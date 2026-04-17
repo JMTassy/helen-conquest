@@ -1,0 +1,44 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E14",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF GOVERNANCE/CLOSURES/E12-legoracle-replay-gate-V1.json is moved to GOVERNANCE/TRANCHE_RECEIPTS/, THEN the test_no_ghost_closures parametric failure on that file clears without weakening the CLOSURE_RECEIPT_V1 invariant (CLOSURES/ remains strict).",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "ci-harness", "identity": "helen_os/tests/test_no_ghost_closures.py"},
+  "experiment": {
+    "action": "mv GOVERNANCE/CLOSURES/E12-legoracle-replay-gate-V1.json -> GOVERNANCE/TRANCHE_RECEIPTS/",
+    "system_layer": "governance (artifact routing, non-sovereign)",
+    "files_touched": 1,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "metric": {
+    "name": "ghost_closure_failing_params",
+    "baseline": 1,
+    "observed": 0,
+    "target": 0
+  },
+  "regression_check": {
+    "pre_pass_fail": "373/375",
+    "post_pass_fail": "373/374",
+    "delta_passing": 0,
+    "delta_failing": -1,
+    "cleared": ["test_no_ghost_closures::test_closure_receipt_is_not_a_ghost[E12-legoracle-replay-gate-V1.json]"],
+    "remaining_failures": ["test_schema_authority_guard::test_legacy_schemas_directory_is_purged (SEAM-001 C12 blocker, independent)"]
+  },
+  "decision_rule": {
+    "keep_conditions": ["failing_params == 0", "CLOSURE_RECEIPT_V1 invariant unchanged", "no CLOSURES/ content modified"],
+    "reject_conditions": ["any new failure", "ghost detector weakened"],
+    "decision": "KEEP"
+  },
+  "failure_model": {
+    "false_positive": "None observed — the ghost detector scans CLOSURES/ and the moved file is no longer in that path.",
+    "gameable": "Future non-CLOSURE_RECEIPT artifacts placed under CLOSURES/ will still trigger the detector (invariant preserved).",
+    "breaks_if": "CLOSURES/ becomes ambiguous again (e.g., schema-agnostic receipts land there). E13 + E14 together establish: CLOSURES/ is for CLOSURE_RECEIPT_V1, TRANCHE_RECEIPTS/ is for tranche sub-receipts."
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:25:00Z",
+  "note": "E14 addresses the regression newly observed by E13's baseline clarification. The correction is directory-level, not schema-level, preserving the strictness of CLOSURE_RECEIPT_V1. This also retroactively completes E12: its receipt is now in the correct governance bucket."
+}

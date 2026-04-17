@@ -1,0 +1,121 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E15",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF a dual-classifier audit (runtime .py refs + doc .md refs, excluding .claude/worktrees/ and .git/) is applied to each file under schemas/, THEN the 48 files partition cleanly into {CONSUMED_RUNTIME, DOCUMENTED_ONLY, ORPHAN_ZERO_REF} with zero unclassified residue and zero file mutations.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "ci-script", "identity": "helen_os/governance/root_schemas_consumer_audit.py"},
+  "experiment": {
+    "artifact": "helen_os/governance/root_schemas_consumer_audit.py",
+    "action": "enumerate schemas/*.json; for each, git-grep basename and relative path across main tree; classify by extension of hits",
+    "system_layer": "governance (audit, non-sovereign)",
+    "files_touched": 1,
+    "files_mutated": 0,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "metric": {
+    "name": "classification_coverage",
+    "total_files": 48,
+    "consumed_runtime_count": 21,
+    "documented_only_count": 14,
+    "orphan_zero_ref_count": 13,
+    "unclassified_count": 0,
+    "target_coverage": 48,
+    "observed_coverage": 48
+  },
+  "buckets": {
+    "CONSUMED_RUNTIME": [
+      "schemas/builders_brief_v1.schema.json",
+      "schemas/builders_claim_v1.schema.json",
+      "schemas/builders_run_v1.schema.json",
+      "schemas/evidence_bundle_v1.schema.json",
+      "schemas/execution_receipt_v1.schema.json",
+      "schemas/gate_evaluated_v1.schema.json",
+      "schemas/gate_report_v1.schema.json",
+      "schemas/hal_reason_codes.enum.json",
+      "schemas/helen_handoff_v1.schema.json",
+      "schemas/issue_list_v1.schema.json",
+      "schemas/mayor_packet_v1.schema.json",
+      "schemas/mission_v1.schema.json",
+      "schemas/plugin_receipt.schema.json",
+      "schemas/proposal_v1.schema.json",
+      "schemas/rho_manifest.schema.json",
+      "schemas/rho_summary.schema.json",
+      "schemas/rho_trace.schema.json",
+      "schemas/run_manifest_v1.schema.json",
+      "schemas/street1_summary.v1.schema.json",
+      "schemas/task_list_v1.schema.json",
+      "schemas/verdict_v1.schema.json"
+    ],
+    "DOCUMENTED_ONLY": [
+      "schemas/claim_graph_v1.schema.json",
+      "schemas/dialogue_event.canonical.schema.json",
+      "schemas/hal_output.schema.json",
+      "schemas/helen.wul_slab.v1.schema.json",
+      "schemas/mayor_candidate_packet_v1.schema.json",
+      "schemas/oracle_town.decision_record.v2.schema.json",
+      "schemas/oracle_town.district_attestation.v2.schema.json",
+      "schemas/oracle_town.mayor_input.v2.schema.json",
+      "schemas/oracle_town.registry_law_codes.v1.schema.json",
+      "schemas/research_claim_v1.schema.json",
+      "schemas/schema_pack_manifest_v1.json",
+      "schemas/skill_library_state_v1.schema.json",
+      "schemas/street1_event.v1.schema.json",
+      "schemas/town_routing_policy.schema.json"
+    ],
+    "ORPHAN_ZERO_REF": [
+      "schemas/executor_manifest_v1.schema.json",
+      "schemas/executor_manifest_v1_schema.json",
+      "schemas/helen_handoff_v1_schema.json",
+      "schemas/helen_kernel_state_schema_v1.json",
+      "schemas/k_tau_manifest.schema.json",
+      "schemas/k_tau_summary.schema.json",
+      "schemas/k_tau_trace.schema.json",
+      "schemas/receipt_payload.v1.schema.json",
+      "schemas/seal_v1.schema.json",
+      "schemas/skill_diff_v1.schema.json",
+      "schemas/skill_eval_receipt_v1.schema.json",
+      "schemas/skill_proposal_v1.schema.json",
+      "schemas/verdict_payload.v1.schema.json"
+    ]
+  },
+  "caveats": {
+    "runtime_hit_semantics": "A 'runtime hit' = a .py file anywhere in main tree contains the schema filename as a substring. This is a lower-bound for 'used' (false positive if the string is a comment; false negative if the code loads via a constant defined elsewhere).",
+    "doc_hit_semantics": "Doc hits indicate the schema is specified/described but may or may not be implemented. Three of the DOCUMENTED_ONLY hits land in VALIDATION_CONTRACT_V1.md, which is a canonical spec; deleting those files without updating the spec would create a spec/code drift.",
+    "k_tau_trio": "schemas/k_tau_{manifest,summary,trace}.schema.json appear as ORPHAN_ZERO_REF, but scripts/helen_k_tau_lint.py emits corresponding artifacts with matching schema_version strings. These are real artifacts; the schemas are contractually correct but structurally unreferenced (emitter uses inline dict, not load+validate).",
+    "duplicate_filenames": "executor_manifest_v1.schema.json and executor_manifest_v1_schema.json differ only in naming convention (.schema.json vs _schema.json); same for helen_handoff_v1.schema.json (CONSUMED_RUNTIME) vs helen_handoff_v1_schema.json (ORPHAN). Suggests historical rename without cleanup."
+  },
+  "regression_check": {
+    "pre_pass_fail": "373/374",
+    "post_pass_fail": "373/374",
+    "delta_passing": 0,
+    "delta_failing": 0,
+    "rationale": "E15 adds one governance audit file (helen_os/governance/root_schemas_consumer_audit.py). No schemas, emitters, kernel, or existing tests modified. The ghost-closure detector scans GOVERNANCE/CLOSURES/ only; the schema-authority guard scans the helen_os/ package; neither sees the new file."
+  },
+  "decision_rule": {
+    "keep_conditions": ["unclassified_count == 0", "files_mutated == 0", "full coverage of schemas/*.json"],
+    "reject_conditions": ["any file unclassified", "any existing file modified", "any test regression"],
+    "decision": "KEEP"
+  },
+  "failure_model": {
+    "false_positive": "Substring match in a .py file without actual load. Mitigated by reporting the specific file paths; human can verify.",
+    "false_negative": "A schema loaded via a Path constant defined in a different module. Mitigated by: the 13 ORPHAN_ZERO_REF all have zero substring matches in any .py file, making this unlikely.",
+    "gameable": "Future code could reference a deleted schema filename in a string literal to restore 'consumed' status without actually loading. Audit is advisory, not enforcement.",
+    "breaks_if": "Future schemas are loaded via dynamic URL resolution (e.g., jsonschema $id registries). Current tree does not appear to do this."
+  },
+  "deletion_proposal": {
+    "status": "NOT_EXECUTED",
+    "rationale": "E15 is scoped to audit-only under the PULL contract. A delete tranche (E-delete) is a separate, sovereign-adjacent action requiring: (a) HAL review, (b) per-file justification, (c) spec-sync for DOCUMENTED_ONLY cases that land in VALIDATION_CONTRACT_V1.md. This receipt establishes the baseline so that future delete tranches are not speculative.",
+    "recommended_next_steps": [
+      "Delete candidates (lowest risk): the 13 ORPHAN_ZERO_REF files, with preference for the k_tau trio being last (their emitter contract is real even though the files are unreferenced).",
+      "Do not delete DOCUMENTED_ONLY without updating VALIDATION_CONTRACT_V1.md, ORACLE_TOWN_V2_CHECKPOINT.md, STREET1_DELIVERY_RECEIPT.md, and the HER_HAL doc set.",
+      "Leave CONSUMED_RUNTIME untouched; those 21 files are load-bearing."
+    ]
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:35:00Z",
+  "note": "E15 produces the first receipted inventory of the repo-root schemas/ directory. It resolves a nagging ambiguity carried since SEAM-001: the 48 root files were lumped as 'orphan candidates' in prior audits without per-file provenance. The audit finds 21 are load-bearing (mostly via helen_os_scaffold/helen_os/artifact.py), 14 are specified by canonical docs, and 13 have zero references. A delete action on the 13 ORPHAN_ZERO_REF would halve the root schemas/ tree from 48 to 35 files with no runtime or spec impact — but that delete is out of scope for this epoch and would be its own tranche under HAL review."
+}

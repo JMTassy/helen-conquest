@@ -1,0 +1,92 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E12",
+  "tranche_title": "LEGORACLE replay gate — freeze determinism with automated replay enforcement",
+  "parent_tranche": "E11-E20",
+  "proposer": {
+    "role": "agent",
+    "identity": "claude-opus-4-7"
+  },
+  "attestor": {
+    "role": "ci-harness",
+    "identity": "helen_os/tests/ci_replay_test_legoracle_gate.py"
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "statement": "E12 replay gate test file exists at canonical CI path.",
+      "expected_artifact": "helen_os/tests/ci_replay_test_legoracle_gate.py",
+      "expected_sha256": "0872aa46f6be09695fc5717303afdeb44b5410ba0d4c37818a5ebbd954110345",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C2",
+      "statement": "SHIP fixture exists and is the input for the positive replay path.",
+      "expected_artifact": "helen_os/tests/fixtures/legoracle_gate/proposal_ship.json",
+      "expected_sha256": "7817b28689c1e9a93124c72221f19c1274755c60fb5b397106365d386abcdf20",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C3",
+      "statement": "NO_SHIP fixture exists and is the input for the negative replay path.",
+      "expected_artifact": "helen_os/tests/fixtures/legoracle_gate/proposal_no_ship.json",
+      "expected_sha256": "1652e62c69a11673e822d018e661c15050b18952a95757f442dea5fbe128828d",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C4",
+      "statement": "LEGORACLE validator under replay gate.",
+      "expected_artifact": "legoracle_v13rc.py",
+      "expected_sha256": "f6267a3c89d04e6bd4c9d40f39148560ee32ca99a278bb668504f73b7a2dab14",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C5",
+      "statement": "SHIP fixture → run_tribunal → verdict=SHIP, output_sha256=21d3c41026c295c18b5f36c02b2c9369ba3e280f80ef49d8cb5be172e850d051, stable across replay (run1_hash==run2_hash).",
+      "verdict": "PASS",
+      "note": "Emitted by build_replay_gate_receipt(): hash_equal=true, verdict_stable=true, verdict=SHIP."
+    },
+    {
+      "claim_id": "C6",
+      "statement": "NO_SHIP fixture → run_tribunal → verdict=NO_SHIP, output_sha256=ce084386bd9455191505d5b71d0a6f159fc696e7d55df3a3154fd566b011df69, stable across replay (run1_hash==run2_hash).",
+      "verdict": "PASS",
+      "note": "Emitted by build_replay_gate_receipt(): hash_equal=true, verdict_stable=true, verdict=NO_SHIP."
+    },
+    {
+      "claim_id": "C7",
+      "statement": "Negative harness: mutating the input (claim_id byte change) produces a different decision_record hash, proving input-sensitivity.",
+      "verdict": "PASS",
+      "note": "test_byte_mutation_changes_hash: sha256(run_tribunal(fixture)) != sha256(run_tribunal(mutated_fixture))."
+    },
+    {
+      "claim_id": "C8",
+      "statement": "Replay-gate test suite is 4/4 green (test_ship_fixture_is_deterministic, test_no_ship_fixture_is_deterministic, test_byte_mutation_changes_hash, test_replay_gate_receipt_is_pass).",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C9",
+      "statement": "Full helen_os/tests/ suite: 373/374 pass. The 1 failure (test_legacy_schemas_directory_is_purged) is the pre-existing SEAM-001 C12 BLOCKER documented in GOVERNANCE/CLOSURES/SEAM-001-schema-authority-V6.json. Not introduced by E12.",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C10",
+      "statement": "No kernel files mutated by E12. Only additions: 1 test file + 2 fixture JSONs + 1 receipt (this file). All non-sovereign surface.",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C11",
+      "statement": "Environment pin: python 3.9.6, legoracle_v13rc module at repo root. Recorded in the emitted REPLAY_GATE_RECEIPT_V1 object (environment field).",
+      "verdict": "PASS"
+    }
+  ],
+  "environment": {
+    "python_version": "3.9.6",
+    "pytest_version": "8.4.2",
+    "platform": "darwin"
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:00:00Z",
+  "halt_condition": "E12 sealed. E13 NOT opened per bounded-tranche discipline: emit sub-receipt, halt, re-rank before next epoch.",
+  "note": "E12 freezes LEGORACLE's run_tribunal() behavior via automated replay enforcement. Acceptance criteria all met: (a) identical input → identical decision_record hash, (b) SHIP fixture stays SHIP on replay, (c) NO_SHIP fixture stays NO_SHIP on replay, (d) CI exits non-zero on any mismatch, (e) zero kernel files mutated. Parallel session at ~/Documents/GitHub/helen_os_v1/ cum_hash b3415eb3edfb reached the same seal via a different path (8 tests + 12 tests = 20 tests); this session's gate is narrower (4 tests) but covers the four required acceptance criteria with one negative harness. HAL gate: PASS. Awaiting re-rank before E13."
+}

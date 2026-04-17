@@ -1,0 +1,50 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E16",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF the `helen_say` capability is a gap, THEN there exists no live shell symbol that dispatches to helen_talk with --reply --no-receipt. Observable signal: `type helen_say` in an interactive zsh returns 'not found'.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "interactive-shell", "identity": "zsh -i -c 'type helen_say'"},
+  "experiment": {
+    "action": "Resolve `helen_say` as a shell symbol in an interactive (login-init) zsh; cross-check the backing runner `_helen_run`; cross-check sibling helpers `helen_hal` and `helen_dev`.",
+    "system_layer": "user-env (~/.zshrc) — outside repo, non-sovereign to HELEN kernel",
+    "files_touched": 0,
+    "files_mutated": 0,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "metric": {
+    "name": "capability_gap_present",
+    "baseline": "unknown (carried over from tranche list as candidate gap)",
+    "observed": "absent — helen_say is a shell function at ~/.zshrc:46 dispatching `_helen_run --reply --no-receipt \"$@\"`",
+    "target": 0
+  },
+  "evidence": {
+    "helen_say_definition_line": "~/.zshrc:46 — `helen_say() { _helen_run --reply --no-receipt \"$@\"; }`",
+    "runner_definition_line": "~/.zshrc:25 — `_helen_run()` resolves ledger from HELEN_LEDGER_MODE (memory|dev|sovereign) then dispatches to `helen talk`",
+    "siblings": {
+      "helen_hal": "~/.zshrc:49 — two-channel HER/HAL",
+      "helen_dev": "~/.zshrc:50 — receipts saved (mode-aware)",
+      "helen_chat": "~/.zshrc:75 — alias to `~/helen chat` (unified entrypoint)"
+    },
+    "current_ledger_mode": "memory",
+    "smoke_test": "zsh -i -c 'type helen_say _helen_run helen_hal helen_dev' → all four reported as 'shell function from /Users/jean-marietassy/.zshrc'"
+  },
+  "regression_check": {
+    "pre_pass_fail": "373/374",
+    "post_pass_fail": "373/374",
+    "delta_passing": 0,
+    "delta_failing": 0,
+    "rationale": "Zero files touched. The experiment is purely a read against the user shell environment."
+  },
+  "decision_rule": {
+    "close_conditions": ["helen_say resolves as live shell function", "_helen_run resolves as live shell function", "no capability gap observed"],
+    "reopen_conditions": ["fresh shell without ~/.zshrc sourcing", "memory/helen_chat.md contradicted by direct test"],
+    "decision": "CLOSE_AS_ALREADY_SHIPPED"
+  },
+  "note": "E16 was carried on the tranche list as a candidate capability gap. Direct measurement shows the gap is absent: `helen_say`, `helen_hal`, `helen_dev`, and `_helen_run` are all live zsh functions installed at ~/.zshrc. This matches the persisted note in MEMORY.md ('Working chat command: helen talk --reply --no-receipt --ledger :memory:') and the shell-function block committed to ~/.zshrc under `# HELEN OS — unified entrypoint`. No action is taken on the user shell. If a future user reports `command not found`, the first diagnostic is `source ~/.zshrc` or `echo $ZDOTDIR`; no HELEN-kernel change is implied.",
+  "verdict": "CLOSED_NO_ACTION",
+  "closed_at": "2026-04-17T18:40:00Z"
+}

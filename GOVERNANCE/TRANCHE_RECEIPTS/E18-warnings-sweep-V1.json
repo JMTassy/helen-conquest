@@ -1,0 +1,98 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E18",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF we run `python -W default` import sweep over helen_os core modules AND pytest over both test trees, THEN we can enumerate every currently-suppressed warning and each collection error, and assign a disposition.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "ci-harness", "identity": "pytest -W default -rw"},
+  "experiment": {
+    "action_a": "python -W default import of 10 helen_os.* modules",
+    "action_b": "pytest -W default -rw helen_os/tests/ (374 tests)",
+    "action_c": "pytest -W default -rw helen_os_scaffold/tests/ (939 collected, 1 collection error)",
+    "system_layer": "governance (audit, non-sovereign)",
+    "files_touched": 0,
+    "files_mutated": 0,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "findings": {
+    "helen_os_core_imports": {
+      "warning_count": 0,
+      "strict_mode_errors": 0,
+      "note": "Clean. All 10 kernel modules import under -W error::DeprecationWarning|SyntaxWarning|PendingDeprecationWarning without emitting or raising."
+    },
+    "helen_os_test_suite": {
+      "warning_count": 0,
+      "note": "373/374 pass, 1 pre-existing SEAM-001 C12 blocker failure, zero warnings."
+    },
+    "helen_os_scaffold_test_suite": {
+      "warning_count": 4,
+      "collection_errors": 1,
+      "warnings": [
+        {
+          "location": "helen_os_scaffold/helen_os/integrations/airi_bridge.py:26",
+          "class": "DeprecationWarning",
+          "message": "websockets.client.WebSocketClientProtocol is deprecated",
+          "origin": "our code (uses deprecated websockets API)",
+          "upstream": "websockets 14.0+ deprecation (2024-11-09)"
+        },
+        {
+          "location": "/opt/homebrew/lib/python3.14/site-packages/websockets/legacy/__init__.py:6",
+          "class": "DeprecationWarning",
+          "message": "websockets.legacy is deprecated",
+          "origin": "transitive via airi_bridge.py",
+          "upstream": "websockets library"
+        },
+        {
+          "location": "helen_os_scaffold/helen_os/api/do_next.py:48",
+          "class": "PydanticDeprecatedSince20",
+          "message": "Pydantic V1 style @validator is deprecated",
+          "origin": "our code (DoNextRequest.validate_session_id)",
+          "upstream": "Pydantic V2 migration — V1 @validator to be removed in V3"
+        },
+        {
+          "location": "helen_os_scaffold/helen_os/api/do_next.py:55",
+          "class": "PydanticDeprecatedSince20",
+          "message": "Pydantic V1 style @validator is deprecated",
+          "origin": "our code (DoNextRequest.validate_mode)",
+          "upstream": "Pydantic V2 migration — V1 @validator to be removed in V3"
+        }
+      ],
+      "collection_error": {
+        "location": "helen_os_scaffold/tests/test_airi_bridge.py",
+        "class": "ModuleNotFoundError",
+        "message": "No module named 'helen.router'",
+        "origin": "helen_os/integrations/airi_bridge.py:28 imports `from helen.router import route_input` which does not resolve in the current tree",
+        "impact": "1 test file uncollectable; 939 tests still collected around it"
+      }
+    }
+  },
+  "dispositions": {
+    "airi_bridge_websockets_warnings": "DEFER — websockets 14+ rename requires upgrading airi_bridge.py to the new async interface. Non-kernel. No current test failure. Separate tranche; schedule for when airi_bridge is exercised in production (currently test_airi_bridge.py does not collect due to helen.router gap).",
+    "do_next_pydantic_v1_validators": "DEFER — migrating @validator → @field_validator is mechanical but touches the /do_next API request model, which is load-bearing for Knowledge Compiler V2 ratification. Bundling this with the V2 ratification work avoids churn. Warnings are noisy but non-breaking until Pydantic V3.",
+    "test_airi_bridge_collection_error": "DEFER — root cause is the unresolved `helen.router` import. Either (a) the router package needs to land on main, or (b) airi_bridge.py's dependency on it should become optional. Either direction is out of scope for a warnings audit. Test file currently does not collect, so it does not count toward the 373/374 pass rate; treated as 'unreachable', not 'failing'."
+  },
+  "regression_check": {
+    "pre_pass_fail": "373/374 (helen_os core suite)",
+    "post_pass_fail": "373/374 (helen_os core suite)",
+    "delta_passing": 0,
+    "delta_failing": 0,
+    "rationale": "Zero mutations. Pure audit. Scaffold suite state is recorded for completeness but is a separate test corpus."
+  },
+  "decision_rule": {
+    "close_conditions": ["every warning has a documented disposition", "no new warnings introduced", "collection error cataloged"],
+    "reopen_conditions": ["websockets or Pydantic pushes V3 that removes compatibility shim", "helen.router module appears on main — then test_airi_bridge.py should be re-evaluated"],
+    "decision": "CLOSE_AS_INVENTORY_SHIPPED"
+  },
+  "failure_model": {
+    "false_positive": "Upstream package re-emits warnings from its own code even when our usage is current. Mitigated by listing origin (`our code` vs `transitive`).",
+    "false_negative": "Warnings suppressed by `warnings.filterwarnings` or `-W ignore` in conftest. Not observed here; -W default overrides project-level filters.",
+    "gameable": "An author could add `warnings.filterwarnings('ignore')` to silence a warning without fixing the root cause. Not observed.",
+    "breaks_if": "Pydantic V3 drops V1 @validator (removes compatibility shim) — do_next.py:48/55 become hard errors."
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:50:00Z",
+  "note": "E18 finding: helen_os/ kernel is warning-clean. Non-kernel scaffold has 4 DeprecationWarnings (2 websockets, 2 Pydantic V1-style) and 1 collection error (missing helen.router module). All three findings are deferrable and none block current tests. The Pydantic V1→V2 migration is the most consequential — it should be bundled with Knowledge Compiler V2 ratification to avoid touching /do_next twice."
+}

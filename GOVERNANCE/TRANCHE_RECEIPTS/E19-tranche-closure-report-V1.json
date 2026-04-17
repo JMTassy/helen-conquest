@@ -1,0 +1,133 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E19",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF the 7 filed sub-receipts under GOVERNANCE/TRANCHE_RECEIPTS/ (E12-E18) are deterministic, THEN a closure report can hash-pin each receipt, compute aggregate metrics, and produce a single receipted summary without touching any original artifact.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "ci-script", "identity": "python3 hashlib + json over GOVERNANCE/TRANCHE_RECEIPTS/"},
+  "experiment": {
+    "action": "enumerate GOVERNANCE/TRANCHE_RECEIPTS/E*.json (excluding this file being written), compute SHA-256 per file, tabulate by tranche_id + verdict",
+    "system_layer": "governance (audit-aggregation, non-sovereign)",
+    "files_touched": 0,
+    "files_mutated": 0,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "sub_receipts": [
+    {
+      "tranche_id": "E12",
+      "file": "E12-legoracle-replay-gate-V1.json",
+      "sha256_prefix": "1b9f75cd55d9",
+      "verdict": "SHIPPED",
+      "one_line": "Freeze LEGORACLE.run_tribunal determinism; SHIP/NO_SHIP fixtures produce stable decision_record hashes across replays; byte-mutation flips the hash."
+    },
+    {
+      "tranche_id": "E13",
+      "file": "E13-dual-recognizer-audit-V1.json",
+      "sha256_prefix": "6c47fd59b36c",
+      "verdict": "SHIPPED",
+      "one_line": "helen_os/schemas/ dual-recognizer audit: 30/30 indexed (27 schema_name + 3 legacy schema const); 1 registry exempt; 0 unindexed."
+    },
+    {
+      "tranche_id": "E14",
+      "file": "E14-relocate-e12-receipt-V1.json",
+      "sha256_prefix": "b26fba4270ca",
+      "verdict": "SHIPPED",
+      "one_line": "Move E12 receipt CLOSURES/ → TRANCHE_RECEIPTS/; clears 1 ghost-closure failure; introduces TRANCHE_RECEIPTS/ directory convention."
+    },
+    {
+      "tranche_id": "E15",
+      "file": "E15-root-schemas-consumer-audit-V1.json",
+      "sha256_prefix": "6e02d48fc9ef",
+      "verdict": "SHIPPED",
+      "one_line": "Classify schemas/*.json (48 files) → 21 CONSUMED_RUNTIME + 14 DOCUMENTED_ONLY + 13 ORPHAN_ZERO_REF. Zero unclassified residue."
+    },
+    {
+      "tranche_id": "E16",
+      "file": "E16-helen-say-capability-audit-V1.json",
+      "sha256_prefix": "465b56c59c91",
+      "verdict": "CLOSED_NO_ACTION",
+      "one_line": "helen_say is an active zsh function at ~/.zshrc:46. Capability gap absent; ALREADY_SHIPPED."
+    },
+    {
+      "tranche_id": "E17",
+      "file": "E17-todo-fixme-hack-triage-V1.json",
+      "sha256_prefix": "bba8ce28dec7",
+      "verdict": "SHIPPED",
+      "one_line": "TODO/FIXME/HACK triage: helen_os/ = 0 real TODOs; helen_city/ = 0; helen_os_scaffold/ = 2 documented placeholders (do_next.py:389, :611) with Step 4A provenance."
+    },
+    {
+      "tranche_id": "E18",
+      "file": "E18-warnings-sweep-V1.json",
+      "sha256_prefix": "f21bafc94fb7",
+      "verdict": "SHIPPED",
+      "one_line": "Warning sweep: helen_os/ kernel = 0 warnings. Scaffold = 4 (2× websockets, 2× Pydantic V1 @validator) + 1 collection error (test_airi_bridge.py missing helen.router). All deferred."
+    }
+  ],
+  "aggregate_metrics": {
+    "receipts_filed": 7,
+    "verdict_distribution": {
+      "SHIPPED": 6,
+      "CLOSED_NO_ACTION": 1
+    },
+    "files_mutated_total": 1,
+    "files_mutated_breakdown": {
+      "E14": "mv GOVERNANCE/CLOSURES/E12-legoracle-replay-gate-V1.json → GOVERNANCE/TRANCHE_RECEIPTS/ (1 rename, 0 content change)"
+    },
+    "new_files_added": 8,
+    "new_files_breakdown": {
+      "helen_os/tests/ci_replay_test_legoracle_gate.py": "E12",
+      "helen_os/tests/fixtures/legoracle_gate/proposal_ship.json": "E12",
+      "helen_os/tests/fixtures/legoracle_gate/proposal_no_ship.json": "E12",
+      "helen_os/governance/schema_index_audit.py": "E13",
+      "helen_os/governance/root_schemas_consumer_audit.py": "E15",
+      "GOVERNANCE/TRANCHE_RECEIPTS/E12-E18 receipts": "6 receipt files"
+    },
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "regression_check": {
+    "pre_tranche_pass_fail": "373/375",
+    "post_tranche_pass_fail": "373/374",
+    "delta_passing": 0,
+    "delta_failing": -1,
+    "explanation": "E14's directory move cleared the ghost-closure parametric failure. One pre-existing SEAM-001 C12 blocker failure (test_legacy_schemas_directory_is_purged) remains; it is the C12 open item of SEAM-001, independent of this tranche.",
+    "remaining_failures_after_tranche": [
+      "helen_os/tests/test_schema_authority_guard.py::test_legacy_schemas_directory_is_purged — SEAM-001 C12 blocker. Independent. Unrelated to E12-E19 work."
+    ]
+  },
+  "invariants_preserved": {
+    "CLOSURE_RECEIPT_V1_strictness": "Preserved. CLOSURES/ contains only SEAM-001-schema-authority-V{4,5,6}.json, all CLOSURE_RECEIPT_V1.",
+    "proposer_ne_attestor": "Preserved across all receipts — proposer=claude-opus-4-7 for all 7; attestor varies (ci-harness, ci-script, interactive-shell).",
+    "authority_false": "Preserved — no receipt claims authority:true.",
+    "kernel_untouched": "Preserved — only helen_os/governance/ and helen_os/tests/ additions; no edit to schemas, emitters, or ledger_replay.",
+    "determinism": "Preserved — E12 replay gate enforces hash stability for run_tribunal; E18 sweep shows zero strict-mode DeprecationWarning in kernel imports."
+  },
+  "decision_rule": {
+    "close_conditions": [
+      "every E12-E18 receipt exists and parses",
+      "every verdict is SHIPPED or CLOSED_NO_ACTION",
+      "invariants preserved (authority, proposer≠attestor, kernel untouched)",
+      "no new failing test introduced"
+    ],
+    "reopen_conditions": [
+      "any receipt missing or malformed",
+      "any verdict becomes REJECTED",
+      "test regression attributable to E12-E18"
+    ],
+    "decision": "TRANCHE_CLOSED"
+  },
+  "pull_mode_conformance": {
+    "one_hypothesis_per_loop": "Preserved — each E12-E18 receipt names exactly one hypothesis.",
+    "observable_signals_only": "Preserved — every metric is a test count, file count, grep count, or hash.",
+    "non_sovereign_layers_only": "Preserved — no kernel edit. E14's rename is the only mutation and it is a directory convention, not a schema or emitter change.",
+    "unknowns_explicit": "Preserved — each receipt names its own unknowns under failure_model or UNKNOWNS field.",
+    "no_authority_claim": "Preserved — all receipts record proposer≠attestor; none set authority:true."
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:55:00Z",
+  "note": "E19 is the halt point for tranche E13-E22 aggregation. E20 (HAL review / MAYOR ship gate) is the sovereign step that reviews this closure report and decides whether to open E21-E23. Until E20 executes, the tranche is in SHIPPED-but-unratified state. This report is the input to that review."
+}

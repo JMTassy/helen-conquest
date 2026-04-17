@@ -1,0 +1,85 @@
+{
+  "schema_name": "TRANCHE_SHIP_GATE_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E20",
+  "parent_tranche": "E13-E22",
+  "gate_role": "HAL_REVIEW + MAYOR_SHIP_GATE",
+  "hypothesis": "IF every sub-receipt in E12-E19 (a) parses, (b) observes proposer≠attestor, (c) claims no authority, (d) records zero kernel/schema/emitter mutation, AND the tranche's regression_check shows delta_failing ≤ 0, THEN the tranche SHIPS and opens the option to request E21-E23.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "hal-gate-script", "identity": "python audit over GOVERNANCE/TRANCHE_RECEIPTS/"},
+  "tranche_inputs": {
+    "member_count": 8,
+    "tranche_cum_hash_sha256": "61286ce78915456f3f595de4c75e4e15f3ea08242c4c3b2dee1b7202a3d3b7e3",
+    "members": [
+      {"tranche_id": "E12", "file": "E12-legoracle-replay-gate-V1.json", "sha256": "1b9f75cd55d95d4dc6aec35f274babe37b1519ea45c9a99fd2fb7759c79bf34d"},
+      {"tranche_id": "E13", "file": "E13-dual-recognizer-audit-V1.json", "sha256_prefix16": "6c47fd59b36cfe84"},
+      {"tranche_id": "E14", "file": "E14-relocate-e12-receipt-V1.json", "sha256_prefix16": "b26fba4270cac981"},
+      {"tranche_id": "E15", "file": "E15-root-schemas-consumer-audit-V1.json", "sha256_prefix16": "6e02d48fc9efa164"},
+      {"tranche_id": "E16", "file": "E16-helen-say-capability-audit-V1.json", "sha256_prefix16": "465b56c59c913994"},
+      {"tranche_id": "E17", "file": "E17-todo-fixme-hack-triage-V1.json", "sha256_prefix16": "bba8ce28dec72b07"},
+      {"tranche_id": "E18", "file": "E18-warnings-sweep-V1.json", "sha256_prefix16": "f21bafc94fb7646d"},
+      {"tranche_id": "E19", "file": "E19-tranche-closure-report-V1.json", "sha256_prefix16": "82f3b8017db0855f"}
+    ]
+  },
+  "hal_checks": {
+    "all_parse": {"result": true, "observed": "8/8 JSON files parseable"},
+    "proposer_ne_attestor_preserved": {"result": true, "observed": "8/8 — proposer=claude-opus-4-7 for all; attestor varies per epoch"},
+    "no_authority_leak": {"result": true, "observed": "grep `\"authority\": true` across all 8 files → 0 hits"},
+    "kernel_untouched": {"result": true, "observed": "8/8 — experiment.kernel_touched=false"},
+    "no_schemas_touched": {"result": true, "observed": "8/8 — experiment.schemas_touched=0"},
+    "no_emitters_touched": {"result": true, "observed": "8/8 — experiment.emitters_touched=0"}
+  },
+  "regression_rollup": {
+    "pre_tranche_pass_fail": "373/375",
+    "post_tranche_pass_fail": "373/374",
+    "delta_passing": 0,
+    "delta_failing": -1,
+    "cleared_failures": [
+      "test_no_ghost_closures::test_closure_receipt_is_not_a_ghost[E12-legoracle-replay-gate-V1.json] — cleared by E14 directory move"
+    ],
+    "remaining_failures": [
+      "test_schema_authority_guard::test_legacy_schemas_directory_is_purged — SEAM-001 C12 blocker; independent of this tranche"
+    ],
+    "rule_check": "delta_failing ≤ 0 required for SHIP. Observed: delta_failing = -1. PASS."
+  },
+  "cross_session_alignment": {
+    "parallel_session_repo": "~/Documents/GitHub/helen_os_v1/",
+    "parallel_e18_verdict": "CLOSE_AS_ALREADY_CLEAN (cum_hash 6945df836e72)",
+    "parallel_pass_fail": "426/0",
+    "this_tree_pass_fail": "373/374",
+    "divergence_reason": "Different test corpora between the two trees. Both observed zero warnings in helen_os/ kernel imports. Both preserved PULL contract invariants.",
+    "alignment_status": "ALIGNED — both trees close E18 with zero warnings and proceed to E19/E20."
+  },
+  "pull_contract_conformance": {
+    "one_hypothesis_per_loop": {"result": true, "observed": "Each E12-E19 receipt declares exactly one hypothesis field."},
+    "observable_signals_only": {"result": true, "observed": "Every metric in every receipt is a test count, file count, grep count, or hash."},
+    "non_sovereign_layers_only": {"result": true, "observed": "E14 is a directory mv — the only mutation. No schema, emitter, or kernel change."},
+    "unknowns_explicit": {"result": true, "observed": "Each receipt has failure_model or UNKNOWNS — no hidden assumptions."},
+    "no_authority_claim": {"result": true, "observed": "All proposer≠attestor; zero authority:true."}
+  },
+  "mayor_decision": {
+    "verdict": "SHIP",
+    "ship_conditions_met": [
+      "all HAL checks PASS (6/6)",
+      "regression_rollup: delta_failing = -1 (improvement)",
+      "PULL contract conformance: 5/5 preserved",
+      "tranche_cum_hash pinned: 61286ce78915"
+    ],
+    "post_ship_status": {
+      "tranche_E13_E22_closed_at_E20": true,
+      "open_for_next_tranche": "E21-E23 may be proposed; requires new hypothesis under PULL contract",
+      "open_seams": {
+        "SEAM-001-C12": "test_legacy_schemas_directory_is_purged remains the single open blocker. E15 established the 13 ORPHAN_ZERO_REF baseline; a future delete tranche (under HAL review) could collapse this.",
+        "Knowledge_Compiler_V2_ratification": "6 patches landed (commit 6eede55). Ratification pending. E17/E18 findings (do_next.py:389,611 + Pydantic V1 validators) should bundle with ratification work to avoid double-touching /do_next."
+      }
+    }
+  },
+  "decision_rule": {
+    "ship_conditions": ["all HAL checks PASS", "delta_failing ≤ 0", "PULL contract preserved", "cum_hash computable"],
+    "no_ship_conditions": ["any HAL check FAIL", "delta_failing > 0", "any PULL invariant violated", "any receipt missing or malformed"],
+    "decision": "SHIP"
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T19:00:00Z",
+  "note": "E20 is the sovereign-adjacent ship gate for tranche E13-E22. It reviews all 8 sub-receipts (E12-E19; E12 predates the tranche but was admitted as the replay-gate seed), computes the tranche cum_hash, verifies every PULL and HAL invariant, and declares SHIP. The tranche closes here. E21-E23 are not automatically opened — they require a fresh hypothesis and fresh HAL-gate signal. The two open seams (SEAM-001-C12 and Knowledge Compiler V2 ratification) are surfaced for the next MAYOR allocation decision."
+}

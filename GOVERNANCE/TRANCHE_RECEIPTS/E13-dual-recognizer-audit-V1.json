@@ -1,0 +1,50 @@
+{
+  "schema_name": "TRANCHE_SUB_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E13",
+  "parent_tranche": "E13-E22",
+  "hypothesis": "IF audit recognizer accepts (schema_name const + schema_version const) OR (schema const + schema_version const) as identity, THEN indexed_count(helen_os/schemas/) rises 27->30 with zero schema/emitter edits.",
+  "proposer": {"role": "agent", "identity": "claude-opus-4-7"},
+  "attestor": {"role": "ci-script", "identity": "helen_os/governance/schema_index_audit.py"},
+  "experiment": {
+    "artifact": "helen_os/governance/schema_index_audit.py",
+    "artifact_sha256": "5fa969503542d8e56c5ef01caa6f477142cebe25da40a230eb46271d6220440c",
+    "system_layer": "governance (audit, non-sovereign)",
+    "files_touched": 1,
+    "schemas_touched": 0,
+    "emitters_touched": 0,
+    "kernel_touched": false
+  },
+  "metric": {
+    "name": "indexed_count",
+    "baseline": 27,
+    "observed": 30,
+    "target": 30,
+    "indexed_schema_name": 27,
+    "indexed_schema_legacy": 3,
+    "exempt_registries": 1,
+    "unindexed": 0
+  },
+  "regression_check": {
+    "pre_tranche_pass_fail": "373/375",
+    "post_tranche_pass_fail": "373/375",
+    "delta": 0,
+    "pre_existing_failures": [
+      "test_schema_authority_guard::test_legacy_schemas_directory_is_purged (SEAM-001 C12 blocker)",
+      "test_no_ghost_closures::test_closure_receipt_is_not_a_ghost[E12-legoracle-replay-gate-V1.json] (E12 receipt uses TRANCHE_SUB_RECEIPT_V1, not CLOSURE_RECEIPT_V1; ghost test is strict about CLOSURES/ content)"
+    ]
+  },
+  "decision_rule": {
+    "keep_conditions": ["indexed_count == 30", "full_suite_delta == 0", "schemas/emitters unchanged"],
+    "reject_conditions": ["indexed_count < 30", "any test regresses", "schemas or emitters modified"],
+    "decision": "KEEP"
+  },
+  "failure_model": {
+    "false_positive": "Non-artifact schema with schema+schema_version const miscounted. Observed probability: 0 (receipt convention is the only schema-field user in current tree).",
+    "gameable": "Future authors could satisfy index by adding {schema: {const: X}}. Audit is advisory; runtime validation unaffected.",
+    "breaks_if": "Future receipt schema drops schema_version const; paired check fails and audit surfaces the regression."
+  },
+  "verdict": "SHIPPED",
+  "closed_at": "2026-04-17T18:15:00Z",
+  "note": "E13 is the PULL-mode tranche opener. Dual-recognizer audit exposes that the helen_os/schemas/ tree is structurally consistent (30/30 after exempting the reason_codes registry). Next observable signal (E14 queue): the E12 receipt at GOVERNANCE/CLOSURES/E12-legoracle-replay-gate-V1.json triggers test_no_ghost_closures because it is not a CLOSURE_RECEIPT_V1. Two hypotheses for E14: (a) relocate E12 receipt out of CLOSURES/ (this is the direction E13 already chose for its own receipt location), or (b) loosen ghost detector to scan only CLOSURE_RECEIPT_V1. (a) preserves the ghost detector's strict contract; (b) weakens it. (a) is the non-sovereign choice."
+}

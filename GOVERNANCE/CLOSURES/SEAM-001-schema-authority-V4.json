@@ -1,0 +1,57 @@
+{
+  "schema_name": "CLOSURE_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "seam_id": "SEAM-001",
+  "seam_title": "Schema Authority — Single Authority Rule",
+  "closure_version": 4,
+  "proposer": {
+    "role": "agent",
+    "identity": "claude-opus-4-7"
+  },
+  "attestor": {
+    "role": "ci-harness",
+    "identity": "helen_os/tests/test_no_ghost_closures.py"
+  },
+  "claims": [
+    {
+      "claim_id": "C1",
+      "statement": "CLOSURE_RECEIPT_V1 schema exists at helen_os/schemas/closure_receipt_v1.json with the canonical contents that this receipt conforms to.",
+      "expected_artifact": "helen_os/schemas/closure_receipt_v1.json",
+      "expected_sha256": "1a413ba22252d32360b84ef1416286d444a9cbb63b311ada0dfd90341a92bb44",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C2",
+      "statement": "Schema Authority Guard test exists at helen_os/tests/test_schema_authority_guard.py and encodes the measurement conditions for Seam 1 closure.",
+      "expected_artifact": "helen_os/tests/test_schema_authority_guard.py",
+      "expected_sha256": "7ee9da6ef32989562c145d963ff5a049093a7f24d16ade9ecd59436caeeca103",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C3",
+      "statement": "Legacy schema purge migration script exists at scripts/purge_legacy_schemas.sh. Safe-by-default: dry-run unless --execute; refuses to purge if bare SchemaRegistry() callers remain in helen_os/.",
+      "expected_artifact": "scripts/purge_legacy_schemas.sh",
+      "expected_sha256": "5869c46b39dd97025dd30c213355a279755e993699ea22ebaa4ceef269c7b125",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C4",
+      "statement": "Ghost Closure Detector test exists at helen_os/tests/test_no_ghost_closures.py. Parameterized over GOVERNANCE/CLOSURES/; verifies every claim's artifact exists with the expected SHA-256 and enforces Rule 3 (proposer != attestor).",
+      "expected_artifact": "helen_os/tests/test_no_ghost_closures.py",
+      "expected_sha256": "911e1dae848b65d91d08a1a68b731db8ccf8defbb25ab74360f12267f4486b6c",
+      "verdict": "PASS"
+    },
+    {
+      "claim_id": "C5",
+      "statement": "The legacy root-level schemas/ directory is purged (absent or empty of JSON schemas).",
+      "expected_artifact": "schemas/",
+      "expected_sha256": "DIRECTORY_ABSENT",
+      "verdict": "FAIL",
+      "observed_sha256": "DIRECTORY_NONEMPTY",
+      "note": "Directory still contains 55 legacy schema JSON files. Blocks closure. Remediation: migrate the 2 test callers that rely on bare SchemaRegistry() (helen_os/test_skill_promotion_requires_receipts.py, helen_os/test_failure_bridge_only_accepts_typed_failures.py) to pass schema_dir=Path('helen_os/schemas'), migrate the schemas they need into helen_os/schemas/, then run scripts/purge_legacy_schemas.sh --execute."
+    }
+  ],
+  "verdict": "BLOCKED",
+  "closed_at": "2026-04-17T00:00:00Z",
+  "note": "V4 materializes the MEASUREMENT INSTRUMENTS for Seam 1. V1/V2/V3 were ghost closures — claimed CLOSED without backing artifacts, retracted by direct filesystem inspection. This V4 is the first honest receipt: it proves the instruments exist (C1–C4) and names the specific blocker (C5) that must clear before a V5 CLOSED receipt can issue. The seam is not closed; the closure process is now auditable."
+}
