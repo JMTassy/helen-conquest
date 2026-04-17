@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/briefcase.schema.json",
+  "title": "Briefcase",
+  "description": "Canonical kernel input produced by Concierge. Schema-closed, no telemetry allowed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "claim_id",
+    "claim_type",
+    "required_obligations",
+    "requested_tests",
+    "kill_switch_policies"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Unique execution identifier for this governance run."
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Unique identifier for the claim being evaluated."
+    },
+    "claim_type": {
+      "type": "string",
+      "enum": ["COMMENTARY", "CHANGE_REQUEST", "ANALYSIS"],
+      "description": "Claim classification that determines obligation routing."
+    },
+    "code_version": {
+      "type": "string",
+      "description": "Optional provenance (e.g., git commit SHA)."
+    },
+    "repo_state": {
+      "type": "string",
+      "enum": ["CLEAN", "DIRTY"],
+      "description": "Optional provenance; DIRTY means working tree differs from code_version."
+    },
+    "required_obligations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/obligation" },
+      "description": "Canonical set of obligations Mayor will enforce. Must be sorted by name for determinism."
+    },
+    "requested_tests": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/requested_test" },
+      "description": "What Factory should execute to generate attestations."
+    },
+    "kill_switch_policies": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Hard-stop policies evaluated by Mayor (or pre-Mayor) as deterministic rules."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata for audit trail only. Never used in decision logic."
+    }
+  },
+  "$defs": {
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "severity"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]{3,64}$",
+          "description": "snake_case stable identifier."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["CODE_PROOF", "DOC_SIGNATURE", "TOOL_RESULT", "METRIC_SNAPSHOT"],
+          "description": "Type of obligation determines expected evidence format."
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["HARD", "SOFT"],
+          "description": "HARD obligations block SHIP if unsatisfied. SOFT are advisory only."
+        },
+        "required_evidence": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "description": "List of evidence artifacts required to satisfy this obligation."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of what this obligation requires."
+        }
+      }
+    },
+    "requested_test": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["obligation_name", "test_command"],
+      "properties": {
+        "obligation_name": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]{3,64}$",
+          "description": "Must match an obligation name in required_obligations."
+        },
+        "test_command": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Command or test identifier that Factory will execute."
+        },
+        "attestor": {
+          "type": "string",
+          "enum": ["CI_RUNNER", "TOOL_RESULT", "HUMAN_SIGNATURE", "SECURITY_SCANNER", "MOCK_FACTORY"],
+          "description": "Expected attestor that will execute this test."
+        }
+      }
+    }
+  }
+}

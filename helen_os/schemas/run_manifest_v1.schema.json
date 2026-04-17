@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/RUN_MANIFEST_V1",
+  "title": "RUN_MANIFEST_V1",
+  "description": "Frozen snapshot of a complete run including all artifacts produced.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "run_id",
+    "seed",
+    "inputs_hash",
+    "artifacts",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "RUN_MANIFEST_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "RUN_MANIFEST_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique run identifier"
+    },
+    "seed": {
+      "type": [
+        "integer",
+        "string"
+      ],
+      "description": "Deterministic seed for reproducibility"
+    },
+    "inputs_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of input configuration"
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "ref",
+          "hash",
+          "type"
+        ],
+        "properties": {
+          "ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Artifact reference or path"
+          },
+          "hash": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 hash of artifact"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "MISSION_V1",
+              "PROPOSAL_V1",
+              "EXECUTION_RECEIPT_V1",
+              "EVIDENCE_BUNDLE_V1",
+              "ISSUE_LIST_V1",
+              "VERDICT_V1"
+            ],
+            "description": "Schema type of artifact"
+          }
+        }
+      },
+      "description": "All artifacts produced by this run"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle.town/schemas/proposal_envelope.schema.json",
+  "title": "ProposalEnvelope",
+  "description": "Creative Town proposal wrapper (non-sovereign, inert, zero authority)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "proposal_id",
+    "origin",
+    "proposal_type",
+    "description_hash",
+    "suggested_changes"
+  ],
+  "properties": {
+    "proposal_id": {
+      "type": "string",
+      "pattern": "^P-[A-Z0-9]{6,16}$",
+      "description": "Unique proposal identifier (e.g., P-847A3F)"
+    },
+    "origin": {
+      "type": "string",
+      "pattern": "^creative_town\\.[a-z_]+$",
+      "description": "Creative agent/team origin (e.g., creative_town.team_red)"
+    },
+    "proposal_type": {
+      "type": "string",
+      "enum": [
+        "SOLUTION_VARIANT",
+        "ARCHITECTURE_SUGGESTION",
+        "TEST_EXTENSION",
+        "PARAMETER_MUTATION",
+        "EDGE_CASE_EXPLORATION",
+        "FAILURE_HYPOTHESIS",
+        "SIMPLIFICATION",
+        "ATTACK_VECTOR"
+      ],
+      "description": "Categorization of creative intent"
+    },
+    "description_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of free-text description (not stored here)"
+    },
+    "suggested_changes": {
+      "type": "object",
+      "description": "Structured proposal content (inert, non-executable)",
+      "additionalProperties": false,
+      "properties": {
+        "model_architecture": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "test_extension": {
+          "type": "string",
+          "maxLength": 256
+        },
+        "metric": {
+          "type": "string",
+          "maxLength": 128
+        },
+        "obligation_addition": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "maxLength": 64
+          },
+          "maxItems": 10
+        },
+        "parameter_delta": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "maxProperties": 20
+        }
+      }
+    },
+    "creativity_metadata": {
+      "type": "object",
+      "description": "Non-hashed metadata about generation context",
+      "additionalProperties": false,
+      "properties": {
+        "generation_timestamp": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "creative_role": {
+          "type": "string",
+          "enum": [
+            "counterexample_hunter",
+            "protocol_simplifier",
+            "adversarial_designer",
+            "edge_case_generator",
+            "novelty_maximizer",
+            "failure_hunter",
+            "refactorer",
+            "attacker"
+          ]
+        },
+        "inspiration_sources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^(failure_mode|oracle_rejection|metrics_trend|prior_artifact):[a-zA-Z0-9_-]{1,64}$"
+          },
+          "maxItems": 5,
+          "description": "References to past failures/rejections that inspired this proposal"
+        },
+        "estimated_novelty_score": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "Agent's self-assessment (non-sovereign, for proposal market only)"
+        }
+      }
+    }
+  }
+}

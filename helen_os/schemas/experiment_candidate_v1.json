@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/experiment_candidate_v1.json",
+  "title": "EXPERIMENT_CANDIDATE_V1",
+  "description": "A proposed experiment awaiting selection. Contains estimated scoring inputs used by the Selection Policy to rank candidates. Non-sovereign — authority=NONE.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "candidate_id", "skill_id", "candidate_skill_version",
+    "mutation_family", "description", "scoring_inputs"
+  ],
+  "properties": {
+    "schema_name":    {"const": "EXPERIMENT_CANDIDATE_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "candidate_id": {
+      "type": "string", "minLength": 1,
+      "description": "Unique identifier for this candidate."
+    },
+    "skill_id": {
+      "type": "string", "minLength": 1,
+      "description": "Skill to be improved by this experiment."
+    },
+    "candidate_skill_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Proposed skill version if this experiment is run and admitted."
+    },
+    "mutation_family": {
+      "type": "string",
+      "enum": ["optimizer","architecture","retrieval","regularization","tokenizer","capability","other"]
+    },
+    "description": {
+      "type": "string", "minLength": 1,
+      "description": "Human-readable description of the proposed mutation."
+    },
+    "scoring_inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_improvement", "information_gain", "strategic_alignment",
+        "risk", "cost", "redundancy",
+        "failure_cluster_priority", "branch_novelty"
+      ],
+      "properties": {
+        "expected_improvement":       {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "information_gain":           {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "strategic_alignment":        {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "risk":                       {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "cost":                       {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "redundancy":                 {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "failure_cluster_priority":   {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "branch_novelty":             {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      },
+      "description": "Estimated scoring inputs (0.0–1.0 each). Used by Selection Policy scoring function."
+    },
+    "notes": {"type": "string"}
+  }
+}

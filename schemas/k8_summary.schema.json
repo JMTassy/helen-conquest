@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.os/schemas/k8_summary.schema.json",
+  "title": "K8_SUMMARY_V1",
+  "description": "HELEN K8 Non-Determinism Boundary gate summary. k8 = min(mu_NDWRAP, mu_NDARTIFACT, mu_NDLEDGER). PASS iff k8 > 0.",
+  "type": "object",
+  "required": ["schema", "run_id", "k8", "verdict", "witness", "invariants"],
+  "additionalProperties": false,
+  "properties": {
+    "schema":   { "const": "K8_SUMMARY_V1" },
+    "run_id":   { "type": "string", "minLength": 1 },
+    "k8":       { "type": "number" },
+    "verdict":  { "enum": ["PASS", "FAIL"] },
+    "witness": {
+      "type": "object",
+      "required": ["invariant", "mu", "files", "detail"],
+      "additionalProperties": false,
+      "properties": {
+        "invariant": { "enum": ["mu_NDWRAP", "mu_NDARTIFACT", "mu_NDLEDGER"] },
+        "mu":        { "type": "number" },
+        "files":     { "type": "array", "items": { "type": "string" } },
+        "detail":    { "type": "string" }
+      }
+    },
+    "invariants": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["name", "mu", "files", "detail"],
+        "additionalProperties": false,
+        "properties": {
+          "name":   { "enum": ["mu_NDWRAP", "mu_NDARTIFACT", "mu_NDLEDGER"] },
+          "mu":     { "type": "number" },
+          "files":  { "type": "array", "items": { "type": "string" } },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  }
+}

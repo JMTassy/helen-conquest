@@ -1,0 +1,27 @@
+{
+  "cycle": 1,
+  "timestamp": "2026-01-26T19:13:51.476338",
+  "ct_output": {
+    "proposal_name": "add_caching",
+    "proposal_hash": "d1f94459cf689df1a5037a23dcdc5e5a0ad160e14ffaf978dc1b5ec85d6d43bb",
+    "patch_count": 3,
+    "tokens_used": 390,
+    "reasoning": "Cycle 1: Adding intelligent caching layer"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

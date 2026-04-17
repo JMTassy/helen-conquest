@@ -1,0 +1,147 @@
+# ORACLE Inner-Loop Runner Configuration
+# This config controls the Claude-as-Creative-Town recursive loop
+
+runner:
+  # Hard stop conditions
+  max_cycles_per_run: 25
+  max_proposal_size_kb: 500
+  max_artifacts_per_cycle: 50
+
+  # Kill-switch patterns (reject if N consecutive cycles have same blocking reason)
+  rejection_kill_threshold: 5
+
+  # Filesystem boundaries
+  staging_dir: "oracle_town/runner/staging"  # CT writes here ONLY
+  state_dir: "oracle_town/runner/state"
+  logs_dir: "oracle_town/runner/logs"
+
+  # Path allowlists (read-only access for Claude)
+  allowed_read_paths:
+    - "oracle_town/core"
+    - "oracle_town/schemas"
+    - "oracle_town/policies"
+    - "oracle_town/keys"
+    - "oracle_town/test_vectors"
+    - "oracle_town/SPEC"
+    - "tests"
+    - "README.md"
+    - "ARCHITECTURE.md"
+    - "QUICKSTART.md"
+
+  # Paths CT can NEVER see (Mayor mind is hidden)
+  forbidden_paths:
+    - "oracle_town/core/mayor*.py"
+    - "oracle_town/runner/logs/internal"
+    - ".env"
+    - "oracle_town/keys/private_keys"
+
+creative_town:
+  # Claude API configuration
+  model: "claude-sonnet-4"
+  max_tokens: 8000
+  temperature: 1.0
+
+  # Tool restrictions for CT (proposal-only mode)
+  allowed_tools:
+    - "produce_proposal_bundle"
+    - "write_patchset"
+    - "query_repo_context"
+
+  # CT context window
+  include_last_n_decisions: 3
+  include_ledger_summary: true
+  include_policy_hash: true
+  include_registry_hash: true
+
+factory:
+  # Receipt plugins to run
+  enabled_receipts:
+    - "pytest_receipt"
+    - "sast_receipt"
+    - "schema_validation_receipt"
+    - "replay_receipt"
+
+  # Receipt execution
+  timeout_seconds: 300
+  parallel_execution: true
+
+  # Evidence requirements
+  require_evidence_digest: true
+  evidence_hash_algorithm: "sha256"
+
+mayor:
+  # Mayor evaluation settings
+  use_rsm: true  # Use MayorRSM (pure predicate)
+  policy_path: "oracle_town/policies/policy_POL-PROD-1.json"
+  registry_path: "oracle_town/keys/public_keys.json"
+
+  # Ledger
+  ledger_append_only: true
+  ledger_path_per_run: true  # Each run gets unique ledger
+
+ideas:
+  # Idea lifecycle tracking
+  ideas_stream: "oracle_town/runner/logs/ideas.jsonl"
+  track_evolution: true
+  max_idea_age_cycles: 50
+
+  # Convergence detection
+  min_receipts_for_claim: 3
+  claim_status_update_interval: 1  # Every cycle
+
+reflection:
+  # What CT can see from previous cycles
+  show_decision: true  # "SHIP" or "NO_SHIP"
+  show_blocking_reasons: true  # List of reasons
+  show_missing_obligations: true  # What receipts are missing
+  show_receipt_counts: true  # How many attestations exist
+
+  # What CT CANNOT see (Mayor's mind)
+  show_mayor_reasoning: false  # No interpretive explanation
+  show_heuristics: false  # No "why" beyond structured reasons
+  show_internal_scores: false  # No numeric confidence
+
+supervisor:
+  # Pre-intake sanitization (before schema validation)
+  nfkc_normalize: true
+  casefold_check: true
+  skeleton_confusables: true
+
+  # Forbidden lexicon (authority leakage detection)
+  forbidden_keywords:
+    - "I approve"
+    - "I decide"
+    - "I authorize"
+    - "this is valid"
+    - "this passes"
+    - "Mayor says"
+    - "override"
+    - "bypass"
+    - "sudo"
+    - "admin"
+
+  # Forbidden JSON fields (K0 invariant)
+  forbidden_fields:
+    - "decision"
+    - "verdict"
+    - "approved"
+    - "is_valid"
+    - "authority"
+    - "permission_level"
+
+logging:
+  # Audit trail
+  log_all_cycles: true
+  log_ct_prompts: true
+  log_mayor_inputs: true
+  log_mayor_outputs: true
+
+  # Retention
+  max_log_files: 1000
+  compress_after_days: 30
+
+determinism:
+  # Verification settings
+  replay_count: 3  # Verify each decision N times
+  require_identical_digests: true
+  hash_algorithm: "sha256"

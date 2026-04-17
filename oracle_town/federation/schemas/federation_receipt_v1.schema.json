@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town/federation/schemas/federation_receipt_v1.schema.json",
+  "title": "FEDERATION_RECEIPT_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "receipt_id",
+    "treaty_id",
+    "link_id",
+    "verdict",
+    "attestation_hashes",
+    "timestamp"
+  ],
+  "properties": {
+    "schema_version": { "const": "FED_RECEIPT_V1" },
+    "receipt_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "treaty_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "link_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "verdict": { "type": "string", "enum": ["PASS", "BLOCK"] },
+    "attestation_hashes": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+    },
+    "timestamp": { "type": "string", "description": "ISO-8601 UTC" },
+    "notes": { "type": ["string", "null"] }
+  }
+}

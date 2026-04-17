@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town.mayor_input.v2.schema.json",
+  "title": "Oracle Town Mayor V2 Input Contract",
+  "description": "Pure function input: attestations + claim + registries. Mayor reads ONLY this schema-valid structure.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "run_id",
+    "claim",
+    "registries",
+    "attestations",
+    "policy"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "ORACLE_TOWN_MAYOR_INPUT_V2"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "oracle_town.mayor_input.v2",
+      "description": "Schema version identifier"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-[0-9]{8}-[A-Z0-9]{4}$",
+      "description": "Unique run identifier (RUN-YYYYMMDD-XXXX)"
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "text",
+        "claim_class"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^C-[0-9]{4,6}$",
+          "description": "Claim identifier"
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Claim statement or proposal"
+        },
+        "claim_class": {
+          "type": "string",
+          "enum": [
+            "VIABILITY",
+            "FACTUAL",
+            "LEGAL",
+            "ENGINEERING",
+            "OTHER"
+          ],
+          "description": "Classification of the claim (determines gate requirements)"
+        },
+        "requires": {
+          "type": "object",
+          "additionalProperties": false,
+          "description": "Gate requirements based on claim class",
+          "properties": {
+            "k_rho": {
+              "type": "boolean",
+              "description": "If true, claim requires rho_lint receipt with inf_rho > 0"
+            },
+            "wul": {
+              "type": "boolean",
+              "description": "If true, claim requires WUL compliance receipts"
+            }
+          }
+        }
+      }
+    },
+    "registries": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "plugins_allowlist_sha256",
+        "reason_codes_sha256"
+      ],
+      "description": "Hash references to immutable registries (proof of policy pinning)",
+      "properties": {
+        "plugins_allowlist_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 hash of plugins/allowlist.json (which plugins are trusted)"
+        },
+        "reason_codes_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 hash of registries/reason_codes.json (enumerated decision codes)"
+        },
+        "role_codes_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 hash of registries/role_codes.json (district roles)"
+        }
+      }
+    },
+    "attestations": {
+      "type": "array",
+      "minItems": 1,
+      "description": "District attestations (each schema-valid + hash-bound)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "district",
+          "attestation_id",
+          "claim_id",
+          "verdict",
+          "reason_codes",
+          "artifacts",
+          "receipt_refs",
+          "attestation_sha256"
+        ],
+        "properties": {
+          "schema": {
+            "type": "string",
+            "const": "oracle_town.district_attestation.v2",
+            "description": "Schema version"
+          },
+          "district": {
+            "type": "string",
+            "enum": [
+              "ENGINEERING",
+              "LEGAL",
+              "GOVERNANCE",
+              "OPERATIONS",
+              "OTHER"
+            ],
+            "description": "District that produced this attestation"
+          },
+          "attestation_id": {
+            "type": "string",
+            "pattern": "^A-[A-Z]+-[0-9]{4}$",
+            "description": "Unique attestation ID (A-DISTRICT-NNNN)"
+          },
+          "claim_id": {
+            "type": "string",
+            "pattern": "^C-[0-9]{4,6}$",
+            "description": "Claim being attested (must match parent claim_id)"
+          },
+          "verdict": {
+            "type": "string",
+            "enum": [
+              "PASS",
+              "FAIL",
+              "ABSTAIN"
+            ],
+            "description": "District verdict on the claim"
+          },
+          "reason_codes": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^[A-Z_]+$",
+              "description": "Enumerated reason codes from registry"
+            },
+            "description": "Why the district reached this verdict"
+          },
+          "artifacts": {
+            "type": "array",
+            "description": "Evidence artifacts referenced by this attestation (hash-bound)",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Relative path to artifact (e.g., artifacts/rho_summary.json)"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$",
+                  "description": "SHA256 hash of artifact file (proof of content)"
+                },
+                "artifact_type": {
+                  "type": "string",
+                  "enum": [
+                    "rho_summary",
+                    "rho_trace",
+                    "design_doc",
+                    "legal_memo",
+                    "other"
+                  ],
+                  "description": "Type of artifact (optional classification)"
+                }
+              }
+            }
+          },
+          "receipt_refs": {
+            "type": "array",
+            "description": "References to plugin receipts (tool output proofs)",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "description": "Path to receipt.json (e.g., artifacts/runs/RUN-XXX/receipts/plugin.rho_lint.receipt.json)"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[a-f0-9]{64}$",
+                  "description": "SHA256 hash of receipt"
+                },
+                "plugin_type": {
+                  "type": "string",
+                  "description": "Type of plugin that produced this receipt (e.g., rho_lint, schema_validate)"
+                }
+              }
+            }
+          },
+          "attestation_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA256 of attestation (excluding this field) — proof of non-tampering"
+          }
+        }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "termination_policy_sha256",
+        "mode"
+      ],
+      "description": "Policy context for decision-making",
+      "properties": {
+        "termination_policy_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 of kernel/policies/termination_policy.json (rules for DELIVER/ABORT)"
+        },
+        "mode": {
+          "type": "string",
+          "const": "DELIVER_OR_ABORT",
+          "description": "Decision mode (binary outcome only)"
+        }
+      }
+    }
+  }
+}

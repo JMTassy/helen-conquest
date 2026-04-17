@@ -1,0 +1,27 @@
+{
+  "cycle": 22,
+  "timestamp": "2026-01-26T19:13:51.479392",
+  "ct_output": {
+    "proposal_name": "add_monitoring",
+    "proposal_hash": "bde55d4777e7a318149e23fff638f57187c26de9da81e872564f5f13ce15c79d",
+    "patch_count": 1,
+    "tokens_used": 232,
+    "reasoning": "Cycle 22: Adding system monitoring and alerts (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "verdict": {
+    "checked_against_policy": "sha256:policy_v1_2026_01",
+    "checks_performed": [
+      {
+        "check": "schema_valid",
+        "details": "All required fields present",
+        "result": "PASS"
+      },
+      {
+        "check": "K0_attestor_not_registered",
+        "details": "Attestor key-2026-01-legal not found in key registry",
+        "result": "FAIL"
+      },
+      {
+        "check": "K2_no_self_attestation",
+        "details": "No self-attestation detected: key-2026-01-legal attesting to oracle_town/jobs/obs_scan.py",
+        "result": "PASS"
+      },
+      {
+        "check": "K7_policy_pinning",
+        "details": "Claim was generated under pinned policy",
+        "result": "PASS"
+      },
+      {
+        "check": "test_pass",
+        "details": "Evidence verified: /tmp/brf_onepager_output.json",
+        "result": "PASS"
+      }
+    ],
+    "claim_id": "claim_20260130_legal_review_001",
+    "decision": "REJECT",
+    "required_remediations": [],
+    "timestamp": "2026-01-30T22:20:13.817855Z"
+  }
+}

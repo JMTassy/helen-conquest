@@ -1,0 +1,20 @@
+{
+  "proposal_ship.json": {
+    "verdict": "SHIP",
+    "input_hash": "e44dadd749d8afeca3818a9c850bc0161e89dbe3ac7ac017366f06e0f2dbad13",
+    "decision_hash": "5f9071bd1409f238f007806baef23bd11e9ae948fab470de0e7305ed0fd074ca",
+    "obligations_total": 12,
+    "obligations_satisfied": 12,
+    "obligations_missing": []
+  },
+  "proposal_no_ship.json": {
+    "verdict": "NO_SHIP",
+    "input_hash": "1934c2693cfd4eba8c07ed9aabef4bbc8f4573172cd302292fd133c4f6565e2d",
+    "decision_hash": "07ae927d1ef37a902b627a012292f8bdf0626ea2d1ccf37f6bb283604d4f7ecd",
+    "obligations_total": 12,
+    "obligations_satisfied": 11,
+    "obligations_missing": [
+      "receipts"
+    ]
+  }
+}

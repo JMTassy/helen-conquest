@@ -1,0 +1,501 @@
+{
+  "run_id": "000002",
+  "status": "complete",
+  "timestamp": "2026-01-31T15:41:09.163872",
+  "policy_hash": "sha256:policy_v1_2026_01",
+  "tri_script": "oracle_town/jobs/tri_gate.py",
+  "total_claims": 11,
+  "claims_processed": 11,
+  "escape_count": 0,
+  "misfire_count": 9,
+  "per_gate_results": {
+    "schema_valid": {
+      "PASS": 11,
+      "FAIL": 0,
+      "WARN": 0
+    },
+    "K1_fail_closed": {
+      "PASS": 9,
+      "FAIL": 0,
+      "WARN": 0
+    },
+    "K7_policy_pinning": {
+      "PASS": 11,
+      "FAIL": 0,
+      "WARN": 0
+    },
+    "K0_attestor_not_registered": {
+      "PASS": 0,
+      "FAIL": 11,
+      "WARN": 0
+    },
+    "K2_no_self_attestation": {
+      "PASS": 10,
+      "FAIL": 0,
+      "WARN": 0
+    },
+    "K5_determinism": {
+      "PASS": 9,
+      "FAIL": 0,
+      "WARN": 0
+    },
+    "K2_self_attestation_detected": {
+      "PASS": 0,
+      "FAIL": 1,
+      "WARN": 0
+    },
+    "K5_nondeterministic_reference": {
+      "PASS": 0,
+      "FAIL": 3,
+      "WARN": 0
+    }
+  },
+  "claim_results": [
+    {
+      "number": 1,
+      "claim_id": "claim_001",
+      "intended_gate": "schema_valid",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K1_001_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "claim_id": "claim_002",
+      "intended_gate": "schema_valid",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "claim_id": "claim_003",
+      "intended_gate": "unknown",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K1_003_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "claim_id": "claim_004",
+      "intended_gate": "K0_attestor_not_registered",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": false,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K0_001_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor key-never-registered-2026-01 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "claim_id": "claim_005",
+      "intended_gate": "K0_attestor_not_registered",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": false,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K0_002_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-inactive-key not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 6,
+      "claim_id": "claim_006",
+      "intended_gate": "K2_no_self_attestation",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K2_001_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 7,
+      "claim_id": "claim_007",
+      "intended_gate": "K2_no_self_attestation",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K2_002_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_self_attestation_detected",
+          "result": "FAIL",
+          "details": "Explicit self-reference: claim acg_claim_K2_002 references itself as parent"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 8,
+      "claim_id": "claim_008",
+      "intended_gate": "K7_policy_pinning",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K7_001_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 9,
+      "claim_id": "claim_009",
+      "intended_gate": "unknown",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K7_002_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_determinism",
+          "result": "PASS",
+          "details": "No reserved keywords detected"
+        }
+      ]
+    },
+    {
+      "number": 10,
+      "claim_id": "claim_010",
+      "intended_gate": "K5_nondeterministic_reference",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_nondeterministic_reference",
+          "result": "FAIL",
+          "details": "Reserved keyword in evidence.path: latest"
+        },
+        {
+          "check": "K5_nondeterministic_reference",
+          "result": "FAIL",
+          "details": "Reserved keyword in evidence.description: Use latest ledger"
+        }
+      ]
+    },
+    {
+      "number": 11,
+      "claim_id": "claim_011",
+      "intended_gate": "K5_nondeterministic_reference",
+      "decision": "REJECT",
+      "primary_fail_gate": "K0_attestor_not_registered",
+      "escaped": false,
+      "misfired": true,
+      "checks": [
+        {
+          "check": "schema_valid",
+          "result": "PASS",
+          "details": "All required fields present"
+        },
+        {
+          "check": "K1_fail_closed",
+          "result": "PASS",
+          "details": "Evidence realizable: acg_claim_K5_002_evidence_0.txt"
+        },
+        {
+          "check": "K7_policy_pinning",
+          "result": "PASS",
+          "details": "Claim was generated under pinned policy"
+        },
+        {
+          "check": "K0_attestor_not_registered",
+          "result": "FAIL",
+          "details": "Attestor test-legal-001 not found in key registry"
+        },
+        {
+          "check": "K2_no_self_attestation",
+          "result": "PASS",
+          "details": "No self-attestation detected"
+        },
+        {
+          "check": "K5_nondeterministic_reference",
+          "result": "FAIL",
+          "details": "Reserved keyword in acceptance_criteria: if now() > 2026-01-31 then approve else reject"
+        }
+      ]
+    }
+  ]
+}

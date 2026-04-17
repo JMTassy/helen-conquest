@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/ledger.schema.json",
+  "title": "Ledger",
+  "description": "Append-only ledger of attestations (receipts) produced by Factory.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "claim_id",
+    "policy_hash",
+    "attestations",
+    "ledger_digest"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Unique execution identifier for this governance run."
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Unique identifier for the claim being evaluated."
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "Pinned policy version hash (must match briefcase policy_hash)."
+    },
+    "attestations": {
+      "type": "array",
+      "items": { "$ref": "https://oracle-town.local/schemas/attestation.schema.json" },
+      "description": "List of attestations (receipts) produced by Factory."
+    },
+    "ledger_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of canonical ledger (for replay verification)."
+    },
+    "factory_version": {
+      "type": "string",
+      "description": "Factory code version that produced this ledger."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when ledger was finalized."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata for audit trail."
+    }
+  }
+}

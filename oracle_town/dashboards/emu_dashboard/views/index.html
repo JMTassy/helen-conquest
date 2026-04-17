@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Oracle Town — Emulation Dashboard (Read-only)</title>
+    <style>
+      body { font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial; margin: 0; }
+      header { padding: 14px 16px; border-bottom: 1px solid #ddd; display:flex; justify-content:space-between; align-items:center; }
+      main { display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px; padding: 12px; }
+      .card { border: 1px solid #ddd; border-radius: 10px; padding: 12px; background: #fff; }
+      .muted { color: #666; font-size: 12px; }
+      .row { display:flex; gap: 8px; flex-wrap: wrap; }
+      .chip { border: 1px solid #ddd; border-radius: 999px; padding: 4px 10px; font-size: 12px; background:#fafafa; }
+      .list { max-height: 70vh; overflow: auto; }
+      .item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+      .item:hover { background: #f7f7f7; }
+      pre { white-space: pre-wrap; word-break: break-word; background: #f7f7f7; padding: 10px; border-radius: 8px; overflow:auto; }
+      code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 12px; }
+      h2 { margin: 0 0 8px 0; font-size: 16px; }
+      h3 { margin: 14px 0 6px 0; font-size: 14px; }
+      .grid2 { display:grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div>
+        <div style="font-weight:700;">Oracle Town — Emulation Dashboard</div>
+        <div class="muted">Read-only. Ledger is truth. /tmp is "latest".</div>
+      </div>
+      <div class="row">
+        <span class="chip" id="statusChip">status: ?</span>
+        <span class="chip" id="pathsChip">paths: ?</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="card">
+        <h2>Latest Emulation</h2>
+        <div class="muted" id="latestMeta">—</div>
+
+        <h3>ONE BET</h3>
+        <div id="oneBet" style="font-size:18px; font-weight:700;">—</div>
+
+        <div class="grid2" style="margin-top:10px;">
+          <div>
+            <h3>TRI Verdict</h3>
+            <div id="triSummary" class="row"></div>
+            <pre id="triRaw"><code>{}</code></pre>
+          </div>
+          <div>
+            <h3>Receipt</h3>
+            <div id="receiptSummary" class="row"></div>
+            <pre id="receiptRaw"><code>{}</code></pre>
+          </div>
+        </div>
+
+        <h3>Insights (BRF / INS)</h3>
+        <pre id="briefRaw"><code>{}</code></pre>
+      </section>
+
+      <section class="card">
+        <h2>Ledger History</h2>
+        <div class="muted">Click a claim_id to load full run (claim + verdict + receipt).</div>
+        <div class="list" id="runsList"></div>
+
+        <h3>Selected Run</h3>
+        <div class="row" id="selectedMeta"></div>
+        <pre id="selectedRaw"><code>{}</code></pre>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

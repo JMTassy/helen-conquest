@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town/kernel_core_v0_1/schemas/event_v1.schema.json",
+  "title": "EVENT_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "type",
+    "seq",
+    "payload",
+    "meta",
+    "payload_hash",
+    "prev_cum_hash",
+    "cum_hash"
+  ],
+  "properties": {
+    "schema_version": { "const": "EVENT_V1" },
+    "type": { "type": "string" },
+    "seq": { "type": "integer", "minimum": 0 },
+    "payload": { "type": "object" },
+    "meta": { "type": "object" },
+    "payload_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "prev_cum_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "cum_hash": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+  }
+}

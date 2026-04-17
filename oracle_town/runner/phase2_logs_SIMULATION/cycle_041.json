@@ -1,0 +1,24 @@
+{
+  "cycle": 41,
+  "timestamp": "2026-01-26T19:13:51.481344",
+  "ct_output": {
+    "proposal_name": "add_monitoring",
+    "proposal_hash": "b3b2d371c71bbd31cc064cae3f02d1a15ac859ff86f19f9ae24e4b6457658acc",
+    "patch_count": 4,
+    "tokens_used": 223,
+    "reasoning": "Cycle 41: Adding system monitoring and alerts (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "REJECT",
+    "kernel_code": "INVALID_SCHEMA"
+  },
+  "factory": null,
+  "mayor": {
+    "decision": "NO_SHIP",
+    "reason_code": "INTAKE_REJECTED"
+  }
+}

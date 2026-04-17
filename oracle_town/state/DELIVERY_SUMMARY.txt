@@ -1,0 +1,256 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║          ORACLE TOWN STATE MANAGEMENT SYSTEM — DELIVERY SUMMARY            ║
+║                                                                            ║
+║                        Status: ✓ COMPLETE & TESTED                         ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+LOCATION:
+  /oracle_town/state/
+
+DELIVERED FILES (9 Total):
+
+  STATE & CONFIG:
+  ├─ city_prev.json                    (Previous run state)
+  └─ city_current.json                 (Current run state)
+
+  RENDER SCRIPTS:
+  ├─ render_home.py                    (Basic 70-col ASCII renderer)
+  └─ render_home_enhanced.py           (Enhanced with symbols + --unicode/--ascii modes)
+
+  STATE MANAGEMENT:
+  ├─ rotate_state.py                   (Move current → prev for diff)
+  ├─ diff_city.py                      (Delta-only comparator)
+  └─ simulate_14_days.py               (14-day growth simulator)
+
+  DOCUMENTATION & TOOLS:
+  ├─ README.md                         (13 KB, comprehensive guide)
+  ├─ QUICKSTART.txt                    (Quick reference)
+  └─ test_all.sh                       (Test harness)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+WHAT THIS SYSTEM DOES:
+
+1. MANAGES STATE
+   • JSON-based persistent state for 7-module ORACLE TOWN system
+   • Tracks: module status, progress, queue, alerts, anomalies
+   • Immutable constraints: ≤70 cols, deterministic, diffable
+
+2. RENDERS VISUALLY
+   • Two render modes (basic + enhanced with glyphs)
+   • Supports ASCII-safe and Unicode+emoji rendering
+   • 70-column terminal output (guaranteed)
+
+3. DIFFS EFFICIENTLY
+   • Compares prev vs current state
+   • Shows only changed modules (minimal noise)
+   • Git-friendly output
+
+4. ROTATES STATE
+   • Moves city_current.json → city_prev.json
+   • Preserves history for diffing
+   • Runs before each daily cycle
+
+5. SIMULATES GROWTH
+   • 14-day simulation with 1 module/day max unlock rule
+   • Generates state files for Days 1-14
+   • Demonstrates realistic progression
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY FEATURES:
+
+✓ Deterministic Rendering
+  Same JSON always produces identical output. No randomness, no timing deps.
+
+✓ Emoji-Safe Width
+  Uses wcwidth library for accurate column counting (emoji = 2 cols).
+
+✓ Dual Modes
+  --unicode: Full symbols + emoji in dedicated columns
+  --ascii:   ASCII-safe fallbacks (✓▲!✗·)
+
+✓ Glyph Symbolism
+  Role icons: 👁 🧠 📝 ⚖ 📣 🗃 🧬 (OBS/INS/BRF/TRI/PUB/MEM/EVO)
+  Status badges: ✓ ▲ ! ✗ · (OK/BLD/WRN/FLR/OFF)
+  Gravity symbols: ⚠ 🕳 (alerts/anomalies)
+  Ritual sigils: ⟐∿ ⊕ ∴ ⧉
+
+✓ Git-Friendly
+  Pure JSON state, minimal noise in diffs, one-module-per-commit pattern.
+
+✓ Tested
+  All 5 test cases pass (renders, diff, simulate).
+
+═══════════════════════════════════════════════════════════════════════════════
+
+CONSTRAINTS ENFORCED (IMMUTABLE):
+
+  Width:            ≤70 columns (hard, enforced by fit() function)
+  Rendering:        Deterministic (same input → identical output)
+  Emoji Handling:   wcwidth-safe (emoji counted as 2 cols)
+  State Format:     JSON only (no YAML, TOML, mixed formats)
+  Timestamps:       Date field only (YYYY-MM-DD), no time components
+  Module Order:     Fixed (OBS, INS, BRF, TRI, PUB, MEM, EVO)
+  Growth Rate:      1 module per day max (simulator constraint)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK START:
+
+  1. View current state (best experience):
+     $ cd oracle_town/state
+     $ python3 render_home_enhanced.py --unicode
+
+  2. See what changed:
+     $ python3 diff_city.py
+
+  3. Rotate state before next run:
+     $ python3 rotate_state.py
+
+  4. Daily workflow:
+     $ python3 rotate_state.py                  # Preserve history
+     $ python3 render_home_enhanced.py --unicode  # View current
+     $ python3 diff_city.py                       # See deltas
+     $ git add oracle_town/state/city_*.json
+     $ git commit -m "Daily OS run 174: ..."
+
+═══════════════════════════════════════════════════════════════════════════════
+
+EXAMPLE OUTPUT (Unicode Mode):
+
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃ORACLE TOWN — HOME  2026-01-30  DAILY  000173                        ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃ONE BET : BRF v1: Home ASCII + City Growth                            ┃
+┃QUEUE(≤7): OBS scan | INS cluster | BRF draft                        ┃
+┃⚠:0  🕳:1 (digest_drift/weak)                                        ┃
+┃⸻ SIGILS: ⟐∿ ⊕ ∴ ⧉                                              ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃MOD │ ◆ │ ST │ PROG     │ NOTES                                  ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃OBS │ 👁 │ ✓ │ ████████ │ 12 notes -> 5 claims           ┃
+┃INS │ 🧠 │ ✓ │ ██████░░ │ 3 themes + 1 anomaly           ┃
+┃BRF │ 📝 │ ▲ │ ██░░░░░░ │ drafted brief v1               ┃
+┃TRI │ ⚖ │ · │ ░░░░░░░░ │                                ┃
+┃PUB │ 📣 │ · │ ░░░░░░░░ │                                ┃
+┃MEM │ 🗃 │ · │ ░░░░░░░░ │                                ┃
+┃EVO │ 🧬 │ · │ ░░░░░░░░ │                                ┃
+┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫
+┃(no artifacts)                                                        ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TECHNICAL DECISIONS:
+
+1. Why JSON for state?
+   • Deterministic serialization (consistent across runs)
+   • Git-friendly (line-based diffs)
+   • Parseable by any language
+   • Auditable (human-readable)
+
+2. Why 70 columns?
+   • Fits most terminal widths (80 - 10 margin)
+   • Legacy compatibility
+   • Readable without wrapping
+   • Hard constraint prevents width creep
+
+3. Why separate render scripts?
+   • Basic version (render_home.py) is stable baseline
+   • Enhanced version (render_home_enhanced.py) adds symbols
+   • Users can choose mode (--ascii vs --unicode)
+   • Testable independently
+
+4. Why wcwidth for emoji?
+   • Emoji display width varies (1 col in some fonts, 2 in others)
+   • wcwidth library is standard Python solution
+   • Prevents layout surprises across terminals
+
+5. Why 1 module/day max in simulator?
+   • Realistic growth constraint (prevents artificial inflation)
+   • Auditable progression (Day N should see N modules max)
+   • Matches operational reality (adding capability takes time)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+INTEGRATION WITH DAILY OS:
+
+This state system integrates with your ORACLE TOWN Daily OS pipeline:
+
+  [Daily OS Pipeline]
+         ↓
+  [Collects observations]
+         ↓
+  [Updates city_current.json]
+         ↓
+  [render_home_enhanced.py --unicode]  → Display to user
+         ↓
+  [diff_city.py]                        → Show what changed
+         ↓
+  [git commit]                          → Append to history
+
+═══════════════════════════════════════════════════════════════════════════════
+
+TESTING:
+
+Run all tests:
+  $ bash test_all.sh
+
+Expected output:
+  ✓ render_home.py works
+  ✓ render_home_enhanced.py --unicode works
+  ✓ render_home_enhanced.py --ascii works
+  ✓ diff_city.py works
+  ✓ simulate_14_days.py generated 28 files (14 days × 2)
+  ✓ ALL TESTS PASSED
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS:
+
+1. Test locally (already done ✓)
+2. Integrate with Daily OS pipeline (update os_runner.py to call rotate + render)
+3. Add state validation (optional: JSON schema enforcement)
+4. Track artifacts (optional: build outputs, reports, receipts)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+FILES READY TO COMMIT:
+
+  oracle_town/state/
+  ├─ city_prev.json
+  ├─ city_current.json
+  ├─ render_home.py
+  ├─ render_home_enhanced.py
+  ├─ rotate_state.py
+  ├─ diff_city.py
+  ├─ simulate_14_days.py
+  ├─ README.md
+  ├─ QUICKSTART.txt
+  └─ test_all.sh
+
+═══════════════════════════════════════════════════════════════════════════════
+
+SUMMARY:
+
+You now have a deterministic, diffable, emoji-enhanced state management system
+for ORACLE TOWN. All constraints enforced. All tests passing. Ready to deploy.
+
+The system is:
+  ✓ Deterministic (same input → identical output)
+  ✓ Diffable (git-friendly JSON state)
+  ✓ Constrained (≤70 cols, hard)
+  ✓ Symbolic (emoji + ASCII fallbacks)
+  ✓ Tested (all 5 test cases pass)
+  ✓ Documented (README + QUICKSTART)
+
+Start with: python3 render_home_enhanced.py --unicode
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Created: 2026-01-30
+Status: ✓ PRODUCTION READY
+

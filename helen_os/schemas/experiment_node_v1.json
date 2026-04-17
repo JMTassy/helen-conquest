@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/experiment_node_v1.json",
+  "title": "EXPERIMENT_NODE_V1",
+  "description": "Single node in the Experiment Lineage Graph. Records one experiment: what was mutated, what the outcome was, and who the parent is. Non-sovereign — authority=NONE. Forms the append-only ELG alongside siblings.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "experiment_id", "skill_id", "candidate_version",
+    "mutation_family",
+    "eval_receipt_hash", "promotion_case_hash", "experiment_hash",
+    "reducer_decision"
+  ],
+  "properties": {
+    "schema_name":    {"const": "EXPERIMENT_NODE_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "experiment_id": {
+      "type": "string", "minLength": 1,
+      "description": "Unique identifier for this experiment."
+    },
+    "parent_experiment_id": {
+      "type": ["string", "null"],
+      "description": "Parent experiment in the lineage. Null for root node."
+    },
+    "skill_id": {
+      "type": "string", "minLength": 1,
+      "description": "Skill being improved by this experiment."
+    },
+    "candidate_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the candidate being evaluated."
+    },
+    "mutation_family": {
+      "type": "string",
+      "enum": ["optimizer", "architecture", "retrieval", "regularization", "tokenizer", "capability", "other"],
+      "description": "Class of mutation attempted. Frozen enum — drives trajectory grouping."
+    },
+    "eval_receipt_hash": {
+      "type": "string", "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the AUTORESEARCH_EVAL_RECEIPT_V1 for this experiment."
+    },
+    "promotion_case_hash": {
+      "type": "string", "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the AUTORESEARCH_PROMOTION_CASE_V1 submitted for this experiment."
+    },
+    "experiment_hash": {
+      "type": "string", "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the full experiment descriptor. Load-bearing provenance."
+    },
+    "reducer_decision": {
+      "type": "string",
+      "enum": ["ADMITTED", "REJECTED", "QUARANTINED"],
+      "description": "Reducer verdict on the promotion case."
+    },
+    "notes": {"type": "string"}
+  }
+}

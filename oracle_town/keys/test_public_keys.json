@@ -1,0 +1,32 @@
+{
+  "test_attestors": [
+    {
+      "id": "test-legal-001",
+      "public_key": "test_legal_pk_abcd1234",
+      "role": "legal",
+      "active": true,
+      "allowed_claim_types": ["code_change", "policy_patch"]
+    },
+    {
+      "id": "test-technical-001",
+      "public_key": "test_tech_pk_efgh5678",
+      "role": "technical",
+      "active": true,
+      "allowed_claim_types": ["code_change", "skill_update"]
+    },
+    {
+      "id": "test-business-001",
+      "public_key": "test_biz_pk_ijkl9012",
+      "role": "business",
+      "active": true,
+      "allowed_claim_types": ["manifest_update"]
+    },
+    {
+      "id": "test-inactive-key",
+      "public_key": "test_inactive_pk_mnop3456",
+      "role": "legal",
+      "active": false,
+      "allowed_claim_types": []
+    }
+  ]
+}

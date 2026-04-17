@@ -1,0 +1,10 @@
+{
+  "brf_receipt": {
+    "attestor_id": "brf_attestor_001",
+    "brief_hash": "sha256:83e5bcbb33cef0aec30d33dec3f4df7caa8efdb1a4f51a7750a9994918e953f9",
+    "note": "Signature placeholder; actual signing by attestor_id required",
+    "one_bet_length": 26,
+    "run_id": 174,
+    "signature": "ed25519:PLACEHOLDER_SIGNATURE"
+  }
+}

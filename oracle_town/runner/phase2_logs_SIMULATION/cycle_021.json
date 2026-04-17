@@ -1,0 +1,27 @@
+{
+  "cycle": 21,
+  "timestamp": "2026-01-26T19:13:51.479270",
+  "ct_output": {
+    "proposal_name": "refactor_test_suite",
+    "proposal_hash": "d6b9add85a0ea4bdea4e441d7751dfde1a38bfd47de8156c07af6cb2559c109e",
+    "patch_count": 1,
+    "tokens_used": 313,
+    "reasoning": "Cycle 21: Refactoring test organization for clarity (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

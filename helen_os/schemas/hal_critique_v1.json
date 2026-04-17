@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "HAL_CRITIQUE_V1",
+  "description": "Structured critique and claim discipline from HAL layer. Transforms HER insights into typed claims and admissibility pressure.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "HAL_CRITIQUE_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "critique_id": {
+      "type": "string",
+      "pattern": "^hal_[a-z0-9_]+$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "responding_to_insight": {
+      "type": "string",
+      "pattern": "^her_[a-z0-9_]+$",
+      "description": "Reference to HER_INSIGHTS_V1.insight_id"
+    },
+    "extracted_claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "claim_id": {
+            "type": "string",
+            "pattern": "^C-[0-9]{3}$"
+          },
+          "claim_text": {
+            "type": "string",
+            "description": "Precise factual or architectural claim"
+          },
+          "claim_type": {
+            "enum": [
+              "factual",
+              "architectural",
+              "governance",
+              "capability",
+              "invariant",
+              "consequence"
+            ]
+          },
+          "evidence_required": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "What evidence would validate this claim"
+          },
+          "blockers": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Known contradictions or issues"
+          },
+          "admissibility_status": {
+            "enum": ["admitted", "conditionally_admissible", "requires_evidence", "blocked"],
+            "description": "HAL's initial assessment"
+          }
+        },
+        "required": [
+          "claim_id",
+          "claim_text",
+          "claim_type",
+          "evidence_required",
+          "admissibility_status"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "objections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "objection_id": {
+            "type": "string",
+            "pattern": "^OBJ-[0-9]{3}$"
+          },
+          "objection_text": {
+            "type": "string",
+            "description": "HAL's structured challenge"
+          },
+          "severity": {
+            "enum": ["info", "warn", "block"],
+            "description": "How serious is this issue"
+          },
+          "resolution_path": {
+            "type": "string",
+            "description": "How could this be addressed"
+          }
+        },
+        "required": ["objection_id", "objection_text", "severity"],
+        "additionalProperties": false
+      },
+      "description": "Issues HAL found with the insight"
+    },
+    "recommendation": {
+      "enum": ["proceed", "refine", "reject", "escalate"],
+      "description": "HAL's direction forward"
+    },
+    "reasoning": {
+      "type": "string",
+      "description": "Why HAL recommends this direction"
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "critique_id",
+    "generated_at",
+    "responding_to_insight",
+    "extracted_claims",
+    "recommendation"
+  ],
+  "additionalProperties": false
+}

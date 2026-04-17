@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/experiment_selection_decision_v1.json",
+  "title": "EXPERIMENT_SELECTION_DECISION_V1",
+  "description": "Typed, hashable output of the Experiment Selection Policy. Records which candidate was selected, why, and the full score breakdown. Non-sovereign — authority=NONE. Journalisable and auditable.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "decision_id", "policy_id",
+    "selected_candidate_id",
+    "selection_tier", "selection_reason",
+    "score_breakdown", "authority"
+  ],
+  "properties": {
+    "schema_name":    {"const": "EXPERIMENT_SELECTION_DECISION_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "decision_id": {
+      "type": "string", "minLength": 1
+    },
+    "policy_id": {
+      "type": "string", "minLength": 1,
+      "description": "ID of the SELECTION_POLICY_V1 that produced this decision."
+    },
+    "selected_candidate_id": {
+      "type": "string", "minLength": 1,
+      "description": "candidate_id of the selected EXPERIMENT_CANDIDATE_V1."
+    },
+    "selection_tier": {
+      "type": "string",
+      "enum": ["REPAIR", "EXPLOIT", "EXPLORE", "VALIDATE"],
+      "description": "Priority tier assigned by the selection policy. REPAIR > EXPLOIT > EXPLORE > VALIDATE."
+    },
+    "selection_reason": {
+      "type": "string", "minLength": 1,
+      "description": "Machine-readable reason code for the selection (e.g. FAILURE_CLUSTER_PRIORITY)."
+    },
+    "score_breakdown": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_improvement", "information_gain", "strategic_alignment",
+        "risk_score", "cost_score", "redundancy_score",
+        "failure_cluster_priority", "branch_novelty", "final_score"
+      ],
+      "properties": {
+        "expected_improvement":     {"type": "number"},
+        "information_gain":         {"type": "number"},
+        "strategic_alignment":      {"type": "number"},
+        "risk_score":               {"type": "number"},
+        "cost_score":               {"type": "number"},
+        "redundancy_score":         {"type": "number"},
+        "failure_cluster_priority": {"type": "number"},
+        "branch_novelty":           {"type": "number"},
+        "final_score":              {"type": "number"}
+      }
+    },
+    "authority": {
+      "const": "NONE",
+      "description": "Selection decisions carry zero institutional authority. They direct experiments, not state."
+    }
+  }
+}

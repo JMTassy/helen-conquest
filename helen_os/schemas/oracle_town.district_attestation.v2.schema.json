@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town.district_attestation.v2.schema.json",
+  "title": "Oracle Town District Attestation V2",
+  "description": "District verdict on a claim. Non-sovereign: districts recommend, mayor decides. All artifacts are hash-bound.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "district",
+    "attestation_id",
+    "claim_id",
+    "verdict",
+    "reason_codes",
+    "artifacts",
+    "receipt_refs",
+    "attestation_sha256"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "ORACLE_TOWN_DISTRICT_ATTESTATION_V2"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "oracle_town.district_attestation.v2",
+      "description": "Schema version identifier"
+    },
+    "district": {
+      "type": "string",
+      "enum": [
+        "ENGINEERING",
+        "LEGAL",
+        "GOVERNANCE",
+        "OPERATIONS",
+        "OTHER"
+      ],
+      "description": "District authority producing this attestation"
+    },
+    "attestation_id": {
+      "type": "string",
+      "pattern": "^A-[A-Z]+-[0-9]{4}$",
+      "description": "Unique attestation identifier (e.g., A-ENG-0001, A-LEG-0001)"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^C-[0-9]{4,6}$",
+      "description": "Claim being attested"
+    },
+    "attestation_type": {
+      "type": "string",
+      "enum": [
+        "ENGINEERING_REVIEW",
+        "LEGAL_REVIEW",
+        "GOVERNANCE_REVIEW",
+        "OPERATIONS_REVIEW",
+        "OTHER"
+      ],
+      "description": "Type of review/attestation"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "ABSTAIN"
+      ],
+      "description": "District verdict: PASS (supports claim), FAIL (opposes), ABSTAIN (no position)"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z_]+$",
+        "description": "Enumerated codes explaining the verdict (from registries/reason_codes.json)"
+      },
+      "minItems": 1,
+      "description": "One or more reason codes justifying verdict (must be from approved registry)"
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Evidence artifacts (design docs, analysis, test results, etc.). Each is hash-bound.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative path to artifact file (e.g., artifacts/engineering/design_v1.md)"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA256 hash of file content (proof of integrity)"
+          },
+          "artifact_type": {
+            "type": "string",
+            "enum": [
+              "rho_summary",
+              "rho_trace",
+              "design_doc",
+              "legal_memo",
+              "test_results",
+              "other"
+            ],
+            "description": "Semantic type of artifact"
+          },
+          "description": {
+            "type": "string",
+            "description": "Brief description of artifact's role in this attestation"
+          }
+        }
+      }
+    },
+    "receipt_refs": {
+      "type": "array",
+      "description": "References to plugin receipts (tool outputs that contributed to this attestation)",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to receipt.json produced by plugin"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA256 of receipt file"
+          },
+          "plugin_type": {
+            "type": "string",
+            "enum": [
+              "rho_lint",
+              "schema_validate",
+              "wul_lint",
+              "hash",
+              "other"
+            ],
+            "description": "Which plugin produced this receipt"
+          }
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional metadata about the attestation process",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When attestation was produced"
+        },
+        "author": {
+          "type": "string",
+          "description": "Who/what produced this attestation"
+        },
+        "version": {
+          "type": "string",
+          "description": "District attestation version (for tracking improvements)"
+        }
+      }
+    },
+    "attestation_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256 of this attestation (excluding attestation_sha256 field itself). Proof of non-tampering."
+    }
+  }
+}

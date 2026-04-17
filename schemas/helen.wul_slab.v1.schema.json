@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen.wul_slab.v1.schema.json",
+  "title": "HELEN WUL Slab V1",
+  "description": "Wrapper for non-code artifacts (policy, narrative, registry) that must be admitted without requiring proof of execution. Power=0 enforced.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "banners", "tags", "power", "content", "source"],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "helen.wul_slab.v1",
+      "description": "Schema version"
+    },
+    "banners": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "const": "WUL"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Exactly two WUL banners (weight: 0)"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "MYTH_LAYER",
+          "REGISTRY_LAW",
+          "KERNEL_CANON",
+          "POLICY",
+          "GUARD_NOTE",
+          "NON_SOVEREIGN",
+          "NO_RECEIPT_NO_CLAIM",
+          "NARRATIVE",
+          "GOVERNANCE",
+          "OTHER"
+        ]
+      },
+      "minItems": 1,
+      "description": "Semantic tags classifying this slab"
+    },
+    "power": {
+      "type": "string",
+      "const": "0",
+      "description": "Power level (must be '0': cannot execute or decide; only witness/reference)"
+    },
+    "content": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The actual slab content (policy, narrative, registry law, etc.)"
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin"],
+      "description": "Provenance information",
+      "properties": {
+        "origin": {
+          "type": "string",
+          "enum": ["apple_notes", "markdown_file", "text_document", "other"],
+          "description": "Where this slab originated"
+        },
+        "title": {
+          "type": "string",
+          "description": "Original title or name"
+        },
+        "location_hint": {
+          "type": "string",
+          "description": "Where written (optional geographic/contextual hint)"
+        },
+        "timestamp_hint": {
+          "type": "string",
+          "description": "When written (approximate, not authoritative)"
+        }
+      }
+    },
+    "slab_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256 of slab (computed: canonical(slab_without_slab_sha256))"
+    }
+  }
+}

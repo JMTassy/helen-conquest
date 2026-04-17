@@ -1,0 +1,18 @@
+{
+  "cycle": 2,
+  "timestamp": "2026-01-26T16:42:26.740473",
+  "ct_output_hash": "41be7da93da6823fb6f61648664e9c611914b29ea401384a282e79fb19564c7f",
+  "supervisor": {
+    "decision": "REJECT",
+    "reason_code": "SUP_FORBIDDEN_AUTHORITY_LANGUAGE"
+  },
+  "intake": {
+    "decision": "REJECT",
+    "kernel_code": null
+  },
+  "factory": null,
+  "mayor": {
+    "decision": "NO_SHIP",
+    "reason_code": "SUPERVISOR_REJECTED"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "channel": "HAL",
+  "verdict": "PASS",
+  "reasons": [
+    "All K-gates verified"
+  ],
+  "required_fixes": [],
+  "certificates": [
+    {
+      "name": "K0_AUTHORITY_SEPARATION",
+      "hash": "k0000000000000000000000000000000000000000000000000000000000000"
+    },
+    {
+      "name": "K1_FAIL_CLOSED",
+      "hash": "k1000000000000000000000000000000000000000000000000000000000000"
+    }
+  ],
+  "witness_injection_type": "CVI",
+  "timestamp_utc": null
+}

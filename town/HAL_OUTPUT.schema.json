@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["verdict", "reasons", "required_fixes", "state_patch"],
+  "properties": {
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "WARN", "BLOCK"]
+    },
+    "reasons": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "required_fixes": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "state_patch": {
+      "type": "object"
+    },
+    "ledger_append": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": false
+}

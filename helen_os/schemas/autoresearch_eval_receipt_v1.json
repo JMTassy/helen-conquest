@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/autoresearch_eval_receipt_v1.json",
+  "title": "AUTORESEARCH_EVAL_RECEIPT_V1",
+  "description": "Deterministic proof that an experiment improved a metric under fixed doctrine and environment. Non-sovereign. Authority=NONE. Becomes payload of a receipt in SKILL_PROMOTION_PACKET_V1.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "experiment_id",
+    "metric_name",
+    "baseline_value",
+    "candidate_value",
+    "comparison_rule",
+    "threshold",
+    "result",
+    "run_log_hash",
+    "environment_manifest_hash",
+    "doctrine_hash"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "AUTORESEARCH_EVAL_RECEIPT_V1",
+      "description": "Frozen schema name."
+    },
+    "schema_version": {
+      "const": "1.0.0",
+      "description": "Frozen schema version."
+    },
+    "experiment_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this experiment run."
+    },
+    "metric_name": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Identifier for the metric being measured (e.g. 'recall@10', 'latency_ms')."
+    },
+    "baseline_value": {
+      "type": "number",
+      "description": "Metric value of the baseline (prior skill version or reference run)."
+    },
+    "candidate_value": {
+      "type": "number",
+      "description": "Metric value of the candidate (new skill version being evaluated)."
+    },
+    "comparison_rule": {
+      "type": "string",
+      "enum": ["gt", "gte", "lt", "lte"],
+      "description": "Comparison predicate applied to (candidate_value, threshold). Frozen enum: gt=greater-than, gte=greater-than-or-equal, lt=less-than, lte=less-than-or-equal."
+    },
+    "threshold": {
+      "type": "number",
+      "description": "Numeric boundary the candidate must satisfy under comparison_rule for PASS."
+    },
+    "result": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INCONCLUSIVE"],
+      "description": "Evaluation outcome. PASS=candidate satisfied comparison_rule vs threshold. FAIL=did not. INCONCLUSIVE=run was incomplete or environment compromised."
+    },
+    "run_log_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the raw run log artifact. Load-bearing provenance — ties receipt to concrete execution."
+    },
+    "environment_manifest_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the environment manifest (dependency versions, seeds, config) under which the experiment ran."
+    },
+    "doctrine_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the law_surface / doctrine artifact in force at evaluation time. Proves governance regime was fixed."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional free-text notes (non-authoritative, TEMPLE-only context)."
+    }
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K5_001",
+    "timestamp": "2026-01-31T10:40:00Z",
+    "target": "oracle_town/jobs/mem_link.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "mem_link.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "dynamic_ledger_state",
+        "path": "latest",
+        "hash": "sha256:varies",
+        "description": "Use latest ledger"
+      }
+    ],
+    "acceptance_criteria": [
+      "links_updated"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test nondeterministic reference rejection",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K5_nondeterministic_reference",
+      "category": "K5",
+      "variant": "test"
+    }
+  }
+}

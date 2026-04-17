@@ -1,0 +1,30 @@
+{
+  "schema_name": "SKILL_PROMOTION_PACKET_V1",
+  "schema_version": "1.0.0",
+  "packet_id": "P_DEMO_001",
+  "skill_id": "skill.chat",
+  "candidate_version": "1.0.0",
+  "lineage": {
+    "parent_skill_id": "skill.base",
+    "parent_version": "0.9.0",
+    "proposal_sha256": "sha256:1111111111111111111111111111111111111111111111111111111111111111"
+  },
+  "capability_manifest_sha256": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+  "doctrine_surface": {
+    "law_surface_version": "v1",
+    "transfer_required": false
+  },
+  "evaluation": {
+    "threshold_name": "accuracy",
+    "threshold_value": 0.9,
+    "observed_value": 0.95,
+    "passed": true
+  },
+  "receipts": [
+    {
+      "receipt_id": "R1",
+      "payload": {"data": "demo"},
+      "sha256": "sha256:7d5b0a02c10ef1e7e1d5d5e1b5d5e1b5d5e1b5d5e1b5d5e1b5d5e1b5d5e1b"
+    }
+  ]
+}

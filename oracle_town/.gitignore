@@ -1,0 +1,9 @@
+# Simulation outputs (generated artifacts, do not commit)
+state/sim_day_*.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/

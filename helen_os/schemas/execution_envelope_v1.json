@@ -1,0 +1,49 @@
+{
+  "type": "object",
+  "properties": {
+    "schema_name": {"const": "EXECUTION_ENVELOPE_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "task_id": {"type": "string"},
+    "skill_id": {"type": "string"},
+    "input_canonical_sha256": {"type": "string"},
+    "output_canonical_sha256": {"type": "string"},
+    "exit_code": {"type": "integer"},
+    "wall_time_ms": {"type": "integer"},
+    "resource_usage": {
+      "type": "object",
+      "properties": {
+        "cpu_ms": {"type": "integer"},
+        "mem_mb": {"type": "integer"}
+      },
+      "required": ["cpu_ms", "mem_mb"],
+      "additionalProperties": false
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {"type": "object"}
+    },
+    "trace": {
+      "type": "object",
+      "properties": {
+        "tool_refs": {"type": "array", "items": {"type": "string"}},
+        "log_sha256": {"type": "string"}
+      },
+      "required": ["tool_refs", "log_sha256"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "task_id",
+    "skill_id",
+    "input_canonical_sha256",
+    "output_canonical_sha256",
+    "exit_code",
+    "wall_time_ms",
+    "resource_usage",
+    "artifact_refs",
+    "trace"
+  ],
+  "additionalProperties": false
+}

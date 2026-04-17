@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/EVIDENCE_BUNDLE_V1",
+  "title": "EVIDENCE_BUNDLE_V1",
+  "description": "Collection of evidence supporting a claim. Maps receipts to obligations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "bundle_id",
+    "claim_id",
+    "evidence",
+    "coverage",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "EVIDENCE_BUNDLE_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "EVIDENCE_BUNDLE_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "bundle_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique evidence bundle identifier"
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The claim this evidence supports"
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "receipt_ref",
+          "kind"
+        ],
+        "properties": {
+          "receipt_ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Reference to a receipt or artifact"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "EXECUTION",
+              "DATA",
+              "TRACE",
+              "HASH",
+              "ATTESTATION",
+              "LOG"
+            ],
+            "description": "Type of evidence"
+          },
+          "summary": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Human-readable summary of this evidence"
+          }
+        }
+      },
+      "description": "Individual pieces of evidence"
+    },
+    "coverage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "obligations_satisfied",
+        "obligations_missing"
+      ],
+      "properties": {
+        "obligations_satisfied": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Obligations this evidence satisfies"
+        },
+        "obligations_missing": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": "Obligations still missing evidence"
+        }
+      }
+    }
+  }
+}

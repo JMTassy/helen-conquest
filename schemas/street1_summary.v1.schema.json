@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "street1_summary.v1.schema.json",
+  "title": "Street1 Run Summary (L0→L2 Rollup)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_count",
+    "run_id",
+    "seed",
+    "receipt_sha"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": ["STREET1_SUMMARY_V1"]
+    },
+    "event_count": {
+      "type": "integer",
+      "minimum": 2,
+      "description": "Total events in source events.ndjson"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Deterministic run identifier (seed-based)"
+    },
+    "seed": {
+      "type": "integer",
+      "description": "RNG seed for reproducibility"
+    },
+    "session_start": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 timestamp of session start"
+    },
+    "session_end": {
+      "type": ["string", "null"],
+      "description": "ISO 8601 timestamp of session end"
+    },
+    "receipt_sha": {
+      "type": ["string", "null"],
+      "minLength": 1,
+      "description": "SHA256 hash of END event (proof of session sealing)"
+    },
+    "facts_extracted": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["fact", "t"],
+        "properties": {
+          "fact": {
+            "type": "string",
+            "minLength": 1
+          },
+          "t": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "npc_id": {
+            "type": ["string", "null"]
+          }
+        }
+      },
+      "description": "All facts extracted from memory_extraction events"
+    },
+    "npc_replies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["npc_id", "t"],
+        "properties": {
+          "npc_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "t": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "text": {
+            "type": "string"
+          },
+          "source": {
+            "type": ["string", "null"],
+            "enum": ["cache", "llm", "fallback", null]
+          }
+        }
+      },
+      "description": "Trace of all NPC replies (cached vs generated)"
+    },
+    "npc_npc_interactions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["t"],
+        "properties": {
+          "t": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "npc1": {
+            "type": "string"
+          },
+          "npc2": {
+            "type": "string"
+          },
+          "dialogue": {
+            "type": "string"
+          }
+        }
+      },
+      "description": "Autonomous NPC-NPC dialogue triggers"
+    },
+    "final_positions": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "x": {
+            "type": "number"
+          },
+          "y": {
+            "type": "number"
+          }
+        }
+      },
+      "description": "Final NPC positions (from last world_delta event)"
+    }
+  }
+}

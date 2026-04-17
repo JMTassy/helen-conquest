@@ -1,0 +1,161 @@
+================================================================================
+  ORACLE TOWN STATE MANAGEMENT — QUICK START
+================================================================================
+
+This directory contains a production-ready state management system for ORACLE
+TOWN's 7-module governance pipeline.
+
+STATUS: ✓ ALL 8 INVARIANTS ENFORCED
+
+================================================================================
+  5-MINUTE START
+================================================================================
+
+1. VERIFY INSTALLATION
+   bash oracle_town/FINAL_VERIFICATION.sh
+
+2. DAILY WORKFLOW (in order)
+   python3 oracle_town/rotate_state.py
+   python3 oracle_town/normalize_state.py oracle_town/state/city_current.json
+   python3 oracle_town/render_home.py
+   python3 oracle_town/diff_city.py
+   git add oracle_town/state/city_*.json
+   git commit -m "Daily run: state updated"
+
+3. VIEW STATE EXAMPLE
+   cat oracle_town/state/city_current.json
+
+================================================================================
+  KEY FILES
+================================================================================
+
+Tools (all executable):
+  • render_home.py          — Render deterministic HOME page (72-char lines)
+  • normalize_state.py      — Format state as canonical JSON (sorted keys)
+  • diff_city.py            — Show delta-only changes (minimal noise)
+  • rotate_state.py         — Rotate current → prev before new run
+  • simulate_14_days.py     — Generate 14-day simulation states
+
+Documentation:
+  • STATE_SYSTEM_CANONICAL.md  — Full specification (contract + procedures)
+  • TOOLS_SUMMARY.md            — Tool reference + schema
+  • IMPLEMENTATION_COMPLETE.md  — Implementation notes + design decisions
+  • FINAL_VERIFICATION.sh       — Test harness (runs all 8 invariants)
+
+State Data (git-tracked):
+  • state/city_current.json   — Source of truth for latest run
+  • state/city_prev.json      — Immediately previous state (for diffs)
+  • .gitignore               — Blocks state/sim_day_*.json (generated)
+
+================================================================================
+  8 IMMUTABLE INVARIANTS
+================================================================================
+
+I1: Determinism       — Same input → byte-identical output (no RNG, env reads)
+I2: Width Guarantee   — Framed lines exactly 72 chars (assert_width gate)
+I3: JSON Format       — Valid JSON with UTF-8, 2-space indent
+I4: No Timestamps     — Date-only YYYY-MM-DD, no wallclock time
+I5: Module Order      — Fixed OBS→INS→BRF→TRI→PUB (MEM↔EVO)
+I6: Progress Range    — Values 0-8 clamped (8-tick bar)
+I7: Sim Outputs       — Generated sim_day_*.json files git-ignored
+I8: Canonical Format  — Sorted top-level keys, fixed module order
+
+TEST: bash oracle_town/FINAL_VERIFICATION.sh
+
+================================================================================
+  COMMON OPERATIONS
+================================================================================
+
+VIEW HOME PAGE:
+  python3 oracle_town/render_home.py
+
+SHOW WHAT CHANGED:
+  python3 oracle_town/diff_city.py
+
+FORMAT STATE FILE:
+  python3 oracle_town/normalize_state.py oracle_town/state/city_current.json
+
+GENERATE SIMULATIONS:
+  python3 oracle_town/simulate_14_days.py
+
+RUN TESTS:
+  bash oracle_town/FINAL_VERIFICATION.sh
+
+================================================================================
+  STATE SCHEMA (JSON)
+================================================================================
+
+{
+  "alerts": [],
+  "anomalies": [{"code": "str", "module": "OBS|INS|BRF|TRI|PUB|MEM|EVO",
+                 "severity": "weak|medium|high"}],
+  "artifacts": ["file1", "file2"],
+  "date": "YYYY-MM-DD",
+  "mode": "DAILY",
+  "modules": {
+    "OBS": {"desc": "...", "progress": 0-8, "status": "OFF|BLD|OK|WRN|FLR"},
+    "INS": {...},
+    "BRF": {...},
+    "TRI": {...},
+    "PUB": {...},
+    "MEM": {...},
+    "EVO": {...}
+  },
+  "one_bet": "single-sentence summary",
+  "queue": ["task1", "task2"],
+  "run_id": 173
+}
+
+================================================================================
+  TROUBLESHOOTING
+================================================================================
+
+ASSERTION FAILED: "WIDTH_INVARIANT_BROKEN"
+  → A rendered line is not exactly 72 chars
+  → Fix: Shorten content or split across lines
+  → Use pad() or row() function for formatting
+
+"Module order incorrect"
+  → JSON keys are alphabetically ordered, not in MODULE_ORDER
+  → Fix: Run normalize_state.py on the file
+
+"Outputs differ (non-deterministic)"
+  → Two runs of render_home.py produced different output
+  → Fix: Check for date/time stamps, environment reads, or RNG calls
+
+State not updating
+  → city_current.json is stale
+  → Fix: Run your pipeline to update it, then rotate_state.py
+
+================================================================================
+  DESIGN PHILOSOPHY
+================================================================================
+
+✓ ASCII-only — len() == display width (no emoji surprises)
+✓ 70 inner columns — Fits 80-col terminals (70 + 2 borders + 8 margin)
+✓ Canonical JSON — Sorted keys = stable diffs (no key-order churn)
+✓ Fail-closed gates — assert_width() exits 1 on violation (no silent drift)
+✓ Deterministic — Same input → identical output (auditable, reproducible)
+✓ All invariants testable — No aspirational claims, all procedures verified
+
+================================================================================
+  FURTHER READING
+================================================================================
+
+Full specification:     STATE_SYSTEM_CANONICAL.md
+Tool reference:         TOOLS_SUMMARY.md
+Implementation notes:   IMPLEMENTATION_COMPLETE.md
+Test suite:             bash oracle_town/FINAL_VERIFICATION.sh
+
+================================================================================
+  STATUS
+================================================================================
+
+Production Ready
+All 8 Invariants Enforced
+Contract: Testable and Verifiable
+Last Verified: 2026-01-30
+
+Commit: 835f17f — state: canonical state management system with 8 enforced invariants
+
+================================================================================

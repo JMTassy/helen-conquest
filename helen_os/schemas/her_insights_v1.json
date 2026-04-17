@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "HER_INSIGHTS_V1",
+  "description": "Creative insights from HER layer. Non-authoritative, non-sovereign. Must be transformed by HAL into structured claims before admission.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "HER_INSIGHTS_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "insight_id": {
+      "type": "string",
+      "pattern": "^her_[a-z0-9_]+$"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Reference to task that prompted this insight"
+    },
+    "insight_type": {
+      "enum": [
+        "hypothesis",
+        "architecture",
+        "synthesis",
+        "lateral_connection",
+        "narrative_frame",
+        "pattern_recognition",
+        "proposal",
+        "question"
+      ],
+      "description": "Category of creative thinking"
+    },
+    "content": {
+      "type": "string",
+      "description": "Free-form insight text (may be poetic, speculative, unstructured)"
+    },
+    "confidence": {
+      "enum": ["speculative", "exploratory", "developed", "reasoned"],
+      "description": "HER's own sense of insight maturity"
+    },
+    "related_concepts": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tags or keywords"
+    },
+    "potential_claims": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Candidate claims this insight might support (HAL will verify)"
+    },
+    "counter_perspectives": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "HER's own alternative viewpoints (for HAL to examine)"
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "insight_id",
+    "generated_at",
+    "task_id",
+    "insight_type",
+    "content",
+    "confidence"
+  ],
+  "additionalProperties": false
+}

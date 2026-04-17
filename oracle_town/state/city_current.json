@@ -1,0 +1,47 @@
+{
+  "alerts": [],
+  "anomalies": [],
+  "artifacts": [],
+  "date": "2026-01-31",
+  "mode": "DAILY",
+  "modules": {
+    "BRF": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "EVO": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "INS": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "MEM": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "OBS": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "PUB": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "TRI": {
+      "desc": "",
+      "progress": 0,
+      "status": "OFF"
+    }
+  },
+  "one_bet": "",
+  "queue": [],
+  "run_id": 1
+}

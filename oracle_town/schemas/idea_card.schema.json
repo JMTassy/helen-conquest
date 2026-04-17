@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/idea_card.schema.json",
+  "title": "IdeaCard",
+  "description": "Non-authoritative inspiration artifact. Published parallel to governance. Never feeds Mayor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "proposal_id",
+    "proposal_type",
+    "one_line_summary",
+    "problem_frame",
+    "mechanism",
+    "affected_components",
+    "published_at"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Links to the governance run for traceability (read-only reference)."
+    },
+    "proposal_id": {
+      "type": "string",
+      "pattern": "^P-[A-Z0-9_-]+$",
+      "description": "Original proposal identifier."
+    },
+    "proposal_type": {
+      "type": "string",
+      "enum": [
+        "architecture",
+        "feature",
+        "process",
+        "experiment",
+        "risk",
+        "agents",
+        "ux",
+        "security",
+        "performance",
+        "documentation",
+        "other"
+      ],
+      "description": "Category for filtering and clustering (not ranking)."
+    },
+    "one_line_summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 200,
+      "description": "Neutral summary. MUST NOT contain authority language."
+    },
+    "problem_frame": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 2, "maxLength": 50 },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "What this idea targets (topics, not rankings)."
+    },
+    "mechanism": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 5, "maxLength": 200 },
+      "minItems": 1,
+      "maxItems": 5,
+      "description": "What it changes (actions, not claims)."
+    },
+    "affected_components": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9_/.-]+$" },
+      "minItems": 1,
+      "description": "Components that would be modified."
+    },
+    "invariants_touched": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[A-Z0-9_]+$" },
+      "description": "Governance invariants potentially affected (K0, K1, etc.)."
+    },
+    "risk_notes": {
+      "type": "array",
+      "items": { "type": "string", "maxLength": 300 },
+      "description": "Neutral risk observations. MUST NOT be persuasive."
+    },
+    "evidence_hypotheses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["receipt_type", "attestor_class"],
+        "properties": {
+          "receipt_type": {
+            "type": "string",
+            "description": "Type of evidence that would likely be needed."
+          },
+          "attestor_class": {
+            "type": "string",
+            "enum": ["CI_RUNNER", "SECURITY", "LEGAL", "DOMAIN_OWNER", "RELEASE_MANAGER"]
+          }
+        }
+      },
+      "description": "Hypothesized receipts (not claims). Phrased as 'would likely need', not 'satisfies'."
+    },
+    "published_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when published to Idea Gallery."
+    },
+    "idea_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonical idea content (for dedup and audit)."
+    },
+    "novelty_bucket": {
+      "type": "string",
+      "enum": ["NOVEL", "VARIATION", "REFINEMENT"],
+      "description": "Optional clustering hint (not a ranking). Computed by publisher."
+    }
+  }
+}

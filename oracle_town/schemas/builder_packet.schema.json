@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/builder_packet.schema.json",
+  "title": "BuilderPacket",
+  "description": "District output: proposed obligations and risk assessment. Non-sovereign, never directly consumed by Mayor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "packet_id",
+    "run_id",
+    "claim_id",
+    "district",
+    "district_version",
+    "proposed_obligations"
+  ],
+  "properties": {
+    "packet_id": {
+      "type": "string",
+      "minLength": 8,
+      "description": "Stable identifier for this packet (uuid or content hash)."
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Links this packet to a specific governance run."
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 4,
+      "description": "Links this packet to a specific claim."
+    },
+    "district": {
+      "type": "string",
+      "enum": ["ENGINEERING", "EV", "LEGAL", "SECURITY", "BUSINESS", "PRODUCT", "SOCIAL", "OTHER"],
+      "description": "District that produced this packet."
+    },
+    "district_version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$",
+      "description": "SemVer for the district concierge logic that produced this packet."
+    },
+    "inputs_digest": {
+      "type": "string",
+      "pattern": "^[a-fA-F0-9]{64}$",
+      "description": "Optional sha256 digest of canonicalized inputs (claim + context) used by the district."
+    },
+    "ttl_seconds": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 2592000,
+      "description": "Optional time-to-live for this packet; stale packets should be rejected by Concierge."
+    },
+    "risks": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Non-sovereign risk notes; do not influence Mayor directly. For UX/telemetry only."
+    },
+    "proposed_obligations": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "$ref": "#/$defs/obligation" },
+      "description": "Obligations this district proposes for inclusion in the briefcase."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional district narrative; never consumed by Mayor. For UX/debug only."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Optional district confidence score. NEVER used in decision logic. For UX/telemetry only."
+    }
+  },
+  "$defs": {
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "severity"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]{3,64}$",
+          "description": "snake_case stable identifier."
+        },
+        "type": {
+          "type": "string",
+          "enum": ["CODE_PROOF", "DOC_SIGNATURE", "TOOL_RESULT", "METRIC_SNAPSHOT"],
+          "description": "Type of obligation determines expected evidence format."
+        },
+        "severity": {
+          "type": "string",
+          "enum": ["HARD", "SOFT"],
+          "description": "HARD obligations block SHIP if unsatisfied. SOFT are advisory only."
+        },
+        "expected_attestor": {
+          "type": "string",
+          "enum": ["CI_RUNNER", "TOOL_RESULT", "HUMAN_REVIEW", "SECURITY_SCANNER", "OTHER"],
+          "description": "Entity expected to produce attestation for this obligation."
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Human-readable description of what this obligation requires."
+        },
+        "tags": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true,
+          "description": "Optional tags for filtering/grouping obligations."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "run_id": "R-F",
+  "claim_id": "CLM-001",
+  "claim_type": "CHANGE_REQUEST",
+  "required_obligations": [
+    {
+      "name": "security_review",
+      "type": "CODE_PROOF",
+      "severity": "HARD",
+      "required_evidence": ["sast_scan", "security_signoff"],
+      "description": "Security review verified by CI and Security team."
+    }
+  ],
+  "requested_tests": [
+    {
+      "obligation_name": "security_review",
+      "test_command": "pytest tests/test_security.py",
+      "attestor": "CI_RUNNER"
+    }
+  ],
+  "kill_switch_policies": [
+    "SECURITY_CRITICAL_VULNERABILITY"
+  ],
+  "metadata": {
+    "origin": "test_vector",
+    "purpose": "adversarial_verification_allowlist_escape"
+  }
+}

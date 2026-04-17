@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K0_002",
+    "timestamp": "2026-01-31T10:11:00Z",
+    "target": "oracle_town/jobs/ins_cluster.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "ins_cluster.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K0_002_evidence_0.txt",
+        "hash": "sha256:d5dc14d2657ba99f77c87a340778123bb3d97d75b641cabd6bdc8773fdf19593",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "test_pass"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-inactive-key",
+    "intent": "Test inactive attestor rejection",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K0_attestor_not_registered",
+      "category": "K0",
+      "variant": "test"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "comment": "HELEN dialogue.ndjson schema mapping",
+  "turn_event_key": "type",
+  "turn_event_value": "turn",
+  "turn_field": "turn",
+  "text_field": null,
+  "hal_object_field": "hal_parsed",
+  "trivial_reason_prefixes": ["STYLE_", "FORMAT_", "WHITESPACE_"]
+}

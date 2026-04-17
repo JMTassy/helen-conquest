@@ -1,0 +1,22 @@
+{
+  "seed": 1337,
+  "generated": "2026-01-31T05:47:57.327177",
+  "total_claims": 11,
+  "distribution": {
+    "K1_schema_failures": 3,
+    "K0_authority_failures": 2,
+    "K2_no_self_attestation": 2,
+    "K7_authority_mutation": 2,
+    "K5_determinism": 2
+  },
+  "gate_ordering": [
+    "schema_valid",
+    "K7_policy_pinning",
+    "K0_attestor_registered",
+    "K2_no_self_attestation",
+    "K1_fail_closed",
+    "K5_determinism"
+  ],
+  "run_id": "000002",
+  "policy_hash": "sha256:policy_v1_2026_01"
+}

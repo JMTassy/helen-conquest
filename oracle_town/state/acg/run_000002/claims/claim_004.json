@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K0_001",
+    "timestamp": "2026-01-31T10:10:00Z",
+    "target": "oracle_town/jobs/obs_scan.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "obs_scan.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K0_001_evidence_0.txt",
+        "hash": "sha256:b865432f98f07a75b257146150b6996ef9bf6632138fac395012d543a6acbf2d",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "test_pass"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "key-never-registered-2026-01",
+    "intent": "Test unregistered attestor rejection",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K0_attestor_not_registered",
+      "category": "K0",
+      "variant": "test"
+    }
+  }
+}

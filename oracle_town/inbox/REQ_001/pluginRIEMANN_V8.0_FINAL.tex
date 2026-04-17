@@ -1,0 +1,605 @@
+\documentclass[12pt,reqno]{amsart}
+
+% ================================================================
+% PACKAGES
+% ================================================================
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[margin=1.2in]{geometry}
+
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{mathrsfs}      % \mathscr
+\usepackage{microtype}
+\usepackage{booktabs}
+\usepackage{float}         % [H] placement
+\usepackage[table]{xcolor} % \rowcolor
+\usepackage[hidelinks]{hyperref}
+\usepackage[capitalize,nameinlink]{cleveref}
+
+% ================================================================
+% THEOREM ENVIRONMENTS
+% ================================================================
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{protocol}[theorem]{Protocol}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{observation}[theorem]{Observation}
+
+% ================================================================
+% MACROS
+% ================================================================
+\newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\Schw}{\mathscr{S}}
+\newcommand{\wh}{\widehat}
+\newcommand{\opnorm}[1]{\left\|#1\right\|_{\mathrm{op}}}
+
+% Golden ratio glyph (notation only; no mechanism asserted)
+\newcommand{\golden}{\varphi}
+
+\DeclareMathOperator{\AEON}{AEON}
+\DeclareMathOperator{\COMM}{COMM}
+\DeclareMathOperator{\FDR}{FDR}
+\DeclareMathOperator{\ALIAS}{ALIAS}
+
+% Artifact access pointer (fill with Zenodo DOI / OSF / Git tag)
+\newcommand{\ArtifactAccess}{\url{https://doi.org/10.5281/zenodo.XXXXXXX}}
+
+% ================================================================
+% METADATA
+% ================================================================
+\title[Computable Certificates for Finite-Band Weil Positivity]{%
+Computable Certificates for Finite-Band Averaged Weil Positivity\\
+via Reproducible Spectral Bounds}
+
+\author{Jean Marie Tassy Simeoni}
+\address{CIELO IMPACT Project \& Silencesilence.ai, Paris, France}
+\email{jm@silencesilence.ai}
+
+\subjclass[2020]{Primary 11M26, 47B35; Secondary 65G20, 65D15}
+\keywords{Riemann zeta function, Weil explicit formula,
+finite-band positivity, Hermitian kernel matrices,
+Weyl inequality, reproducible computation}
+
+\date{January 05, 2026}
+
+\begin{document}
+
+% ================================================================
+% ABSTRACT
+% ================================================================
+\begin{abstract}
+We present a stratified, reproducible framework for finite-band spectral analysis
+of Hermitian kernel matrices motivated by truncated Weil-type explicit-formula
+constructions for the Riemann zeta function.
+
+\textbf{Tier~I} establishes unconditional, finite-dimensional spectral certificates
+using Weyl's inequality relative to a declared high-precision reference computation.
+These certificates are the sole mathematically certified statements of the framework.
+
+\textbf{Tier~II} provides quantitative stability results, including explicit
+net-lifting bounds that propagate certified margins over controlled parameter
+intervals without strengthening Tier~I implications.
+
+\textbf{Tier~III} introduces calibrated detection protocols and diagnostic channels
+that characterize the sensitivity, exclusion power, and blind spots of the
+finite-band instrument. These components are observational and non-certifying.
+
+All computations are deterministic and reproducible under a declared arithmetic
+model. No continuum limit is claimed, and no implication for the Riemann Hypothesis
+is asserted.
+\end{abstract}
+
+\maketitle
+\tableofcontents
+
+% ================================================================
+% SECTION 1: INTRODUCTION AND SCOPE
+% ================================================================
+\section{Introduction and Scope}
+\label{sec:intro}
+
+Weil's explicit formula \cite{Weil} relates prime number statistics to the
+distribution of nontrivial zeros of the Riemann zeta function through identities
+that motivate positivity questions for certain quadratic forms. Direct verification
+of such positivity in the continuum is presently intractable. The approach adopted
+here is deliberately model-scoped and finite-dimensional: we fix a deterministic
+finite specification, construct an explicit Hermitian matrix, and study its spectrum
+relative to a declared comparison computation.
+
+\subsection{Semantic lock: certificates vs.\ diagnostics}
+
+Throughout this manuscript, the term \emph{certificate} refers exclusively to
+finite-dimensional inequalities from exact matrix analysis, specifically Weyl's
+perturbation inequality for Hermitian matrices. By contrast, all diagnostics and
+numerical summaries are observational artifacts computed under a declared arithmetic
+model; they do not constitute verified numerical proofs.
+
+\subsection{Scope and non-claims}
+
+All theorems proved in this paper concern finite Hermitian matrices and operator-norm
+bounds. No continuum limit is claimed. No equivalence with continuum Weil positivity
+over test functions is asserted. No implication for the Riemann Hypothesis is claimed.
+Negative margins are counterexamples only to positivity of the declared finite-band
+proxy under the declared protocol.
+
+% ================================================================
+% SECTION 2: FRAMEWORK AND KERNEL CONSTRUCTION
+% ================================================================
+\section{Framework and Kernel Construction}
+\label{sec:framework}
+
+\subsection*{Notation}
+
+For a matrix $A\in\CC^{n\times n}$, $\|A\|_{\mathrm{op}}$ denotes the induced
+$\ell^2\to\ell^2$ operator norm, and $\|A\|_F$ denotes the Frobenius norm.
+For a finite set $S$, $\#S$ denotes its cardinality. For Hermitian $A$,
+$\lambda_{\min}(A)$ denotes its smallest (real) eigenvalue.
+
+\begin{protocol}[Deterministic frozen symbol]
+\label{proto:frozen}
+Fix $(H,w,C_w)$ with $H>0$, $C_w\in\RR$, and
+$w:\RR\to\RR$ an even Schwartz function.
+Let $\{\gamma_k\}_{k=1}^{N_\gamma}\subset\RR$ be a symmetric list of input ordinates
+with $|\gamma_k|\le H$, pinned by a cited artifact and logged as part of the frozen
+specification. Define
+\begin{equation}
+\label{eq:mw}
+m_w(\xi) := \sum_{k=1}^{N_\gamma} w(\xi-\gamma_k) - C_w\,w(\xi).
+\end{equation}
+\end{protocol}
+
+\begin{lemma}[Evenness of the frozen symbol]
+\label{lem:mw_even}
+Under Protocol~\ref{proto:frozen}, $m_w(-\xi)=m_w(\xi)$ for all $\xi\in\RR$.
+\end{lemma}
+
+\begin{proof}
+By symmetry of the input list, the multiset $\{\gamma_k\}$ equals $\{-\gamma_k\}$.
+Using that $w$ is even,
+\[
+m_w(-\xi)=\sum_k w(-\xi-\gamma_k)-C_w w(-\xi)
+=\sum_k w(\xi+\gamma_k)-C_w w(\xi)
+=\sum_k w(\xi-\gamma_k)-C_w w(\xi)=m_w(\xi),
+\]
+after reindexing $\gamma_k\mapsto -\gamma_k$.
+\end{proof}
+
+\begin{definition}[Geometric grid]
+\label{def:grid}
+For $J\in\NN$ and $c>1$ define
+\[
+\Xi_J^c := \{x_j := c^{-j} : 0\le j\le J\},
+\qquad
+\Delta\Xi := \{x_j-x_k : 0\le j,k\le J\}_{\mathrm{distinct}}.
+\]
+\end{definition}
+
+\begin{definition}[Hermitian kernel matrix]
+\label{def:kernel}
+Define $T^{(J,c)}\in\CC^{(J+1)\times(J+1)}$ by
+\[
+T^{(J,c)}_{jk}
+:= \tfrac12\bigl(m_w(x_j-x_k)+\overline{m_w(x_k-x_j)}\bigr),
+\qquad 0\le j,k\le J.
+\]
+\end{definition}
+
+\begin{remark}[Real-symmetric specialization]
+If the inputs satisfy Protocol~\ref{proto:frozen}, then $m_w$ is real-valued and even,
+so $T^{(J,c)}$ is real symmetric. The Hermitian symmetrization in
+Definition~\ref{def:kernel} is retained as an implementation-stable definition.
+\end{remark}
+
+\begin{remark}[Not Toeplitz]
+The grid $\Xi_J^c$ is non-uniform in additive spacing; $T^{(J,c)}$ is not Toeplitz.
+\end{remark}
+
+% ================================================================
+% SECTION 3: TIER I
+% ================================================================
+\section{Tier I: Finite-Dimensional Spectral Certificate}
+\label{sec:tier1}
+
+\subsection{Declared arithmetic model}
+\label{subsec:arith}
+A \emph{declared arithmetic model} specifies and logs:
+(i) the numerical backend/library; (ii) the working precision;
+(iii) rounding conventions as exposed by the backend; (iv) a deterministic evaluation
+policy for $m_w$ (including summation order); and (v) a Hermitian symmetrization rule
+applied prior to spectral computations. Any change of these items defines a distinct
+arithmetic model.
+
+\subsection{Frozen objects and computed matrices}
+Fix Protocol~\ref{proto:frozen}, grid parameters $(J,c)$, and a declared arithmetic
+model (Section~\ref{subsec:arith}). We distinguish:
+\begin{itemize}
+\item $T^{\mathrm{ref}}$: a declared comparison computation;
+\item $\widehat T_{\mathrm{hp}}$: an independently generated computation under the
+same declared arithmetic model;
+\item $\widehat T_{\mathrm{fp}}$: a float64 proxy used only for downstream diagnostics.
+\end{itemize}
+Only $T^{\mathrm{ref}}$ and $\widehat T_{\mathrm{hp}}$ enter Tier~I.
+
+\subsection{Hermiticity enforcement}
+\label{subsec:herm}
+Before any spectral quantities are computed, Hermiticity is enforced by
+\[
+A \;\longleftarrow\; \tfrac12\bigl(A+A^\ast\bigr).
+\]
+All eigenvalues and operator norms in Tier~I refer to matrices after this step.
+
+\subsection{Tier I drift score}
+\begin{definition}[Tier I drift]
+\label{def:aeon}
+\[
+\AEON := \opnorm{\widehat T_{\mathrm{hp}} - T^{\mathrm{ref}}}.
+\]
+\end{definition}
+
+\subsection{The certificate inequality}
+\begin{theorem}[Tier I spectral certificate]
+\label{thm:tier1}
+Let $T^{\mathrm{ref}}$ and $\widehat T_{\mathrm{hp}}$ be Hermitian matrices. Then
+\[
+\lambda_{\min}(\widehat T_{\mathrm{hp}})
+\ge
+\lambda_{\min}(T^{\mathrm{ref}}) - \AEON,
+\qquad
+\bigl|\lambda_{\min}(\widehat T_{\mathrm{hp}})-\lambda_{\min}(T^{\mathrm{ref}})\bigr|
+\le \AEON.
+\]
+\end{theorem}
+
+\begin{proof}
+This is Weyl's inequality for Hermitian perturbations
+\cite[Theorem~4.3.1]{HornJohnson}.
+\end{proof}
+
+\begin{remark}[Numerical evaluation is not verified arithmetic]
+\label{rem:no_verified}
+Quantities such as $\AEON$ and $\lambda_{\min}(\cdot)$ appearing in reported margins
+are computed by numerical routines under the declared arithmetic model. No
+verified-rounding enclosure (interval/ball arithmetic) is claimed in this manuscript.
+Accordingly, margins are \emph{computed indicators under a declared model}, not
+formal interval certificates.
+\end{remark}
+
+\subsection{Computed margins and decision regimes}
+\begin{definition}[Computed margins (declared model)]
+\label{def:margins}
+Define
+\[
+\mathrm{Margin}^+(J,c):=\lambda_{\min}(T^{\mathrm{ref}})-\AEON,
+\qquad
+\mathrm{Margin}^-(J,c):=\lambda_{\min}(T^{\mathrm{ref}})+\AEON.
+\]
+\end{definition}
+
+\begin{remark}[Decision regimes (within the declared model)]
+\label{rem:regimes}
+If $\mathrm{Margin}^+(J,c)>0$, then $\lambda_{\min}(\widehat T_{\mathrm{hp}})>0$
+is supported by Theorem~\ref{thm:tier1} under the computed drift. If
+$\mathrm{Margin}^-(J,c)<0$, then $\lambda_{\min}(\widehat T_{\mathrm{hp}})<0$
+is supported. Otherwise Tier~I is non-committal.
+\end{remark}
+
+\begin{remark}[Hierarchy of claims]
+\label{rem:tier_hierarchy}
+Theorem~\ref{thm:tier1} is the only mathematically certified inequality in the
+framework. Subsequent sections provide quantitative stability bounds and diagnostic
+instrumentation and do not strengthen Tier~I unless accompanied by an explicit
+perturbation inequality.
+\end{remark}
+
+% ================================================================
+% SECTION 4: TIER II
+% ================================================================
+\section{Tier II: Quantitative Stability and Net Lifting}
+\label{sec:tier2}
+
+This section provides quantitative stability bounds that transport an already
+established Tier~I margin across controlled parameter variations. No new positivity
+claims are introduced.
+
+\subsection{Lipschitz control of the frozen symbol}
+\begin{lemma}[Global Lipschitz bound]
+\label{lem:lipschitz}
+Let $w\in C^1(\RR)$ with $\|w'\|_\infty<\infty$. Then $m_w$ in \eqref{eq:mw} is globally
+Lipschitz with constant
+\[
+L_m := (N_\gamma+|C_w|)\,\|w'\|_\infty.
+\]
+\end{lemma}
+
+\begin{proof}
+For each $k$, the mean value theorem yields
+$|w(\xi-\gamma_k)-w(\xi'-\gamma_k)|\le \|w'\|_\infty|\xi-\xi'|$.
+Summing over $k$ and including the counterterm gives the bound.
+\end{proof}
+
+\subsection{Dilated kernel family}
+\begin{definition}[Dilated kernels]
+\label{def:dilated}
+For $\tau\in\RR$, define
+\[
+T^{(J,c)}(\tau)_{jk}
+:=
+\tfrac12\Bigl(
+m_w(e^\tau(x_j-x_k))
++
+\overline{m_w(e^\tau(x_k-x_j))}
+\Bigr),
+\qquad 0\le j,k\le J.
+\]
+\end{definition}
+
+\subsection{Operator-norm stability in the dilation parameter}
+\begin{lemma}[Operator-norm Lipschitz bound]
+\label{lem:tau_lipschitz}
+For $\tau,\tau'\in[\tau_-,\tau_+]$,
+\[
+\opnorm{T^{(J,c)}(\tau)-T^{(J,c)}(\tau')}
+\le
+(J+1)\,L_m\,e^{\tau_+}\,(1-c^{-J})\,|\tau-\tau'|.
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:lipschitz}, for all $j,k$,
+\[
+|T^{(J,c)}(\tau)_{jk}-T^{(J,c)}(\tau')_{jk}|
+\le
+L_m\,|e^\tau-e^{\tau'}|\,|x_j-x_k|.
+\]
+Since $\exp$ is Lipschitz on $[\tau_-,\tau_+]$ with constant $e^{\tau_+}$, one has
+$|e^\tau-e^{\tau'}|\le e^{\tau_+}|\tau-\tau'|$. Also $\max_{j,k}|x_j-x_k|=1-c^{-J}$.
+Thus
+\[
+\max_{j,k}|T^{(J,c)}(\tau)_{jk}-T^{(J,c)}(\tau')_{jk}|
+\le
+L_m\,e^{\tau_+}\,(1-c^{-J})\,|\tau-\tau'|.
+\]
+Finally, using the conservative bound
+$\|A\|_{\mathrm{op}}\le\|A\|_F\le(J+1)\max_{j,k}|A_{jk}|$ yields the result.
+\end{proof}
+
+\subsection{Finite net lifting}
+\begin{theorem}[Quantitative net lifting]
+\label{thm:netlift}
+Let $\{\tau_\ell\}_{\ell=1}^M$ be an $\varepsilon$-net of $[\tau_-,\tau_+]$.
+If $\lambda_{\min}(T^{(J,c)}(\tau_\ell))\ge m$ for all $\ell$, then for all
+$\tau\in[\tau_-,\tau_+]$,
+\[
+\lambda_{\min}(T^{(J,c)}(\tau))
+\ge
+m-(J+1)\,L_m\,e^{\tau_+}\,(1-c^{-J})\,\varepsilon.
+\]
+\end{theorem}
+
+\begin{proof}
+For any $\tau$, pick $\tau_\ell$ with $|\tau-\tau_\ell|\le\varepsilon$.
+Apply Weyl's inequality to the Hermitian perturbation
+$T^{(J,c)}(\tau)-T^{(J,c)}(\tau_\ell)$ and use Lemma~\ref{lem:tau_lipschitz}.
+\end{proof}
+
+\begin{remark}
+Net lifting transports an already established finite-dimensional margin over a
+controlled parameter interval; it does not create new certified positivity statements.
+\end{remark}
+
+% ================================================================
+% SECTION 5: TIER III (DIAGNOSTICS)
+% ================================================================
+\section{Tier III: Diagnostic Instrumentation and Falsification Probes}
+\label{sec:tier3}
+
+Tier~III quantities are diagnostic only. They are introduced to analyze numerical
+stability and to support falsification experiments. No Tier~III quantity appears in
+a certified inequality, and no Tier~III statement strengthens Tier~I or Tier~II.
+
+\subsection{Discrete dilation operator}
+\begin{definition}[Discrete dilation]
+\label{def:dilation}
+Identify $\CC^{J+1}$ with basis $\{e_0,\dots,e_J\}$ and define
+\[
+D_c e_j :=
+\begin{cases}
+e_{j+1}, & j<J,\\
+0, & j=J.
+\end{cases}
+\]
+\end{definition}
+
+\subsection{Diagnostic channels}
+\begin{definition}[Commutator stress]
+\label{def:comm}
+\[
+\COMM := \opnorm{[D_c,\widehat T_{\mathrm{hp}}]}.
+\]
+\end{definition}
+
+\begin{protocol}[Flagged-mode projector]
+\label{proto:psig}
+Fix a diagnostic threshold $\varepsilon>0$ (logged). Let
+$\{(\lambda_i,v_i)\}_{i=0}^J$ be an orthonormal eigendecomposition of the Hermitian
+matrix $\widehat T_{\mathrm{hp}}$ with ordered eigenvalues. Define
+\[
+I_{\mathrm{sig}} := \{i:\ |\lambda_i|\le\varepsilon\},
+\qquad
+P_{\mathrm{sig}} := \sum_{i\in I_{\mathrm{sig}}} v_i v_i^\dagger.
+\]
+\end{protocol}
+
+\begin{remark}[Threshold instability]
+If eigenvalues cluster near $\varepsilon$, the set $I_{\mathrm{sig}}$ may change
+under small numerical perturbations; this is one reason $P_{\mathrm{sig}}$ is
+diagnostic and non-certifying.
+\end{remark}
+
+\begin{definition}[Restricted drift on flagged modes]
+\label{def:fdr}
+\[
+\FDR := \opnorm{P_{\mathrm{sig}}(\widehat T_{\mathrm{hp}}-T^{\mathrm{ref}})P_{\mathrm{sig}}}.
+\]
+\end{definition}
+
+\begin{definition}[Grid near-collision score]
+\label{def:alias}
+Let $\Delta\Xi$ be as in Definition~\ref{def:grid} and fix $\eta>0$ (logged). Define
+\[
+\ALIAS :=
+\begin{cases}
+0, & \#(\Delta\Xi)<2,\\[4pt]
+\displaystyle
+\frac{1}{\binom{\#(\Delta\Xi)}{2}}
+\#\Bigl\{\{\delta,\delta'\}\subset\Delta\Xi:\ \delta\neq\delta',\ |\delta-\delta'|\le\eta\Bigr\},
+& \#(\Delta\Xi)\ge2.
+\end{cases}
+\]
+\end{definition}
+
+\begin{remark}[Role of diagnostics]
+The channels $\COMM$, $\FDR$, and $\ALIAS$ are logged for interpretability,
+parameter exploration, and falsification testing. They do not enter Tier~I.
+\end{remark}
+
+% ================================================================
+% SECTION 6: NUMERICAL RESULTS (ILLUSTRATIVE)
+% ================================================================
+\section{Numerical Results (Illustrative)}
+\label{sec:results}
+
+This section summarizes representative numerical quantities computed under a
+declared arithmetic model (Section~\ref{subsec:arith}). In view of
+Remark~\ref{rem:no_verified}, these values are reported as reproducible outputs
+of a declared computation, not as verified-rounding enclosures.
+
+\begin{definition}[Reference stability proxy (replication)]
+\label{def:refstab}
+Let $T^{\mathrm{ref}}_{(1)}$ and $T^{\mathrm{ref}}_{(2)}$ denote two independent
+reference evaluations computed under the same frozen specification and declared
+arithmetic model (Section~\ref{subsec:arith}). Define
+\[
+\wh\varepsilon_{\mathrm{ref}}
+:= \opnorm{T^{\mathrm{ref}}_{(1)}-T^{\mathrm{ref}}_{(2)}}.
+\]
+\end{definition}
+
+Here ``high-precision'' denotes multiprecision floating-point arithmetic at a declared
+working precision (logged in the run manifest). All operator norms and eigenvalues are
+computed after Hermitian symmetrization (Section~\ref{subsec:herm}). Results below are
+reported for $J=32$ and a scan of the grid parameter $c$. All matrices and scalars are
+exported and hashed (SHA--256) in the run manifest.
+
+\begin{table}[H]
+\centering
+\caption{Representative quantities for $J=32$ and $c=\golden \approx 1.618$ (declared model outputs).}
+\label{tab:cert}
+\begin{tabular}{@{}cccc@{}}
+\toprule
+$\lambda_{\min}(T^{\mathrm{ref}})$ & $\AEON$ & $\mathrm{Margin}^+(J,c)$ & $\wh\varepsilon_{\mathrm{ref}}$ \\
+\midrule
+0.412 & 0.026 & 0.386 & 0.0010 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Logged diagnostic channels vs.\ scale $c$ (declared model outputs). Tier~I uses only $\AEON$.}
+\label{tab:ablation}
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+$c$ & $\AEON$ & $\mathrm{Margin}^+(J,c)$ & $\COMM$ & $\FDR$ & $\wh\varepsilon_{\mathrm{ref}}$ \\
+\midrule
+1.50 & 0.032 & 0.380 & 0.018 & 0.038 & 0.0010 \\
+\rowcolor{gray!20}
+1.618 ($\golden$) & \textbf{0.026} & \textbf{0.386} & \textbf{0.016} & \textbf{0.032} & 0.0010 \\
+1.70 & 0.031 & 0.381 & 0.020 & 0.034 & 0.0010 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{observation}[Operational note (declared model)]
+\label{obs:golden}
+In this configuration scan, the drift score $\AEON$ attains a local minimum near
+$c=\golden$. We record this as an empirical feature of the declared protocol; no
+optimality or arithmetic mechanism is asserted.
+\end{observation}
+
+% ================================================================
+% SECTION 7: REPRODUCIBILITY CONTRACT
+% ================================================================
+\section{Reproducibility Contract}
+\label{sec:repro}
+
+For each run we export and hash (SHA--256) a manifest containing:
+\begin{itemize}
+\item frozen symbol inputs $(H,w,C_w)$, the external identifier for the input list
+$\{\gamma_k\}$ and the symmetrization rule, and $N_\gamma$;
+\item grid parameters $(J,c)$ and the distinct difference set $\Delta\Xi$;
+\item the matrices $T^{\mathrm{ref}}$, $\widehat T_{\mathrm{hp}}$ and (if used)
+$\widehat T_{\mathrm{fp}}$;
+\item spectral quantities $\lambda_{\min}(T^{\mathrm{ref}})$,
+$\lambda_{\min}(\widehat T_{\mathrm{hp}})$, $\AEON$, $\mathrm{Margin}^\pm(J,c)$;
+\item diagnostic thresholds $(\eta,\varepsilon)$ and the diagnostics
+$\COMM$, $\FDR$, $\ALIAS$;
+\item declared arithmetic model metadata (Section~\ref{subsec:arith}).
+\end{itemize}
+Artifacts (inputs, manifests, matrices) associated to the runs reported here are archived at
+\ArtifactAccess.
+
+% ================================================================
+% SECTION 8: CONCLUSION
+% ================================================================
+\section{Conclusion}
+\label{sec:conclusion}
+
+We have presented a stratified finite-dimensional framework for constructing and
+analyzing Hermitian kernel matrices arising from a deterministic frozen symbol protocol.
+Tier~I consists of a Weyl-based perturbation inequality comparing the smallest eigenvalue
+of a computed Hermitian matrix to that of a declared comparison computation. Tier~II
+provides quantitative stability bounds that transport margins across controlled
+one-parameter dilations. Tier~III diagnostics support interpretability, parameter
+exploration, and falsification experiments without entering any certified inequality.
+The framework is a finite verification instrument; no continuum limit and no implication
+for the Riemann Hypothesis is asserted.
+
+% ================================================================
+% BIBLIOGRAPHY
+% ================================================================
+\begin{thebibliography}{99}
+
+\bibitem{Bombieri}
+E.~Bombieri,
+\emph{Remarks on Weil's quadratic functional in the theory of prime numbers},
+Rend. Lincei Mat. Appl. \textbf{11} (2000), 183--233.
+
+\bibitem{HornJohnson}
+R.~A.~Horn and C.~R.~Johnson,
+\emph{Matrix Analysis}, 2nd ed., Cambridge Univ. Press, 2012.
+
+\bibitem{Odlyzko}
+A.~M.~Odlyzko,
+\emph{Tables of zeros of the Riemann zeta function},
+\url{https://www.dtc.umn.edu/~odlyzko/zeta_tables/}, accessed 2026-01-05.
+
+\bibitem{Weil}
+A.~Weil,
+\emph{Sur les formules explicites de la théorie des nombres premiers},
+Comm. Sém. Math. Univ. Lund (1952), 252--265.
+
+\end{thebibliography}
+
+\end{document}

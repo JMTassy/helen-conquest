@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EXECUTION_RESULT_V1",
+  "type": "object",
+  "properties": {
+    "schema_name": {"const": "EXECUTION_RESULT_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "execution_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "decision_id_ref": {"type": "string"},
+    "tool_type": {"type": "string"},
+    "status": {"type": "string", "enum": ["SUCCESS", "FAILURE"]},
+    "failure_code": {"type": ["string", "null"]},
+    "pre_state_hash": {"type": "string"},
+    "post_state_hash": {"type": ["string", "null"]},
+    "output_sha256": {"type": "string"},
+    "execution_identity": {"type": "string"},
+    "artifact_refs": {"type": "array", "items": {"type": "string"}},
+    "notes": {"type": ["string", "null"]}
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "execution_id",
+    "created_at",
+    "decision_id_ref",
+    "tool_type",
+    "status",
+    "failure_code",
+    "pre_state_hash",
+    "post_state_hash",
+    "output_sha256",
+    "execution_identity",
+    "artifact_refs",
+    "notes"
+  ],
+  "additionalProperties": false
+}

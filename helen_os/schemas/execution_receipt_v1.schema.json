@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/EXECUTION_RECEIPT_V1",
+  "title": "EXECUTION_RECEIPT_V1",
+  "description": "Proof of execution. Signed output from mission executor.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "receipt_id",
+    "mission_id",
+    "step_id",
+    "executor",
+    "status",
+    "command_ref",
+    "output_hash",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "EXECUTION_RECEIPT_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "EXECUTION_RECEIPT_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique receipt identifier"
+    },
+    "mission_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Mission this step belongs to"
+    },
+    "step_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Step within mission that was executed"
+    },
+    "executor": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Who/what executed this step"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "PASS",
+        "FAIL",
+        "WARN"
+      ],
+      "description": "Execution status"
+    },
+    "command_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Reference to the command executed"
+    },
+    "stdout_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 of stdout if captured"
+    },
+    "stderr_hash": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 of stderr if captured"
+    },
+    "output_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 of combined output"
+    },
+    "exit_code": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0,
+      "description": "Exit code if applicable"
+    }
+  }
+}

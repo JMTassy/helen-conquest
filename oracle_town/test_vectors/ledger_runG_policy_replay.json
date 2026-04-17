@@ -1,0 +1,53 @@
+{
+  "run_id": "R-G",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "attestations": [
+    {
+      "attestation_id": "ATT-G-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-G",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:pSvn1/tu1w4LKFYktdQ35YhocPiFe2oChL5/L0Mv9hODM8L+sDzqlUzKaKIIQ8cSZSuUhoH8jWCLNj1qGvScDg==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-20T10:00:00Z",
+      "meta": {
+        "_test_note": "Attestation signed against OLD policy (aaa...) but ledger claims NEW policy (bbb...)"
+      }
+    },
+    {
+      "attestation_id": "ATT-G-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-G",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:t+85sitKckl93xbNRmR6xFWVgqMmiuxUh7yIMQuvNvc1LvS4TyOEaD5atGD292DmfycoXev59EndvZoROqIwCw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-20T10:05:00Z"
+    }
+  ],
+  "ledger_digest": "sha256:gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runG_policy_replay",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "POLICY_HASH_MISMATCH",
+    "attack_description": "Attestations signed against old policy version replayed against new policy. Replay attack."
+  }
+}

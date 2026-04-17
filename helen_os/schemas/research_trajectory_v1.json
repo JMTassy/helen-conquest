@@ -1,0 +1,55 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/research_trajectory_v1.json",
+  "title": "RESEARCH_TRAJECTORY_V1",
+  "description": "Cluster of experiments sharing a mutation_family, with an aggregate performance trend. Produced deterministically from the Experiment Lineage Graph. Non-sovereign — authority=NONE. Drives the Experiment Selection Policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "trajectory_id", "mutation_family",
+    "origin_experiments",
+    "experiment_count", "admitted_count", "rejected_count",
+    "performance_trend", "confidence",
+    "linked_skills", "status", "authority"
+  ],
+  "properties": {
+    "schema_name":    {"const": "RESEARCH_TRAJECTORY_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "trajectory_id": {
+      "type": "string", "minLength": 1
+    },
+    "mutation_family": {
+      "type": "string",
+      "enum": ["optimizer","architecture","retrieval","regularization","tokenizer","capability","other"]
+    },
+    "origin_experiments": {
+      "type": "array", "items": {"type": "string"}, "minItems": 1
+    },
+    "experiment_count": {"type": "integer", "minimum": 1},
+    "admitted_count":   {"type": "integer", "minimum": 0},
+    "rejected_count":   {"type": "integer", "minimum": 0},
+    "performance_trend": {
+      "type": "string",
+      "enum": ["IMPROVING", "PLATEAU", "DECLINING"],
+      "description": "IMPROVING = admitted_rate >= threshold. DECLINING = no admissions. PLATEAU = mixed."
+    },
+    "confidence": {
+      "type": "number", "minimum": 0.0, "maximum": 1.0,
+      "description": "admitted_count / experiment_count. Measure of trend reliability."
+    },
+    "linked_skills": {
+      "type": "array", "items": {"type": "string"},
+      "description": "Skill IDs admitted through experiments in this trajectory."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "EXHAUSTED", "ABANDONED"],
+      "description": "ACTIVE = still worth exploring. EXHAUSTED = declining returns. ABANDONED = dead zone."
+    },
+    "authority": {
+      "const": "NONE",
+      "description": "Trajectories are analysis artifacts. They carry zero institutional authority."
+    }
+  }
+}

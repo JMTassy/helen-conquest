@@ -1,0 +1,149 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town.decision_record.v2.schema.json",
+  "title": "Oracle Town Decision Record V2",
+  "description": "Mayor's final decision: pure function output. Binary (DELIVER or ABORT). Not a 'seal' or 'certification', just a deterministic record of reasoning.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "run_id",
+    "claim_id",
+    "decision",
+    "reason_codes",
+    "inputs",
+    "bound_artifacts",
+    "decision_sha256"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "ORACLE_TOWN_DECISION_RECORD_V2"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "oracle_town.decision_record.v2",
+      "description": "Schema version identifier"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^RUN-[0-9]{8}-[A-Z0-9]{4}$",
+      "description": "Unique run ID (matches mayor_input.run_id)"
+    },
+    "claim_id": {
+      "type": "string",
+      "pattern": "^C-[0-9]{4,6}$",
+      "description": "Claim being decided"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "DELIVER",
+        "ABORT"
+      ],
+      "description": "Binary decision: DELIVER (claim is approved) or ABORT (claim is rejected)"
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z_]+$",
+        "description": "Enumerated codes explaining the decision"
+      },
+      "description": "Why this decision was reached (from registries/reason_codes.json)"
+    },
+    "active_constraint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "If decision=ABORT, which constraint blocked it (e.g., mu_Z, RHOLESS_CLAIM, etc.)",
+      "examples": [
+        "mu_Z",
+        "mu_Pi",
+        "RHOLESS_CLAIM",
+        "NO_LEGAL_ATTESTATION",
+        null
+      ]
+    },
+    "inputs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mayor_input_sha256"
+      ],
+      "description": "Input references for traceability",
+      "properties": {
+        "mayor_input_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 of mayor_input.json (the canonical input to this decision)"
+        }
+      }
+    },
+    "bound_artifacts": {
+      "type": "array",
+      "description": "All artifacts (attestations, receipts, policy) referenced by this decision. For audit trail.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "sha256"
+        ],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Path to artifact"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA256 of artifact"
+          },
+          "artifact_type": {
+            "type": "string",
+            "enum": [
+              "mayor_input",
+              "attestation",
+              "receipt",
+              "policy",
+              "claim",
+              "other"
+            ],
+            "description": "Type of bound artifact"
+          }
+        }
+      }
+    },
+    "decision_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256(canonical(decision_record_without_decision_sha256)). Proof that decision was deterministically computed from inputs."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional metadata",
+      "properties": {
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When decision was made"
+        },
+        "mayor_version": {
+          "type": "string",
+          "description": "Version of mayor.py that made this decision"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional narrative context (non-binding)"
+        }
+      }
+    }
+  }
+}

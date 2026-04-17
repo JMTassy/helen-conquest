@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Oracle Town Memory Claim Schema",
+  "description": "Unified claim format for all memory operations (inject, store, forget)",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "operation",
+    "content",
+    "category",
+    "scope",
+    "source",
+    "timestamp"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "description": "Unique claim identifier",
+      "pattern": "^memory:[a-z0-9-]+$",
+      "example": "memory:supermemory:inject:2026-01-30:14:22:00"
+    },
+    "operation": {
+      "type": "string",
+      "description": "Memory operation type",
+      "enum": ["inject", "store", "forget"],
+      "example": "store"
+    },
+    "content": {
+      "type": "string",
+      "description": "Memory content being stored/injected",
+      "minLength": 1,
+      "maxLength": 10000,
+      "example": "User prefers dark mode for interfaces"
+    },
+    "content_hash": {
+      "type": "string",
+      "description": "SHA256 hash of content (first 16 chars) for evidence linking",
+      "pattern": "^[a-f0-9]{16}$",
+      "example": "abc123def456789f"
+    },
+    "category": {
+      "type": "string",
+      "description": "Memory category (governance boundary)",
+      "enum": ["preference", "fact", "decision", "entity"],
+      "example": "preference"
+    },
+    "scope": {
+      "type": "string",
+      "description": "Container/machine scope (prevents global pollution)",
+      "pattern": "^(hostname|container):[a-zA-Z0-9\\-_.]+$",
+      "example": "hostname:macbook.local"
+    },
+    "source": {
+      "type": "string",
+      "description": "Operation source (governance path)",
+      "enum": ["auto_capture", "slash_command", "cli", "tool"],
+      "example": "auto_capture"
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 timestamp",
+      "format": "date-time",
+      "example": "2026-01-30T14:22:00Z"
+    },
+    "redaction_proof": {
+      "type": "object",
+      "description": "For auto-capture: evidence that tags were stripped before storage",
+      "properties": {
+        "original_length": {
+          "type": "integer",
+          "description": "Length before redaction"
+        },
+        "redacted_length": {
+          "type": "integer",
+          "description": "Length after redaction"
+        },
+        "tags_removed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Tag patterns removed (for audit)"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata (source query, scores, etc.)",
+      "properties": {
+        "memory_ids": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "For inject: which memories were retrieved"
+        },
+        "retrieval_query": {
+          "type": "string",
+          "description": "For inject: what query triggered retrieval"
+        },
+        "top_k": {
+          "type": "integer",
+          "description": "For inject: how many top results were returned"
+        },
+        "scores": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "description": "For inject: relevance scores of retrieved memories"
+        },
+        "source_file": {
+          "type": "string",
+          "description": "For auto-capture: which file/conversation was source"
+        }
+      }
+    }
+  },
+  "examples": [
+    {
+      "claim_id": "memory:supermemory:inject:2026-01-30:14:22:00",
+      "operation": "inject",
+      "content": "User prefers dark mode. Project deadline: 2026-02-15.",
+      "content_hash": "abc123def456789f",
+      "category": "fact",
+      "scope": "hostname:macbook.local",
+      "source": "auto_recall",
+      "timestamp": "2026-01-30T14:22:00Z",
+      "metadata": {
+        "memory_ids": ["mem_001", "mem_002"],
+        "retrieval_query": "user preferences",
+        "top_k": 2,
+        "scores": [0.95, 0.87]
+      }
+    },
+    {
+      "claim_id": "memory:supermemory:store:2026-01-30:14:23:00",
+      "operation": "store",
+      "content": "Meeting notes: discussed Q1 roadmap with engineering team",
+      "content_hash": "def456ghi789012a",
+      "category": "fact",
+      "scope": "hostname:workstation",
+      "source": "auto_capture",
+      "timestamp": "2026-01-30T14:23:00Z",
+      "redaction_proof": {
+        "original_length": 245,
+        "redacted_length": 240,
+        "tags_removed": ["<system_message>", "</system_message>"]
+      }
+    },
+    {
+      "claim_id": "memory:supermemory:forget:2026-01-30:14:24:00",
+      "operation": "forget",
+      "content": "memory:001",
+      "content_hash": "ghi789jkl012345b",
+      "category": "fact",
+      "scope": "hostname:workstation",
+      "source": "slash_command",
+      "timestamp": "2026-01-30T14:24:00Z"
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+[
+  {
+    "code": "A4",
+    "date": "2026-01-31",
+    "description": "Observable customer/user impact detected",
+    "id": "anom_20260131_5247597df097cfbd",
+    "links": [],
+    "obs_id": "obs_20260131_0e38c52c6081c428",
+    "run_id": 175,
+    "severity": "medium",
+    "type": "anomaly"
+  },
+  {
+    "code": "A4",
+    "date": "2026-01-31",
+    "description": "Observable customer/user impact detected",
+    "id": "anom_20260131_69ec8e48e91a1f48",
+    "links": [],
+    "obs_id": "obs_20260131_3494759f289a65e8",
+    "run_id": 175,
+    "severity": "medium",
+    "type": "anomaly"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "approved_campaign",
+    "date": "2026-01-31",
+    "id": "ins_20260131_08e5503bf96b661d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260131_2aaa918e3d772a4d"
+    ],
+    "run_id": 175,
+    "tags": [],
+    "theme": "Cluster: Approved Campaign"
+  },
+  {
+    "avg_confidence": 0.92,
+    "cluster": "affected_connection",
+    "date": "2026-01-31",
+    "id": "ins_20260131_27c18be467955647",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260131_0e38c52c6081c428"
+    ],
+    "run_id": 175,
+    "tags": [
+      "critical",
+      "database",
+      "incident"
+    ],
+    "theme": "Cluster: Affected Connection"
+  },
+  {
+    "avg_confidence": 0.95,
+    "cluster": "bounce_direct",
+    "date": "2026-01-31",
+    "id": "ins_20260131_4bdbd0e0d59939b3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260131_754282de81d29c4f"
+    ],
+    "run_id": 175,
+    "tags": [
+      "metrics",
+      "performance",
+      "traffic"
+    ],
+    "theme": "Cluster: Bounce Direct"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_engineering",
+    "date": "2026-01-31",
+    "id": "ins_20260131_9bdab78cd772e8fe",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260131_3494759f289a65e8"
+    ],
+    "run_id": 175,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Engineering"
+  }
+]

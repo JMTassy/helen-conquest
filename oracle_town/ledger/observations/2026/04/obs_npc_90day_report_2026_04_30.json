@@ -1,0 +1,191 @@
+{
+  "report_period": {
+    "start": "2026-01-31",
+    "end": "2026-04-30",
+    "duration_days": 90
+  },
+  "report_timestamp": "2026-04-30T23:59:59Z",
+  "doctrine_version": "1.0",
+  "doctrine_hash": "sha256:6ba9551d6a17551a04a719b6f1539b9bae772c72fbb86053d3470607fd68a709",
+  "observations": [
+    {
+      "observation_id": "obs_accuracy_watcher_2026_04_30_001",
+      "npc_type": "accuracy_watcher",
+      "npc_id": "npc_accuracy_watcher_001",
+      "metric_id": "accept_outcome_success_rate",
+      "metric_description": "Percentage of ACCEPT verdicts where outcomes matched expectations",
+      "observation_window": {
+        "start": "2026-01-31",
+        "end": "2026-04-30",
+        "duration_days": 90
+      },
+      "referenced_receipts": [
+        "R-2026-02-15-0001",
+        "R-2026-02-15-0002",
+        "R-2026-02-20-0001",
+        "R-2026-03-10-0001",
+        "R-2026-03-15-0002",
+        "R-2026-03-25-0001",
+        "R-2026-04-05-0001",
+        "R-2026-04-10-0002",
+        "R-2026-04-20-0001",
+        "R-2026-04-25-0001"
+      ],
+      "measurement": {
+        "value": 0.71,
+        "unit": "ratio"
+      },
+      "baseline_comparison": {
+        "previous_window": null,
+        "delta": null
+      },
+      "confidence": "HIGH",
+      "notes": "Of 24 ACCEPT verdicts issued Jan-Apr, 17 outcomes succeeded (0.71 success rate). 7 failed. Failures were evenly distributed across CLASS_I and CLASS_II. No systematic bias detected.",
+      "timestamp": "2026-04-30T23:59:59Z"
+    },
+    {
+      "observation_id": "obs_speculation_tracker_2026_04_30_001",
+      "npc_type": "speculation_tracker",
+      "npc_id": "npc_speculation_tracker_001",
+      "metric_id": "capital_at_risk",
+      "metric_description": "Total amount committed via CLASS_III/IV overrides, currently unlocked",
+      "observation_window": {
+        "start": "2026-01-31",
+        "end": "2026-04-30",
+        "duration_days": 90
+      },
+      "referenced_receipts": [
+        "override_le_tar_wall_001"
+      ],
+      "measurement": {
+        "value": 700000,
+        "unit": "EUR"
+      },
+      "override_tracking": {
+        "override_id": "override_le_tar_wall_001",
+        "class": "CLASS_III",
+        "title": "LE TAR Property Wall (€700k)",
+        "review_date": "2027-01-31",
+        "days_until_review": 276,
+        "status": "in_progress",
+        "expected_outcome": "Wall construction complete, property value stabilized"
+      },
+      "confidence": "HIGH",
+      "notes": "Single active CLASS_III override tracked. LE TAR wall locked at 2027-01-31 (276 days). No outcomes to measure yet. Status: in progress. Identity-defining investment confirmed.",
+      "timestamp": "2026-04-30T23:59:59Z"
+    },
+    {
+      "observation_id": "obs_pattern_detector_2026_04_30_001",
+      "npc_type": "pattern_detector",
+      "npc_id": "npc_pattern_detector_001",
+      "metric_id": "class_distribution",
+      "metric_description": "Distribution of verdicts by CLASS_I, II, III, IV",
+      "observation_window": {
+        "start": "2026-01-31",
+        "end": "2026-04-30",
+        "duration_days": 90
+      },
+      "referenced_receipts": [
+        "R-2026-02-15-0001",
+        "R-2026-02-15-0002",
+        "R-2026-02-20-0001",
+        "R-2026-03-10-0001",
+        "R-2026-03-15-0002",
+        "R-2026-03-25-0001",
+        "R-2026-04-05-0001",
+        "R-2026-04-10-0002",
+        "R-2026-04-20-0001",
+        "R-2026-04-25-0001",
+        "override_le_tar_wall_001"
+      ],
+      "measurement": {
+        "value": "CLASS_I: 40%, CLASS_II: 35%, CLASS_III: 20%, CLASS_IV: 5%"
+      },
+      "distribution_breakdown": {
+        "class_i": {
+          "count": 10,
+          "percentage": 0.40,
+          "acceptance_rate": 0.60
+        },
+        "class_ii": {
+          "count": 9,
+          "percentage": 0.35,
+          "acceptance_rate": 0.78
+        },
+        "class_iii": {
+          "count": 5,
+          "percentage": 0.20,
+          "status": "overrides_logged"
+        },
+        "class_iv": {
+          "count": 1,
+          "percentage": 0.05,
+          "status": "override_logged"
+        }
+      },
+      "confidence": "HIGH",
+      "notes": "Submissions well-distributed across classes. CLASS_II shows higher acceptance (78%) vs CLASS_I (60%). No drift detected. Class distribution stable throughout 90-day window.",
+      "timestamp": "2026-04-30T23:59:59Z"
+    },
+    {
+      "observation_id": "obs_risk_analyzer_2026_04_30_001",
+      "npc_type": "risk_analyzer",
+      "npc_id": "npc_risk_analyzer_001",
+      "metric_id": "override_frequency",
+      "metric_description": "Number of CLASS_III/IV overrides per month",
+      "observation_window": {
+        "start": "2026-01-31",
+        "end": "2026-04-30",
+        "duration_days": 90
+      },
+      "referenced_receipts": [
+        "override_le_tar_wall_001"
+      ],
+      "measurement": {
+        "value": 0.33,
+        "unit": "per month"
+      },
+      "monthly_breakdown": {
+        "january": {
+          "month": "2026-01",
+          "overrides": 1,
+          "rate_per_month": 0.33
+        },
+        "february": {
+          "month": "2026-02",
+          "overrides": 0,
+          "rate_per_month": 0
+        },
+        "march": {
+          "month": "2026-03",
+          "overrides": 0,
+          "rate_per_month": 0
+        },
+        "april": {
+          "month": "2026-04",
+          "overrides": 0,
+          "rate_per_month": 0
+        }
+      },
+      "mean_time_between_overrides": "90+ days (still measuring)",
+      "confidence": "MEDIUM",
+      "notes": "Single override in 90-day period (LE TAR wall, Jan 31). No exception creep observed. Override justification was thorough (>500 chars). No dependency clustering on specific domains.",
+      "timestamp": "2026-04-30T23:59:59Z"
+    }
+  ],
+  "meta": {
+    "total_observations": 4,
+    "npc_types_reporting": ["accuracy_watcher", "speculation_tracker", "pattern_detector", "risk_analyzer"],
+    "total_receipts_analyzed": 11,
+    "all_observations_valid": true,
+    "doctrine_hash_confirmed": true,
+    "observation_window_confirmed": true,
+    "silence_observations": []
+  },
+  "overall_assessment": {
+    "system_health": "STABLE",
+    "doctrine_adherence": "HIGH",
+    "exception_creep_detected": false,
+    "amendment_eligibility": "Not yet. Single observation window. Need ≥2 NPCs over ≥90 days covering same section to propose amendment."
+  }
+}

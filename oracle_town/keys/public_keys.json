@@ -1,0 +1,32 @@
+{
+  "registry_id": "KEYREG-ORACLE-TOWN",
+  "registry_version": "1.0.0",
+  "created_at": "2026-01-23T00:00:00Z",
+  "keys": [
+    {
+      "signing_key_id": "key-2026-01-ci",
+      "attestor_class": "CI_RUNNER",
+      "public_key_ed25519_b64": "13ai+qsIaIjvY9fXnohM6VaB+oJlxqI38nMVXKAbeOw=",
+      "status": "ACTIVE",
+      "allow": { "obligations": ["*"], "policy_ids": ["*"] },
+      "metadata": { "owner": "ci", "rotation_hint": "monthly" }
+    },
+    {
+      "signing_key_id": "key-2026-01-legal",
+      "attestor_class": "LEGAL",
+      "public_key_ed25519_b64": "1Hz+sMYjkDDZZhHC/bf8WgWRbu31hWD7iztAmgEEwMM=",
+      "status": "ACTIVE",
+      "allow": { "obligations": ["gdpr_consent_banner"], "policy_ids": ["POL-ORACLE-TOWN-MVP", "POL-TEST-1"] },
+      "metadata": { "owner": "legal", "rotation_hint": "quarterly" }
+    },
+    {
+      "signing_key_id": "key-2025-12-legal-old",
+      "attestor_class": "LEGAL",
+      "public_key_ed25519_b64": "YipwkJ9LGqOVZzfAtMCt1/+PFOSsgmr2Wr/VzanSRjI=",
+      "status": "REVOKED",
+      "revoked_at": "2026-01-15T00:00:00Z",
+      "revocation_reason": "Key compromise",
+      "allow": { "obligations": ["*"], "policy_ids": ["*"] }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "FAILURE_REPORT_V1",
+  "type": "object",
+  "properties": {
+    "schema_name": {"const": "FAILURE_REPORT_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "failure_report_id": {"type": "string"},
+    "failure_class": {
+      "type": "string",
+      "enum": ["SCHEMA_MISMATCH", "ASSERTION_FAILURE", "TOOL_ERROR", "TIMEOUT", "RESOURCE_EXHAUSTION", "RECEIPT_REJECTION", "NONDETERMINISM", "UNKNOWN"]
+    },
+    "reason_code": {"type": "string"},
+    "typed_failure": {
+      "type": "object",
+      "properties": {
+        "message": {"type": "string"},
+        "detected_at": {"type": "string"}
+      },
+      "required": ["message", "detected_at"]
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "failure_report_id",
+    "failure_class",
+    "reason_code",
+    "typed_failure"
+  ],
+  "additionalProperties": false
+}

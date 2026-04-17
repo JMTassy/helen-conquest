@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/swarm_reject.schema.json",
+  "title": "SwarmReject",
+  "description": "Terminal rejection artifact produced when Swarm handoff is blocked. Ensures fail-closed with explainability.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "swarm_run_id",
+    "rejected_at",
+    "reason_code",
+    "violations"
+  ],
+  "properties": {
+    "swarm_run_id": {
+      "type": "string",
+      "pattern": "^SWARM-[A-Za-z0-9._-]+$",
+      "description": "Links this rejection to a specific Swarm run."
+    },
+    "rejected_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when rejection occurred."
+    },
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "SWARM_REJECT_FORBIDDEN_AUTHORITY",
+        "SWARM_REJECT_SCHEMA_INVALID",
+        "SWARM_REJECT_DUPLICATE_BLOCKS",
+        "SWARM_REJECT_BUDGET_VIOLATION",
+        "SWARM_REJECT_NONDETERMINISTIC_HASH"
+      ],
+      "description": "Canonical rejection reason (highest priority match)."
+    },
+    "violations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "rule", "detail_digest"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "JSON path or file path where violation was detected."
+          },
+          "rule": {
+            "type": "string",
+            "description": "Rule identifier that was violated (e.g., S0, G2, G3)."
+          },
+          "detail_digest": {
+            "type": "string",
+            "pattern": "^sha256:[a-fA-F0-9]{64}$",
+            "description": "SHA256 of violation details (for forensic lookup without leaking content)."
+          },
+          "matched_signal": {
+            "type": "string",
+            "description": "Optional: specific signal that triggered the rule (e.g., AUTHORITY_KEY:attestation)."
+          }
+        }
+      },
+      "description": "List of detected violations (forensic detail)."
+    },
+    "swarm_boundary_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "Optional: SBD if seal state was reached before rejection."
+    },
+    "eligible_artifacts_at_rejection": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256"],
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" }
+        }
+      },
+      "description": "Optional: artifacts that existed at rejection time (for audit)."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata."
+    }
+  }
+}

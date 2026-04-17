@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helen.local/schemas/decision_ledger_v1.json",
+  "title": "DECISION_LEDGER_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "ledger_id",
+    "canonicalization",
+    "entries"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "DECISION_LEDGER_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "ledger_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "canonicalization": {
+      "const": "JCS_SHA256_V1"
+    },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entry_index",
+          "ts",
+          "prev_entry_hash",
+          "decision",
+          "entry_hash"
+        ],
+        "properties": {
+          "entry_index": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "ts": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "prev_entry_hash": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "string",
+                "pattern": "^sha256:[a-f0-9]{64}$"
+              }
+            ]
+          },
+          "decision": {
+            "type": "object",
+            "description": "Opaque decision object. Full validation delegated to SKILL_PROMOTION_DECISION_V1."
+          },
+          "entry_hash": {
+            "type": "string",
+            "pattern": "^sha256:[a-f0-9]{64}$"
+          }
+        }
+      }
+    }
+  }
+}

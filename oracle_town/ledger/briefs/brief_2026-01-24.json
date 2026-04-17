@@ -1,0 +1,15 @@
+{
+  "date": "2026-01-24",
+  "clusters": [
+    {
+      "cluster": "marketing_campaigns",
+      "theme": "Marketing Campaigns",
+      "confidence": 1.0
+    },
+    {
+      "cluster": "infrastructure_health",
+      "theme": "Infrastructure Health",
+      "confidence": 1.0
+    }
+  ]
+}

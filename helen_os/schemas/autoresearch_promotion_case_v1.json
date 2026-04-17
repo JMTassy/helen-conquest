@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/autoresearch_promotion_case_v1.json",
+  "title": "AUTORESEARCH_PROMOTION_CASE_V1",
+  "description": "Typed bridge artifact: carries an evaluation receipt and skill proposal from the Autoresearch layer to the Mayor pipeline. Non-sovereign — carries provenance only. Authority=NONE. Mayor assembles SKILL_PROMOTION_PACKET_V1 from this.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "case_id",
+    "skill_id",
+    "candidate_version",
+    "parent_skill_id",
+    "parent_version",
+    "eval_receipt",
+    "authority"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "AUTORESEARCH_PROMOTION_CASE_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "case_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this promotion case."
+    },
+    "skill_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Skill being proposed for promotion (e.g. skill.search)."
+    },
+    "candidate_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the candidate skill."
+    },
+    "parent_skill_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Parent skill in active_skills. Mayor verifies this exists before routing to reducer."
+    },
+    "parent_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Version of the parent skill at the time of proposal."
+    },
+    "eval_receipt": {
+      "type": "object",
+      "description": "Embedded AUTORESEARCH_EVAL_RECEIPT_V1. Must be a valid frozen schema instance.",
+      "required": [
+        "schema_name",
+        "schema_version",
+        "experiment_id",
+        "metric_name",
+        "baseline_value",
+        "candidate_value",
+        "comparison_rule",
+        "threshold",
+        "result",
+        "run_log_hash",
+        "environment_manifest_hash",
+        "doctrine_hash"
+      ],
+      "properties": {
+        "schema_name": {"const": "AUTORESEARCH_EVAL_RECEIPT_V1"},
+        "schema_version": {"const": "1.0.0"},
+        "experiment_id":            {"type": "string", "minLength": 1},
+        "metric_name":              {"type": "string", "minLength": 1},
+        "baseline_value":           {"type": "number"},
+        "candidate_value":          {"type": "number"},
+        "comparison_rule":          {"type": "string", "enum": ["gt", "gte", "lt", "lte"]},
+        "threshold":                {"type": "number"},
+        "result":                   {"type": "string", "enum": ["PASS", "FAIL", "INCONCLUSIVE"]},
+        "run_log_hash":             {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "environment_manifest_hash":{"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "doctrine_hash":            {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+        "notes":                    {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "capability_description": {
+      "type": "string",
+      "description": "Human-readable description of the capability improvement being proposed."
+    },
+    "authority": {
+      "const": "NONE",
+      "description": "Promotion cases carry zero institutional authority. Authority is granted only by reducer-emitted decisions."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional free-text notes (non-authoritative)."
+    }
+  }
+}

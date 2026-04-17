@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/ISSUE_LIST_V1",
+  "title": "ISSUE_LIST_V1",
+  "description": "List of issues or problems found during evaluation. Blocking or non-blocking.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "issue_list_id",
+    "subject_ref",
+    "issues",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "ISSUE_LIST_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "ISSUE_LIST_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "issue_list_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique issue list identifier"
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What artifact or claim this issue list evaluates"
+    },
+    "issues": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "severity",
+          "message"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Issue code (e.g., MISSING_RECEIPT, INCOMPLETE_EVIDENCE)"
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "INFO",
+              "WARN",
+              "BLOCK"
+            ],
+            "description": "INFO: informational, WARN: warning, BLOCK: blocks SHIP"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Human-readable description of the issue"
+          },
+          "receipt_ref": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "description": "Optional reference to related receipt or evidence"
+          }
+        }
+      },
+      "description": "List of identified issues"
+    }
+  }
+}

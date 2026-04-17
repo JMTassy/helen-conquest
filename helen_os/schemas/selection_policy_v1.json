@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/selection_policy_v1.json",
+  "title": "SELECTION_POLICY_V1",
+  "description": "Frozen experiment selection policy. Encodes scoring weights, tier thresholds, and governance filters. Hashable — a change in policy produces a different hash, detectable in audit. Non-sovereign — authority=NONE.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "policy_id", "weights", "tier_thresholds",
+    "governance_filter", "max_candidates", "authority"
+  ],
+  "properties": {
+    "schema_name":    {"const": "SELECTION_POLICY_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "policy_id": {
+      "type": "string", "minLength": 1,
+      "description": "Unique identifier for this policy version."
+    },
+    "weights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expected_improvement", "information_gain", "strategic_alignment",
+        "failure_cluster_priority", "branch_novelty",
+        "risk", "cost", "redundancy"
+      ],
+      "properties": {
+        "expected_improvement":     {"type": "number"},
+        "information_gain":         {"type": "number"},
+        "strategic_alignment":      {"type": "number"},
+        "failure_cluster_priority": {"type": "number"},
+        "branch_novelty":           {"type": "number"},
+        "risk":                     {"type": "number"},
+        "cost":                     {"type": "number"},
+        "redundancy":               {"type": "number"}
+      },
+      "description": "Linear scoring weights. Positive = reward, negative = penalty."
+    },
+    "tier_thresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "repair_failure_cluster_priority",
+        "exploit_strategic_alignment",
+        "explore_branch_novelty"
+      ],
+      "properties": {
+        "repair_failure_cluster_priority": {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "exploit_strategic_alignment":     {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "explore_branch_novelty":          {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      },
+      "description": "Thresholds for tier classification. REPAIR checked first, then EXPLOIT, EXPLORE, VALIDATE."
+    },
+    "governance_filter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["max_risk", "max_redundancy"],
+      "properties": {
+        "max_risk":       {"type": "number", "minimum": 0.0, "maximum": 1.0},
+        "max_redundancy": {"type": "number", "minimum": 0.0, "maximum": 1.0}
+      },
+      "description": "Hard rejection filters. Candidates exceeding max_risk or max_redundancy are excluded before scoring."
+    },
+    "max_candidates": {
+      "type": "integer", "minimum": 1,
+      "description": "Maximum number of candidates to consider (budget bound)."
+    },
+    "authority": {
+      "const": "NONE",
+      "description": "Policy is analysis infrastructure. Authority over state is held only by the reducer."
+    }
+  }
+}

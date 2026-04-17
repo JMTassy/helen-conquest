@@ -1,0 +1,29 @@
+{
+  "_comment": "TEMPLATE — copy to rho_manifest.json and fill in values before run starts. Never mutate after run begins.",
+  "schema_version": "RHO_MANIFEST_V1",
+  "run_id": "RUN-YYYY-MM-DD-001",
+  "thresholds": {
+    "Delta_floor": 0.01,
+    "eps_Pi": 0.001,
+    "M_floor": 0.0,
+    "R2_floor": 0.90,
+    "mu_floor": 0.05,
+    "Z_max": 3.0,
+    "tau": 100
+  },
+  "audit": {
+    "delta_audit": 1e-12
+  },
+  "environment": {
+    "precision": "float64",
+    "backend": "numpy",
+    "seeds": {
+      "global": 42
+    },
+    "commit": "abc1234"
+  },
+  "optional_refs": {
+    "latex_spine": "docs/JM_RECURSION_THEORY_v1.md",
+    "notes": "Initial K-rho deployment."
+  }
+}

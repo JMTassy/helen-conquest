@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "BUILDERS_CLAIM_V1",
+  "title": "BUILDERS_CLAIM_V1",
+  "description": "Atomic unit of production work in ORACLE SUPER 2: BUILDERS. Claims replace chat.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "BUILDERS_CLAIM_V1"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "BUILDERS_CLAIM_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "claim_id": {
+      "type": "string",
+      "description": "Globally unique claim identifier.",
+      "pattern": "^CLAIM-[A-Z0-9-]+$"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Run this claim belongs to.",
+      "pattern": "^RUN-[A-Z0-9-]+$"
+    },
+    "author_role": {
+      "type": "string",
+      "enum": [
+        "FOREMAN",
+        "RESEARCHER",
+        "SKEPTIC",
+        "WRITER",
+        "EDITOR"
+      ],
+      "description": "Role that emitted this claim. Role purity is enforced."
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "structure",
+        "content",
+        "critique",
+        "evidence",
+        "rewrite"
+      ],
+      "description": "Claim type. Role restrictions apply (see x-role-restrictions)."
+    },
+    "statement": {
+      "type": "string",
+      "description": "The claim body.",
+      "minLength": 1,
+      "maxLength": 5000
+    },
+    "support_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "IDs of sources or prior claims that support this claim."
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Advisory confidence score [0, 1]. Non-sovereign — never used for admissibility decisions."
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "accepted",
+        "rejected",
+        "superseded"
+      ],
+      "description": "Current status of this claim. Only EDITOR may set 'superseded' on draft content."
+    },
+    "phase": {
+      "type": "string",
+      "enum": [
+        "exploration",
+        "tension",
+        "drafting",
+        "editorial_collapse",
+        "delivery"
+      ],
+      "description": "Pipeline phase during which this claim was emitted."
+    },
+    "parent_claims": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "claim_ids this claim builds on or responds to."
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "canonicalization",
+    "claim_id",
+    "run_id",
+    "author_role",
+    "type",
+    "statement",
+    "confidence",
+    "status",
+    "phase"
+  ],
+  "additionalProperties": false,
+  "x-role-restrictions": {
+    "FOREMAN": [
+      "structure"
+    ],
+    "RESEARCHER": [
+      "evidence",
+      "content"
+    ],
+    "SKEPTIC": [
+      "critique",
+      "evidence"
+    ],
+    "WRITER": [
+      "content",
+      "structure"
+    ],
+    "EDITOR": [
+      "structure",
+      "content",
+      "critique",
+      "evidence",
+      "rewrite"
+    ]
+  },
+  "x-law": "confidence is advisory only, never sovereign. Only EDITOR may emit rewrite claims that supersede accepted draft content. SKEPTIC may not emit content claims. FOREMAN may not emit final artifact prose claims."
+}

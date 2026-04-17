@@ -1,0 +1,3 @@
+Evidence artifact for acg_claim_K1_003
+Type: test_result
+Index: 0

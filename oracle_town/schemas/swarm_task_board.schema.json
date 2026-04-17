@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/swarm_task_board.schema.json",
+  "title": "SwarmTaskBoard",
+  "description": "Task decomposition for Swarm execution. Non-authoritative planning artifact.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["swarm_run_id", "tasks"],
+  "properties": {
+    "swarm_run_id": {
+      "type": "string",
+      "pattern": "^SWARM-[A-Za-z0-9._-]+$",
+      "description": "Links this task board to a specific Swarm run."
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["task_id", "description", "deps", "inputs", "outputs"],
+        "properties": {
+          "task_id": {
+            "type": "string",
+            "pattern": "^T[0-9]{2,4}$",
+            "description": "Unique task identifier (e.g., T01, T02)."
+          },
+          "description": {
+            "type": "string",
+            "maxLength": 500,
+            "description": "Human-readable task description. MUST NOT contain authority language."
+          },
+          "deps": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "^T[0-9]{2,4}$"
+            },
+            "description": "Task IDs this task depends on (DAG structure)."
+          },
+          "inputs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Input artifact paths or references."
+          },
+          "outputs": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Expected output artifact paths."
+          },
+          "assigned_worker": {
+            "type": "string",
+            "description": "Optional: worker identifier assigned to this task."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING", "IN_PROGRESS", "COMPLETED", "BLOCKED"],
+            "description": "Optional: task execution status."
+          }
+        }
+      },
+      "description": "Ordered list of tasks for Swarm execution."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata."
+    }
+  }
+}

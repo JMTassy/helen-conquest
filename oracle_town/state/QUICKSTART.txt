@@ -1,0 +1,111 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   ORACLE TOWN STATE MANAGEMENT QUICKSTART                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+LOCATION:  /oracle_town/state/
+
+═══════════════════════════════════════════════════════════════════════════════
+
+1. DAILY RUN WORKFLOW
+
+   Step 1: Rotate state (preserve history for diff)
+   $ python3 rotate_state.py
+   
+   Step 2: Update city_current.json with new run data
+   (This is done by your Daily OS pipeline)
+   
+   Step 3: Render HOME page
+   $ python3 render_home_enhanced.py --unicode
+   
+   Step 4: View what changed
+   $ python3 diff_city.py
+   
+   Step 5: Commit to git
+   $ git add oracle_town/state/city_*.json
+   $ git commit -m "Daily OS run: OBS+INS progressing"
+
+═══════════════════════════════════════════════════════════════════════════════
+
+2. QUICK COMMANDS
+
+   View current state (ASCII mode):
+   $ python3 render_home.py
+
+   View current state (enhanced with emoji):
+   $ python3 render_home_enhanced.py --unicode
+
+   View current state (ASCII-safe, no emoji):
+   $ python3 render_home_enhanced.py --ascii
+
+   Compare prev vs current:
+   $ python3 diff_city.py
+
+   Generate 14-day simulation:
+   $ python3 simulate_14_days.py
+
+═══════════════════════════════════════════════════════════════════════════════
+
+3. STATE FILES
+
+   city_prev.json      Previous run state (used for diff)
+   city_current.json   Current run state (source of truth)
+
+   Both are JSON format, diffable, and git-friendly.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+4. SCRIPTS
+
+   render_home.py             → Basic 70-col ASCII renderer
+   render_home_enhanced.py    → Enhanced renderer (unicode/ascii modes)
+   diff_city.py              → Show deltas only
+   rotate_state.py           → Move current → prev (before run)
+   simulate_14_days.py       → Generate 14 days of growth
+
+═══════════════════════════════════════════════════════════════════════════════
+
+5. CONSTRAINTS (IMMUTABLE)
+
+   ✓ ≤70 column width (hard constraint)
+   ✓ Deterministic rendering (same JSON → identical output)
+   ✓ Emoji-safe (wcwidth for 2-column emoji)
+   ✓ JSON-only state (diffable, git-friendly)
+   ✓ No timestamps (date field only)
+   ✓ Module order fixed (OBS, INS, BRF, TRI, PUB, MEM, EVO)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+6. MODULE STATUSES
+
+   OFF  → BLD  → OK    (normal progression)
+   WRN  → OK           (warning + recovery)
+   FLR               (failed, needs intervention)
+
+   Progress: 0-8 ticks (shown as bar: ████████)
+
+═══════════════════════════════════════════════════════════════════════════════
+
+7. SYMBOLOGY (Enhanced Mode Only)
+
+   ROLE ICONS (dedicated column):
+   👁 OBS, 🧠 INS, 📝 BRF, ⚖ TRI, 📣 PUB, 🗃 MEM, 🧬 EVO
+
+   STATUS BADGES (1 char):
+   ✓ OK, ▲ BLD, ! WRN, ✗ FLR, · OFF
+
+   GRAVITY SYMBOLS (header):
+   ⚠ alerts, 🕳 anomalies
+
+   RITUAL SIGILS (footer):
+   ⟐∿ ⊕ ∴ ⧉
+
+═══════════════════════════════════════════════════════════════════════════════
+
+8. EXAMPLES
+
+   See README.md for full documentation and examples.
+
+═══════════════════════════════════════════════════════════════════════════════
+
+Ready to use! Start with: python3 render_home_enhanced.py --unicode
+

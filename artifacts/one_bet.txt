@@ -1,0 +1,1 @@
+HIGH: Critical anomalies detected (A3).

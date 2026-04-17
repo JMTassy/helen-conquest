@@ -1,0 +1,33 @@
+{
+  "run_id": "R-A",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-A-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-A",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:07P1AiPjQXBSGIlXnY34iSHmakzzcS1UCYI29LU33j3R58f2EUbJoyM0xZqqZic62k8bS4jIXFtJnvcNtfSvAQ==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-25T10:00:00Z"
+    }
+  ],
+  "ledger_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:01:00Z",
+  "metadata": {
+    "test_vector": "runA_missing_legal",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "QUORUM_NOT_MET",
+    "missing_class": "LEGAL"
+  }
+}

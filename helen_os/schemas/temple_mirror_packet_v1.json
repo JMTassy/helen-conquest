@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "TEMPLE_MIRROR_PACKET_V1",
+  "description": "Minimal archivable mirror reading. One motif. One tension. One sketch. One limit. Full provenance. Non-sovereign by constitution.",
+  "type": "object",
+  "required": [
+    "schema_name",
+    "schema_version",
+    "packet_id",
+    "source_session_id",
+    "source_hash",
+    "protocol_version",
+    "authority",
+    "mirror_derived",
+    "motif",
+    "tension",
+    "center_sketch",
+    "limit",
+    "mythologization_risk",
+    "three_tests_applied",
+    "export",
+    "bridge_status"
+  ],
+  "properties": {
+    "schema_name":       { "type": "string", "const": "TEMPLE_MIRROR_PACKET_V1" },
+    "schema_version":    { "type": "string", "const": "1.0.0" },
+    "packet_id":         { "type": "string" },
+    "source_session_id": { "type": "string" },
+    "source_hash":       { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "protocol_version":  { "type": "string", "const": "TEMPLE_MIRROR_PROTOCOL_V1" },
+    "authority":         { "type": "string", "const": "NONE" },
+    "mirror_derived":    { "type": "boolean", "const": true },
+
+    "motif": {
+      "type": "object",
+      "description": "Exactly one motif. Cardinality cap: 1.",
+      "required": ["label", "evidence_strength"],
+      "properties": {
+        "label":            { "type": "string" },
+        "evidence_strength": { "type": "string", "enum": ["weak", "moderate", "strong"] }
+      },
+      "additionalProperties": false
+    },
+
+    "tension": {
+      "type": "object",
+      "description": "Exactly one tension. Cardinality cap: 1.",
+      "required": ["pole_a", "pole_b", "description"],
+      "properties": {
+        "pole_a":       { "type": "string" },
+        "pole_b":       { "type": "string" },
+        "description":  { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+
+    "center_sketch": {
+      "type": "string",
+      "description": "Exactly one center sketch. Cardinality cap: 1."
+    },
+
+    "limit": {
+      "type": "string",
+      "description": "Exactly one limit. What this reading cannot certify or resolve. Cardinality cap: 1."
+    },
+
+    "mythologization_risk": {
+      "type": "string",
+      "enum": ["low", "medium", "high"],
+      "description": "HAL's assessment of narrative inflation risk for this reading."
+    },
+
+    "three_tests_applied": {
+      "type": "object",
+      "description": "Explicit pass/fail on all three HAL tests. Must be populated before archiving.",
+      "required": ["recurrence", "compression", "resistance"],
+      "properties": {
+        "recurrence":  { "type": "string", "enum": ["pass", "fail", "weak"] },
+        "compression": { "type": "string", "enum": ["pass", "fail", "weak"] },
+        "resistance":  { "type": "string", "enum": ["pass", "fail", "weak"] }
+      },
+      "additionalProperties": false
+    },
+
+    "export":        { "type": "string", "const": "NONE" },
+    "bridge_status": { "type": "string", "const": "NOT_SUBMITTED" },
+    "notes":         { "type": "string" }
+  },
+  "additionalProperties": false
+}

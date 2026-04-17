@@ -1,0 +1,127 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "NEW_SKILL_DISCOVERY_V1",
+  "description": "Non-sovereign proposal for a new skill discovered from repeated typed failure clusters.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "NEW_SKILL_DISCOVERY_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "discovery_id": {
+      "type": "string",
+      "description": "Unique identifier for this discovery (deterministic from batch + failure cluster)"
+    },
+    "batch_id": {
+      "type": "string",
+      "description": "Source batch that triggered this discovery"
+    },
+    "failure_cluster": {
+      "type": "object",
+      "description": "Summary of repeated failure pattern",
+      "properties": {
+        "failure_type": {
+          "type": "string",
+          "description": "The repeated failure reason code (e.g., ERR_UNRESOLVED_SOURCE_CONFLICT)"
+        },
+        "occurrence_count": {
+          "type": "integer",
+          "minimum": 2,
+          "description": "Number of times this failure appeared in batch"
+        },
+        "affected_task_ids": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Task IDs experiencing this failure"
+        },
+        "common_context": {
+          "type": "object",
+          "description": "Shared properties among failing tasks (e.g., failure.skill_id, error.root_cause)"
+        }
+      },
+      "required": ["failure_type", "occurrence_count", "affected_task_ids"]
+    },
+    "capability_gap": {
+      "type": "object",
+      "description": "Analysis of the missing capability",
+      "properties": {
+        "class": {
+          "type": "string",
+          "enum": ["FILTER", "TRANSFORM", "VALIDATE", "RECONCILE", "OPTIMIZE"],
+          "description": "Skill family category"
+        },
+        "description": {
+          "type": "string",
+          "description": "Plain-language description of capability needed"
+        },
+        "existing_skill_candidates": {
+          "type": "array",
+          "items": {"type": "string"},
+          "description": "Skills that were tried and failed (lineage chain)"
+        },
+        "why_existing_insufficient": {
+          "type": "string",
+          "description": "Why existing skills could not handle this failure pattern"
+        }
+      },
+      "required": ["class", "description"]
+    },
+    "proposed_skill": {
+      "type": "object",
+      "description": "Proposed new skill specification",
+      "properties": {
+        "skill_name": {
+          "type": "string",
+          "description": "Proposed skill identifier (e.g., skill.reconcile)"
+        },
+        "version": {
+          "type": "string",
+          "description": "Initial version (typically 1.0.0)"
+        },
+        "parent_skill_id": {
+          "type": "string",
+          "description": "Which skill family it extends (for lineage)"
+        },
+        "signature": {
+          "type": "object",
+          "description": "Input/output contract",
+          "properties": {
+            "input_type": {"type": "string"},
+            "output_type": {"type": "string"}
+          }
+        }
+      },
+      "required": ["skill_name", "version"]
+    },
+    "confidence": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0,
+      "description": "Detector's confidence that this is a genuine capability gap (0.0-1.0)"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When discovery was made"
+    },
+    "authority": {
+      "type": "string",
+      "const": "NONE",
+      "description": "This proposal has no authority; MAYOR decides admission"
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "discovery_id",
+    "batch_id",
+    "failure_cluster",
+    "capability_gap",
+    "proposed_skill",
+    "timestamp",
+    "authority"
+  ],
+  "additionalProperties": false
+}

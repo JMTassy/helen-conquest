@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/ct_run_manifest.schema.json",
+  "title": "Creative Town Run Manifest",
+  "description": "Provenance metadata for Creative Town proposal generation (non-authoritative).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "ct_boundary_digest",
+    "proposals_count",
+    "timestamp"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "pattern": "^R-CT-[0-9]{8}-[0-9]{3}$",
+      "description": "Creative Town run identifier (e.g., R-CT-20260123-001)."
+    },
+    "ct_boundary_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of canonical(proposal_bundle || ct_run_manifest) for immutable record."
+    },
+    "proposals_count": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total number of proposals in this run."
+    },
+    "ct_version": {
+      "type": "string",
+      "description": "Creative Town code version (for diagnostics only, non-sovereign)."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when CT run completed."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata (ct_version, generation settings, etc.)."
+    }
+  }
+}

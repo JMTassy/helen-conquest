@@ -1,0 +1,49 @@
+{
+  "run_id": "R-C",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-C-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-C",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:8a8jkBG/3/Vesb8stXQAWBu1FWAoO/0vL8d085harlPlBqmZE+wikXQAt49QXzMwFb4pBOLYoMaBbXiVqAmVCw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-25T10:00:00Z"
+    },
+    {
+      "attestation_id": "ATT-C-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-C",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:2ZfNd8HjSGuENlZYAAPYAkwAUnZUY7ltDVOoyG/tIn2Qwpv7MYSVO+lYMQG2HqyX9HkMZj7kCgh4j2rknh/BDw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-25T10:05:00Z"
+    }
+  ],
+  "ledger_digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runC_valid_quorum",
+    "expected_decision": "SHIP",
+    "satisfied_obligation": "gdpr_consent_banner"
+  }
+}

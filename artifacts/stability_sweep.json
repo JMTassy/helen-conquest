@@ -1,0 +1,102 @@
+{
+  "seeds": [
+    7,
+    13,
+    42,
+    99,
+    137,
+    200,
+    314,
+    512
+  ],
+  "n_ticks_per_seed": 80,
+  "prop1_verified_count": 8,
+  "prop2_verified_count": 0,
+  "converged_count": 1,
+  "mean_final_L": 0.2777732441696146,
+  "mean_crisis_fraction": 0.39556962025316456,
+  "worst_seed": 13,
+  "best_seed": 7,
+  "per_seed_summary": [
+    {
+      "seed": 7,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.26110070359870113,
+      "crisis_count": 25,
+      "final_regime": "politics",
+      "ticks_in_politics": 44
+    },
+    {
+      "seed": 13,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.31296635120506383,
+      "crisis_count": 35,
+      "final_regime": "egregor",
+      "ticks_in_politics": 52
+    },
+    {
+      "seed": 42,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.26756959964042865,
+      "crisis_count": 30,
+      "final_regime": "politics",
+      "ticks_in_politics": 52
+    },
+    {
+      "seed": 99,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.30561478938053144,
+      "crisis_count": 33,
+      "final_regime": "egregor",
+      "ticks_in_politics": 56
+    },
+    {
+      "seed": 137,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.26414289406364133,
+      "crisis_count": 35,
+      "final_regime": "politics",
+      "ticks_in_politics": 40
+    },
+    {
+      "seed": 200,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.28078260129250704,
+      "crisis_count": 29,
+      "final_regime": "politics",
+      "ticks_in_politics": 42
+    },
+    {
+      "seed": 314,
+      "prop1": true,
+      "prop2": false,
+      "converged": true,
+      "final_L": 0.24678389523802566,
+      "crisis_count": 30,
+      "final_regime": "politics",
+      "ticks_in_politics": 36
+    },
+    {
+      "seed": 512,
+      "prop1": true,
+      "prop2": false,
+      "converged": false,
+      "final_L": 0.2832251189380176,
+      "crisis_count": 33,
+      "final_regime": "politics",
+      "ticks_in_politics": 52
+    }
+  ]
+}

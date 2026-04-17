@@ -1,0 +1,56 @@
+[
+  {
+    "body": "Subject: Marketing campaign Q1 2026 launch approved From: marketing@company.com The Q1 2026 marketing campaign has been approved by leadership. Budget: $250K. Timeline: Jan 30 - Mar 31. Key channels: email, social media, paid search. Expected reach: 500K users. Success metric: 5% conversion rate.",
+    "confidence": 1.0,
+    "date": "2026-01-30",
+    "id": "obs_20260130_2b17eec49f6d5bd8",
+    "links": [],
+    "run_id": 174,
+    "source": "sample_email_001",
+    "tags": [],
+    "title": "sample_email_001"
+  },
+  {
+    "body": "Total unique visitors: 45,230. Page load time: 2.3s (avg). Bounce rate: 28%. Top pages: /products (12K), /pricing (8K), /blog (6K). Traffic sources: organic 60%, direct 25%, paid 15%.",
+    "confidence": 0.95,
+    "date": "2026-01-30",
+    "id": "obs_20260130_2ec5aa7d7a864c99",
+    "links": [],
+    "run_id": 174,
+    "source": "analytics_dashboard",
+    "tags": [
+      "metrics",
+      "performance",
+      "traffic"
+    ],
+    "title": "Weekly Traffic Report - Week 1"
+  },
+  {
+    "body": "Received 47 support tickets in last 24 hours related to database timeouts. Issue detected at 14:30 UTC on 2026-01-29. Root cause: connection pool exhaustion under load. Fix deployed at 16:45 UTC. Recovery time: 2.25 hours. Customer impact: ~500 users affected during outage window.",
+    "confidence": 0.92,
+    "date": "2026-01-30",
+    "id": "obs_20260130_93016a7834f411bc",
+    "links": [],
+    "run_id": 174,
+    "source": "customer_support",
+    "tags": [
+      "critical",
+      "database",
+      "incident"
+    ],
+    "title": "Support ticket spike - Database connection issues"
+  },
+  {
+    "body": "# Engineering Team Standup - 2026-01-29 ## Attendees - Lead Engineer: Alice Chen - Backend: Bob Martinez - Frontend: Carol Singh - DevOps: David Thompson ## Key Decisions ### API Rate Limiting - Current limits: 1000 req/min per user - Proposed: 100 req/min per free tier, 500 req/min per pro tier - Status: APPROVED by engineering lead - Implementation: Bob will merge PR by EOD 2026-01-31 - Impact: Prevents abuse, improves platform stability ### Frontend Performance Optimization - React compon",
+    "confidence": 0.9,
+    "date": "2026-01-30",
+    "id": "obs_20260130_f6391d8cd23e66c3",
+    "links": [],
+    "run_id": 174,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Engineering Team Standup - 2026-01-29"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "cycle": 48,
+  "timestamp": "2026-01-26T19:13:51.482057",
+  "ct_output": {
+    "proposal_name": "add_performance_metrics",
+    "proposal_hash": "25bdc264b9a1fcfd7e28a207e462af46e8e7b0ffc2706e73cac2184df8403292",
+    "patch_count": 2,
+    "tokens_used": 328,
+    "reasoning": "Cycle 48: Adding performance tracking to critical paths (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

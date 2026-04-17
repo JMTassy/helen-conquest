@@ -1,0 +1,191 @@
+{
+  "seed": 42,
+  "epochs_run": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "metrics_log": [
+    {
+      "epoch": 5,
+      "turn_range": "1-6",
+      "num_clusters": 3,
+      "cluster_sizes": [
+        2,
+        2,
+        2
+      ],
+      "speed_cluster_success": 0.9799999999999998,
+      "accuracy_cluster_success": 0.8199999999999998,
+      "average_cluster_cohesion": 0.34943202697167913,
+      "houses_formed": 0,
+      "house_health": {}
+    },
+    {
+      "epoch": 6,
+      "turn_range": "7-12",
+      "num_clusters": 3,
+      "cluster_sizes": [
+        2,
+        2,
+        2
+      ],
+      "speed_cluster_success": 1.0,
+      "accuracy_cluster_success": 1.0,
+      "average_cluster_cohesion": 0.722007188548338,
+      "houses_formed": 0,
+      "house_health": {}
+    },
+    {
+      "epoch": 7,
+      "turn_range": "13-18",
+      "num_clusters": 3,
+      "cluster_sizes": [
+        2,
+        2,
+        2
+      ],
+      "speed_cluster_success": 1.0,
+      "accuracy_cluster_success": 1.0,
+      "average_cluster_cohesion": 1.0,
+      "houses_formed": 3,
+      "house_health": {
+        "Builders": 1.0,
+        "Scholars": 1.0,
+        "Explorers": 1.0
+      }
+    },
+    {
+      "epoch": 8,
+      "turn_range": "19-24",
+      "num_clusters": 3,
+      "cluster_sizes": [
+        2,
+        2,
+        2
+      ],
+      "speed_cluster_success": 1.0,
+      "accuracy_cluster_success": 1.0,
+      "average_cluster_cohesion": 1.0,
+      "houses_formed": 3,
+      "house_health": {
+        "Builders": 1.0,
+        "Scholars": 1.0,
+        "Explorers": 1.0
+      }
+    }
+  ],
+  "final_houses": {
+    "Builders": {
+      "leader": "Planner",
+      "members": [
+        "Planner",
+        "Worker"
+      ],
+      "strategy": "Speed",
+      "focus": [
+        "execution",
+        "speed",
+        "throughput"
+      ],
+      "cohesion": 1.0
+    },
+    "Scholars": {
+      "leader": "Critic",
+      "members": [
+        "Critic",
+        "Archivist"
+      ],
+      "strategy": "Accuracy",
+      "focus": [
+        "verification",
+        "knowledge",
+        "accuracy"
+      ],
+      "cohesion": 1.0
+    },
+    "Explorers": {
+      "leader": "Explorer",
+      "members": [
+        "Explorer",
+        "Integrator"
+      ],
+      "strategy": "Balance",
+      "focus": [
+        "innovation",
+        "discovery",
+        "ideas"
+      ],
+      "cohesion": 1.0
+    }
+  },
+  "collaboration_graph": {
+    "(0, 1)": {
+      "agent_a": "Explorer",
+      "agent_b": "Planner",
+      "compatibility": 0.18421275288313949,
+      "co_appearances": 6
+    },
+    "(0, 2)": {
+      "agent_a": "Explorer",
+      "agent_b": "Worker",
+      "compatibility": 0.12414515578259624,
+      "co_appearances": 4
+    },
+    "(0, 3)": {
+      "agent_a": "Explorer",
+      "agent_b": "Integrator",
+      "compatibility": 1.0,
+      "co_appearances": 45
+    },
+    "(0, 4)": {
+      "agent_a": "Explorer",
+      "agent_b": "Critic",
+      "compatibility": 0.10092691117564659,
+      "co_appearances": 3
+    },
+    "(0, 5)": {
+      "agent_a": "Explorer",
+      "agent_b": "Archivist",
+      "compatibility": 0.1576269578569113,
+      "co_appearances": 5
+    },
+    "(1, 2)": {
+      "agent_a": "Planner",
+      "agent_b": "Worker",
+      "compatibility": 1.0,
+      "co_appearances": 48
+    },
+    "(1, 4)": {
+      "agent_a": "Planner",
+      "agent_b": "Critic",
+      "compatibility": 0.1337240826078481,
+      "co_appearances": 4
+    },
+    "(1, 5)": {
+      "agent_a": "Planner",
+      "agent_b": "Archivist",
+      "compatibility": 0.16096691811224084,
+      "co_appearances": 5
+    },
+    "(3, 4)": {
+      "agent_a": "Integrator",
+      "agent_b": "Critic",
+      "compatibility": 0.13445829301805695,
+      "co_appearances": 4
+    },
+    "(3, 5)": {
+      "agent_a": "Integrator",
+      "agent_b": "Archivist",
+      "compatibility": 0.1710952845007234,
+      "co_appearances": 5
+    },
+    "(4, 5)": {
+      "agent_a": "Critic",
+      "agent_b": "Archivist",
+      "compatibility": 1.0,
+      "co_appearances": 46
+    }
+  }
+}

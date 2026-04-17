@@ -1,0 +1,4653 @@
+{
+  "emergence_map": {
+    "total_runs": 96,
+    "regime_distribution": {
+      "politics": 42,
+      "egregor": 6,
+      "noise": 48
+    },
+    "house_forming_configs": 47,
+    "egregor_forming_configs": 48,
+    "min_scarcity_for_houses": 0.1,
+    "min_coord_penalty_for_houses": 0.0,
+    "min_imitation_for_egregors": 0.2
+  },
+  "results": [
+    {
+      "seed": 42,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 6,
+        "politics": 10
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 6,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.922
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 42
+      },
+      "final_metrics": {
+        "modularity": 0.7135,
+        "ie_ratio": 6.6415,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0235,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "a4e7a59a11ec78a1"
+    },
+    {
+      "seed": 43,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 13
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.937
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 43
+      },
+      "final_metrics": {
+        "modularity": 0.6406,
+        "ie_ratio": 6.1411,
+        "coalition_persistence": 0.2273,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0207,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "45040a746e2dfd3e"
+    },
+    {
+      "seed": 44,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 8,
+        "politics": 12
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 12,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 44
+      },
+      "final_metrics": {
+        "modularity": 0.6677,
+        "ie_ratio": 5.3585,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0192,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "e7481dd512be140e"
+    },
+    {
+      "seed": 45,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 13
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.935
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 19,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 45
+      },
+      "final_metrics": {
+        "modularity": 0.6918,
+        "ie_ratio": 5.9867,
+        "coalition_persistence": 0.2576,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0171,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "d188b41042a427dc"
+    },
+    {
+      "seed": 46,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 15
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.962
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 20,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 46
+      },
+      "final_metrics": {
+        "modularity": 0.5347,
+        "ie_ratio": 5.4986,
+        "coalition_persistence": 0.1818,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0197,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "88af22d0c0ab1792"
+    },
+    {
+      "seed": 47,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 15
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 15,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.972
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.998
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 47
+      },
+      "final_metrics": {
+        "modularity": 0.6963,
+        "ie_ratio": 6.1146,
+        "coalition_persistence": 0.2727,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0095,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "9e95c4e0763d5492"
+    },
+    {
+      "seed": 48,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 18
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 76,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.975
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 59,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.963
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 18,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 48
+      },
+      "final_metrics": {
+        "modularity": 0.4479,
+        "ie_ratio": 6.0074,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.069,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "774ce01a0b52d38d"
+    },
+    {
+      "seed": 49,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 10,
+        "politics": 25
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01"
+          ],
+          "strategy": "explore",
+          "formed_at": 30,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 27,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.893
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 80,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.95
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 49
+      },
+      "final_metrics": {
+        "modularity": 0.3016,
+        "ie_ratio": 4.8204,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0463,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "03719a06be60bbbd"
+    },
+    {
+      "seed": 50,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 18
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 56,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 59,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 50
+      },
+      "final_metrics": {
+        "modularity": 0.374,
+        "ie_ratio": 6.1124,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0425,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "511a2acc562ec976"
+    },
+    {
+      "seed": 51,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 10,
+        "politics": 19
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 19,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.925
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 60,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.925
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 51
+      },
+      "final_metrics": {
+        "modularity": 0.3926,
+        "ie_ratio": 6.6579,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0909,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "f974e1d377683b81"
+    },
+    {
+      "seed": 52,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 18
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a01",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 18,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 79,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 73,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 52
+      },
+      "final_metrics": {
+        "modularity": 0.2651,
+        "ie_ratio": 5.8196,
+        "coalition_persistence": 0.0455,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.071,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "bd6b05ebd846aa62"
+    },
+    {
+      "seed": 53,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 1,
+      "n_egregors": 1,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 13,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 44,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.987
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 53
+      },
+      "final_metrics": {
+        "modularity": 0.2227,
+        "ie_ratio": 8.4375,
+        "coalition_persistence": 0.0303,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0893,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "edb436ce9e58efe0"
+    },
+    {
+      "seed": 54,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 54
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1714,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "3e8575219b6fab1c"
+    },
+    {
+      "seed": 55,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 55
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1028,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "9e6c55ef3ec644bf"
+    },
+    {
+      "seed": 56,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 56
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2029,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "92264b0a9b788875"
+    },
+    {
+      "seed": 57,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 57
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1531,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "3c15e8d9a5957fe2"
+    },
+    {
+      "seed": 58,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 58
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2466,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "f3d89a47fb5894b8"
+    },
+    {
+      "seed": 59,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 59
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1238,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "5c9171964628dbe6"
+    },
+    {
+      "seed": 60,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 60
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2055,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "3da11c5340699be2"
+    },
+    {
+      "seed": 61,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 61
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1638,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "c9cf1d4a33010d93"
+    },
+    {
+      "seed": 62,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 62
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0954,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "36c82a3713b68ec2"
+    },
+    {
+      "seed": 63,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 63
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.3127,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "f2c9a58bfe95f6d3"
+    },
+    {
+      "seed": 64,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 64
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1881,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "58169a61f5b17d0b"
+    },
+    {
+      "seed": 65,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.1,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 65
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1521,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "53bd79d933edf6ab"
+    },
+    {
+      "seed": 66,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 6,
+        "politics": 16
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 66
+      },
+      "final_metrics": {
+        "modularity": 0.7073,
+        "ie_ratio": 6.4445,
+        "coalition_persistence": 0.2727,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.009,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "031d0dc285995edc"
+    },
+    {
+      "seed": 67,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 12
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.992
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.865
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.962
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 67
+      },
+      "final_metrics": {
+        "modularity": 0.6897,
+        "ie_ratio": 5.9268,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0362,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "b735ec98d9a9ab11"
+    },
+    {
+      "seed": 68,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 8,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.988
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 17,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 68
+      },
+      "final_metrics": {
+        "modularity": 0.5795,
+        "ie_ratio": 4.7955,
+        "coalition_persistence": 0.2121,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0116,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "cf636df16fcc2aec"
+    },
+    {
+      "seed": 69,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 8,
+        "politics": 14
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.863
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 21,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 69
+      },
+      "final_metrics": {
+        "modularity": 0.527,
+        "ie_ratio": 5.1109,
+        "coalition_persistence": 0.1818,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0364,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "acac42608c8e1462"
+    },
+    {
+      "seed": 70,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 4,
+        "politics": 13
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 4,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.985
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 70
+      },
+      "final_metrics": {
+        "modularity": 0.6829,
+        "ie_ratio": 5.7426,
+        "coalition_persistence": 0.2576,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0133,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "77baef344f869c61"
+    },
+    {
+      "seed": 71,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 16
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.933
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 71
+      },
+      "final_metrics": {
+        "modularity": 0.5951,
+        "ie_ratio": 5.1459,
+        "coalition_persistence": 0.1667,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0278,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "ce8126e37af7f4f8"
+    },
+    {
+      "seed": 72,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 20
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 20,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.953
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 77,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.975
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a09",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 12,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.875
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 72
+      },
+      "final_metrics": {
+        "modularity": 0.3917,
+        "ie_ratio": 6.6257,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0626,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "5a7a0f173fd2ae3b"
+    },
+    {
+      "seed": 73,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 2,
+      "n_egregors": 2,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 11,
+        "politics": 34
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 25,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 66,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.937
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 73
+      },
+      "final_metrics": {
+        "modularity": 0.4001,
+        "ie_ratio": 6.7656,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0738,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "3ff75a45e83b00e0"
+    },
+    {
+      "seed": 74,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 34
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 34,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.987
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 20,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 19,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 74
+      },
+      "final_metrics": {
+        "modularity": 0.477,
+        "ie_ratio": 7.2549,
+        "coalition_persistence": 0.0909,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.038,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "1d5df0299549d9af"
+    },
+    {
+      "seed": 75,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 17,
+        "politics": 31
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a01",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 41,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.975
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 17,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.987
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 20,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.983
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 75
+      },
+      "final_metrics": {
+        "modularity": 0.4399,
+        "ie_ratio": 5.7224,
+        "coalition_persistence": 0.0909,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0688,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "54aee83bf9a12ae7"
+    },
+    {
+      "seed": 76,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 2,
+      "n_egregors": 2,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 15,
+        "politics": 33
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 29,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.957
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 33,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 76
+      },
+      "final_metrics": {
+        "modularity": 0.3786,
+        "ie_ratio": 7.2572,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0453,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "5b83571bf516b185"
+    },
+    {
+      "seed": 77,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 14,
+        "politics": 20
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01"
+          ],
+          "strategy": "explore",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 44,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.93
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 18,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 77
+      },
+      "final_metrics": {
+        "modularity": 0.2874,
+        "ie_ratio": 6.8147,
+        "coalition_persistence": 0.0455,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1026,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "588a134024e768a2"
+    },
+    {
+      "seed": 78,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 78
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1598,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "10969e481c873c79"
+    },
+    {
+      "seed": 79,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 79
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0673,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "b60656ebf22f9039"
+    },
+    {
+      "seed": 80,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 80
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2152,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "9b529836b6d7f53d"
+    },
+    {
+      "seed": 81,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 81
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1342,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "93dd13109d1677e3"
+    },
+    {
+      "seed": 82,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 82
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.128,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "cbe53a2c2c69acb9"
+    },
+    {
+      "seed": 83,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 83
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1501,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "824c1cfa72e20721"
+    },
+    {
+      "seed": 84,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 84
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2622,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "18ad2fa953c572bf"
+    },
+    {
+      "seed": 85,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 85
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.212,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "571d38bdc9656c07"
+    },
+    {
+      "seed": 86,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 86
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2002,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "4dec1f08e533fb4a"
+    },
+    {
+      "seed": 87,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 87
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2026,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "4c9d01ed0ee180ba"
+    },
+    {
+      "seed": 88,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 88
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1758,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "adc8dea4749272ed"
+    },
+    {
+      "seed": 89,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.3,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 89
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2692,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "f3006d3e4851f476"
+    },
+    {
+      "seed": 90,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 16
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.972
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a05",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 80,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.81
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 53,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.935
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 90
+      },
+      "final_metrics": {
+        "modularity": 0.5759,
+        "ie_ratio": 6.1733,
+        "coalition_persistence": 0.1818,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0428,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "c388aacc9ca01e54"
+    },
+    {
+      "seed": 91,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 16
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.935
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 91
+      },
+      "final_metrics": {
+        "modularity": 0.6742,
+        "ie_ratio": 5.5183,
+        "coalition_persistence": 0.2576,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0155,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "a195274eb2a7fe96"
+    },
+    {
+      "seed": 92,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 5,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 5,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.978
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 17,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.968
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 12,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.907
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 92
+      },
+      "final_metrics": {
+        "modularity": 0.6591,
+        "ie_ratio": 5.1546,
+        "coalition_persistence": 0.2273,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0278,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "12d1e6a0e99786cb"
+    },
+    {
+      "seed": 93,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 8,
+        "politics": 14
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.958
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.978
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 93
+      },
+      "final_metrics": {
+        "modularity": 0.6961,
+        "ie_ratio": 6.1072,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0154,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "2c2607e4af9cdab9"
+    },
+    {
+      "seed": 94,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 10,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 30,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.993
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.998
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 94
+      },
+      "final_metrics": {
+        "modularity": 0.6104,
+        "ie_ratio": 5.1698,
+        "coalition_persistence": 0.1818,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0269,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "61783f4706cf5934"
+    },
+    {
+      "seed": 95,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 7,
+        "politics": 18
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 22,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 7,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.985
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 95
+      },
+      "final_metrics": {
+        "modularity": 0.6863,
+        "ie_ratio": 5.8351,
+        "coalition_persistence": 0.2727,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0071,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "8defc9166909eabc"
+    },
+    {
+      "seed": 96,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 15,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 17,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.957
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 59,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.977
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a09",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 73,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.975
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 96
+      },
+      "final_metrics": {
+        "modularity": 0.5252,
+        "ie_ratio": 7.9603,
+        "coalition_persistence": 0.0909,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1088,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "476a4eca64d7be74"
+    },
+    {
+      "seed": 97,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 35
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 9,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 35,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.993
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 97
+      },
+      "final_metrics": {
+        "modularity": 0.3824,
+        "ie_ratio": 6.6569,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0696,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "fc217fa00ab96eb0"
+    },
+    {
+      "seed": 98,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 2,
+      "n_egregors": 2,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 12,
+        "politics": 18
+      },
+      "houses": [
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05"
+          ],
+          "strategy": "build",
+          "formed_at": 80,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.76
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a09",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 75,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.905
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 98
+      },
+      "final_metrics": {
+        "modularity": 0.1816,
+        "ie_ratio": 5.6428,
+        "coalition_persistence": 0.0303,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0714,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "98b7d7caa86919d6"
+    },
+    {
+      "seed": 99,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 12,
+        "politics": 14
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01"
+          ],
+          "strategy": "explore",
+          "formed_at": 12,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 61,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.935
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.94
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 99
+      },
+      "final_metrics": {
+        "modularity": 0.3321,
+        "ie_ratio": 5.267,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0329,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "71e641d8b452eac7"
+    },
+    {
+      "seed": 100,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 13,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 47,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 57,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 26,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.94
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 100
+      },
+      "final_metrics": {
+        "modularity": 0.3818,
+        "ie_ratio": 5.9874,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0363,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "c2c65133820dc8e3"
+    },
+    {
+      "seed": 101,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 13,
+        "politics": 53
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a01",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 15,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.94
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 74,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 59,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.869
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 101
+      },
+      "final_metrics": {
+        "modularity": 0.5776,
+        "ie_ratio": 9.6883,
+        "coalition_persistence": 0.0909,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1699,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "b7245a97bc12caa1"
+    },
+    {
+      "seed": 102,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 102
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1807,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "0377289115b09ced"
+    },
+    {
+      "seed": 103,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 103
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.095,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "aac51d4485340a96"
+    },
+    {
+      "seed": 104,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 104
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1185,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "78ad858a9693b205"
+    },
+    {
+      "seed": 105,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 105
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1151,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "78a1de5be209ac31"
+    },
+    {
+      "seed": 106,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 106
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2082,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "5729eae9734762c5"
+    },
+    {
+      "seed": 107,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 107
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1134,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "da808780d783d8a9"
+    },
+    {
+      "seed": 108,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 108
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2206,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "20d0f86e8bd2d741"
+    },
+    {
+      "seed": 109,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 109
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1512,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "ec1ee30cd9fbffd4"
+    },
+    {
+      "seed": 110,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 110
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.131,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "276693db3bf383d4"
+    },
+    {
+      "seed": 111,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 61
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 111
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2209,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "8f0e839767444314"
+    },
+    {
+      "seed": 112,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 112
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1282,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "5f3636b38eac27ff"
+    },
+    {
+      "seed": 113,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.5,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 113
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1585,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "623af349483b980e"
+    },
+    {
+      "seed": 114,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 11,
+        "politics": 17
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.937
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 12,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.985
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 17,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 114
+      },
+      "final_metrics": {
+        "modularity": 0.6174,
+        "ie_ratio": 5.6274,
+        "coalition_persistence": 0.197,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0191,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "2276d64aa8cba287"
+    },
+    {
+      "seed": 115,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 6,
+        "politics": 11
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.987
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 8,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.998
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 6,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 115
+      },
+      "final_metrics": {
+        "modularity": 0.6762,
+        "ie_ratio": 5.5696,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.004,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "3bf2b3c903da4105"
+    },
+    {
+      "seed": 116,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 11,
+        "politics": 19
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 19,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.935
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.99
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 116
+      },
+      "final_metrics": {
+        "modularity": 0.7504,
+        "ie_ratio": 8.015,
+        "coalition_persistence": 0.2727,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0164,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "d55db482a41629d4"
+    },
+    {
+      "seed": 117,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 6,
+        "politics": 10
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_00",
+          "members": [
+            "a08",
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 6,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.953
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 117
+      },
+      "final_metrics": {
+        "modularity": 0.6289,
+        "ie_ratio": 5.901,
+        "coalition_persistence": 0.2273,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0143,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "912aed89b8de9080"
+    },
+    {
+      "seed": 118,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 6,
+        "politics": 11
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.988
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 6,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.985
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.995
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 118
+      },
+      "final_metrics": {
+        "modularity": 0.6966,
+        "ie_ratio": 6.1228,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0088,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "e7701a93ffd9b9a5"
+    },
+    {
+      "seed": 119,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 10,
+        "politics": 11
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 54,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.915
+        },
+        {
+          "id": "H_BUI_00",
+          "members": [
+            "a04",
+            "a05",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 10,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.958
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10",
+            "a11"
+          ],
+          "strategy": "judge",
+          "formed_at": 11,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.0,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 119
+      },
+      "final_metrics": {
+        "modularity": 0.7041,
+        "ie_ratio": 6.3445,
+        "coalition_persistence": 0.2424,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.022,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "b2df8155487877ac"
+    },
+    {
+      "seed": 120,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 12,
+        "politics": 19
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02"
+          ],
+          "strategy": "explore",
+          "formed_at": 64,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.92
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 62,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.997
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.79
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 120
+      },
+      "final_metrics": {
+        "modularity": 0.3912,
+        "ie_ratio": 7.5879,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0776,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "45325b8a1618e6e6"
+    },
+    {
+      "seed": 121,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 27
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 40,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 14,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.97
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 27,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 121
+      },
+      "final_metrics": {
+        "modularity": 0.3825,
+        "ie_ratio": 6.2545,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1039,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "14caffebbfd2b977"
+    },
+    {
+      "seed": 122,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 8,
+        "politics": 21
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01"
+          ],
+          "strategy": "explore",
+          "formed_at": 39,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 68,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.967
+        },
+        {
+          "id": "H_JUD_01",
+          "members": [
+            "a08",
+            "a09"
+          ],
+          "strategy": "judge",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 122
+      },
+      "final_metrics": {
+        "modularity": 0.3653,
+        "ie_ratio": 5.7851,
+        "coalition_persistence": 0.0606,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0611,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "d00f9ac3154ee651"
+    },
+    {
+      "seed": 123,
+      "final_tick": 80,
+      "final_regime": "politics",
+      "n_houses": 3,
+      "n_egregors": 3,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 9,
+        "politics": 28
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 64,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 1.0
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a05",
+            "a07"
+          ],
+          "strategy": "build",
+          "formed_at": 51,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.98
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 28,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.88
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 123
+      },
+      "final_metrics": {
+        "modularity": 0.259,
+        "ie_ratio": 6.1675,
+        "coalition_persistence": 0.0455,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0561,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "0b60619da069f413"
+    },
+    {
+      "seed": 124,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 2,
+      "n_egregors": 2,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 13,
+        "politics": 16
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a02",
+            "a03"
+          ],
+          "strategy": "explore",
+          "formed_at": 31,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.983
+        },
+        {
+          "id": "H_JUD_02",
+          "members": [
+            "a08",
+            "a09",
+            "a10"
+          ],
+          "strategy": "judge",
+          "formed_at": 16,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.987
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 124
+      },
+      "final_metrics": {
+        "modularity": 0.4709,
+        "ie_ratio": 9.1582,
+        "coalition_persistence": 0.0758,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1003,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "7a3796088d869d17"
+    },
+    {
+      "seed": 125,
+      "final_tick": 80,
+      "final_regime": "egregor",
+      "n_houses": 2,
+      "n_egregors": 2,
+      "regime_transitions": {
+        "noise": 1,
+        "egregor": 10,
+        "politics": 21
+      },
+      "houses": [
+        {
+          "id": "H_EXP_00",
+          "members": [
+            "a00",
+            "a01"
+          ],
+          "strategy": "explore",
+          "formed_at": 13,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.96
+        },
+        {
+          "id": "H_BUI_01",
+          "members": [
+            "a04",
+            "a06"
+          ],
+          "strategy": "build",
+          "formed_at": 35,
+          "is_egregor": true,
+          "policy_predictability": 1.0,
+          "collective_rep": 0.885
+        }
+      ],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.1,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 125
+      },
+      "final_metrics": {
+        "modularity": 0.2002,
+        "ie_ratio": 6.4663,
+        "coalition_persistence": 0.0303,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.0688,
+        "policy_explanation_rate": 1.0
+      },
+      "ledger_tip": "0913dea828ea3659"
+    },
+    {
+      "seed": 126,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 126
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1665,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "19ba190a88fe7e66"
+    },
+    {
+      "seed": 127,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 127
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1169,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "bed32710a52cd3b4"
+    },
+    {
+      "seed": 128,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 128
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1721,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "c4dd189e00899a92"
+    },
+    {
+      "seed": 129,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 129
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1579,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "4ada788222e827ee"
+    },
+    {
+      "seed": 130,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 130
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1686,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "b616dfeb292e04a8"
+    },
+    {
+      "seed": 131,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.2,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 131
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1614,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "86baea4e4a24f76a"
+    },
+    {
+      "seed": 132,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.2,
+        "seed": 132
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1397,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "c1cd6949208581ba"
+    },
+    {
+      "seed": 133,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.3,
+        "imitation_strength": 0.5,
+        "seed": 133
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2347,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "30aa67376eb52fa7"
+    },
+    {
+      "seed": 134,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.2,
+        "seed": 134
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1767,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "1b867c2fc0b940f2"
+    },
+    {
+      "seed": 135,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.5,
+        "imitation_strength": 0.5,
+        "seed": 135
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.2603,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "975e2c467a0f4ee7"
+    },
+    {
+      "seed": 136,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.2,
+        "seed": 136
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1648,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "f29df3245bfca1b4"
+    },
+    {
+      "seed": 137,
+      "final_tick": 80,
+      "final_regime": "noise",
+      "n_houses": 0,
+      "n_egregors": 0,
+      "regime_transitions": {
+        "noise": 1
+      },
+      "houses": [],
+      "params": {
+        "n_agents": 12,
+        "scarcity": 0.7,
+        "coordination_penalty": 0.4,
+        "reputation_weight": 0.7,
+        "imitation_strength": 0.5,
+        "seed": 137
+      },
+      "final_metrics": {
+        "modularity": 0.0,
+        "ie_ratio": 1.0,
+        "coalition_persistence": 0.0,
+        "strategy_entropy": 1.585,
+        "reputation_gini": 0.1713,
+        "policy_explanation_rate": 0.0
+      },
+      "ledger_tip": "ae01aec192faaf0b"
+    }
+  ]
+}

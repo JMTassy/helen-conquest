@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/experiment_lineage_v1.json",
+  "title": "EXPERIMENT_LINEAGE_V1",
+  "description": "Append-only Experiment Lineage Graph. Records every experiment node — including rejected ones. Separate from the sovereign ledger: ELG is the exploration memory layer, ledger is the governance memory layer.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_name", "schema_version", "lineage_id", "nodes"],
+  "properties": {
+    "schema_name":    {"const": "EXPERIMENT_LINEAGE_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "lineage_id": {
+      "type": "string", "minLength": 1,
+      "description": "Unique identifier for this lineage graph."
+    },
+    "nodes": {
+      "type": "array",
+      "description": "Ordered list of EXPERIMENT_NODE_V1 objects. Append-only.",
+      "items": {
+        "type": "object",
+        "required": [
+          "schema_name", "schema_version",
+          "experiment_id", "skill_id", "candidate_version",
+          "mutation_family",
+          "eval_receipt_hash", "promotion_case_hash", "experiment_hash",
+          "reducer_decision"
+        ],
+        "properties": {
+          "schema_name":           {"const": "EXPERIMENT_NODE_V1"},
+          "schema_version":        {"const": "1.0.0"},
+          "experiment_id":         {"type": "string", "minLength": 1},
+          "parent_experiment_id":  {"type": ["string", "null"]},
+          "skill_id":              {"type": "string", "minLength": 1},
+          "candidate_version":     {"type": "string"},
+          "mutation_family":       {"type": "string", "enum": ["optimizer","architecture","retrieval","regularization","tokenizer","capability","other"]},
+          "eval_receipt_hash":     {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+          "promotion_case_hash":   {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+          "experiment_hash":       {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+          "reducer_decision":      {"type": "string", "enum": ["ADMITTED","REJECTED","QUARANTINED"]},
+          "notes":                 {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

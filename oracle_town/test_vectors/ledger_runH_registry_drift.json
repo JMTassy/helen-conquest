@@ -1,0 +1,55 @@
+{
+  "run_id": "R-H",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-H-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-H",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "key_registry_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "evidence_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:SM93wLuUr2+skbP5ijRD3ogOgMddjrblFoRhR/zNVYOVSxnmUKDWcSVSb4/tJQkbmmSmedmu9OLjJIG1gbi/AQ==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-20T10:00:00Z",
+      "meta": {
+        "_test_note": "Attestation signed with OLD registry hash (000...) but policy expects CURRENT registry hash"
+      }
+    },
+    {
+      "attestation_id": "ATT-H-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-H",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "key_registry_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "evidence_digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:7zYnqTPRXiPo4fBep6U5WH11/9ReyqtNTzGlq3UCDWxyWaNI7OfwzDdCbwHwOREklntqDfbaSVaK8yK4iOE7Aw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-20T10:05:00Z"
+    }
+  ],
+  "ledger_digest": "sha256:hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runH_registry_drift",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "SIGNATURE_INVALID",
+    "attack_description": "Attestations signed with old registry hash. Signature verification fails because canonical message includes different registry hash."
+  }
+}

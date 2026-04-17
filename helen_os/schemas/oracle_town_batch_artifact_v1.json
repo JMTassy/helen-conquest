@@ -1,0 +1,162 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "ORACLE_TOWN_BATCH_ARTIFACT_V1",
+  "description": "Storable batch artifact for Oracle Town. Contains full ledger for independent verification + state projection.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "ORACLE_TOWN_BATCH_ARTIFACT_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "artifact_id": {
+      "type": "string",
+      "pattern": "^batch_artifact_[a-z0-9_]+$"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^batch_receipt_[a-z0-9_]+$",
+      "description": "Reference to parent BATCH_RECEIPT_PACKET_V1"
+    },
+    "ledger": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "const": "DECISION_LEDGER_V1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "ledger_id": {
+          "type": "string"
+        },
+        "canonicalization": {
+          "const": "JCS_SHA256_V1"
+        },
+        "entries": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "entry_index": {"type": "integer"},
+              "ts": {"type": "string", "format": "date-time"},
+              "prev_entry_hash": {
+                "oneOf": [
+                  {"type": "null"},
+                  {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+                ]
+              },
+              "decision": {"type": "object"},
+              "entry_hash": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"}
+            },
+            "required": ["entry_index", "ts", "prev_entry_hash", "decision", "entry_hash"],
+            "additionalProperties": false
+          },
+          "description": "Full immutable decision ledger, verbatim from kernel"
+        }
+      },
+      "required": ["schema_name", "schema_version", "ledger_id", "canonicalization", "entries"],
+      "additionalProperties": false
+    },
+    "state_projection": {
+      "type": "object",
+      "properties": {
+        "schema_name": {
+          "const": "SKILL_LIBRARY_STATE_V1"
+        },
+        "schema_version": {
+          "const": "1.0.0"
+        },
+        "active_skills": {
+          "type": "object",
+          "description": "Final active_skills dict after all governance decisions applied",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "active_version": {"type": "string"},
+              "status": {"const": "ACTIVE"},
+              "last_decision_id": {"type": "string"}
+            },
+            "required": ["active_version", "status", "last_decision_id"],
+            "additionalProperties": false
+          }
+        },
+        "state_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$",
+          "description": "Final state hash after replay"
+        }
+      },
+      "required": ["schema_name", "schema_version", "active_skills", "state_hash"],
+      "additionalProperties": false
+    },
+    "admission_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_index": {
+            "type": "integer"
+          },
+          "decision_type": {
+            "const": "ADMITTED",
+            "description": "Only ADMITTED decisions are summarized here"
+          },
+          "skill_id": {
+            "type": "string",
+            "pattern": "^skill\\."
+          },
+          "candidate_version": {
+            "type": "string"
+          },
+          "decision_id": {
+            "type": "string"
+          },
+          "reason_code": {
+            "const": "OK_ADMITTED"
+          }
+        },
+        "required": ["entry_index", "decision_type", "skill_id", "candidate_version", "decision_id", "reason_code"],
+        "additionalProperties": false
+      },
+      "description": "Extracted summary of all ADMITTED decisions in order"
+    },
+    "rejection_summary": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_index": {
+            "type": "integer"
+          },
+          "decision_type": {
+            "enum": ["REJECTED", "QUARANTINED"]
+          },
+          "reason_code": {
+            "type": "string",
+            "description": "e.g., ERR_THRESHOLD_NOT_MET, ERR_RECEIPT_MISSING, etc."
+          },
+          "skill_id": {
+            "type": "string",
+            "pattern": "^skill\\."
+          }
+        },
+        "required": ["entry_index", "decision_type", "reason_code", "skill_id"],
+        "additionalProperties": false
+      },
+      "description": "Extracted summary of all REJECTED/QUARANTINED decisions"
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "artifact_id",
+    "receipt_id",
+    "ledger",
+    "state_projection",
+    "admission_summary",
+    "rejection_summary"
+  ],
+  "additionalProperties": false
+}

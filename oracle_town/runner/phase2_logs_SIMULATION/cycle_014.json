@@ -1,0 +1,27 @@
+{
+  "cycle": 14,
+  "timestamp": "2026-01-26T19:13:51.478159",
+  "ct_output": {
+    "proposal_name": "fix_race_condition",
+    "proposal_hash": "7626d7cbdf3f3197b85d9d66bd689862df31d7766808f4f0d0f7b7da1f110ea3",
+    "patch_count": 5,
+    "tokens_used": 359,
+    "reasoning": "Cycle 14: Fixing potential race condition in async code (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

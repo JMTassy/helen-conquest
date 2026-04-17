@@ -1,0 +1,15 @@
+{
+  "date": "2026-01-27",
+  "clusters": [
+    {
+      "cluster": "customer_sentiment",
+      "theme": "Customer Sentiment",
+      "confidence": 0.92
+    },
+    {
+      "cluster": "security_alerts",
+      "theme": "Security Alerts",
+      "confidence": 0.85
+    }
+  ]
+}

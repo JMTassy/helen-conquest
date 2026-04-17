@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Frozen Reason Code Registry",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "REASON_CODES"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "code": {
+      "type": "string",
+      "enum": [
+        "ERR_SCHEMA_INVALID",
+        "ERR_RECEIPT_MISSING",
+        "ERR_RECEIPT_HASH_MISMATCH",
+        "ERR_CAPABILITY_DRIFT",
+        "ERR_DOCTRINE_CONFLICT",
+        "ERR_THRESHOLD_NOT_MET",
+        "ERR_ROLLBACK_TRIGGER",
+        "OK_ADMITTED",
+        "OK_QUARANTINED"
+      ]
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "code"
+  ],
+  "additionalProperties": false
+}

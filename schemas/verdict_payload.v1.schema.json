@@ -1,0 +1,188 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "verdict_payload.v1.schema.json",
+  "title": "VERDICT_PAYLOAD_V1",
+  "description": "Payload schema for VERDICT ledger events. This is the hash-bound deterministic portion. Timestamps and notes belong in meta. SORTED ARRAYS REQUIRED: reason_codes, required_fixes, certificates MUST be lexicographically sorted.",
+  "type": "object",
+  "required": [
+    "schema",
+    "verdict_kind",
+    "verdict_id",
+    "subject",
+    "decision",
+    "anchors"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "VERDICT_PAYLOAD_V1",
+      "description": "Schema version discriminator. MUST be exactly 'VERDICT_PAYLOAD_V1'."
+    },
+    "verdict_kind": {
+      "type": "string",
+      "enum": ["PASS", "WARN", "BLOCK", "SHIP", "ABORT"],
+      "description": "Governance outcome: PASS/WARN/BLOCK for structural verdicts; SHIP/ABORT for termination decisions."
+    },
+    "verdict_id": {
+      "type": "string",
+      "pattern": "^V-[0-9A-Z_-]{1,64}$",
+      "description": "Unique verdict identifier. Example: V-000001, V-SHIP-ALPHA. Deterministic, never wall-clock derived."
+    },
+    "subject": {
+      "type": "object",
+      "required": ["subject_id", "subject_type"],
+      "additionalProperties": false,
+      "properties": {
+        "subject_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Identifier of the artifact, run, or claim being judged."
+        },
+        "subject_type": {
+          "type": "string",
+          "enum": ["run", "artifact", "task_claim", "integration", "ledger_event", "policy"],
+          "description": "Category of the subject."
+        },
+        "subject_hash_hex": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Optional SHA256 of the subject artifact (for binding to immutable content)."
+        }
+      },
+      "description": "What this verdict is about."
+    },
+    "decision": {
+      "type": "object",
+      "required": ["outcome", "reason_codes"],
+      "additionalProperties": false,
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": ["DELIVER", "HOLD", "ABORT"],
+          "description": "Actionable outcome: DELIVER (proceed), HOLD (blocked, pending fix), ABORT (terminate run)."
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]{3,64}$"
+          },
+          "minItems": 1,
+          "description": "MUST be lexicographically sorted. All codes must be in registries/reason_codes.v1.json."
+        },
+        "required_fixes": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]{3,64}$"
+          },
+          "description": "MUST be lexicographically sorted. Fix codes that MUST be resolved before DELIVER. Empty for PASS/SHIP."
+        },
+        "certificates": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[A-Z0-9_]{3,64}$"
+          },
+          "description": "MUST be lexicographically sorted. Proof codes earned (e.g., KTAU_OK, RHO_OK, FORMAL_I1_OK)."
+        },
+        "mutations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "description": "Proposed policy mutation. Read-only; NEVER auto-applied."
+          },
+          "description": "Policy change proposals. Non-empty implies verdict_kind IN {WARN, BLOCK}."
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "mutations": { "minItems": 1 }
+            },
+            "required": ["mutations"]
+          },
+          "then": {
+            "properties": {
+              "outcome": { "enum": ["HOLD", "ABORT"] }
+            }
+          }
+        }
+      ]
+    },
+    "anchors": {
+      "type": "object",
+      "required": [
+        "run_id",
+        "kernel_hash_hex",
+        "policy_hash_hex",
+        "ledger_length_at_verdict",
+        "ledger_cum_hash_hex",
+        "identity_hash_hex"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "Run identifier. Deterministic, seed-derived or explicitly assigned."
+        },
+        "kernel_hash_hex": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 of the kernel code (LedgerKernel.v or kernel_cli binary) at time of verdict."
+        },
+        "policy_hash_hex": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256 of the active policy rules at time of verdict."
+        },
+        "ledger_length_at_verdict": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of events in the ledger when this VERDICT was written (seq index, 0-based)."
+        },
+        "ledger_cum_hash_hex": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Cumulative hash of the ledger at time of verdict (HELEN_CUM_V1 scheme)."
+        },
+        "identity_hash_hex": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA256(ledger_cum_hash_hex || kernel_hash_hex || policy_hash_hex) — composite identity proof."
+        }
+      },
+      "description": "Cryptographic anchors that bind this verdict to a specific kernel+policy+ledger state."
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["output_id", "output_type"],
+        "additionalProperties": true,
+        "properties": {
+          "output_id": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Artifact or output identifier."
+          },
+          "output_type": {
+            "type": "string",
+            "description": "Category: 'artifact', 'receipt', 'ndjson', 'json', etc."
+          },
+          "output_hash_hex": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA256 of the output file/artifact (optional but recommended)."
+          }
+        }
+      },
+      "description": "Optional list of output artifacts produced alongside this verdict."
+    }
+  }
+}

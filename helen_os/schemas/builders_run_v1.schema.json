@@ -1,0 +1,180 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "BUILDERS_RUN_V1",
+  "title": "BUILDERS_RUN_V1",
+  "description": "Execution envelope for one bounded ORACLE SUPER 2: BUILDERS mission. Terminates in exactly deliver or abort.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "BUILDERS_RUN_V1"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "BUILDERS_RUN_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Globally unique run identifier.",
+      "pattern": "^RUN-[A-Z0-9-]+$"
+    },
+    "brief_id": {
+      "type": "string",
+      "description": "The brief that initiated this run.",
+      "pattern": "^BRIEF-[A-Z0-9-]+$"
+    },
+    "builder_version": {
+      "type": "string",
+      "description": "Version of BUILDERS engine used.",
+      "const": "ORACLE_SUPER_2_BUILDERS_V1"
+    },
+    "phase_order": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "exploration",
+          "tension",
+          "drafting",
+          "editorial_collapse",
+          "delivery"
+        ]
+      },
+      "description": "Frozen phase execution order. Must be the standard 5-phase sequence.",
+      "minItems": 5,
+      "maxItems": 5
+    },
+    "active_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "FOREMAN",
+          "RESEARCHER",
+          "SKEPTIC",
+          "WRITER",
+          "EDITOR"
+        ]
+      },
+      "description": "Roles active in this run.",
+      "minItems": 1
+    },
+    "phase_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "phase",
+          "claim_count",
+          "status"
+        ],
+        "properties": {
+          "phase": {
+            "type": "string",
+            "enum": [
+              "exploration",
+              "tension",
+              "drafting",
+              "editorial_collapse",
+              "delivery"
+            ]
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Observational only — not constitutive for determinism."
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Observational only — not constitutive for determinism."
+          },
+          "claim_count": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "complete",
+              "aborted",
+              "pending"
+            ]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "termination": {
+      "type": "object",
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "type": "string",
+          "enum": [
+            "deliver",
+            "abort"
+          ],
+          "description": "Exactly one of two valid terminal states. Missing termination.kind is invalid."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Human-readable explanation of the terminal decision."
+        },
+        "abort_conditions_met": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "contradictions_unresolved",
+              "insufficient_evidence",
+              "budget_exhausted",
+              "coherence_threshold_not_met"
+            ]
+          },
+          "description": "Conditions that triggered abort. Present only if kind=abort."
+        }
+      },
+      "additionalProperties": false
+    },
+    "artifact_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Relative paths to artifact bundle files produced by this run."
+    },
+    "payload_sha256": {
+      "type": "string",
+      "description": "sha256(JCS(artifact bundle payload)).",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "receipt_sha256": {
+      "type": "string",
+      "description": "sha256(JCS(this object with receipt_sha256 omitted)).",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "canonicalization",
+    "run_id",
+    "brief_id",
+    "builder_version",
+    "phase_order",
+    "active_roles",
+    "phase_log",
+    "termination",
+    "artifact_refs",
+    "payload_sha256",
+    "receipt_sha256"
+  ],
+  "additionalProperties": false,
+  "x-law": "Phase order is frozen. Only two terminal states: deliver or abort. Missing termination.kind is invalid. Timestamps are observational only — non-constitutive for determinism."
+}

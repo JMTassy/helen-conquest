@@ -1,0 +1,11 @@
+{
+  "schema": "ARTIFACT_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-17T15:18:43.565880Z",
+  "artifact_file": "helen-portrait_2026-04-17_05-08-42.mp4",
+  "artifact_sha256": "98614d726fbf5142d2dc103d5d707defacc371848d811c4a608026f068e18424",
+  "artifact_bytes": 3596902,
+  "artifact_type": "mp4",
+  "source": "autoresearch_epoch_1_retroactive",
+  "model_id": "hyperframes-0.4.2",
+  "composition_src": "artifacts/video/helen-portrait/index.html"
+}

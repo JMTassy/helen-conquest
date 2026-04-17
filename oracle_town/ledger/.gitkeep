@@ -1,0 +1,17 @@
+# Ledger directory (append-only)
+#
+# This directory contains immutable event logs:
+# - observations.jsonl (raw facts)
+# - decisions.jsonl (verdict records)
+# - artifacts.jsonl (metadata about outputs)
+#
+# All files are append-only JSON lines (one JSON object per line).
+# Never modify or delete past entries.
+#
+# Entries are added during daily runs:
+# - OBS appends to observations.jsonl
+# - TRI appends to decisions.jsonl
+# - PUB appends decision metadata
+# - MEM links entities in memory/index.json
+#
+# Git history shows cumulative growth of the ledger.

@@ -1,0 +1,90 @@
+[
+  {
+    "code": "A4",
+    "date": "2026-01-30",
+    "description": "Observable customer/user impact detected",
+    "id": "anom_20260130_10a56a90d0abe18a",
+    "links": [],
+    "obs_id": "obs_20260130_93016a7834f411bc",
+    "run_id": 174,
+    "severity": "medium",
+    "type": "anomaly"
+  },
+  {
+    "code": "A4",
+    "date": "2026-01-30",
+    "description": "Observable customer/user impact detected",
+    "id": "anom_20260130_c8ac3d314611063a",
+    "links": [],
+    "obs_id": "obs_20260130_f6391d8cd23e66c3",
+    "run_id": 174,
+    "severity": "medium",
+    "type": "anomaly"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "approved_campaign",
+    "date": "2026-01-30",
+    "id": "ins_20260130_36f561da74a7fe48",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260130_2b17eec49f6d5bd8"
+    ],
+    "run_id": 174,
+    "tags": [],
+    "theme": "Cluster: Approved Campaign"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_engineering",
+    "date": "2026-01-30",
+    "id": "ins_20260130_3b759480057e99f6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260130_f6391d8cd23e66c3"
+    ],
+    "run_id": 174,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Engineering"
+  },
+  {
+    "avg_confidence": 0.95,
+    "cluster": "bounce_direct",
+    "date": "2026-01-30",
+    "id": "ins_20260130_ab656edd5c74a1d1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260130_2ec5aa7d7a864c99"
+    ],
+    "run_id": 174,
+    "tags": [
+      "metrics",
+      "performance",
+      "traffic"
+    ],
+    "theme": "Cluster: Bounce Direct"
+  },
+  {
+    "avg_confidence": 0.92,
+    "cluster": "affected_connection",
+    "date": "2026-01-30",
+    "id": "ins_20260130_ae8c2509d9324643",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260130_93016a7834f411bc"
+    ],
+    "run_id": 174,
+    "tags": [
+      "critical",
+      "database",
+      "incident"
+    ],
+    "theme": "Cluster: Affected Connection"
+  }
+]

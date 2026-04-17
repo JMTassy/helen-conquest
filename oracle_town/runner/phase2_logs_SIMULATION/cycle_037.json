@@ -1,0 +1,27 @@
+{
+  "cycle": 37,
+  "timestamp": "2026-01-26T19:13:51.480971",
+  "ct_output": {
+    "proposal_name": "refactor_modules",
+    "proposal_hash": "a32d6384389275d9cb2e2e95ec516d700dc7413928723fc21c5654e7ee43cc7a",
+    "patch_count": 2,
+    "tokens_used": 323,
+    "reasoning": "Cycle 37: Refactoring to reduce module coupling (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "NO_SHIP",
+    "reason_code": "NO_RECEIPTS"
+  }
+}

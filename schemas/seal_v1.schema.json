@@ -1,0 +1,105 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "seal_v1.schema.json",
+  "title": "SEAL_V1",
+  "description": "Payload schema for SEAL ledger events. SEAL is the terminal closure event written only by MAYOR. It binds the final ledger state, environment, kernel identity, and mayor signature into an unforgeable closure proof. There can be AT MOST ONE SEAL per ledger.",
+  "type": "object",
+  "required": [
+    "schema",
+    "seal_id",
+    "environment_hash_hex",
+    "final_ledger_length",
+    "final_ledger_cum_hash_hex",
+    "identity_hash_hex",
+    "schema_bundle_hash_hex",
+    "mayor_key_id",
+    "mayor_signature"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "SEAL_V1",
+      "description": "Schema version discriminator. MUST be exactly 'SEAL_V1'."
+    },
+    "seal_id": {
+      "type": "string",
+      "pattern": "^SEAL-[0-9A-Z_-]{1,64}$",
+      "description": "Unique seal identifier. Example: SEAL-000001. Deterministic."
+    },
+    "environment_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256(Canon(registries/environment.v1.json)) at time of seal. Any env change invalidates this seal."
+    },
+    "final_ledger_length": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Total number of events in the ledger at seal time (seq of SEAL event + 1). Counts all events including this SEAL."
+    },
+    "final_ledger_cum_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "The cum_hash of the event IMMEDIATELY BEFORE this SEAL (the prev_cum_hash of the SEAL event). This is the final cumulative hash of all non-SEAL events."
+    },
+    "identity_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256(final_ledger_cum_hash_hex_bytes || environment_hash_hex_bytes) — composite closure identity binding ledger state to environment."
+    },
+    "schema_bundle_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256 of the canonical concatenation of all schema files used in this ledger (sorted by filename). Pins the schema set at closure time."
+    },
+    "actor_registry_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256(Canon(registries/actors.v1.json)). Optional but recommended for full audit chain."
+    },
+    "reason_code_registry_hash_hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA256(Canon(registries/reason_codes.v1.json)). Optional but recommended."
+    },
+    "mayor_key_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_-]{3,64}$",
+      "description": "Identifies which mayor key signed this seal. Must match key_id in registries/environment.v1.json mayor_key."
+    },
+    "mayor_signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Ed25519 signature (base64url-encoded) over the identity_hash_hex bytes. Signed with mayor private key corresponding to mayor_key_id."
+    },
+    "sealed_at_seq": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "seq of this SEAL event in the ledger (0-based). Must equal final_ledger_length - 1."
+    },
+    "sealing_run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "run_id from the last VERDICT/RECEIPT before this seal. For traceability."
+    },
+    "preconditions_verified": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hash_chain_valid": {
+          "type": "boolean",
+          "description": "validate_hash_chain.py returned PASS immediately before sealing."
+        },
+        "all_verdicts_have_receipts": {
+          "type": "boolean",
+          "description": "validate_receipt_linkage.py returned PASS: every SHIP verdict has a bound receipt."
+        },
+        "no_open_required_fixes": {
+          "type": "boolean",
+          "description": "No VERDICT with outcome HOLD remains unresolved in the ledger."
+        }
+      },
+      "description": "Optional checklist of preconditions verified before the MAYOR signed. Informational — the signature is the authoritative proof."
+    }
+  }
+}

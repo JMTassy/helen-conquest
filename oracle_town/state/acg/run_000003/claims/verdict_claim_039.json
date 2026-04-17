@@ -1,0 +1,41 @@
+{
+  "verdict": {
+    "checked_against_policy": "sha256:policy_v1_2026_01",
+    "checks_performed": [
+      {
+        "check": "schema_valid",
+        "details": "All required fields present",
+        "result": "PASS"
+      },
+      {
+        "check": "K1_evidence_not_realizable",
+        "details": "Evidence file not found: artifacts/test_valid.txt",
+        "result": "FAIL"
+      },
+      {
+        "check": "K7_policy_pinning",
+        "details": "Claim was generated under pinned policy",
+        "result": "PASS"
+      },
+      {
+        "check": "K0_attestor_not_registered",
+        "details": "Attestor test-legal-001 not found in key registry",
+        "result": "FAIL"
+      },
+      {
+        "check": "K2_no_self_attestation",
+        "details": "No self-attestation detected",
+        "result": "PASS"
+      },
+      {
+        "check": "K5_determinism",
+        "details": "No reserved keywords detected",
+        "result": "PASS"
+      }
+    ],
+    "claim_id": "acg_claim_K7_039",
+    "decision": "REJECT",
+    "required_remediations": [],
+    "timestamp": "2026-01-31T15:21:58.220444Z"
+  }
+}

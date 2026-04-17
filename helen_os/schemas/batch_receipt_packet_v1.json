@@ -1,0 +1,165 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "BATCH_RECEIPT_PACKET_V1",
+  "description": "Immutable proof object emitted by kernel for Oracle Town archival. Records governance facts, not narrative.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "BATCH_RECEIPT_PACKET_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^batch_receipt_[a-z0-9_]+$",
+      "description": "Deterministic receipt identifier: hash(batch_id + final_state_hash + ledger_hash)"
+    },
+    "batch_id": {
+      "type": "string",
+      "pattern": "^batch_[a-z0-9_]+$"
+    },
+    "executor_id": {
+      "type": "string",
+      "description": "e.g., 'helen_os_kernel_v1'"
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Unique run identifier, e.g., 'run_2026-03-13T14:23:45Z'"
+    },
+    "batch_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "decisions_processed": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total decisions fed to batch"
+    },
+    "decisions_appended": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Decisions actually entered into ledger"
+    },
+    "decision_type_breakdown": {
+      "type": "object",
+      "properties": {
+        "ADMITTED": {"type": "integer", "minimum": 0},
+        "REJECTED": {"type": "integer", "minimum": 0},
+        "QUARANTINED": {"type": "integer", "minimum": 0},
+        "ROLLED_BACK": {"type": "integer", "minimum": 0}
+      },
+      "required": ["ADMITTED", "REJECTED", "QUARANTINED", "ROLLED_BACK"],
+      "additionalProperties": false
+    },
+    "initial_state_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "final_state_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "ledger_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Hash of final decision ledger (entries + metadata)"
+    },
+    "execution_replay_proof": {
+      "type": "object",
+      "properties": {
+        "environment_manifest": {
+          "type": "object",
+          "properties": {
+            "reducer_version": {
+              "type": "string"
+            },
+            "law_surface_hash": {
+              "type": "string",
+              "pattern": "^sha256:[a-f0-9]{64}$"
+            },
+            "canonicalization": {
+              "const": "JCS_SHA256_V1"
+            }
+          },
+          "required": ["reducer_version", "law_surface_hash", "canonicalization"],
+          "additionalProperties": false
+        },
+        "determinism_certificate": {
+          "type": "string",
+          "description": "e.g., '20 runs → identical state hashes' or 'UNPROVEN'"
+        }
+      },
+      "required": ["environment_manifest", "determinism_certificate"],
+      "additionalProperties": false
+    },
+    "ledger_replay_proof": {
+      "type": "object",
+      "properties": {
+        "from_initial_state_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "via_ledger_entries": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of entries in ledger"
+        },
+        "yields_final_state_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "corruption_check": {
+          "enum": ["PASS", "WARN", "FAIL"],
+          "description": "Entry index validation, prev_hash chain verification"
+        }
+      },
+      "required": ["from_initial_state_hash", "via_ledger_entries", "yields_final_state_hash", "corruption_check"],
+      "additionalProperties": false
+    },
+    "authority_lineage": {
+      "type": "object",
+      "properties": {
+        "approved_by": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "pattern": "^hal_verdict_[a-z0-9_]+$"}
+          ],
+          "description": "null = not yet approved by HAL"
+        },
+        "visibility_level": {
+          "enum": ["CORE", "HAL_REVIEW", "MAYOR_READY"],
+          "description": "CORE=local kernel, HAL_REVIEW=HAL can audit, MAYOR_READY=ready for sovereign decision"
+        },
+        "ready_for_hal": {
+          "type": "boolean"
+        },
+        "ready_for_mayor": {
+          "type": "boolean",
+          "description": "true only after HAL verdict received and no blockers flagged"
+        }
+      },
+      "required": ["approved_by", "visibility_level", "ready_for_hal", "ready_for_mayor"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "receipt_id",
+    "batch_id",
+    "executor_id",
+    "run_id",
+    "batch_timestamp",
+    "decisions_processed",
+    "decisions_appended",
+    "decision_type_breakdown",
+    "initial_state_hash",
+    "final_state_hash",
+    "ledger_hash",
+    "execution_replay_proof",
+    "ledger_replay_proof",
+    "authority_lineage"
+  ],
+  "additionalProperties": false
+}

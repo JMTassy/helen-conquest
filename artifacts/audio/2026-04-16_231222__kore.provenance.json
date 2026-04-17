@@ -1,0 +1,13 @@
+{
+  "schema": "AUDIO_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-16T21:12:22.593072Z",
+  "model": "gemini-2.5-flash-preview-tts",
+  "voice": "Kore",
+  "sample_rate": 24000,
+  "text_sha256": "b41900b44288ceb8fa6c9aec80d31baae3351d3158251eab1524490f423a9849",
+  "audio_sha256": "ef310833aa3b1ea55d6028e44fd70c4329367fd11c02d9a7d1d902dad1088737",
+  "audio_file": "2026-04-16_231222__kore.wav",
+  "text_length": 74,
+  "audio_bytes": 601486,
+  "payload_hash": "cf006919d3718b23f43f1bd9fd1971654df3499546cfaf785c645e651e97ea1d"
+}

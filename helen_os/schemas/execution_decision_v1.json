@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "EXECUTION_DECISION_V1",
+  "type": "object",
+  "properties": {
+    "schema_name": {"const": "EXECUTION_DECISION_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "decision_id": {"type": "string"},
+    "created_at": {"type": "string"},
+    "tool_type": {"type": "string"},
+    "normalized_target": {"type": "string"},
+    "normalized_payload_sha256": {"type": "string"},
+    "pre_state_hash": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "execution_identity": {"type": "string"},
+    "decision": {"type": "string", "enum": ["ALLOW", "REJECT", "DEFER"]},
+    "failure_code": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "decision_id",
+    "created_at",
+    "tool_type",
+    "normalized_target",
+    "normalized_payload_sha256",
+    "pre_state_hash",
+    "policy_version",
+    "execution_identity",
+    "decision",
+    "failure_code",
+    "notes"
+  ],
+  "additionalProperties": false
+}

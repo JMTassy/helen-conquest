@@ -1,0 +1,29 @@
+{
+  "claim": {
+    "id": "acg_claim_K1_003",
+    "timestamp": "2026-01-31T10:02:00Z",
+    "target": "oracle_town/jobs/brf_onepager.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K1_003_evidence_0.txt",
+        "hash": "sha256:0ddf585e58c5c1b714e21d36e53309178c000c015771fe53817dd4eb23e7ad61",
+        "description": "Tests passed"
+      }
+    ],
+    "acceptance_criteria": [
+      "all_tests_pass"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test dangling evidence reference",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "unknown",
+      "category": "K1",
+      "variant": "test"
+    }
+  }
+}

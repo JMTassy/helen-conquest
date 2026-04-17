@@ -1,0 +1,44 @@
+{
+  "sprint_id": "SPRINT_001_PATHV1",
+  "sprint_name": "Path A Breakthrough: Federation + SCF",
+  "start_date": "2026-02-27T22:26:55.554591+00:00",
+  "duration_weeks": 5.5,
+  "deadline": "2026-04-10",
+  "features": [
+    {
+      "feature_id": "F_FED_001",
+      "name": "Federation (Multi-Town Proof Exchange)",
+      "effort_weeks": 4,
+      "owner": "HELEN (analysis) + Human (execution)",
+      "acceptance_criteria": [
+        "Two towns exchange cross-receipts",
+        "Non-interference theorem verified",
+        "Audit replay proves determinism",
+        "Third-party can verify ledger integrity"
+      ]
+    },
+    {
+      "feature_id": "F_SCF_001",
+      "name": "SCF Integration (Coherence Filtering)",
+      "effort_weeks": 1.5,
+      "owner": "HELEN (analysis) + Human (execution)",
+      "acceptance_criteria": [
+        "SCF filters evidence for HELEN decisions",
+        "Decision quality measured (precision/recall)",
+        "Diagnostics logged to Channel C",
+        "No authority leakage"
+      ]
+    }
+  ],
+  "success_criteria": {
+    "technical": "All acceptance criteria met + audit passes",
+    "institutional": "Third party confirms: 'Constitutional AI validated'",
+    "governance": "Zero authority claims, 100% policy adherence"
+  },
+  "decision_audit": {
+    "helen_recommendation": "OPT_B",
+    "user_approval": "APPROVED",
+    "approval_timestamp": "2026-02-27T22:26:55.554181+00:00",
+    "logged_to": "artifacts/helen_decisions.ndjson"
+  }
+}

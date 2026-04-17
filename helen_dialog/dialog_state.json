@@ -1,0 +1,20 @@
+{
+  "turn": 11,
+  "session_id": "dlg_2026-02-28_001",
+  "verifier": {
+    "enabled": true,
+    "strictness": 2
+  },
+  "oath": {
+    "no_mysticism": true,
+    "append_only": true,
+    "termination": "SHIP_OR_ABORT"
+  },
+  "constraints": {
+    "determinism_required": true,
+    "max_loops": 5
+  },
+  "last_state_patch": {
+    "turn": 11
+  }
+}

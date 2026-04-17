@@ -1,0 +1,65 @@
+{
+  "alerts": [],
+  "anomalies": [
+    {
+      "code": "digest_drift",
+      "module": "INS",
+      "severity": "weak"
+    }
+  ],
+  "artifacts": [
+    "brief_v1.md",
+    "insight_card.json",
+    "run.log",
+    "diff.txt"
+  ],
+  "date": "2026-01-30",
+  "mode": "DAILY",
+  "modules": {
+    "BRF": {
+      "desc": "drafted brief v1",
+      "progress": 2,
+      "status": "BLD"
+    },
+    "EVO": {
+      "desc": "threshold proposal",
+      "progress": 4,
+      "status": "WRN"
+    },
+    "INS": {
+      "desc": "3 themes + 1 anomaly",
+      "progress": 6,
+      "status": "OK"
+    },
+    "MEM": {
+      "desc": "linked 4 precedents",
+      "progress": 7,
+      "status": "OK"
+    },
+    "OBS": {
+      "desc": "12 notes -> 5 claims",
+      "progress": 8,
+      "status": "OK"
+    },
+    "PUB": {
+      "desc": "waiting TRI=OK",
+      "progress": 0,
+      "status": "OFF"
+    },
+    "TRI": {
+      "desc": "missing receipts",
+      "progress": 1,
+      "status": "FLR"
+    }
+  },
+  "one_bet": "BRF v1: Home ASCII + City Growth",
+  "queue": [
+    "OBS scan",
+    "INS cluster",
+    "BRF draft",
+    "TRI verify",
+    "PUB ship",
+    "MEM link"
+  ],
+  "run_id": 173
+}

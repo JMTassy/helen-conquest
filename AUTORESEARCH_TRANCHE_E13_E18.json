@@ -1,0 +1,104 @@
+{
+  "schema_name": "AUTORESEARCH_TRANCHE_RECEIPT_V1",
+  "schema_version": "1.0.0",
+  "tranche_id": "E13-E18",
+  "audit_date": "2026-04-17",
+  "prior_tranche": "E11-E12",
+  "epochs": [
+    {
+      "id": "E13",
+      "signal": "Governance index incomplete (45/47)",
+      "hypothesis": "rho schema_version enum→const yields 47/47",
+      "decision": "KEEP",
+      "metric_before": "45/47",
+      "metric_after": "47/47",
+      "mutations": 2,
+      "files_modified": [
+        "helen_os/schemas/rho_manifest.schema.json",
+        "helen_os/schemas/rho_summary.schema.json"
+      ],
+      "test_delta": 0
+    },
+    {
+      "id": "E14",
+      "signal": "Legacy validators.py has 2 consumers",
+      "hypothesis": "Redirect consumers to governance equivalents → 0 legacy imports",
+      "decision": "KEEP",
+      "metric_before": "2 legacy imports",
+      "metric_after": "0 legacy imports",
+      "mutations": 2,
+      "files_modified": [
+        "helen_os/test_failure_bridge_only_accepts_typed_failures.py",
+        "helen_os/test_skill_promotion_requires_receipts.py"
+      ],
+      "test_delta": 0
+    },
+    {
+      "id": "E15",
+      "signal": "48 root schemas/ unclassified",
+      "hypothesis": "Dual-classifier partitions all 48 with zero residue",
+      "decision": "KEEP (audit only)",
+      "metric_before": "48 unclassified",
+      "metric_after": "21 runtime + 14 doc + 13 orphan = 48, residue=0",
+      "mutations": 0,
+      "files_modified": [],
+      "test_delta": 0,
+      "note": "Executed in operator's local session (Releve 24)"
+    },
+    {
+      "id": "E16",
+      "signal": "helen_say capability gap hypothesis",
+      "hypothesis": "helen_say not wired in user shell",
+      "decision": "ALREADY_SHIPPED",
+      "metric_before": "unknown",
+      "metric_after": "4 shell functions resolved (helen_say, _helen_run, helen_hal, helen_dev)",
+      "mutations": 0,
+      "files_modified": [],
+      "test_delta": 0,
+      "note": "Executed in operator's local session"
+    },
+    {
+      "id": "E17",
+      "signal": "TODO/FIXME/HACK markers in helen_os/",
+      "hypothesis": "Grep produces triage list; each item has disposition",
+      "decision": "BOUNDED_SHIPPED",
+      "metric_before": "unknown count",
+      "metric_after": "9 raw hits → 7 benign + 2 real (both documented, safe defaults)",
+      "mutations": 0,
+      "files_modified": [],
+      "test_delta": 0,
+      "note": "Executed in operator's local session"
+    },
+    {
+      "id": "E18",
+      "signal": "DeprecationWarning / SyntaxWarning presence",
+      "hypothesis": "Import or test warnings exist",
+      "decision": "ALREADY_CLEAN",
+      "metric_before": "0 (E3 already fixed)",
+      "metric_after": "0",
+      "mutations": 0,
+      "files_modified": [],
+      "test_delta": 0
+    }
+  ],
+  "aggregate_metrics": {
+    "test_suite_start": "414 pass, 4 fail",
+    "test_suite_end": "426 pass, 0 fail",
+    "k8_status": "PASS k8=+1.000",
+    "governance_index": "47/47 (100%)",
+    "root_schemas": "56 → 19 (this session) / 48 (operator local)",
+    "legacy_validator_imports": "2 → 0",
+    "warnings": "27 → 0",
+    "kernel_files_mutated": 0,
+    "ledger_entries_added": "~30 receipts this session"
+  },
+  "open_items": [
+    "SEAM-001 C12: root schemas/ purge (48→0 on operator side, 19 remaining here)",
+    "validators.py deletion (Action 8, zero consumers now — safe to delete next tranche)",
+    "13 orphan schemas in root (classified E15, delete deferred)",
+    "Telegram bot not daemonized",
+    "hyperframes npm allowlist not formalized"
+  ],
+  "sovereignty_boundary": "No kernel files modified. All mutations in non-sovereign layers (schemas, tests, tools). Governance registry read-only except index additions.",
+  "receipt_hash": "d285cf24f6e96686046972c9f991c0d0b4a7b4db21c531f08ad4c3927bad4db8"
+}

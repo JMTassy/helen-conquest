@@ -1,0 +1,11 @@
+{
+  "receipt": {
+    "claim_id": "claim_20260130_legal_review_001",
+    "legal_binding": true,
+    "mayor_signature": "ed25519:MAYOR_e43886156024bc09",
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "timestamp_signed": "2026-01-30T22:20:37.912192Z",
+    "verdict": "REJECT",
+    "world_mutation_allowed": false
+  }
+}

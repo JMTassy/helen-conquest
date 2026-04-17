@@ -1,0 +1,10 @@
+{
+  "obs_receipt": {
+    "attestor_id": "obs_attestor_001",
+    "note": "Signature placeholder; actual signing by attestor_id required",
+    "observation_count": 4,
+    "observations_hash": "sha256:99f1b99b932d8be43754e00cd214ebe732d833bcc781949dc2d14807fa0f423e",
+    "run_id": 174,
+    "signature": "ed25519:PLACEHOLDER_SIGNATURE"
+  }
+}

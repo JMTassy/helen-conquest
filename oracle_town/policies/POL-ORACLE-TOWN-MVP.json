@@ -1,0 +1,40 @@
+{
+  "policy_id": "POL-ORACLE-TOWN-MVP",
+  "policy_version": "1.0.0",
+  "policy_hash": "sha256:REPLACE_WITH_COMPUTED_POLICY_HASH",
+  "effective_date": "2026-01-23T00:00:00Z",
+  "change_rationale": "Initial production policy pinned to key registry",
+  "quorum_rules": {
+    "default_min_quorum": 1,
+    "obligation_specific_rules": {
+      "gdpr_consent_banner": {
+        "required_attestor_classes": ["CI_RUNNER", "LEGAL"],
+        "min_quorum": 2
+      }
+    }
+  },
+  "key_registry_hash": "sha256:13d9e19eaa6b4aefc697da5fe781cab71056b08a91eb0d7facefb0128f07e659",
+  "revoked_keys": [
+    {
+      "key_id": "key-2025-12-legal-old",
+      "revoked_at": "2026-01-15T00:00:00Z",
+      "reason": "Key compromise"
+    }
+  ],
+  "revoked_attestors": [],
+  "budget_caps": {
+    "max_proposals_per_run": 100,
+    "max_obligations_per_run": 50,
+    "max_free_text_bytes": 102400,
+    "max_metadata_fields": 20
+  },
+  "invariants": {
+    "fail_closed": true,
+    "no_self_attestation": true,
+    "quorum_by_class": true,
+    "receipt_required": true,
+    "determinism": true
+  },
+  "sampling_rate": 0.05,
+  "metadata": {}
+}

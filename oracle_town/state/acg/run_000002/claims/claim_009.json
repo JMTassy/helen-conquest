@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K7_002",
+    "timestamp": "2026-01-31T10:31:00Z",
+    "target": "oracle_town/schemas/claim.py",
+    "claim_type": "policy_patch",
+    "proposed_diffs": [
+      {
+        "path": "oracle_town/schemas/claim.py",
+        "operation": "modify",
+        "hash_before": "sha256:orig_schema",
+        "hash_after": "sha256:new_schema"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K7_002_evidence_0.txt",
+        "hash": "sha256:d662aed64a9d231f8a5def2d8c9f381f855d3b32e283ad63eb3fdfe946e107b0",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "schema_updated"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test schema mutation prevention",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "unknown",
+      "category": "K7",
+      "variant": "test"
+    }
+  }
+}

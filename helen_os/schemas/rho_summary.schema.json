@@ -1,0 +1,133 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rho_summary.schema.json",
+  "title": "RHO Summary",
+  "description": "Per-run viability certificate summary. Produced at run end. Linter verifies this is consistent with rho_trace.ndjson and rho_manifest.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "run_id",
+    "inf_rho",
+    "t_star",
+    "active_constraint",
+    "margins_at_t_star"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "RHO_SUMMARY"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Must match the run_id in the corresponding rho_manifest.json."
+    },
+    "inf_rho": {
+      "type": "number",
+      "description": "inf_{t <= N} rho(t) = min over the entire trace. Positive = DELIVER, non-positive = ABORT."
+    },
+    "t_star": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Witness time: argmin_t rho(t). The step where the viability was tightest."
+    },
+    "active_constraint": {
+      "type": "string",
+      "enum": [
+        "mu_Delta",
+        "mu_Pi",
+        "mu_CFL",
+        "mu_Lyap",
+        "mu_Z"
+      ],
+      "description": "The margin that achieved the minimum at t_star. This is the named emergent for HELEN."
+    },
+    "margins_at_t_star": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "All margin values at the witness time t_star, plus the computed rho.",
+      "required": [
+        "mu_Delta",
+        "mu_Pi",
+        "mu_CFL",
+        "mu_Lyap",
+        "mu_Z",
+        "rho"
+      ],
+      "properties": {
+        "mu_Delta": {
+          "type": "number",
+          "description": "Gap margin at t_star."
+        },
+        "mu_Pi": {
+          "type": "number",
+          "description": "Projector integrity margin at t_star."
+        },
+        "mu_CFL": {
+          "type": "number",
+          "description": "CFL / goodness-of-fit margin at t_star."
+        },
+        "mu_Lyap": {
+          "type": "number",
+          "description": "Lyapunov margin at t_star."
+        },
+        "mu_Z": {
+          "type": "number",
+          "description": "Autocorrelation / Z-score margin at t_star."
+        },
+        "rho": {
+          "type": "number",
+          "description": "Computed rho = min(mu_Delta, mu_Pi, mu_CFL, mu_Lyap, mu_Z) at t_star. Must match inf_rho within delta_audit."
+        }
+      }
+    },
+    "helen_termination": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional HELEN termination block, populated when this summary is used as a Foundry run receipt.",
+      "required": [
+        "outcome",
+        "district"
+      ],
+      "properties": {
+        "outcome": {
+          "type": "string",
+          "enum": [
+            "DELIVER",
+            "ABORT"
+          ],
+          "description": "DELIVER iff inf_rho > 0. ABORT otherwise."
+        },
+        "district": {
+          "type": "string",
+          "enum": [
+            "RESEARCH",
+            "FOUNDRY",
+            "CONQUEST",
+            "WUL"
+          ],
+          "description": "Which district produced this run."
+        },
+        "reason_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Machine-readable reason codes. On ABORT must include ACTIVE_CONSTRAINT=<active_constraint>."
+        },
+        "emergent_name": {
+          "type": "string",
+          "description": "HELEN-assigned emergent name derived from active_constraint and run context. E.g. active_constraint__mu_Pi."
+        },
+        "falsifier": {
+          "type": "string",
+          "description": "Operational falsifier for the emergent claim. Must be a concrete, runnable test description."
+        }
+      }
+    }
+  }
+}

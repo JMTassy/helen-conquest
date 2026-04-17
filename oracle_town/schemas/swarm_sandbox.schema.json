@@ -1,0 +1,166 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/swarm_sandbox.schema.json",
+  "title": "SwarmSandbox",
+  "description": "Creative Town Swarm Sandbox execution manifest. Zero authority, parallel cognition only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "swarm_run_id",
+    "seed",
+    "lead_id",
+    "workers",
+    "task_graph",
+    "output_bundle_ref"
+  ],
+  "properties": {
+    "swarm_run_id": {
+      "type": "string",
+      "pattern": "^SWARM-[A-Z0-9]{8,}$",
+      "description": "Unique identifier for this swarm execution."
+    },
+    "seed": {
+      "type": "string",
+      "pattern": "^0x[a-fA-F0-9]{16,}$",
+      "description": "Deterministic seed for replay. Format: 0x + hex."
+    },
+    "lead_id": {
+      "type": "string",
+      "description": "Identifier of the coordinating planner (no authority)."
+    },
+    "workers": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "$ref": "#/$defs/worker"
+      },
+      "description": "List of parallel reasoning units."
+    },
+    "task_graph": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/task"
+      },
+      "description": "Directed acyclic graph of tasks (structure only, not content)."
+    },
+    "output_bundle_ref": {
+      "type": "string",
+      "description": "Reference to the normalized proposal_bundle.json output."
+    },
+    "execution_trace": {
+      "$ref": "#/$defs/execution_trace",
+      "description": "Optional structured trace for observability."
+    },
+    "authority_check": {
+      "$ref": "#/$defs/authority_check",
+      "description": "Pre-Intake authority violation scan results."
+    }
+  },
+  "$defs": {
+    "worker": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["worker_id", "role", "capability"],
+      "properties": {
+        "worker_id": {
+          "type": "string",
+          "pattern": "^worker_[a-z0-9_]+$"
+        },
+        "role": {
+          "type": "string",
+          "enum": ["analyst", "risk_assessor", "domain_expert", "evidence_planner", "counterexample_hunter", "edge_case_generator"]
+        },
+        "capability": {
+          "type": "string",
+          "description": "What this worker can analyze (no authority verbs)."
+        }
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_id", "assigned_to", "task_type"],
+      "properties": {
+        "task_id": {
+          "type": "string",
+          "pattern": "^TASK-[0-9]{4}$"
+        },
+        "assigned_to": {
+          "type": "string",
+          "description": "Worker ID or 'lead'."
+        },
+        "task_type": {
+          "type": "string",
+          "enum": ["analysis", "risk", "domain", "evidence_plan", "aggregation", "normalization"]
+        },
+        "depends_on": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Task IDs this task depends on."
+        },
+        "outputs_to": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Task IDs that consume this task's output."
+        }
+      }
+    },
+    "execution_trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "started_at": { "type": "string", "format": "date-time" },
+        "completed_at": { "type": "string", "format": "date-time" },
+        "tasks_completed": { "type": "integer", "minimum": 0 },
+        "tasks_failed": { "type": "integer", "minimum": 0 },
+        "normalization_applied": { "type": "boolean" },
+        "authority_violations_detected": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "authority_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["passed", "violations"],
+      "properties": {
+        "passed": {
+          "type": "boolean",
+          "description": "True iff no authority language detected."
+        },
+        "violations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/authority_violation"
+          }
+        }
+      }
+    },
+    "authority_violation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["violation_type", "location", "matched_pattern"],
+      "properties": {
+        "violation_type": {
+          "type": "string",
+          "enum": [
+            "AUTHORITY_CLAIM",
+            "CONSENSUS_LANGUAGE",
+            "RANKING_DETECTED",
+            "CONFIDENCE_CLAIM",
+            "RECOMMENDATION",
+            "RECEIPT_SIMULATION",
+            "AMPLIFICATION"
+          ]
+        },
+        "location": {
+          "type": "string",
+          "description": "Path to violation (e.g., 'worker_03.output.summary')."
+        },
+        "matched_pattern": {
+          "type": "string",
+          "description": "The pattern that triggered detection."
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ARTIFACT_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-17T15:18:43.581563Z",
+  "artifact_file": "scene2_loop.png",
+  "artifact_sha256": "94b6395f546f5b7ec79c51e3966951cb8a7a6f82799429cfdac22d1d097f377f",
+  "artifact_bytes": 26952,
+  "artifact_type": "png",
+  "source": "autoresearch_epoch_1_retroactive",
+  "model_id": "procedural"
+}

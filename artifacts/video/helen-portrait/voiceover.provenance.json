@@ -1,0 +1,12 @@
+{
+  "schema": "ARTIFACT_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-17T15:18:43.552433Z",
+  "artifact_file": "voiceover.wav",
+  "artifact_sha256": "d49d78cf3779d1fa47257fc4faa9238016202c16fc47325bdd3af6c6962104df",
+  "artifact_bytes": 2126010,
+  "artifact_type": "wav",
+  "source": "autoresearch_epoch_1_retroactive",
+  "model_id": "gemini-2.5-flash-preview-tts",
+  "voice": "Zephyr",
+  "text_source": "HELEN manifesto autoportrait script"
+}

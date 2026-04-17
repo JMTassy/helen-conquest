@@ -1,0 +1,34 @@
+{
+  "proposals": [
+    {
+      "proposal_id": "P-RECEIPT-001",
+      "origin": "SWARM",
+      "proposal_type": "verification",
+      "description": "Verification complete. Obligation gdpr_consent_banner is satisfied.",
+      "suggested_changes": {
+        "files": []
+      },
+      "attestation": {
+        "obligation_name": "gdpr_consent_banner",
+        "status": "SATISFIED",
+        "evidence": "All tests passed"
+      }
+    }
+  ],
+  "_test_metadata": {
+    "test_vector": "swarm_receipt_attempt",
+    "test_layer": "SWARM",
+    "expected_result": "SWARM_REJECT",
+    "expected_reason": "SWARM_REJECT_FORBIDDEN_AUTHORITY",
+    "authority_keys_present": [
+      "attestation",
+      "satisfied"
+    ],
+    "authority_phrases_present": [
+      "is satisfied",
+      "all tests passed"
+    ],
+    "description": "Tests that Swarm guardrails (G2) reject pseudo-attestation structures before Intake.",
+    "note": "Also tested as Intake defense-in-depth with CT_REJECTED_AUTHORITY_ATTEMPT"
+  }
+}

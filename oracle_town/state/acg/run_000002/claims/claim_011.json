@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K5_002",
+    "timestamp": "2026-01-31T10:41:00Z",
+    "target": "oracle_town/jobs/evo_adjust.py",
+    "claim_type": "policy_patch",
+    "proposed_diffs": [
+      {
+        "path": "evo_adjust.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K5_002_evidence_0.txt",
+        "hash": "sha256:ad3001c0e2785f453f2c386f536ef079ce55cfd8dc8ca0c9a6aa1cf0d91f12f1",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "if now() > 2026-01-31 then approve else reject"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test temporal logic rejection",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K5_nondeterministic_reference",
+      "category": "K5",
+      "variant": "test"
+    }
+  }
+}

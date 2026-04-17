@@ -1,0 +1,14 @@
+{
+  "type": "FED_SIM_SCENARIO_V1",
+  "scenario_id": "baseline_round",
+  "description": "3-peer deterministic federation baseline. Same seed + inputs → same tip hash on every replay.",
+  "seed": 42,
+  "rounds": 3,
+  "peers": [
+    {"peer_id": "TOWN_A", "initial_vector": {"c": 0.1, "r": 0.2}},
+    {"peer_id": "TOWN_B", "initial_vector": {"c": 0.2, "r": 0.1}},
+    {"peer_id": "TOWN_C", "initial_vector": {"c": 0.15, "r": 0.15}}
+  ],
+  "banned_fields": ["raw_dialogue", "prompt_text", "claim_spans", "user_identifier"],
+  "receipt_required": true
+}

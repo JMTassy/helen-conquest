@@ -1,0 +1,157 @@
+{
+  "decision_id": "FPD_001_2026_02_27",
+  "decision_type": "feature_prioritization",
+  "timestamp": "2026-02-27T00:00:00Z",
+  "decision_context": "Choose 2-3 features from CONQUEST/HELEN OS roadmap for next 6-8 weeks",
+  "authority": false,
+  "phase": "exploration",
+  "candidates": [
+    {
+      "feature_id": "F_DECAY_001",
+      "name": "Delayed Decay Mechanic",
+      "description": "Deterministic entropy system: world degrades when user absent/present, maintenance required",
+      "effort_weeks": 2,
+      "effort_certainty": 0.95,
+      "impact_score": 8,
+      "impact_type": ["game_feel", "world_consistency", "friction_model"],
+      "risk_level": "low",
+      "risk_factors": ["none_identified"],
+      "dependencies": [],
+      "blocks": [],
+      "enables": ["faction_awareness_of_decay"],
+      "rationale": "Preserves v0.0 alive-world constraint; minimal scope; highest certainty"
+    },
+    {
+      "feature_id": "F_FED_001",
+      "name": "Federation (Multi-Town Proof Exchange)",
+      "description": "Multiple sealed towns exchange cross-receipts; test non-interference under federation",
+      "effort_weeks": 4,
+      "effort_certainty": 0.65,
+      "impact_score": 9,
+      "impact_type": ["architecture", "breakthrough_validation", "proof_system"],
+      "risk_level": "medium",
+      "risk_factors": ["merkle_proof_complexity", "seal_binding_edge_cases", "cross_town_determinism"],
+      "dependencies": ["SCF_filtered_evidence"],
+      "blocks": ["supply_chain_cross_faction"],
+      "enables": ["faction_diplomacy", "multi_org_deployment"],
+      "rationale": "Validates sovereign enclave architecture; high value; moderate risk; proves Path A"
+    },
+    {
+      "feature_id": "F_DIPL_001",
+      "name": "Faction Diplomacy Suite",
+      "description": "Negotiation, treaty, betrayal mechanics; uses federation for proof exchange",
+      "effort_weeks": 3,
+      "effort_certainty": 0.8,
+      "impact_score": 6,
+      "impact_type": ["gameplay", "strategic_depth", "player_agency"],
+      "risk_level": "medium",
+      "risk_factors": ["incentive_alignment", "betrayal_detection", "state_consistency"],
+      "dependencies": ["F_FED_001"],
+      "blocks": [],
+      "enables": ["faction_reputation_system"],
+      "rationale": "Makes federation tangible in game; enables emergent play; moderate scope; requires federation"
+    },
+    {
+      "feature_id": "F_SUPPLY_001",
+      "name": "Supply Chain & Scarcity",
+      "description": "Resource tracking, trade routes, scarcity mechanics, storage limits",
+      "effort_weeks": 5,
+      "effort_certainty": 0.7,
+      "impact_score": 7,
+      "impact_type": ["economy", "strategic_depth", "realism"],
+      "risk_level": "high",
+      "risk_factors": ["economic_balance", "inflation_risk", "complexity_creep"],
+      "dependencies": [],
+      "blocks": ["diplomacy_trade_routes"],
+      "enables": ["faction_asymmetry", "wealth_inequality"],
+      "rationale": "Large scope; high design complexity; powerful but risky; can defer to v0.2"
+    },
+    {
+      "feature_id": "F_SCF_001",
+      "name": "SCF Integration (Coherence Filtering)",
+      "description": "Feed SCF diagnostics into HELEN's decision evidence; measure decision quality improvement",
+      "effort_weeks": 1.5,
+      "effort_certainty": 0.9,
+      "impact_score": 8,
+      "impact_type": ["architecture", "operational", "proof_system"],
+      "risk_level": "low",
+      "risk_factors": ["none_identified"],
+      "dependencies": [],
+      "blocks": [],
+      "enables": ["federation_proof_filtering", "HELEN_autonomous_decisions"],
+      "rationale": "Smallest scope; highest certainty; enables federation; low risk; unlocks HELEN autonomy"
+    }
+  ],
+  "constraints": {
+    "max_capacity_weeks": 8,
+    "parallel_slots": 3,
+    "serial_slots": 1,
+    "can_split_feature": false,
+    "team_size": "varies"
+  },
+  "decision_options": [
+    {
+      "option_id": "OPT_A",
+      "name": "Foundation Path (Low Risk)",
+      "features": ["F_DECAY_001", "F_SCF_001"],
+      "total_effort_weeks": 3.5,
+      "rationale": "Start with certainty. Decay proves world model; SCF unlocks HELEN. Foundation for federation.",
+      "risk_level": "low",
+      "enables_next": "Federation in week 4-8 sprint"
+    },
+    {
+      "option_id": "OPT_B",
+      "name": "Breakthrough Path (Medium Risk)",
+      "features": ["F_FED_001", "F_SCF_001"],
+      "total_effort_weeks": 5.5,
+      "rationale": "Validate sovereign enclave architecture directly. Skip decay, prove proof system.",
+      "risk_level": "medium",
+      "enables_next": "Diplomacy + decay in next sprint"
+    },
+    {
+      "option_id": "OPT_C",
+      "name": "Complete Path (High Risk)",
+      "features": ["F_DECAY_001", "F_FED_001", "F_DIPL_001"],
+      "total_effort_weeks": 9,
+      "rationale": "Do everything. Requires hard deadline push. High value if successful; risky.",
+      "risk_level": "high",
+      "enables_next": "Supply chain + scaling"
+    },
+    {
+      "option_id": "OPT_D",
+      "name": "Safe Scaling Path",
+      "features": ["F_DECAY_001", "F_SCF_001", "F_SUPPLY_001_PARTIAL"],
+      "total_effort_weeks": 6.5,
+      "rationale": "Build out CONQUEST world fully. Defer federation proof. Strong gameplay, lower breakthrough value.",
+      "risk_level": "medium",
+      "enables_next": "Federation in v0.2"
+    }
+  ],
+  "trade_offs": [
+    {
+      "trade_off_id": "T_001",
+      "between": ["F_FED_001", "F_DECAY_001"],
+      "description": "Federation proves architecture (Path A validation). Decay proves world consistency.",
+      "recommendation": "Both eventually; federation first for institutional credibility"
+    },
+    {
+      "trade_off_id": "T_002",
+      "between": ["F_DIPL_001", "F_SUPPLY_001"],
+      "description": "Diplomacy is game experience. Supply chain is game depth.",
+      "recommendation": "Diplomacy depends on federation; supply chain is independent. Diplomacy first."
+    },
+    {
+      "trade_off_id": "T_003",
+      "between": ["F_FED_001", "F_SUPPLY_001"],
+      "description": "Federation is proof. Supply chain is complexity.",
+      "recommendation": "Federation validates breakthrough; supply chain can wait. Federation first."
+    }
+  ],
+  "questions_for_helen": [
+    "Which option best validates Path A (operational proof of constitutional AI)?",
+    "What is the dependency order if we want to prove federation by week 8?",
+    "What is the minimum viable feature set for institutional credibility?",
+    "Should we defer supply chain entirely to v0.2 or split it?"
+  ],
+  "decision_status": "awaiting_helen_analysis"
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "oracle_town/kernel_core_v0_1/schemas/hal_verdict_v1.schema.json",
+  "title": "HAL_VERDICT_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["verdict", "reason_codes", "required_fixes"],
+  "properties": {
+    "verdict": { "type": "string", "enum": ["PASS", "WARN", "BLOCK"] },
+    "reason_codes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[A-Z0-9_]+$" }
+    },
+    "required_fixes": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

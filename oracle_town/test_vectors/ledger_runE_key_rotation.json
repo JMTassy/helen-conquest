@@ -1,0 +1,53 @@
+{
+  "run_id": "R-E",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-E-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-E",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:X70qz5DsKLDPWpWq07VcwMkn9YIPIDFMvXq/jtD2KWKHLbV40BnqP5xGL1p8B62dLQ7JEivFjZ5png0WQRD8Cw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-25T10:00:00Z"
+    },
+    {
+      "attestation_id": "ATT-E-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-E",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
+      "signing_key_id": "key-2025-12-legal-old",
+      "signature": "ed25519:xqcrYhZ2sY1Ru2aQ6OU6kW4JXPORpkG+q1pM1TOdHmtYXYreq1DH+AgxNNrkrC/NJA0WhXqkr1fhkvfpn1NTBA==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-10T10:05:00Z",
+      "meta": {
+        "_test_note": "Attestation signed BEFORE key revocation (2026-01-15), but evaluated AFTER. Should still fail."
+      }
+    }
+  ],
+  "ledger_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runE_key_rotation",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "KEY_REVOKED",
+    "attack_description": "Attestation signed before key revocation but replayed after. Time-of-check vs time-of-use attack."
+  }
+}

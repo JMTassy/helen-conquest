@@ -1,0 +1,27 @@
+{
+  "claim": {
+    "id": "acg_claim_K1_010",
+    "timestamp": "2026-01-31T10:09:00Z",
+    "target": "oracle_town/jobs/brf_onepager.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "/nonexistent/test_result_variant_9.json",
+        "hash": "sha256:notreal",
+        "description": "Tests passed variant 9"
+      }
+    ],
+    "acceptance_criteria": [
+      "all_tests_pass"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test dangling evidence reference variant 9",
+    "expected_outcomes": [
+      "test_pass",
+      "verification_complete"
+    ]
+  }
+}

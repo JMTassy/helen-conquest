@@ -1,0 +1,7 @@
+{
+  "name": "helen-autoportrait",
+  "description": "HELEN OS autoportrait — consciousness loop, voiced by Zephyr. Built with HyperFrames.",
+  "duration": 44,
+  "resolution": { "width": 1080, "height": 1920 },
+  "fps": 30
+}

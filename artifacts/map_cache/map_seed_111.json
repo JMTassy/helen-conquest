@@ -1,0 +1,398 @@
+{
+  "seed": 111,
+  "width": 5,
+  "height": 5,
+  "timestamp": "2026-02-20T11:00:47.346282",
+  "territories": [
+    {
+      "territory_id": 0,
+      "cells": [
+        [
+          3,
+          0
+        ],
+        [
+          3,
+          1
+        ],
+        [
+          3,
+          2
+        ]
+      ],
+      "center": [
+        2.9486807024704746,
+        1.1762790173825457
+      ],
+      "terrain_distribution": {
+        "plains": 2,
+        "water": 1
+      },
+      "climate_distribution": {
+        "frozen": 1,
+        "temperate": 2
+      },
+      "tile_count": 3
+    },
+    {
+      "territory_id": 1,
+      "cells": [
+        [
+          1,
+          4
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          3,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          4
+        ]
+      ],
+      "center": [
+        2.244236077484681,
+        3.5770498900924914
+      ],
+      "terrain_distribution": {
+        "water": 3,
+        "plains": 3
+      },
+      "climate_distribution": {
+        "tropical": 5,
+        "arid": 1
+      },
+      "tile_count": 6
+    },
+    {
+      "territory_id": 2,
+      "cells": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ]
+      ],
+      "center": [
+        1.6813012176115048,
+        1.0966518285579592
+      ],
+      "terrain_distribution": {
+        "water": 3,
+        "plains": 2
+      },
+      "climate_distribution": {
+        "frozen": 4,
+        "temperate": 1
+      },
+      "tile_count": 5
+    },
+    {
+      "territory_id": 3,
+      "cells": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          2
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "center": [
+        0.5899132981766471,
+        2.180897969058231
+      ],
+      "terrain_distribution": {
+        "water": 3,
+        "plains": 3
+      },
+      "climate_distribution": {
+        "temperate": 3,
+        "tropical": 2,
+        "arid": 1
+      },
+      "tile_count": 6
+    },
+    {
+      "territory_id": 4,
+      "cells": [
+        [
+          2,
+          2
+        ]
+      ],
+      "center": [
+        1.4547285649857842,
+        1.8506247675551695
+      ],
+      "terrain_distribution": {
+        "water": 1
+      },
+      "climate_distribution": {
+        "temperate": 1
+      },
+      "tile_count": 1
+    },
+    {
+      "territory_id": 5,
+      "cells": [
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          4,
+          2
+        ],
+        [
+          4,
+          3
+        ]
+      ],
+      "center": [
+        4.462849858523515,
+        1.4509058156000911
+      ],
+      "terrain_distribution": {
+        "plains": 3,
+        "water": 1
+      },
+      "climate_distribution": {
+        "frozen": 2,
+        "temperate": 2
+      },
+      "tile_count": 4
+    }
+  ],
+  "tile_map": {
+    "0,0": {
+      "x": 0,
+      "y": 0,
+      "territory_id": 2,
+      "terrain": "water",
+      "climate": "frozen"
+    },
+    "0,1": {
+      "x": 0,
+      "y": 1,
+      "territory_id": 3,
+      "terrain": "water",
+      "climate": "temperate"
+    },
+    "0,2": {
+      "x": 0,
+      "y": 2,
+      "territory_id": 3,
+      "terrain": "plains",
+      "climate": "tropical"
+    },
+    "0,3": {
+      "x": 0,
+      "y": 3,
+      "territory_id": 3,
+      "terrain": "water",
+      "climate": "tropical"
+    },
+    "0,4": {
+      "x": 0,
+      "y": 4,
+      "territory_id": 3,
+      "terrain": "plains",
+      "climate": "arid"
+    },
+    "1,0": {
+      "x": 1,
+      "y": 0,
+      "territory_id": 2,
+      "terrain": "plains",
+      "climate": "frozen"
+    },
+    "1,1": {
+      "x": 1,
+      "y": 1,
+      "territory_id": 2,
+      "terrain": "water",
+      "climate": "frozen"
+    },
+    "1,2": {
+      "x": 1,
+      "y": 2,
+      "territory_id": 3,
+      "terrain": "water",
+      "climate": "temperate"
+    },
+    "1,3": {
+      "x": 1,
+      "y": 3,
+      "territory_id": 3,
+      "terrain": "plains",
+      "climate": "temperate"
+    },
+    "1,4": {
+      "x": 1,
+      "y": 4,
+      "territory_id": 1,
+      "terrain": "water",
+      "climate": "tropical"
+    },
+    "2,0": {
+      "x": 2,
+      "y": 0,
+      "territory_id": 2,
+      "terrain": "water",
+      "climate": "frozen"
+    },
+    "2,1": {
+      "x": 2,
+      "y": 1,
+      "territory_id": 2,
+      "terrain": "plains",
+      "climate": "temperate"
+    },
+    "2,2": {
+      "x": 2,
+      "y": 2,
+      "territory_id": 4,
+      "terrain": "water",
+      "climate": "temperate"
+    },
+    "2,3": {
+      "x": 2,
+      "y": 3,
+      "territory_id": 1,
+      "terrain": "plains",
+      "climate": "tropical"
+    },
+    "2,4": {
+      "x": 2,
+      "y": 4,
+      "territory_id": 1,
+      "terrain": "plains",
+      "climate": "tropical"
+    },
+    "3,0": {
+      "x": 3,
+      "y": 0,
+      "territory_id": 0,
+      "terrain": "plains",
+      "climate": "frozen"
+    },
+    "3,1": {
+      "x": 3,
+      "y": 1,
+      "territory_id": 0,
+      "terrain": "water",
+      "climate": "temperate"
+    },
+    "3,2": {
+      "x": 3,
+      "y": 2,
+      "territory_id": 0,
+      "terrain": "plains",
+      "climate": "temperate"
+    },
+    "3,3": {
+      "x": 3,
+      "y": 3,
+      "territory_id": 1,
+      "terrain": "water",
+      "climate": "tropical"
+    },
+    "3,4": {
+      "x": 3,
+      "y": 4,
+      "territory_id": 1,
+      "terrain": "plains",
+      "climate": "arid"
+    },
+    "4,0": {
+      "x": 4,
+      "y": 0,
+      "territory_id": 5,
+      "terrain": "plains",
+      "climate": "frozen"
+    },
+    "4,1": {
+      "x": 4,
+      "y": 1,
+      "territory_id": 5,
+      "terrain": "plains",
+      "climate": "frozen"
+    },
+    "4,2": {
+      "x": 4,
+      "y": 2,
+      "territory_id": 5,
+      "terrain": "water",
+      "climate": "temperate"
+    },
+    "4,3": {
+      "x": 4,
+      "y": 3,
+      "territory_id": 5,
+      "terrain": "plains",
+      "climate": "temperate"
+    },
+    "4,4": {
+      "x": 4,
+      "y": 4,
+      "territory_id": 1,
+      "terrain": "water",
+      "climate": "tropical"
+    }
+  },
+  "metadata": {
+    "algorithm": "seeded_rng_voronoi_approximation",
+    "deterministic": true,
+    "rng_type": "numpy.random.RandomState",
+    "seed_value": 111
+  }
+}

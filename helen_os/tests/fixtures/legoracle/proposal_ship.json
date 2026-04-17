@@ -1,0 +1,32 @@
+{
+  "schema_name": "SKILL_PROMOTION_PACKET_V1",
+  "schema_version": "1.0.0",
+  "packet_id": "PROMO-REPLAY-SHIP",
+  "skill_id": "WEB_SEARCH",
+  "candidate_version": "WEB_SEARCH_V4",
+  "lineage": {
+    "parent_skill_id": "WEB_SEARCH",
+    "parent_version": "WEB_SEARCH_V3",
+    "proposal_sha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  },
+  "capability_manifest_sha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "doctrine_surface": {
+    "law_surface_version": "KERNEL_V2_1.0",
+    "transfer_required": true
+  },
+  "evaluation": {
+    "threshold_name": "pass_rate",
+    "threshold_value": 0.95,
+    "observed_value": 0.98,
+    "passed": true
+  },
+  "receipts": [
+    {
+      "receipt_id": "R1",
+      "payload": {
+        "type": "eval"
+      },
+      "sha256": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+    }
+  ]
+}

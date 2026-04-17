@@ -1,0 +1,10 @@
+{
+  "schema": "ARTIFACT_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-17T15:18:43.580534Z",
+  "artifact_file": "scene1_emergence.png",
+  "artifact_sha256": "a8195c3e0ca6b59858cb84f9ff50b5b6a6c8a978cfb3794807ea06329208cc65",
+  "artifact_bytes": 235061,
+  "artifact_type": "png",
+  "source": "autoresearch_epoch_1_retroactive",
+  "model_id": "procedural"
+}

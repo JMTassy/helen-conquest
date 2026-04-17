@@ -1,0 +1,53 @@
+{
+  "run_id": "R-D",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-D-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-D",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:AD4JfP7d9ZrMjD/ixezAQ0zOjd3uQ6tbBOCvKn9HO63aRuflVowDqimZqjeGJBfN5LlWVB91MWNB53iM+6uVDA==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-25T10:00:00Z"
+    },
+    {
+      "attestation_id": "ATT-D-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-D",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:qLBKnLeTPcEPlz9MnKBNQEnwrKeoQLxW138VU/U2rhMC1yUIluJ7oKxlqLvlePi/5TzwVyDaqNGOChe4haOaDA==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-25T10:05:00Z",
+      "meta": {
+        "_test_note": "This attestation lies: key-2026-01-legal is bound to LEGAL class but claims CI_RUNNER"
+      }
+    }
+  ],
+  "ledger_digest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runD_class_mismatch",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "KEY_CLASS_MISMATCH",
+    "attack_description": "LEGAL key signs attestation claiming to be CI_RUNNER class"
+  }
+}

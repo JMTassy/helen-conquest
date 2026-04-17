@@ -1,0 +1,145 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "HELEN_HANDOFF_V1",
+  "title": "HELEN_HANDOFF_V1",
+  "description": "Non-sovereign handoff from ORACLE SUPER 2: BUILDERS to HELEN/ORACLE kernel. A handoff, not a verdict.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "HELEN_HANDOFF_V1"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "HELEN_HANDOFF_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "handoff_id": {
+      "type": "string",
+      "description": "Globally unique handoff identifier.",
+      "pattern": "^HANDOFF-[A-Z0-9-]+$"
+    },
+    "source_system": {
+      "type": "string",
+      "const": "ORACLE_SUPER_2_BUILDERS",
+      "description": "Must always be ORACLE_SUPER_2_BUILDERS to prevent source spoofing."
+    },
+    "run_id": {
+      "type": "string",
+      "description": "The BUILDERS_RUN_V1 this handoff comes from.",
+      "pattern": "^RUN-[A-Z0-9-]+$"
+    },
+    "brief_id": {
+      "type": "string",
+      "description": "The BUILDERS_BRIEF_V1 that initiated the run.",
+      "pattern": "^BRIEF-[A-Z0-9-]+$"
+    },
+    "artifact_bundle_ref": {
+      "type": "string",
+      "description": "Relative path to artifact_bundle.json."
+    },
+    "final_artifact_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Relative path to final_artifact.md or .json. Null if run aborted."
+    },
+    "claims_log_ref": {
+      "type": "string",
+      "description": "Relative path to claims_log.json."
+    },
+    "phase_log_ref": {
+      "type": "string",
+      "description": "Relative path to phase_log.json."
+    },
+    "abort_report_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Relative path to abort_report.json. Null if run delivered successfully."
+    },
+    "payload_sha256": {
+      "type": "string",
+      "description": "sha256(JCS(final artifact payload)).",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Source identifiers cited during the run."
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Evidence bundle identifiers used during the run."
+    },
+    "open_risks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Known weaknesses, unresolved tensions, or incomplete evidence in the artifact. HELEN uses these during admissibility evaluation."
+    },
+    "non_sovereign_attestation": {
+      "type": "object",
+      "description": "BUILDERS asserts it did NOT emit sovereign decisions. HELEN verifies this before admissibility evaluation.",
+      "required": [
+        "verdict_emitted",
+        "truth_claimed",
+        "doctrine_mutated"
+      ],
+      "properties": {
+        "verdict_emitted": {
+          "type": "boolean",
+          "const": false,
+          "description": "MUST be false. Any true value causes immediate HELEN rejection."
+        },
+        "truth_claimed": {
+          "type": "boolean",
+          "const": false,
+          "description": "MUST be false. BUILDERS does not self-attest truth."
+        },
+        "doctrine_mutated": {
+          "type": "boolean",
+          "const": false,
+          "description": "MUST be false. BUILDERS cannot mutate kernel doctrine."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "canonicalization",
+    "handoff_id",
+    "source_system",
+    "run_id",
+    "brief_id",
+    "artifact_bundle_ref",
+    "final_artifact_ref",
+    "claims_log_ref",
+    "phase_log_ref",
+    "abort_report_ref",
+    "payload_sha256",
+    "open_risks",
+    "non_sovereign_attestation"
+  ],
+  "additionalProperties": false,
+  "x-forbidden-fields": [
+    "SHIP",
+    "NO_SHIP",
+    "verdict",
+    "doctrine_update",
+    "receipt_authorization"
+  ],
+  "x-law": "This object is a handoff, not a verdict. HELEN must reject any handoff where non_sovereign_attestation contains true values or where forbidden fields appear. HELEN decides admissibility; BUILDERS hands off artifacts."
+}

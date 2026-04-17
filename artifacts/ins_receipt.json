@@ -1,0 +1,11 @@
+{
+  "ins_receipt": {
+    "anomalies_count": 29,
+    "attestor_id": "ins_attestor_001",
+    "insights_count": 194,
+    "insights_hash": "sha256:4118167c15e653b6e45b07e394ca9b4822ef8dd5229810338fa022327978da18",
+    "note": "Signature placeholder; actual signing by attestor_id required",
+    "run_id": 1,
+    "signature": "ed25519:PLACEHOLDER_SIGNATURE"
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": "bibliotheque_requests_v1",
+  "generated_at_iso": "2026-01-29T17:00:00Z",
+  "requests": [
+    {
+      "request_id": "REQ_001",
+      "type": "MATH_DRAFT",
+      "title": "K5 Determinism Proof",
+      "why_needed": "Formalize invariant that same input → same output across 30 iterations",
+      "accepted_formats": [".md", ".tex", ".txt"],
+      "drop_location": "oracle_town/inbox/REQ_001/",
+      "status": "OPEN",
+      "deadline": null
+    },
+    {
+      "request_id": "REQ_002",
+      "type": "CODE_ARCHIVE",
+      "title": "Legacy Quorum Validation Code",
+      "why_needed": "Pattern extraction: how was K3 (quorum-by-class) implemented before RSM?",
+      "accepted_formats": [".py", ".go", ".rs", ".txt"],
+      "drop_location": "oracle_town/inbox/REQ_002/",
+      "status": "OPEN",
+      "deadline": null
+    },
+    {
+      "request_id": "REQ_003",
+      "type": "RESEARCH",
+      "title": "Byzantine Fault Tolerance Background",
+      "why_needed": "Support K3 quorum design with academic references",
+      "accepted_formats": [".md", ".pdf", ".txt"],
+      "drop_location": "oracle_town/inbox/REQ_003/",
+      "status": "OPEN",
+      "deadline": null
+    },
+    {
+      "request_id": "REQ_004",
+      "type": "OPERATIONAL",
+      "title": "Past Attestation Failures (Incident Log)",
+      "why_needed": "Ground E4 (revocation cascade) pattern in real incidents",
+      "accepted_formats": [".md", ".txt", ".json"],
+      "drop_location": "oracle_town/inbox/REQ_004/",
+      "status": "OPEN",
+      "deadline": null
+    }
+  ]
+}

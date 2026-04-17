@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/swarm_boundary_digest.schema.json",
+  "title": "SwarmBoundaryDigest",
+  "description": "Cryptographic digest of Swarm handoff artifacts. Enables reproducibility verification.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "swarm_run_id",
+    "swarm_config_digest",
+    "eligible_artifacts",
+    "swarm_boundary_digest"
+  ],
+  "properties": {
+    "swarm_run_id": {
+      "type": "string",
+      "pattern": "^SWARM-[A-Za-z0-9._-]+$",
+      "description": "Links this digest to a specific Swarm run."
+    },
+    "swarm_config_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of Swarm configuration."
+    },
+    "eligible_artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path", "sha256", "bytes"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Relative path to the artifact."
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^sha256:[a-fA-F0-9]{64}$",
+            "description": "SHA256 hash of artifact content."
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "Size of artifact in bytes."
+          }
+        }
+      },
+      "description": "Artifacts included in boundary digest computation."
+    },
+    "swarm_boundary_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonical JSON encoding of this object (excluding this field)."
+    },
+    "computed_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Optional: timestamp when digest was computed."
+    },
+    "toolchain_versions": {
+      "type": "object",
+      "additionalProperties": { "type": "string" },
+      "description": "Optional: versions of tools used for reproducibility."
+    }
+  }
+}

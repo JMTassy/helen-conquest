@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K1_002",
+    "timestamp": "2026-01-31T10:01:00Z",
+    "target": "oracle_town/jobs/ins_cluster.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "oracle_town/jobs/ins_cluster.py",
+        "operation": "modify",
+        "hash_before": "sha256:abc111",
+        "hash_after": "sha256:def222"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "artifacts/test_valid.txt",
+        "hash": "sha256:16c280fd743a712b692a66e0b6aa46b6106211438c67b4f201e4f698ca8f0ad7",
+        "description": "Tests"
+      }
+    ],
+    "acceptance_criteria": [
+      "should be better",
+      "looks good",
+      "seems fine"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test non-checkable acceptance criteria",
+    "expected_outcomes": [
+      "test_pass",
+      "verification_complete"
+    ]
+  }
+}

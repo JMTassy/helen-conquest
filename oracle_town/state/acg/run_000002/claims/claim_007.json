@@ -1,0 +1,37 @@
+{
+  "claim": {
+    "id": "acg_claim_K2_002",
+    "timestamp": "2026-01-31T10:21:00Z",
+    "target": "oracle_town/jobs/ins_cluster.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "ins.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K2_002_evidence_0.txt",
+        "hash": "sha256:a55207aef533e6c2678d87b0d75d2dc658cd25e0adf5a2395e56b6319f337bf9",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "test_pass"
+    ],
+    "parent_claim_id": "acg_claim_K2_002",
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test circular claim rejection",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K2_no_self_attestation",
+      "category": "K2",
+      "variant": "test"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "_comment": "TEMPLATE — produced at run end. Fill in from rho_trace.ndjson min computation.",
+  "schema_version": "RHO_SUMMARY_V1",
+  "run_id": "RUN-YYYY-MM-DD-001",
+  "inf_rho": 0.023,
+  "t_star": 0,
+  "active_constraint": "mu_Pi",
+  "margins_at_t_star": {
+    "mu_Delta": 0.045,
+    "mu_Pi": 0.023,
+    "mu_CFL": 0.031,
+    "mu_Lyap": 0.078,
+    "mu_Z": 0.055,
+    "rho": 0.023
+  },
+  "helen_termination": {
+    "outcome": "DELIVER",
+    "district": "RESEARCH",
+    "reason_codes": [],
+    "emergent_name": "active_constraint__mu_Pi",
+    "falsifier": "Produce a run with identical config where active_constraint at t_star is not mu_Pi."
+  }
+}

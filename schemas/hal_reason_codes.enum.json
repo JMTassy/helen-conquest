@@ -1,0 +1,160 @@
+{
+  "title": "HAL Reason Code Enumeration",
+  "description": "Stable, deterministic reason codes for MAYOR verdicts. All codes MUST be lexicographically sorted in output.",
+  "meta": {
+    "version": "1.0.0",
+    "date": "2026-02-22",
+    "policy": "Codes are frozen once in production. New codes require amendment process."
+  },
+  "categories": {
+    "schema_validation": {
+      "description": "Payload structure validation",
+      "codes": {
+        "INVALID_HAL_SCHEMA": "HAL object does not match HAL_VERDICT_V1",
+        "INVALID_PAYLOAD_SCHEMA": "Payload structure invalid",
+        "MISSING_REQUIRED_FIELD": "Required field missing",
+        "INVALID_ENUM_VALUE": "Enum field has invalid value",
+        "REASONS_NOT_SORTED": "reasons_codes not in lexicographic order",
+        "FIXES_NOT_SORTED": "required_fixes not in lexicographic order",
+        "REASON_CODE_INVALID_FORMAT": "Reason code does not match ^[A-Z0-9_]{3,64}$",
+        "VERDICT_MUTATION_RULE": "mutations present but verdict is PASS (must be WARN/BLOCK)"
+      }
+    },
+    "determinism": {
+      "description": "Determinism and reproducibility checks",
+      "codes": {
+        "NONDETERMINISM_TIMESTAMP": "Wall-clock timestamp found in payload (belongs in meta)",
+        "NONDETERMINISM_RANDOM_ID": "Non-deterministic ID generation detected",
+        "NONDETERMINISM_UNSEEDED_RNG": "Unseeded randomness in payload",
+        "NONDETERMINISM_LOCALE_DEPENDENT": "Locale-dependent formatting detected"
+      }
+    },
+    "hash_integrity": {
+      "description": "Hash chain verification",
+      "codes": {
+        "PAYLOAD_HASH_MISMATCH": "Computed SHA256(payload) != payload_hash",
+        "CUM_HASH_MISMATCH": "Computed cum_hash != declared cum_hash",
+        "HASH_CHAIN_BROKEN": "cum_hash chain is not monotonically valid",
+        "IDENTITY_HASH_MISMATCH": "identity_hash mismatch (kernel/policy/ledger hash changed)"
+      }
+    },
+    "governance_gates": {
+      "description": "K-τ, K-ρ, CouplingGate results",
+      "codes": {
+        "KTAU_BOUNDARY_VIOLATION": "K-τ μ_BOUNDARY: kernel imports forbidden library",
+        "KTAU_IO_VIOLATION": "K-τ μ_IO: write outside allowlisted roots",
+        "KTAU_DETERMINISM_VIOLATION": "K-τ μ_DETERMINISM: unseeded randomness detected",
+        "KTAU_ALLOWLIST_VIOLATION": "K-τ μ_ALLOWLIST: tool not registered",
+        "KTAU_SCHEMA_VIOLATION": "K-τ μ_SCHEMA: artifact JSON parse fails",
+        "RHO_VIABILITY_CRITICAL": "K-ρ viability: inf_rho < 0 (abort state)",
+        "RHO_CONSTRAINT_ACTIVE": "K-ρ: active constraint preventing decision",
+        "COUPLING_HASH_MISMATCH_RUN": "CouplingGate: run hash mismatch",
+        "COUPLING_HASH_MISMATCH_KERNEL": "CouplingGate: kernel or config hash mismatch",
+        "COUPLING_ORACLE_HOLD": "CouplingGate: OracleTown holding forecast",
+        "COUPLING_NO_CAPABILITY": "CouplingGate: no matching capability",
+        "COUPLING_POC_NOT_GRADUATED": "CouplingGate: POC not yet graduated",
+        "COUPLING_MISSING_RECEIPT": "CouplingGate: support receipt missing",
+        "COUPLING_INVALID_RECEIPT": "CouplingGate: support receipt invalid",
+        "COUPLING_FORECAST_REJECTED": "CouplingGate: forecast rejected by OracleTown"
+      }
+    },
+    "byzantine": {
+      "description": "Byzantine detection and recovery",
+      "codes": {
+        "BYZANTINE_DETECTION_OK": "No Byzantine behavior detected",
+        "BYZANTINE_DIVERGENCE": "Multiple contradictory ledger histories",
+        "BYZANTINE_RECOVERY_APPLIED": "Byzantine recovery protocol invoked"
+      }
+    },
+    "authority": {
+      "description": "Authority constraint checks",
+      "codes": {
+        "AUTHORITY_CONSTRAINT_OK": "Authority separation verified",
+        "AUTHORITY_ESCALATION_ATTEMPT": "Agent attempted unauthorized privilege",
+        "AUTHORITY_CYCLE_DETECTED": "Circular authority dependency",
+        "AUTHORITY_SELF_RATIFICATION": "Agent attempted to validate own output"
+      }
+    },
+    "receipt_binding": {
+      "description": "Receipt and artifact binding",
+      "codes": {
+        "NO_RECEIPT": "Claim asserted without bound receipt",
+        "RECEIPT_MISSING": "Referenced receipt not found",
+        "RECEIPT_INVALID": "Receipt validation failed",
+        "RECEIPT_BINDING_OK": "Receipt validated and bound"
+      }
+    },
+    "termination": {
+      "description": "Termination decision logic",
+      "codes": {
+        "TERMINATION_LOCKED": "Run cannot terminate (ongoing operation)",
+        "TERMINATION_DECISION_DELIVER": "Editor decision: DELIVER artifact",
+        "TERMINATION_DECISION_ABORT": "Editor decision: ABORT run",
+        "TERMINATION_INSUFFICIENT_EVIDENCE": "Cannot decide DELIVER without sufficient evidence"
+      }
+    },
+    "style_format": {
+      "description": "Non-critical style/format issues (marked trivial)",
+      "codes": {
+        "FORMAT_EXTRA_WHITESPACE": "Non-semantic whitespace",
+        "FORMAT_COMMENT_STYLE": "Comment formatting inconsistent",
+        "STYLE_CAPITALIZATION": "Inconsistent case",
+        "WHITESPACE_TRAILING": "Trailing whitespace detected"
+      }
+    }
+  },
+  "reason_code_registry": [
+    "ALL_K_GATES_VERIFIED",
+    "ALL_TESTS_PASSED",
+    "AUTHORITY_CONSTRAINT_OK",
+    "AUTHORITY_CYCLE_DETECTED",
+    "AUTHORITY_ESCALATION_ATTEMPT",
+    "AUTHORITY_SELF_RATIFICATION",
+    "BYZANTINE_DETECTION_OK",
+    "BYZANTINE_DIVERGENCE",
+    "BYZANTINE_RECOVERY_APPLIED",
+    "COUPLING_FORECAST_REJECTED",
+    "COUPLING_HASH_MISMATCH_KERNEL",
+    "COUPLING_HASH_MISMATCH_RUN",
+    "COUPLING_INVALID_RECEIPT",
+    "COUPLING_MISSING_RECEIPT",
+    "COUPLING_NO_CAPABILITY",
+    "COUPLING_ORACLE_HOLD",
+    "COUPLING_POC_NOT_GRADUATED",
+    "CUM_HASH_MISMATCH",
+    "FORMAT_COMMENT_STYLE",
+    "FORMAT_EXTRA_WHITESPACE",
+    "HASH_CHAIN_BROKEN",
+    "IDENTITY_HASH_MISMATCH",
+    "INVALID_ENUM_VALUE",
+    "INVALID_HAL_SCHEMA",
+    "INVALID_PAYLOAD_SCHEMA",
+    "KTAU_ALLOWLIST_VIOLATION",
+    "KTAU_BOUNDARY_VIOLATION",
+    "KTAU_DETERMINISM_VIOLATION",
+    "KTAU_IO_VIOLATION",
+    "KTAU_SCHEMA_VIOLATION",
+    "LEDGER_COHERENT",
+    "MISSING_REQUIRED_FIELD",
+    "NONDETERMINISM_LOCALE_DEPENDENT",
+    "NONDETERMINISM_RANDOM_ID",
+    "NONDETERMINISM_TIMESTAMP",
+    "NONDETERMINISM_UNSEEDED_RNG",
+    "NO_RECEIPT",
+    "PAYLOAD_HASH_MISMATCH",
+    "REASON_CODE_INVALID_FORMAT",
+    "RECEIPT_BINDING_OK",
+    "RECEIPT_INVALID",
+    "RECEIPT_MISSING",
+    "REASONS_NOT_SORTED",
+    "RHO_CONSTRAINT_ACTIVE",
+    "RHO_VIABILITY_CRITICAL",
+    "STYLE_CAPITALIZATION",
+    "TERMINATION_DECISION_ABORT",
+    "TERMINATION_DECISION_DELIVER",
+    "TERMINATION_INSUFFICIENT_EVIDENCE",
+    "TERMINATION_LOCKED",
+    "VERDICT_MUTATION_RULE",
+    "WHITESPACE_TRAILING"
+  ]
+}

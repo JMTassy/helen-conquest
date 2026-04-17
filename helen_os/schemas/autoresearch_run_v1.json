@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "AUTORESEARCH_RUN_V1",
+  "description": "Contract for helen autoresearch run command. Defines input manifest, environment, and expected output artifacts.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "AUTORESEARCH_RUN_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^run_[a-z0-9_]+$"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "environment_manifest": {
+      "type": "object",
+      "properties": {
+        "reducer_version": {"type": "string"},
+        "law_surface_hash": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "canonicalization": {
+          "const": "JCS_SHA256_V1"
+        },
+        "ledger_path": {"type": "string", "description": "Path to input DECISION_LEDGER_V1 (or null for fresh)"},
+        "state_path": {"type": "string", "description": "Path to input SKILL_LIBRARY_STATE_V1"},
+        "schemas_path": {"type": "string", "description": "Path to schemas directory"}
+      },
+      "required": ["reducer_version", "law_surface_hash", "canonicalization", "state_path", "schemas_path"],
+      "additionalProperties": false
+    },
+    "input_artifacts": {
+      "type": "object",
+      "properties": {
+        "initial_ledger": {
+          "type": ["object", "null"],
+          "description": "Existing DECISION_LEDGER_V1 or null to start fresh"
+        },
+        "initial_state": {
+          "type": "object",
+          "description": "SKILL_LIBRARY_STATE_V1"
+        },
+        "decisions": {
+          "type": "array",
+          "items": {"type": "object"},
+          "description": "Decision packets to process through batch"
+        }
+      },
+      "required": ["initial_state", "decisions"],
+      "additionalProperties": false
+    },
+    "batch_params": {
+      "type": "object",
+      "properties": {
+        "max_items": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum decisions to process"
+        },
+        "determinism_proof_runs": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1,
+          "description": "Number of replay runs to verify determinism"
+        }
+      },
+      "required": ["max_items"],
+      "additionalProperties": false
+    },
+    "output_spec": {
+      "type": "object",
+      "properties": {
+        "output_dir": {
+          "type": "string",
+          "description": "Where to write ledger_out.json, state_out.json, proof.json"
+        },
+        "emit_receipt": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to emit BATCH_RECEIPT_PACKET_V1"
+        },
+        "emit_artifact": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to emit ORACLE_TOWN_BATCH_ARTIFACT_V1"
+        },
+        "emit_hal_packet": {
+          "type": "boolean",
+          "default": true,
+          "description": "Whether to emit HAL_REVIEW_PACKET_V1"
+        }
+      },
+      "required": ["output_dir"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "run_id",
+    "created_at",
+    "environment_manifest",
+    "input_artifacts",
+    "batch_params",
+    "output_spec"
+  ],
+  "additionalProperties": false
+}

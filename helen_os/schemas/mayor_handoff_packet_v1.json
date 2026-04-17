@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "MAYOR_HANDOFF_PACKET_V1",
+  "description": "Sovereign handoff packet: only emitted after HAL verdict received. Mayor reads receipts + verdict, decides SHIP or NO_SHIP.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "MAYOR_HANDOFF_PACKET_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "handoff_id": {
+      "type": "string",
+      "pattern": "^mayor_[a-z0-9_]+$"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^batch_receipt_[a-z0-9_]+$",
+      "description": "Reference to kernel-emitted receipt"
+    },
+    "hal_verdict_receipt": {
+      "type": "string",
+      "pattern": "^hal_verdict_[a-z0-9_]+$",
+      "description": "HAL's structured verdict response"
+    },
+    "kernel_artifacts": {
+      "type": "object",
+      "properties": {
+        "batch_receipt_packet": {
+          "type": "object",
+          "description": "Full BATCH_RECEIPT_PACKET_V1 (governance facts only)"
+        },
+        "oracle_town_artifact": {
+          "type": "object",
+          "description": "Full ORACLE_TOWN_BATCH_ARTIFACT_V1 (ledger + state)"
+        },
+        "hal_review_packet": {
+          "type": "object",
+          "description": "Full HAL_REVIEW_PACKET_V1 (audit facts)"
+        }
+      },
+      "required": ["batch_receipt_packet", "oracle_town_artifact", "hal_review_packet"],
+      "additionalProperties": false
+    },
+    "hal_verdict_summary": {
+      "type": "object",
+      "properties": {
+        "verdict": {
+          "enum": ["PASS", "WARN", "BLOCK"],
+          "description": "HAL's final judgment"
+        },
+        "blockers": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "If verdict == BLOCK, explanation codes"
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "If verdict == WARN, attention points (does not prevent SHIP)"
+        }
+      },
+      "required": ["verdict", "blockers", "warnings"],
+      "additionalProperties": false
+    },
+    "ledger_state_commit": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Final ledger hash from receipt (immutable reference)"
+    },
+    "final_state_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Final state hash from receipt (immutable reference)"
+    },
+    "proposal": {
+      "enum": ["SHIP", "NO_SHIP"],
+      "description": "Mayor's sovereign choice. No other values accepted."
+    },
+    "mayor_authority_approval": {
+      "type": "object",
+      "properties": {
+        "approved_by": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "description": "Mayor identifier or signature"}
+          ],
+          "description": "null = not yet sealed by Mayor"
+        },
+        "sealed_timestamp": {
+          "oneOf": [
+            {"type": "null"},
+            {"type": "string", "format": "date-time"}
+          ],
+          "description": "When Mayor sealed this decision"
+        },
+        "is_final": {
+          "type": "boolean",
+          "description": "true = SHIP/NO_SHIP is irrevocable"
+        }
+      },
+      "required": ["approved_by", "sealed_timestamp", "is_final"],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "handoff_id",
+    "receipt_id",
+    "hal_verdict_receipt",
+    "kernel_artifacts",
+    "hal_verdict_summary",
+    "ledger_state_commit",
+    "final_state_hash",
+    "proposal",
+    "mayor_authority_approval"
+  ],
+  "additionalProperties": false
+}

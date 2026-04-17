@@ -1,0 +1,67 @@
+{
+  "seed": 42,
+  "final_tick": 100,
+  "final_regime": "politics",
+  "n_houses": 3,
+  "n_egregors": 3,
+  "regime_transitions": {
+    "noise": 1,
+    "egregor": 13,
+    "politics": 17
+  },
+  "houses": [
+    {
+      "id": "H_EXP_00",
+      "members": [
+        "a00",
+        "a01"
+      ],
+      "strategy": "explore",
+      "formed_at": 80,
+      "is_egregor": true,
+      "policy_predictability": 1.0,
+      "collective_rep": 0.95
+    },
+    {
+      "id": "H_BUI_01",
+      "members": [
+        "a04",
+        "a07"
+      ],
+      "strategy": "build",
+      "formed_at": 35,
+      "is_egregor": true,
+      "policy_predictability": 1.0,
+      "collective_rep": 1.0
+    },
+    {
+      "id": "H_JUD_01",
+      "members": [
+        "a08",
+        "a09",
+        "a10"
+      ],
+      "strategy": "judge",
+      "formed_at": 14,
+      "is_egregor": true,
+      "policy_predictability": 1.0,
+      "collective_rep": 1.0
+    }
+  ],
+  "params": {
+    "n_agents": 12,
+    "scarcity": 0.5,
+    "coordination_penalty": 0.1,
+    "reputation_weight": 0.5,
+    "imitation_strength": 0.3
+  },
+  "final_metrics": {
+    "modularity": 0.3945,
+    "ie_ratio": 6.5678,
+    "coalition_persistence": 0.0758,
+    "strategy_entropy": 1.585,
+    "reputation_gini": 0.0289,
+    "policy_explanation_rate": 1.0
+  },
+  "ledger_tip": "85bcc3a664c9d9b9"
+}

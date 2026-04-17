@@ -1,0 +1,92 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/temple_transmutation_request_v1.json",
+  "title": "TEMPLE_TRANSMUTATION_REQUEST_V1",
+  "description": "Typed bridge artifact: routes a HAL-passed TEMPLE export candidate to the Mayor pipeline. Non-sovereign — carries provenance only. Authority=NONE. Mayor assembles SKILL_PROMOTION_PACKET_V1 from this.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "request_id",
+    "source_session_id",
+    "source_artifact_hash",
+    "export_candidate_id",
+    "export_hal_verdict",
+    "proposed_skill_id",
+    "proposed_version",
+    "parent_skill_id",
+    "transmutation_status",
+    "authority"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "TEMPLE_TRANSMUTATION_REQUEST_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "request_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this transmutation request"
+    },
+    "source_session_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ID of the originating TEMPLE_EXPLORATION_V1 session"
+    },
+    "source_artifact_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 hash of the source TEMPLE_EXPLORATION_V1. Load-bearing provenance."
+    },
+    "export_candidate_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ID of the specific export_candidate within the source TEMPLE session"
+    },
+    "export_hal_verdict": {
+      "type": "string",
+      "enum": ["PASS", "WARN"],
+      "description": "HAL verdict on the export candidate. BLOCK is not transmitted — it is dropped at the TEMPLE bridge."
+    },
+    "proposed_skill_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Skill identifier being proposed (e.g. skill.weaver)"
+    },
+    "proposed_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of the proposed skill"
+    },
+    "parent_skill_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Parent skill in active_skills. Mayor verifies this exists before routing to reducer."
+    },
+    "capability_description": {
+      "type": "string",
+      "description": "Human-readable description of the capability gap being addressed"
+    },
+    "failure_cluster_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Optional: hash of the NEW_SKILL_DISCOVERY_V1 that motivated this request"
+    },
+    "transmutation_status": {
+      "type": "string",
+      "enum": ["PENDING", "SUBMITTED", "WITHDRAWN"],
+      "description": "PENDING = awaiting Mayor routing. SUBMITTED = Mayor has received it. WITHDRAWN = retracted before Mayor decision."
+    },
+    "authority": {
+      "const": "NONE",
+      "description": "Transmutation requests carry zero institutional authority. Authority is granted only by reducer-emitted decisions."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional free-text notes (TEMPLE-only, non-authoritative)"
+    }
+  }
+}

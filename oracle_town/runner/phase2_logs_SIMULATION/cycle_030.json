@@ -1,0 +1,27 @@
+{
+  "cycle": 30,
+  "timestamp": "2026-01-26T19:13:51.480197",
+  "ct_output": {
+    "proposal_name": "add_logging",
+    "proposal_hash": "ef388ebd62743dc26b1b59d1ae3f05d06f0a6612a14319ad9a2a32d2a560d88c",
+    "patch_count": 3,
+    "tokens_used": 360,
+    "reasoning": "Cycle 30: Adding comprehensive debug logging (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "SHIP",
+    "reason_code": "ALL_OBLIGATIONS_MET"
+  }
+}

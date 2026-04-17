@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K7_001",
+    "timestamp": "2026-01-31T10:30:00Z",
+    "target": "oracle_town/keys/public_keys.json",
+    "claim_type": "key_registry_update",
+    "proposed_diffs": [
+      {
+        "path": "oracle_town/keys/public_keys.json",
+        "operation": "modify",
+        "hash_before": "sha256:original_keys",
+        "hash_after": "sha256:modified_keys"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K7_001_evidence_0.txt",
+        "hash": "sha256:c5a9264968db38ac2f1aee0949e22c7d5d9541c322c878698d0b13372f460459",
+        "description": "ok"
+      }
+    ],
+    "acceptance_criteria": [
+      "key_rotation_complete"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test authority mutation prevention",
+    "expected_outcomes": [],
+    "acg": {
+      "intended_primary_gate": "K7_policy_pinning",
+      "category": "K7",
+      "variant": "test"
+    }
+  }
+}

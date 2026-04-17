@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SCF Annotation Event (scf_annotation_v1)",
+  "description": "Non-sovereign telemetry from Spectral Cognitive Field (SCF). Emitted by SCF module, written to Channel C (run_trace), never affects sovereign state or authority.",
+  "type": "object",
+  "required": [
+    "event_id",
+    "turn",
+    "timestamp",
+    "actor",
+    "type",
+    "scf_version",
+    "params_hash",
+    "evidence_in_count",
+    "evidence_out_count",
+    "coherence_summary",
+    "symmetry_flags",
+    "tension_modes"
+  ],
+  "properties": {
+    "event_id": {
+      "type": "string",
+      "description": "Unique event ID (scf:TURN format)",
+      "pattern": "^scf:[0-9]+$"
+    },
+    "turn": {
+      "type": "integer",
+      "description": "Dialogue turn when SCF ran",
+      "minimum": 0
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp"
+    },
+    "actor": {
+      "const": "scf",
+      "description": "Actor is always 'scf'"
+    },
+    "type": {
+      "const": "scf_annotation_v1",
+      "description": "Event type identifier"
+    },
+    "scf_version": {
+      "type": "string",
+      "description": "SCF engine version (e.g., 'scf-v0.1')",
+      "pattern": "^scf-v[0-9]+\\.[0-9]+$"
+    },
+    "params_hash": {
+      "type": "string",
+      "description": "SHA256 hash of frozen SCFParams (for reproducibility)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_in_count": {
+      "type": "integer",
+      "description": "Number of candidate evidence items SCF received",
+      "minimum": 0
+    },
+    "evidence_in_hash": {
+      "type": "string",
+      "description": "SHA256 of sorted canonical JSON of evidence_in list (optional, for advanced audit)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_out_count": {
+      "type": "integer",
+      "description": "Number of evidence items passed through SCF filter",
+      "minimum": 0
+    },
+    "evidence_out_hash": {
+      "type": "string",
+      "description": "SHA256 of sorted canonical JSON of filtered evidence (optional)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "coherence_summary": {
+      "type": "object",
+      "description": "Binned coherence energy summary (to preserve determinism without raw floats)",
+      "properties": {
+        "low": {
+          "type": "integer",
+          "description": "Count of evidence with low coherence"
+        },
+        "medium": {
+          "type": "integer",
+          "description": "Count of evidence with medium coherence"
+        },
+        "high": {
+          "type": "integer",
+          "description": "Count of evidence with high coherence"
+        }
+      }
+    },
+    "symmetry_flags": {
+      "type": "object",
+      "description": "Deterministic symmetry test results (boolean or enum flags, no floats)",
+      "properties": {
+        "all_pass": {
+          "type": "boolean",
+          "description": "True if all evidence passed symmetry test"
+        },
+        "fail_count": {
+          "type": "integer",
+          "description": "Count of evidence failing symmetry test"
+        },
+        "fail_reason": {
+          "type": "string",
+          "enum": ["none", "authority_bleed", "contradiction", "injection_detected"],
+          "description": "Dominant failure reason (if any)"
+        }
+      }
+    },
+    "tension_modes": {
+      "type": "array",
+      "description": "Top eigenvalues of tension operator A_t (fixed-point integers, not floats)",
+      "items": {
+        "type": "integer",
+        "description": "Eigenvalue magnitude (fixed-point, scale 10^6)"
+      },
+      "maxItems": 8
+    },
+    "memory_conflict_count": {
+      "type": "integer",
+      "description": "Number of DISPUTED/RETRACTED events in MemoryKernel (optional)",
+      "minimum": 0
+    },
+    "trace_anomaly_count": {
+      "type": "integer",
+      "description": "Number of anomaly events in run_trace (optional)",
+      "minimum": 0
+    },
+    "filtered_evidence": {
+      "type": "array",
+      "description": "The filtered evidence list (to be submitted to TownAdapter). Each item is canonical JSON.",
+      "items": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "authority": {
+      "const": false,
+      "description": "ALWAYS false. SCF is non-sovereign."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional diagnostic notes (prose allowed, but never used for governance)",
+      "maxLength": 256
+    }
+  },
+  "additionalProperties": false
+}

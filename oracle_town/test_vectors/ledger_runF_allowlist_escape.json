@@ -1,0 +1,53 @@
+{
+  "run_id": "R-F",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-F-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-F",
+      "claim_id": "CLM-001",
+      "obligation_name": "security_review",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:2t3ef73NZYiQfxR8Za0HaVsNQBcXqWbdAJIXZ4/bhIeF03triH+42zOn+Nh39ashIO+fYNpZFQs9SpzM82LtBQ==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/security_scan.xml",
+      "evidence_type": "sast-report",
+      "timestamp": "2026-01-25T10:00:00Z"
+    },
+    {
+      "attestation_id": "ATT-F-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-F",
+      "claim_id": "CLM-001",
+      "obligation_name": "security_review",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:wfKcg/T+QO9covfN/kQTx8kykGR4/zI6+Zxq+XPSZzIDa7Sxx7pykGPEVFMv9Kt8FzcAksW7X+oG8lioP0EZDA==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/security_legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-25T10:05:00Z",
+      "meta": {
+        "_test_note": "key-2026-01-legal is only allowed to sign gdpr_consent_banner, NOT security_review"
+      }
+    }
+  ],
+  "ledger_digest": "sha256:ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runF_allowlist_escape",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "KEY_OBLIGATION_NOT_ALLOWED",
+    "attack_description": "LEGAL key signs obligation outside its allowlist (security_review instead of gdpr_consent_banner)"
+  }
+}

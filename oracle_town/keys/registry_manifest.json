@@ -1,0 +1,11 @@
+{
+  "registry_id": "KEYREG-ORACLE-TOWN",
+  "registry_version": "1.0.0",
+  "created_at": "2026-01-23T00:00:00Z",
+  "registry_hash": "sha256:bdd2dc4e987ecb005a1f932315afcf798efe64a56af80619d844311c1b5964dc",
+  "policy_compat": {
+    "policy_ids": ["POL-ORACLE-TOWN-MVP"],
+    "policy_versions": ["1.0.x"]
+  },
+  "notes": "Authoritative key allowlist for Oracle Town receipts"
+}

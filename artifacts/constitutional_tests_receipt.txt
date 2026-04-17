@@ -1,0 +1,75 @@
+================================================================================
+CONSTITUTIONAL COMPLIANCE TEST SUITE (9 TESTS)
+================================================================================
+
+These tests enforce the immutable KERNEL_CONSTITUTION.md
+Failures are kernel bugs, not feature requests.
+
+
+================================================================================
+TEST 1: Mayor-Only Verdict Output
+================================================================================
+✅ PASSED: Only Mayor writes to decisions/
+
+================================================================================
+TEST 2: Factory Emits Attestations Only
+================================================================================
+✅ PASSED: Factory has no verdict semantics
+
+================================================================================
+TEST 3: Mayor Dependency Purity
+================================================================================
+✅ PASSED: Mayor has no forbidden imports (including Layer 2 Creative Town)
+
+================================================================================
+TEST 4: NO RECEIPT = NO SHIP
+================================================================================
+✅ PASSED: NO RECEIPT = NO SHIP enforced
+
+================================================================================
+TEST 5: Kill-Switch Absolute Priority
+================================================================================
+✅ PASSED: Kill-switch blocks SHIP even with satisfied attestations
+
+================================================================================
+TEST 6: Replay Determinism
+================================================================================
+✅ PASSED: Replay determinism verified
+
+================================================================================
+TEST 7: Schema Validation is Fail-Closed
+================================================================================
+✅ Invalid UI stream rejected (missing required fields)
+✅ Invalid attestation status 'MAYBE' rejected (must be PASS or FAIL)
+✅ PASSED: Schema validation is fail-closed
+
+================================================================================
+TEST 8: Ledger Chain Integrity
+================================================================================
+✅ Clean ledger chain verified
+✅ Tampered ledger detected (payload modification)
+✅ PASSED: Ledger chain integrity enforcement works
+
+================================================================================
+TEST 9: Mayor I/O Allowlist
+================================================================================
+✅ Mayor has no forbidden file I/O (open/read_text/read_bytes)
+✅ PASSED: Mayor I/O purity enforced
+
+================================================================================
+TEST SUMMARY
+================================================================================
+✅ PASS: run_test_1_mayor_only_writes_decisions
+✅ PASS: run_test_2_factory_no_verdict_semantics
+✅ PASS: run_test_3_mayor_dependency_purity
+✅ PASS: run_test_4_no_receipt_no_ship
+✅ PASS: run_test_5_kill_switch_priority
+✅ PASS: run_test_6_replay_determinism
+✅ PASS: run_test_7_schema_fail_closed
+✅ PASS: run_test_8_ledger_chain_integrity
+✅ PASS: run_test_9_mayor_io_allowlist
+
+Result: 9/9 tests passed
+
+🎉 ALL CONSTITUTIONAL TESTS PASSED
+   System is constitutionally compliant.

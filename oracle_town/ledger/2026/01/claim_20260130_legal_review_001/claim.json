@@ -1,0 +1,30 @@
+{
+  "claim": {
+    "id": "claim_20260130_legal_review_001",
+    "timestamp": "2026-01-30T14:45:00Z",
+    "target": "oracle_town/jobs/obs_scan.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "oracle_town/jobs/obs_scan.py",
+        "operation": "modify",
+        "hash_before": "sha256:abc123",
+        "hash_after": "sha256:def456"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "/tmp/brf_onepager_output.json",
+        "hash": "sha256:2d939ddc7dc76919048555efda81bcab934b2da88dff88fd4337db56c2184539",
+        "description": "BRF output verified"
+      }
+    ],
+    "expected_outcomes": [
+      "all_tests_pass"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "key-2026-01-legal",
+    "intent": "Approve observation synthesis for daily digest"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/registry_manifest.schema.json",
+  "title": "Registry Manifest",
+  "description": "Manifest that pins the canonical public_keys.json via hash and compatibility metadata.",
+  "type": "object",
+  "required": ["registry_id", "registry_version", "created_at", "registry_hash"],
+  "additionalProperties": false,
+  "properties": {
+    "registry_id": { "type": "string" },
+    "registry_version": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "registry_hash": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" },
+    "policy_compat": {
+      "type": "object",
+      "properties": {
+        "policy_ids": { "type": "array", "items": { "type": "string" } },
+        "policy_versions": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

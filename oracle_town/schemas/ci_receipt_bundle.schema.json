@@ -1,0 +1,239 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/ci_receipt_bundle.schema.json",
+  "title": "CIReceiptBundle",
+  "description": "Factory-produced, receipt-grade bundle of deterministic test executions and resulting attestations. Consumed by Mayor via Ledger reference (id+hash). Not produced by Creative Town.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "bundle_id",
+    "run_id",
+    "briefcase_id",
+    "created_at",
+    "provenance",
+    "executions",
+    "attestations",
+    "hashes",
+    "constraints"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "enum": ["1.0.0"] },
+    "bundle_id": { "type": "string", "pattern": "^RCPT-[A-Z0-9]{8,40}$" },
+    "run_id": { "type": "string", "minLength": 4, "maxLength": 128 },
+    "briefcase_id": { "type": "string", "minLength": 4, "maxLength": 128 },
+    "created_at": { "type": "string", "format": "date-time" },
+
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "attestor_id",
+        "attestor_kind",
+        "repo",
+        "git",
+        "runtime",
+        "tool_versions"
+      ],
+      "properties": {
+        "attestor_id": { "type": "string", "pattern": "^[A-Z0-9_\\-]{2,64}$" },
+        "attestor_kind": { "type": "string", "enum": ["CI_RUNNER", "FACTORY_RUNNER"] },
+
+        "repo": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "url_or_origin"],
+          "properties": {
+            "name": { "type": "string", "minLength": 2, "maxLength": 128 },
+            "url_or_origin": { "type": "string", "minLength": 3, "maxLength": 512 }
+          }
+        },
+
+        "git": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["commit_sha", "dirty"],
+          "properties": {
+            "commit_sha": { "type": "string", "pattern": "^[a-f0-9]{40}$" },
+            "branch": { "type": "string", "maxLength": 256 },
+            "dirty": { "type": "boolean" }
+          }
+        },
+
+        "runtime": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["os", "arch", "container_image", "working_dir"],
+          "properties": {
+            "os": { "type": "string", "maxLength": 128 },
+            "arch": { "type": "string", "maxLength": 64 },
+            "container_image": { "type": "string", "maxLength": 256 },
+            "working_dir": { "type": "string", "maxLength": 512 }
+          }
+        },
+
+        "tool_versions": {
+          "description": "Pinned versions used to interpret receipts deterministically.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["python", "pytest"],
+          "properties": {
+            "python": { "type": "string", "maxLength": 64 },
+            "pytest": { "type": "string", "maxLength": 64 },
+            "node": { "type": "string", "maxLength": 64 },
+            "npm": { "type": "string", "maxLength": 64 }
+          }
+        }
+      }
+    },
+
+    "executions": {
+      "description": "Deterministic test executions (commands + outputs hashed).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "exec_id",
+          "test_id",
+          "command",
+          "started_at",
+          "ended_at",
+          "exit_code",
+          "status",
+          "io_hashes",
+          "artifacts"
+        ],
+        "properties": {
+          "exec_id": { "type": "string", "pattern": "^EX-[A-Z0-9]{6,32}$" },
+          "test_id": { "type": "string", "pattern": "^T-[A-Z0-9]{4,40}$" },
+          "command": { "type": "string", "minLength": 1, "maxLength": 4000 },
+
+          "started_at": { "type": "string", "format": "date-time" },
+          "ended_at": { "type": "string", "format": "date-time" },
+
+          "exit_code": { "type": "integer", "minimum": 0, "maximum": 255 },
+          "status": { "type": "string", "enum": ["PASS", "FAIL", "ERROR"] },
+
+          "io_hashes": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["stdout_sha256", "stderr_sha256"],
+            "properties": {
+              "stdout_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+              "stderr_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+            }
+          },
+
+          "artifacts": {
+            "description": "Files emitted by the test (e.g., junit xml) by path+hash.",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path", "sha256"],
+              "properties": {
+                "path": { "type": "string", "minLength": 1, "maxLength": 512 },
+                "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "attestations": {
+      "description": "Obligation-level verdicts derived from executions. This is what Mayor reads (directly or via Ledger indexing).",
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "attestation_id",
+          "obligation_name",
+          "expected_attestor",
+          "status",
+          "based_on_exec_ids",
+          "evidence",
+          "created_at"
+        ],
+        "properties": {
+          "attestation_id": { "type": "string", "pattern": "^ATT-[A-Z0-9]{6,32}$" },
+          "obligation_name": { "type": "string", "pattern": "^[a-z0-9_\\.\\-]{3,128}$" },
+          "expected_attestor": { "type": "string", "pattern": "^[A-Z0-9_\\-]{2,64}$" },
+
+          "status": { "type": "string", "enum": ["PASS", "FAIL"] },
+
+          "based_on_exec_ids": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^EX-[A-Z0-9]{6,32}$" }
+          },
+
+          "evidence": {
+            "description": "Receipt references only; no free-form opinions.",
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["bundle_ref", "exec_refs"],
+            "properties": {
+              "bundle_ref": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["bundle_id", "sha256"],
+                "properties": {
+                  "bundle_id": { "type": "string" },
+                  "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+                }
+              },
+              "exec_refs": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["exec_id"],
+                  "properties": { "exec_id": { "type": "string" } }
+                }
+              }
+            }
+          },
+
+          "created_at": { "type": "string", "format": "date-time" },
+
+          "notes_redacted": {
+            "description": "Optional machine-generated note (e.g., summarized failing assertion). Must be non-authoritative and may be omitted entirely.",
+            "type": "string",
+            "maxLength": 2000
+          }
+        }
+      }
+    },
+
+    "hashes": {
+      "description": "Hash commitments; canonicalize JSON before hashing.",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["canonical_sha256"],
+      "properties": {
+        "canonical_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+      }
+    },
+
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["deterministic", "no_confidence_fields", "no_mayor_imports_claimed"],
+      "properties": {
+        "deterministic": { "type": "boolean", "const": true },
+        "no_confidence_fields": { "type": "boolean", "const": true },
+        "no_mayor_imports_claimed": {
+          "description": "Explicitly asserts that dependency purity is checked via execution receipts (e.g., AST import scan), not keyword scanning.",
+          "type": "boolean",
+          "const": true
+        }
+      }
+    }
+  }
+}

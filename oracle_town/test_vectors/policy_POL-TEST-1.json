@@ -1,0 +1,47 @@
+{
+  "policy_id": "POL-TEST-1",
+  "policy_version": "1.0.0",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "effective_date": "2026-01-01T00:00:00Z",
+  "quorum_rules": {
+    "default_min_quorum": 2,
+    "obligation_specific_rules": {
+      "gdpr_consent_banner": {
+        "required_attestor_classes": [
+          "CI_RUNNER",
+          "LEGAL"
+        ],
+        "min_quorum": 2
+      },
+      "security_review": {
+        "required_attestor_classes": [
+          "CI_RUNNER",
+          "SECURITY"
+        ],
+        "min_quorum": 2
+      }
+    }
+  },
+  "revoked_keys": [
+    {
+      "key_id": "key-2025-12-legal-old",
+      "revoked_at": "2026-01-15T00:00:00Z",
+      "reason": "Key compromise"
+    }
+  ],
+  "revoked_attestors": [],
+  "key_registry_hash": "sha256:bdd2dc4e987ecb005a1f932315afcf798efe64a56af80619d844311c1b5964dc",
+  "budget_caps": {
+    "max_proposals_per_run": 10,
+    "max_obligations_per_run": 20,
+    "max_free_text_bytes": 102400,
+    "max_metadata_fields": 20
+  },
+  "invariants": {
+    "fail_closed": true,
+    "no_self_attestation": true,
+    "quorum_by_class": true,
+    "deterministic_replay": true
+  },
+  "sampling_rate": 0.05
+}

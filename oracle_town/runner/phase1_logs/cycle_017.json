@@ -1,0 +1,21 @@
+{
+  "cycle": 17,
+  "timestamp": "2026-01-26T16:42:28.492511",
+  "ct_output_hash": "2908596a67542149b68c44cfd348c645c926164eb0016d5aa0a952a79cd66df5",
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "NO_SHIP",
+    "reason_code": "QUORUM_MISSING"
+  }
+}

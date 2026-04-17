@@ -1,0 +1,14 @@
+{
+  "schema": "RENDER_V1",
+  "basename": "2026-04-16__hf_init.mp4",
+  "rendered_at": "2026-04-16T22:43:00Z",
+  "composition_source": "/tmp/hf_smoke/index.html",
+  "composition_sha": "f4772b85437e4af315e22202df2c4ea77104da4e8e85e5ebdc93dfc1850c4149",
+  "mp4_sha": "ea19a5d4ad86e0bb1ece3497894ad92d1696097eca01c841b1d7dde2724e92a9",
+  "hyperframes_version": "0.4.0",
+  "render_config": {"quality": "draft", "fps": 30, "workers": 1, "resolution": "1920x1080", "duration_seconds": 10},
+  "ledger_entries_depicted": [],
+  "llm_copy_hashes": [],
+  "model_id": "hyperframes@0.4.0",
+  "note": "smoke test — scaffolded by hyperframes init, no HELEN-specific content"
+}

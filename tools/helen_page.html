@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HELEN — Local Page</title>
+  <style>
+    body { font-family: system-ui, -apple-system, Roboto, Arial; background:#0b1220; color:#e6edf3; padding:20px }
+    .card{background:#071021;padding:16px;border-radius:8px;max-width:920px;margin:0 auto}
+    #log{height:360px;overflow:auto;background:#04101a;padding:12px;border-radius:6px;white-space:pre-wrap;font-family:Menlo,monospace;font-size:13px}
+    .user{color:#9ad1ff;margin:4px 0}
+    .helen{color:#ffd89b;margin:4px 0}
+    input[type=text]{width:100%;padding:10px;border-radius:6px;border:1px solid #223;background:#071826;color:#fff}
+    button{padding:8px 12px;border-radius:6px;background:#0ea5a4;color:#042;border:none}
+    .header-row{display:flex;gap:12px;align-items:center;margin-bottom:12px}
+    .avatar-preview{width:84px;height:42px;border-radius:6px;overflow:hidden;background:#071826}
+    .summary{flex:1;color:#cbd5e1}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="header-row">
+      <div class="avatar-preview"><img id="avatarImg" src="/tools/azvatar.svg" alt="avatar" style="width:100%;height:100%;object-fit:cover"/></div>
+      <div class="summary">
+        <h2 style="margin:0 0 6px 0">HELEN (local)</h2>
+        <div id="summaryText">connecting…</div>
+      </div>
+    </div>
+    <div id="log"></div>
+    <form id="f">
+      <input id="t" type="text" autocomplete="off" placeholder="Say something to HELEN..." />
+      <div style="height:8px"></div>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+  <script>
+    const log = document.getElementById('log');
+    const f = document.getElementById('f');
+    const t = document.getElementById('t');
+    function append(cls, txt){ const el=document.createElement('div'); el.className=cls; el.textContent=txt; log.appendChild(el); log.scrollTop = log.scrollHeight; }
+    f.addEventListener('submit', async (e)=>{
+      e.preventDefault(); const text = t.value.trim(); if(!text) return; append('user', 'you: '+text); t.value='';
+      try{
+        const res = await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({text})});
+        const j = await res.json(); append('helen', 'helen: '+ (j.reply||'(no reply)'));
+      }catch(err){ append('helen','helen: error contacting server') }
+    });
+    // fetch initial state and populate avatar + summary
+    (async function bootstrap(){
+      try{
+        const res = await fetch('/api/state');
+        if(res.ok){
+          const j = await res.json();
+          document.getElementById('summaryText').textContent = j.summary || '';
+          // update avatar image if available
+          if(j.avatar){
+            // try to load generated svg preview; fallback to emoji text if not available
+            const img = document.getElementById('avatarImg');
+            img.src = '/tools/azvatar.svg';
+            append('helen', 'helen: '+ (j.summary || 'ready — say "state" or "wisdom"'));
+            if(Array.isArray(j.recent_wisdom) && j.recent_wisdom.length){
+              append('helen', 'recent wisdom:\n- ' + j.recent_wisdom.join('\n- '));
+            }
+          }
+        }else{
+          append('helen','helen: could not fetch state')
+        }
+      }catch(err){ append('helen','helen: could not fetch state') }
+    })();
+  </script>
+</body>
+</html>

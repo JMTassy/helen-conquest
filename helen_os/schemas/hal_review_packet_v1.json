@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-2020-12/schema",
+  "title": "HAL_REVIEW_PACKET_V1",
+  "description": "Structured audit surface for HAL review. Prevents narrative laundering. HAL responds with typed verdicts only.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "HAL_REVIEW_PACKET_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "review_id": {
+      "type": "string",
+      "pattern": "^hal_review_[a-z0-9_]+$"
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^batch_receipt_[a-z0-9_]+$",
+      "description": "Parent receipt reference"
+    },
+    "batch_summary": {
+      "type": "object",
+      "properties": {
+        "batch_id": {
+          "type": "string"
+        },
+        "total_steps": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "successful_admissions": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "failures_analyzed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "REJECTED + QUARANTINED"
+        },
+        "rollbacks_applied": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": ["batch_id", "total_steps", "successful_admissions", "failures_analyzed", "rollbacks_applied"],
+      "additionalProperties": false
+    },
+    "governance_checks": {
+      "type": "object",
+      "properties": {
+        "all_decisions_validated": {
+          "type": "boolean",
+          "description": "Schema + cross-field validation passed"
+        },
+        "ledger_integrity_verified": {
+          "type": "boolean",
+          "description": "Entry index, prev_hash chain, corruption checks"
+        },
+        "replay_determinism_proven": {
+          "type": "boolean",
+          "description": "Ledger replay proof completed successfully"
+        },
+        "authority_boundaries_respected": {
+          "type": "boolean",
+          "description": "Only reducer decisions in ledger, no unauthorized mutations"
+        }
+      },
+      "required": [
+        "all_decisions_validated",
+        "ledger_integrity_verified",
+        "replay_determinism_proven",
+        "authority_boundaries_respected"
+      ],
+      "additionalProperties": false
+    },
+    "flags_for_hal": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "entry_index": {
+            "type": "integer"
+          },
+          "decision_type": {
+            "enum": ["ADMITTED", "REJECTED", "QUARANTINED", "ROLLED_BACK"]
+          },
+          "reason_code": {
+            "type": "string",
+            "description": "e.g., ERR_THRESHOLD_NOT_MET, OK_ADMITTED, etc."
+          },
+          "skill_id": {
+            "type": "string"
+          },
+          "flag_category": {
+            "enum": ["INFO", "WARN", "BLOCK"],
+            "description": "INFO=noted, WARN=attention needed, BLOCK=prevents SHIP"
+          },
+          "interpretation": {
+            "type": "string",
+            "description": "Structured fact, never narrative opinion"
+          }
+        },
+        "required": ["entry_index", "decision_type", "reason_code", "skill_id", "flag_category", "interpretation"],
+        "additionalProperties": false
+      },
+      "description": "Structured governance facts flagged for HAL consideration"
+    },
+    "ready_for_verdict": {
+      "type": "boolean",
+      "description": "Bridge asserts this artifact is complete and audit-ready"
+    },
+    "suggested_verdict": {
+      "enum": ["PASS", "WARN", "BLOCK"],
+      "description": "Recommendation based on flag analysis. HAL may override."
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "review_id",
+    "receipt_id",
+    "batch_summary",
+    "governance_checks",
+    "flags_for_hal",
+    "ready_for_verdict",
+    "suggested_verdict"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,151 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "BUILDERS_BRIEF_V1",
+  "title": "BUILDERS_BRIEF_V1",
+  "description": "Root execution contract for one ORACLE SUPER 2: BUILDERS run. Not prompt text — a typed execution contract.",
+  "type": "object",
+  "properties": {
+    "schema_name": {
+      "const": "BUILDERS_BRIEF_V1"
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "BUILDERS_BRIEF_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "brief_id": {
+      "type": "string",
+      "description": "Globally unique identifier for this brief. Required for deterministic run identity.",
+      "pattern": "^BRIEF-[A-Z0-9-]+$"
+    },
+    "domain": {
+      "type": "string",
+      "enum": [
+        "research",
+        "product",
+        "marketing",
+        "design",
+        "ops",
+        "engineering",
+        "governance",
+        "other"
+      ]
+    },
+    "objective": {
+      "type": "string",
+      "description": "What the artifact should accomplish.",
+      "minLength": 10,
+      "maxLength": 2000
+    },
+    "audience": {
+      "type": "string",
+      "description": "Intended reader or consumer of the artifact.",
+      "minLength": 2
+    },
+    "output_type": {
+      "type": "string",
+      "enum": [
+        "memo",
+        "spec",
+        "article",
+        "plan",
+        "report",
+        "deck_outline",
+        "schema",
+        "code",
+        "other"
+      ]
+    },
+    "constraints": {
+      "type": "object",
+      "properties": {
+        "must_include": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Topics or elements that must appear in the artifact."
+        },
+        "must_avoid": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Topics, terms, or framings to exclude."
+        },
+        "style": {
+          "type": "string",
+          "description": "Tone or style guidance (e.g., 'concise and technical', 'accessible overview')."
+        },
+        "max_length": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Maximum word count or character count for final artifact."
+        },
+        "allowed_sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Source IDs or domains permitted as references."
+        }
+      },
+      "additionalProperties": false
+    },
+    "iteration_budget": {
+      "type": "object",
+      "required": [
+        "max_phases",
+        "max_claims"
+      ],
+      "properties": {
+        "max_phases": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 5,
+          "description": "Maximum number of pipeline phases to run. Standard is 5."
+        },
+        "max_claims": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 500,
+          "description": "Maximum total claims permitted across all phases."
+        },
+        "max_runtime_seconds": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Wall-clock timeout in seconds. Non-constitutive for determinism."
+        }
+      },
+      "additionalProperties": false
+    },
+    "input_refs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "References to source documents, prior artifacts, or evidence bundles to be used."
+    },
+    "seed": {
+      "type": "string",
+      "description": "Explicit seed for deterministic execution. Required if cross-run reproducibility is expected."
+    }
+  },
+  "required": [
+    "schema_name",
+    "schema_version",
+    "canonicalization",
+    "brief_id",
+    "domain",
+    "objective",
+    "audience",
+    "output_type",
+    "constraints",
+    "iteration_budget"
+  ],
+  "additionalProperties": false,
+  "x-law": "No free-text hidden instructions outside this object. brief_id must be globally unique. seed must be explicit if determinism is expected."
+}

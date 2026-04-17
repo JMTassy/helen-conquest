@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen.local/schemas/skill_node_v1.json",
+  "title": "SKILL_NODE_V1",
+  "description": "Single node in the Skill Evolution Graph. Records the admission or rejection of a skill version: what it originated from, what decision it received, and where it sits in the skill family tree.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name", "schema_version",
+    "skill_id", "skill_version",
+    "origin_experiments",
+    "promotion_case_hash", "reducer_decision"
+  ],
+  "properties": {
+    "schema_name":    {"const": "SKILL_NODE_V1"},
+    "schema_version": {"const": "1.0.0"},
+    "skill_id": {
+      "type": "string", "minLength": 1,
+      "description": "Skill identifier (e.g. skill.search)."
+    },
+    "skill_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Semantic version of this skill node."
+    },
+    "parent_skill_id": {
+      "type": ["string", "null"],
+      "description": "Parent skill. Null for root skill (newly discovered capability)."
+    },
+    "parent_version": {
+      "type": ["string", "null"],
+      "pattern": "^([0-9]+\\.[0-9]+\\.[0-9]+)?$",
+      "description": "Parent skill version. Null for root."
+    },
+    "origin_experiments": {
+      "type": "array",
+      "items": {"type": "string"},
+      "minItems": 1,
+      "description": "Experiment IDs that motivated this skill version proposal."
+    },
+    "promotion_case_hash": {
+      "type": "string", "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "SHA-256 of the AUTORESEARCH_PROMOTION_CASE_V1 that produced this node."
+    },
+    "reducer_decision": {
+      "type": "string",
+      "enum": ["ADMITTED", "REJECTED", "QUARANTINED"],
+      "description": "Reducer verdict on the promotion case."
+    },
+    "notes": {"type": "string"}
+  }
+}

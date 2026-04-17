@@ -1,0 +1,140 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/attestation.schema.json",
+  "title": "Attestation",
+  "description": "Truth primitive: cryptographically signed proof that an obligation was satisfied. Append-only ledger entry. RSM v0.1 compliant.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "claim_id",
+    "obligation_name",
+    "attestor_id",
+    "attestor_class",
+    "policy_hash",
+    "key_registry_hash",
+    "evidence_digest",
+    "signing_key_id",
+    "signature",
+    "policy_match",
+    "timestamp"
+  ],
+  "properties": {
+    "attestation_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for this attestation (uuid or content hash)."
+    },
+    "attestation_version": {
+      "type": "string",
+      "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$",
+      "description": "Semantic version of attestation schema (e.g., 0.1.0)."
+    },
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Links this attestation to a specific governance run. SIGNED FIELD."
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Links this attestation to a specific claim. SIGNED FIELD."
+    },
+    "obligation_name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]{3,64}$",
+      "description": "Must match an obligation name from the briefcase. SIGNED FIELD."
+    },
+    "attestor_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique attestor identifier (role instance, not person). E.g., 'ci_runner_001'. SIGNED FIELD."
+    },
+    "attestor_class": {
+      "type": "string",
+      "enum": ["CI_RUNNER", "SECURITY", "LEGAL", "DOMAIN_OWNER", "RELEASE_MANAGER", "MOCK_FACTORY"],
+      "description": "Function-based attestor class (RSM v0). Determines quorum-by-class rules. SIGNED FIELD."
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "Pinned policy version hash. Ensures attestation is bound to specific governance rules. SIGNED FIELD."
+    },
+    "key_registry_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of the key registry when attestation was signed. Ensures registry-bound verification. SIGNED FIELD."
+    },
+    "evidence_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonical evidence payload. NO_RECEIPT = NO_SHIP if missing. SIGNED FIELD."
+    },
+    "signing_key_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Public key identifier for signature verification and revocation. E.g., 'key-2026-01-ci-prod'. NOT SIGNED (meta)."
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^ed25519:[A-Za-z0-9+/=]+$",
+      "description": "Ed25519 signature over canonical signed fields. Format: 'ed25519:' + base64(signature_bytes)."
+    },
+    "policy_match": {
+      "type": "integer",
+      "enum": [0, 1],
+      "description": "Binary satisfaction: 1 iff obligation is satisfied, 0 otherwise. NO soft values. SIGNED FIELD."
+    },
+    "evidence_uri": {
+      "type": "string",
+      "description": "Pointer to stored evidence artifact. NOT SIGNED (informational only)."
+    },
+    "evidence_type": {
+      "type": "string",
+      "description": "Evidence format identifier (e.g., pytest-junit, compliance-signoff). NOT SIGNED (informational only)."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when attestation was created. NOT SIGNED (replay determinism)."
+    },
+    "meta": {
+      "type": "object",
+      "additionalProperties": { "type": ["string", "number", "boolean", "null"] },
+      "description": "Optional non-sovereign metadata. NOT SIGNED. Never changes satisfaction semantics."
+    }
+  },
+  "$defs": {
+    "canonical_signed_message": {
+      "type": "object",
+      "description": "Fields included in signature computation. Order enforced by canonical JSON (sort_keys=True).",
+      "required": [
+        "attestor_class",
+        "attestor_id",
+        "claim_id",
+        "evidence_digest",
+        "key_registry_hash",
+        "obligation_name",
+        "policy_hash",
+        "policy_match",
+        "run_id"
+      ],
+      "properties": {
+        "attestor_class": { "type": "string" },
+        "attestor_id": { "type": "string" },
+        "claim_id": { "type": "string" },
+        "evidence_digest": { "type": "string" },
+        "key_registry_hash": { "type": ["string", "null"] },
+        "obligation_name": { "type": "string" },
+        "policy_hash": { "type": "string" },
+        "policy_match": { "type": "integer" },
+        "run_id": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "signature_algorithm": {
+      "const": "Ed25519",
+      "description": "Only Ed25519 signatures are accepted. Algorithm is fixed for determinism."
+    }
+  }
+}

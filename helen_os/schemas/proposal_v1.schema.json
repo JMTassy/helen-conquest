@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/PROPOSAL_V1",
+  "title": "PROPOSAL_V1",
+  "description": "Proposal: a claim requesting action. Non-sovereign until receipted and approved.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "proposal_id",
+    "proposer",
+    "kind",
+    "claim",
+    "requested_action",
+    "support_refs",
+    "truth_claimed",
+    "verdict_emitted",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "PROPOSAL_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "PROPOSAL_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "proposal_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique proposal identifier"
+    },
+    "proposer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Who made this proposal (agent, system, or human name)"
+    },
+    "kind": {
+      "type": "string",
+      "enum": [
+        "CLAIM",
+        "MISSION_REQUEST",
+        "WORLD_ACTION",
+        "PATCH_REQUEST",
+        "AUDIT_REQUEST"
+      ],
+      "description": "Type of proposal"
+    },
+    "claim": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The statement being claimed or requested"
+    },
+    "requested_action": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What action is being requested"
+    },
+    "support_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "References to supporting evidence or prior artifacts"
+    },
+    "truth_claimed": {
+      "type": "boolean",
+      "const": false,
+      "description": "MUST be false. Proposals do not self-attest truth."
+    },
+    "verdict_emitted": {
+      "type": "boolean",
+      "const": false,
+      "description": "MUST be false. Proposals do not emit verdicts."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "cycle": 15,
+  "timestamp": "2026-01-26T19:13:51.478285",
+  "ct_output": {
+    "proposal_name": "improve_error_handling",
+    "proposal_hash": "30b0413ac882cc0f6c1c1dc6ca465b8252c6b1d97cdd4f9f3768aad8fc1279d4",
+    "patch_count": 4,
+    "tokens_used": 227,
+    "reasoning": "Cycle 15: Enhancing error messages and recovery (improved version)"
+  },
+  "supervisor": {
+    "decision": "PASS",
+    "reason_code": null
+  },
+  "intake": {
+    "decision": "ACCEPT",
+    "kernel_code": null
+  },
+  "factory": {
+    "success": true,
+    "attestation_count": 1
+  },
+  "mayor": {
+    "decision": "NO_SHIP",
+    "reason_code": "NO_RECEIPTS"
+  }
+}

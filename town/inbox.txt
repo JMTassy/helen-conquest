@@ -1,0 +1,5 @@
+[HER]
+Analyze ledger for any authority-leakage patterns.
+
+[HAL]
+{"reasons":["All K-gates verified","Ledger coherent"],"required_fixes":[],"state_patch":{},"verdict":"PASS"}

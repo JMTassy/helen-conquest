@@ -1,0 +1,173 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/decision_record.schema.json",
+  "title": "DecisionRecord",
+  "description": "Mayor-only output: binary shipping decision with explicit blockers. Immutable once written. RSM v0.1 compliant.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "run_id",
+    "claim_id",
+    "decision",
+    "policy_hash",
+    "key_registry_hash",
+    "briefcase_digest",
+    "ledger_digest",
+    "blocking_reasons",
+    "decision_digest"
+  ],
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique execution identifier for this governance run."
+    },
+    "claim_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for the claim being evaluated."
+    },
+    "decision": {
+      "type": "string",
+      "enum": ["SHIP", "NO_SHIP"],
+      "description": "Binary shipping decision. NO soft values, NO maybes, NO partial shipping."
+    },
+    "policy_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of the policy used for this decision."
+    },
+    "key_registry_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 hash of the key registry at decision time. Ensures registry-bound verification."
+    },
+    "briefcase_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonicalized briefcase (input obligations)."
+    },
+    "ledger_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonicalized ledger (attestations), excluding self-referential ledger_digest field."
+    },
+    "blocking_reasons": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/blocking_reason"
+      },
+      "description": "Structured blocking reasons. Empty array iff decision=SHIP. MUST be sorted by (reason_code, obligation_name) for determinism."
+    },
+    "satisfied_obligations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z0-9_]{3,64}$"
+      },
+      "description": "Obligations that passed quorum-by-class. MUST be sorted lexicographically."
+    },
+    "decision_digest": {
+      "type": "string",
+      "pattern": "^sha256:[a-fA-F0-9]{64}$",
+      "description": "SHA256 of canonical decision payload for replay verification. See $defs/decision_digest_payload."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp. EXCLUDED from decision_digest for determinism."
+    },
+    "code_version": {
+      "type": "string",
+      "description": "Version of oracle_town code that produced this decision. EXCLUDED from decision_digest."
+    }
+  },
+  "$defs": {
+    "reason_code": {
+      "type": "string",
+      "enum": [
+        "ATTESTATION_SCHEMA_INVALID",
+        "POLICY_HASH_MISMATCH",
+        "REGISTRY_HASH_MISMATCH",
+        "EVIDENCE_MISSING",
+        "KEY_UNKNOWN",
+        "KEY_REVOKED",
+        "KEY_CLASS_MISMATCH",
+        "KEY_ATTESTOR_NOT_ALLOWLISTED",
+        "KEY_OBLIGATION_NOT_ALLOWED",
+        "KEY_POLICY_VIOLATION",
+        "SIGNATURE_INVALID",
+        "QUORUM_NOT_MET"
+      ],
+      "description": "Frozen set of reason codes. Adding new codes requires schema version bump."
+    },
+    "blocking_reason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["reason_code"],
+      "properties": {
+        "reason_code": {
+          "$ref": "#/$defs/reason_code"
+        },
+        "obligation_name": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]{3,64}$",
+          "description": "Obligation that triggered this reason (if applicable)."
+        },
+        "key_id": {
+          "type": "string",
+          "description": "Key ID involved (for KEY_* reason codes)."
+        },
+        "attestor_id": {
+          "type": "string",
+          "description": "Attestor ID involved (if applicable)."
+        },
+        "expected": {
+          "type": "string",
+          "description": "Expected value (for mismatch errors)."
+        },
+        "actual": {
+          "type": "string",
+          "description": "Actual value (for mismatch errors)."
+        },
+        "missing_classes": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Missing attestor classes for QUORUM_NOT_MET. MUST be sorted lexicographically."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Human-readable detail (not used for determinism checks)."
+        }
+      }
+    },
+    "decision_digest_payload": {
+      "type": "object",
+      "description": "Canonical payload for decision_digest computation. Fields MUST be in this exact order when serialized.",
+      "properties": {
+        "run_id": { "type": "string" },
+        "claim_id": { "type": "string" },
+        "decision": { "type": "string", "enum": ["SHIP", "NO_SHIP"] },
+        "policy_hash": { "type": "string" },
+        "key_registry_hash": { "type": "string" },
+        "briefcase_digest": { "type": "string" },
+        "ledger_digest": { "type": "string" },
+        "blocking_reasons": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/blocking_reason" }
+        }
+      },
+      "required": [
+        "run_id",
+        "claim_id",
+        "decision",
+        "policy_hash",
+        "key_registry_hash",
+        "briefcase_digest",
+        "ledger_digest",
+        "blocking_reasons"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

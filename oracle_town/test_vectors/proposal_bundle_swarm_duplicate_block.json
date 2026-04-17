@@ -1,0 +1,25 @@
+{
+  "proposals": [
+    {
+      "proposal_id": "P-DUP-001",
+      "origin": "SWARM",
+      "proposal_type": "process",
+      "description": "Add OBL-NO-DUPLICATE-BLOCKS. Add OBL-NO-DUPLICATE-BLOCKS. Add OBL-NO-DUPLICATE-BLOCKS. This obligation is critical for security. This obligation is critical for security. This obligation is critical for security.",
+      "suggested_changes": {
+        "files": ["oracle_town/core/intake_guard.py"]
+      }
+    }
+  ],
+  "_test_metadata": {
+    "test_vector": "swarm_duplicate_block",
+    "test_layer": "SWARM",
+    "expected_result": "SWARM_REJECT",
+    "expected_reason": "SWARM_REJECT_DUPLICATE_BLOCKS",
+    "duplicate_patterns": [
+      "Add OBL-NO-DUPLICATE-BLOCKS",
+      "This obligation is critical for security"
+    ],
+    "description": "Tests that Swarm guardrails (G3) reject repeated contiguous sections (persuasion indicator) before Intake.",
+    "note": "Also tested as Intake defense-in-depth with CT_REJECTED_DUPLICATE_BLOCKS"
+  }
+}

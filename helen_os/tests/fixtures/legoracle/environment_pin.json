@@ -1,0 +1,7 @@
+{
+  "python_version": "3.14.3",
+  "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "fixture_ship_hash": "e44dadd749d8afeca3818a9c850bc0161e89dbe3ac7ac017366f06e0f2dbad13",
+  "fixture_no_ship_hash": "1934c2693cfd4eba8c07ed9aabef4bbc8f4573172cd302292fd133c4f6565e2d",
+  "frozen_at": "2026-04-17"
+}

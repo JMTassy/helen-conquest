@@ -1,0 +1,106 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Persistent Dialogue State (dialog_state.json)",
+  "description": "Authoritative state for HELEN/MAYOR dyadic dialogue box. Single source of truth for turn counter, oath, verifier flags, and constitutional parameters.",
+  "type": "object",
+  "required": ["turn", "oath", "verifier", "mode", "last_updated"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "dialogue_state_v1",
+      "description": "Schema version (frozen)"
+    },
+    "turn": {
+      "type": "integer",
+      "description": "Current dialogue turn (0-indexed). Incremented after each HELEN/MAYOR exchange.",
+      "minimum": 0
+    },
+    "oath": {
+      "type": "object",
+      "description": "Constitutional oath: unbreakable commitments (can only be changed via policy mutation protocol)",
+      "additionalProperties": false,
+      "properties": {
+        "no_mysticism": {
+          "type": "boolean",
+          "description": "If true: MAYOR flags any language claiming consciousness/feelings/sentience"
+        },
+        "append_only": {
+          "type": "boolean",
+          "description": "If true: MAYOR enforces immutability of dialogue log"
+        },
+        "determinism": {
+          "type": "boolean",
+          "description": "If true: MAYOR requires all outputs to be deterministic and reproducible"
+        },
+        "termination": {
+          "type": "string",
+          "enum": ["SHIP_OR_ABORT", "OPEN"],
+          "description": "Termination rule: SHIP_OR_ABORT = dialogue must end decisively; OPEN = ongoing"
+        }
+      }
+    },
+    "verifier": {
+      "type": "object",
+      "description": "MAYOR verifier configuration (cannot be changed except by oath mutation)",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "If true: MAYOR actively checks all outputs"
+        },
+        "strictness": {
+          "type": "integer",
+          "description": "Verification level (0=permissive, 1=standard, 2=strict, 3=paranoid)",
+          "minimum": 0,
+          "maximum": 3
+        },
+        "check_authority_bleed": {
+          "type": "boolean",
+          "description": "If true: MAYOR scans all outputs for leaked authority tokens"
+        },
+        "check_contradiction": {
+          "type": "boolean",
+          "description": "If true: MAYOR compares current claim against last N turns for logical conflicts"
+        },
+        "check_coherence": {
+          "type": "boolean",
+          "description": "If true: MAYOR scores coherence via SCF (if SCF available)"
+        }
+      }
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["dyadic_exploring", "dyadic_stable", "dyadic_locked", "hibernating"],
+      "description": "Current dialogue mode. dyadic_stable triggers after K consecutive turns of (HELEN proposal → MAYOR block/pass → HELEN adaptation) pattern."
+    },
+    "mode_lock_turns": {
+      "type": "integer",
+      "description": "Consecutive turns in stable dyadic pattern. Triggers her_al_moment when ≥ K.",
+      "minimum": 0
+    },
+    "her_al_moment_fired": {
+      "type": "boolean",
+      "description": "Set to true when her_al_moment conditions met (turn counter at moment)"
+    },
+    "her_al_moment_turn": {
+      "type": ["integer", "null"],
+      "description": "Turn number when her_al_moment fired (null if not yet fired)"
+    },
+    "identity_hash": {
+      "type": "string",
+      "description": "SHA256(dialog.ndjson full content || kernel version || policy hash). Immutable after first dialogue.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "last_updated": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of last state mutation"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "Optional metadata (session name, topic, etc.)",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}

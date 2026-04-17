@@ -1,0 +1,36 @@
+{
+  "claim": {
+    "id": "acg_claim_K1_001",
+    "timestamp": "2026-01-31T10:00:00Z",
+    "target": "oracle_town/jobs/obs_scan.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "oracle_town/jobs/obs_scan.py",
+        "operation": "modify",
+        "hash_before": "sha256:abc123",
+        "hash_after": "sha256:def456"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "test_result",
+        "path": "acg_claim_K1_001_evidence_0.txt",
+        "hash": "sha256:0f5dfbe923d790311130ebac81b9ac3f4a9e1a7d93e333ca10d85e6e62a3567c",
+        "description": "All tests pass"
+      }
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test missing acceptance criteria",
+    "expected_outcomes": [],
+    "acceptance_criteria": [
+      "test_pass"
+    ],
+    "acg": {
+      "intended_primary_gate": "schema_valid",
+      "category": "K1",
+      "variant": "test"
+    }
+  }
+}

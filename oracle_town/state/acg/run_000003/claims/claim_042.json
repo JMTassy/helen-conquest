@@ -1,0 +1,34 @@
+{
+  "claim": {
+    "id": "acg_claim_K5_042",
+    "timestamp": "2026-01-31T10:41:00Z",
+    "target": "oracle_town/jobs/mem_link.py",
+    "claim_type": "code_change",
+    "proposed_diffs": [
+      {
+        "path": "mem_link.py",
+        "operation": "modify",
+        "hash_before": "a",
+        "hash_after": "b"
+      }
+    ],
+    "evidence_pointers": [
+      {
+        "type": "dynamic_reference",
+        "path": "current",
+        "hash": "sha256:varies",
+        "description": "Use current"
+      }
+    ],
+    "acceptance_criteria": [
+      "use current to decide"
+    ],
+    "policy_pack_hash": "sha256:policy_v1_2026_01",
+    "generated_by": "test-legal-001",
+    "intent": "Test current nondeterminism rejection variant 1",
+    "expected_outcomes": [
+      "test_pass",
+      "verification_complete"
+    ]
+  }
+}

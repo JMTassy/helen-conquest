@@ -1,0 +1,50 @@
+{
+  "run_id": "R-B",
+  "claim_id": "CLM-001",
+  "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-B-001",
+      "attestation_version": "0.1.0",
+      "run_id": "R-B",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_001",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:4TUDmw+AcYOH1CPYxUtNVpjcighj2BphoMCKHa9Fo6NLBL7gKM/NPPiU0LzurFyutmo6Vond4nGERXESUfVcDw==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/consent_flow_test_result.xml",
+      "evidence_type": "pytest-junit",
+      "timestamp": "2026-01-25T10:00:00Z"
+    },
+    {
+      "attestation_id": "ATT-B-002",
+      "attestation_version": "0.1.0",
+      "run_id": "R-B",
+      "claim_id": "CLM-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_001",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_digest": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+      "signing_key_id": "key-2025-12-legal-old",
+      "signature": "ed25519:YnNikL0gWJd7ccAwx1I5pdhJP0ENU1dkXWRBGyiQ7ApFLm04ESIgbKKRVC2VWOH6txhyKIFcnHGvqd3mVodtBQ==",
+      "policy_match": 1,
+      "evidence_uri": "artifacts/legal_signoff.json",
+      "evidence_type": "compliance-signoff",
+      "timestamp": "2026-01-25T10:05:00Z"
+    }
+  ],
+  "ledger_digest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "factory_version": "1.0.0",
+  "timestamp": "2026-01-25T10:06:00Z",
+  "metadata": {
+    "test_vector": "runB_revoked_key",
+    "expected_decision": "NO_SHIP",
+    "expected_reason": "KEY_REVOKED",
+    "revoked_key_id": "key-2025-12-legal-old"
+  }
+}

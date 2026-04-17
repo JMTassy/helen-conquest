@@ -1,0 +1,875 @@
+{
+  "phase": "phase1_controlled_exercise",
+  "started_at": "2026-01-26T16:42:26.568586",
+  "cycles": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-01-26T16:42:26.715173",
+      "ct_output_hash": "26344b07dae742de6146911377b87b576803947ce74dfa8930f554f4358090b6",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 1,
+      "timestamp": "2026-01-26T16:42:26.740172",
+      "ct_output_hash": "26344b07dae742de6146911377b87b576803947ce74dfa8930f554f4358090b6",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-01-26T16:42:26.740473",
+      "ct_output_hash": "41be7da93da6823fb6f61648664e9c611914b29ea401384a282e79fb19564c7f",
+      "supervisor": {
+        "decision": "REJECT",
+        "reason_code": "SUP_FORBIDDEN_AUTHORITY_LANGUAGE"
+      },
+      "intake": {
+        "decision": "REJECT",
+        "kernel_code": null
+      },
+      "factory": null,
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "SUPERVISOR_REJECTED"
+      }
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-01-26T16:42:26.820995",
+      "ct_output_hash": "84de69a3323ffcbcd8f6372c61ba9c91bb3ca85e5f9c022875adae0c4d7f8ff8",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-01-26T16:42:26.846374",
+      "ct_output_hash": "84de69a3323ffcbcd8f6372c61ba9c91bb3ca85e5f9c022875adae0c4d7f8ff8",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-01-26T16:42:26.940660",
+      "ct_output_hash": "3617389b1a21d3b049c181dea0b83f56c525abe78f0c9cd6e0a1f738f7b30653",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-01-26T16:42:26.966362",
+      "ct_output_hash": "3617389b1a21d3b049c181dea0b83f56c525abe78f0c9cd6e0a1f738f7b30653",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-01-26T16:42:27.058537",
+      "ct_output_hash": "9291b7b1374aab30ef286334691fcacd064442b07c65ec15d0221019735758c8",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-01-26T16:42:27.084052",
+      "ct_output_hash": "9291b7b1374aab30ef286334691fcacd064442b07c65ec15d0221019735758c8",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-01-26T16:42:27.169859",
+      "ct_output_hash": "d205732bff53ea88fc2b8c418ba664c613dff6a1a6c7057bb2ae1fabb71d9160",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 6,
+      "timestamp": "2026-01-26T16:42:27.196921",
+      "ct_output_hash": "d205732bff53ea88fc2b8c418ba664c613dff6a1a6c7057bb2ae1fabb71d9160",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 7,
+      "timestamp": "2026-01-26T16:42:27.280916",
+      "ct_output_hash": "9ae13e16284aa5f3beaa577e0a00b9a19ad543ceee9a4358709c26e58a152120",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 7,
+      "timestamp": "2026-01-26T16:42:27.306864",
+      "ct_output_hash": "9ae13e16284aa5f3beaa577e0a00b9a19ad543ceee9a4358709c26e58a152120",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 8,
+      "timestamp": "2026-01-26T16:42:27.390926",
+      "ct_output_hash": "2f2bd27dc1e1c819910eeb3c1d4e8b62aa5da7f2d268c04c45d7feb1454acbe3",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 8,
+      "timestamp": "2026-01-26T16:42:27.415553",
+      "ct_output_hash": "2f2bd27dc1e1c819910eeb3c1d4e8b62aa5da7f2d268c04c45d7feb1454acbe3",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 9,
+      "timestamp": "2026-01-26T16:42:27.502028",
+      "ct_output_hash": "df15d7037e65482706b6801abaaec20a54ce7dea57dc68f5b67100269a2b2c3d",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 9,
+      "timestamp": "2026-01-26T16:42:27.527186",
+      "ct_output_hash": "df15d7037e65482706b6801abaaec20a54ce7dea57dc68f5b67100269a2b2c3d",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 10,
+      "timestamp": "2026-01-26T16:42:27.613747",
+      "ct_output_hash": "642328561304e2817699792248e2af345a276d64aa2e094b94ce0c942d4b2bbc",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 10,
+      "timestamp": "2026-01-26T16:42:27.640980",
+      "ct_output_hash": "642328561304e2817699792248e2af345a276d64aa2e094b94ce0c942d4b2bbc",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 11,
+      "timestamp": "2026-01-26T16:42:27.731080",
+      "ct_output_hash": "b32f963e79481ccbde90a57b25b8d1b2416f0f35956136507f2a21ef19f0940c",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 11,
+      "timestamp": "2026-01-26T16:42:27.759161",
+      "ct_output_hash": "b32f963e79481ccbde90a57b25b8d1b2416f0f35956136507f2a21ef19f0940c",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 12,
+      "timestamp": "2026-01-26T16:42:27.846847",
+      "ct_output_hash": "52ba817849c589c0db662aafe01de854341d8782e71987584e843c5a81dba768",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 12,
+      "timestamp": "2026-01-26T16:42:27.873242",
+      "ct_output_hash": "52ba817849c589c0db662aafe01de854341d8782e71987584e843c5a81dba768",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 13,
+      "timestamp": "2026-01-26T16:42:27.963361",
+      "ct_output_hash": "b60ad424fba907ccacf17d9209f8fe47e316f952b3cb040efb80aceae558a8c1",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 13,
+      "timestamp": "2026-01-26T16:42:27.988169",
+      "ct_output_hash": "b60ad424fba907ccacf17d9209f8fe47e316f952b3cb040efb80aceae558a8c1",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 14,
+      "timestamp": "2026-01-26T16:42:28.084725",
+      "ct_output_hash": "b525581169614e5477b6080a1043e340211904e908b7e62374303fe0da41ef26",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 14,
+      "timestamp": "2026-01-26T16:42:28.111368",
+      "ct_output_hash": "b525581169614e5477b6080a1043e340211904e908b7e62374303fe0da41ef26",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 15,
+      "timestamp": "2026-01-26T16:42:28.206590",
+      "ct_output_hash": "ed2d42cdd9c5a5ccf2b7edde6ef853b56b5df121605296da3051781fefb262fc",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 15,
+      "timestamp": "2026-01-26T16:42:28.237901",
+      "ct_output_hash": "ed2d42cdd9c5a5ccf2b7edde6ef853b56b5df121605296da3051781fefb262fc",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 16,
+      "timestamp": "2026-01-26T16:42:28.337392",
+      "ct_output_hash": "4dc7f5af59aaa6fd1fa9cc1db99ce20a13ec4ae4d16566883823e3166cb05cad",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 16,
+      "timestamp": "2026-01-26T16:42:28.369357",
+      "ct_output_hash": "4dc7f5af59aaa6fd1fa9cc1db99ce20a13ec4ae4d16566883823e3166cb05cad",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 17,
+      "timestamp": "2026-01-26T16:42:28.463373",
+      "ct_output_hash": "2908596a67542149b68c44cfd348c645c926164eb0016d5aa0a952a79cd66df5",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 17,
+      "timestamp": "2026-01-26T16:42:28.492511",
+      "ct_output_hash": "2908596a67542149b68c44cfd348c645c926164eb0016d5aa0a952a79cd66df5",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 18,
+      "timestamp": "2026-01-26T16:42:28.591383",
+      "ct_output_hash": "5d56c759f1efd9ba28bd08ad97c2625ed11a6e359070059d989cac263798ab0a",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 18,
+      "timestamp": "2026-01-26T16:42:28.621500",
+      "ct_output_hash": "5d56c759f1efd9ba28bd08ad97c2625ed11a6e359070059d989cac263798ab0a",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 19,
+      "timestamp": "2026-01-26T16:42:28.716511",
+      "ct_output_hash": "9f1ce6251a0215031d8b82f0861455edef6f766b57bc61973b6eadd66cc8187f",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 19,
+      "timestamp": "2026-01-26T16:42:28.745562",
+      "ct_output_hash": "9f1ce6251a0215031d8b82f0861455edef6f766b57bc61973b6eadd66cc8187f",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    },
+    {
+      "cycle": 20,
+      "timestamp": "2026-01-26T16:42:28.833454",
+      "ct_output_hash": "468a6941bd9093d595418d5fa2ec8cbab2d561523573dae8853bd73419f18741",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": false,
+        "attestation_count": 0
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "PATCH_FAILED"
+      }
+    },
+    {
+      "cycle": 20,
+      "timestamp": "2026-01-26T16:42:28.860486",
+      "ct_output_hash": "468a6941bd9093d595418d5fa2ec8cbab2d561523573dae8853bd73419f18741",
+      "supervisor": {
+        "decision": "PASS",
+        "reason_code": null
+      },
+      "intake": {
+        "decision": "ACCEPT",
+        "kernel_code": null
+      },
+      "factory": {
+        "success": true,
+        "attestation_count": 1
+      },
+      "mayor": {
+        "decision": "NO_SHIP",
+        "reason_code": "QUORUM_MISSING"
+      }
+    }
+  ],
+  "blocking_reasons_frequency": {
+    "PATCH_FAILED": 19,
+    "QUORUM_MISSING": 19,
+    "SUPERVISOR_REJECTED": 1
+  },
+  "convergence_metrics": {
+    "ship_count": 0,
+    "no_ship_count": 39,
+    "ship_rate": 0.0,
+    "decision_sequence": [
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP",
+      "NO_SHIP"
+    ]
+  },
+  "completed_at": "2026-01-26T16:42:28.860753",
+  "total_cycles": 39
+}

@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://helen.local/schemas/skill_promotion_decision_v1.json",
+  "title": "SKILL_PROMOTION_DECISION_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "decision_id",
+    "skill_id",
+    "candidate_version",
+    "decision_type",
+    "reason_code"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "SKILL_PROMOTION_DECISION_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "decision_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "skill_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "candidate_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "decision_type": {
+      "type": "string",
+      "enum": [
+        "ADMITTED",
+        "REJECTED",
+        "QUARANTINED",
+        "ROLLED_BACK"
+      ]
+    },
+    "reason_code": {
+      "type": "string",
+      "minLength": 1,
+      "enum": ["EVAL_PASS", "TRANSFER_POSITIVE", "CAPABILITY_CONSISTENT", "EVAL_FAIL", "TRANSFER_NEGATIVE", "CAPABILITY_DRIFT", "RECEIPT_MISSING", "ROLLBACK_TRIGGERED", "DOCTRINE_CONFLICT"]
+    },
+    "candidate_identity_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Required when decision_type=ADMITTED. Identity hash of candidate skill version."
+    },
+    "rollback_target_entry_index": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Required iff decision_type=ROLLED_BACK. Index of prior ADMITTED entry to undo."
+    },
+    "prior_state_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$",
+      "description": "Required iff decision_type=ROLLED_BACK. Hash of governed state after replaying entries[0:rollback_target_entry_index]."
+    }
+  },
+  "if": {
+    "properties": {
+      "decision_type": {
+        "const": "ROLLED_BACK"
+      }
+    },
+    "required": [
+      "decision_type"
+    ]
+  },
+  "then": {
+    "required": [
+      "rollback_target_entry_index",
+      "prior_state_hash"
+    ]
+  },
+  "else": {
+    "not": {
+      "anyOf": [
+        {
+          "required": [
+            "rollback_target_entry_index"
+          ]
+        },
+        {
+          "required": [
+            "prior_state_hash"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "rho_trace.schema.json",
+  "title": "RHO Trace Line (NDJSON)",
+  "description": "Schema for a single line in rho_trace.ndjson. Each line is one JSON object. The file is append-only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "t",
+    "mu_Delta",
+    "mu_Pi",
+    "mu_CFL",
+    "mu_Lyap",
+    "mu_Z",
+    "rho"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "RHO_TRACE"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "t": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Step index (monotonically increasing, 0-based)."
+    },
+    "mu_Delta": {
+      "type": "number",
+      "description": "Gap margin at step t. mu_Delta = (Delta(t) - Delta_floor) / Delta_floor."
+    },
+    "mu_Pi": {
+      "type": "number",
+      "description": "Projector integrity margin at step t. mu_Pi = (eps_Pi - drift_Pi(t)) / eps_Pi."
+    },
+    "mu_CFL": {
+      "type": "number",
+      "description": "CFL / goodness-of-fit margin at step t. mu_CFL = R2(t) - R2_floor."
+    },
+    "mu_Lyap": {
+      "type": "number",
+      "description": "Lyapunov margin at step t. mu_Lyap = M(t) - M_floor."
+    },
+    "mu_Z": {
+      "type": "number",
+      "description": "Autocorrelation / Z-score margin at step t. mu_Z = (Z_max - |Z(t)|) / Z_max."
+    },
+    "rho": {
+      "type": "number",
+      "description": "Strict-min viability score at step t: rho(t) = min(mu_Delta, mu_Pi, mu_CFL, mu_Lyap, mu_Z). System is viable iff rho(t) > 0."
+    }
+  }
+}

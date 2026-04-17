@@ -1,0 +1,29 @@
+{
+  "run_id": "R-TEST-BASE",
+  "claim_id": "CLM-001",
+  "claim_type": "CHANGE_REQUEST",
+  "required_obligations": [
+    {
+      "name": "gdpr_consent_banner",
+      "type": "CODE_PROOF",
+      "severity": "HARD",
+      "required_evidence": ["consent_flow_test", "legal_signoff"],
+      "description": "GDPR-compliant consent banner implementation verified by CI and Legal."
+    }
+  ],
+  "requested_tests": [
+    {
+      "obligation_name": "gdpr_consent_banner",
+      "test_command": "pytest tests/test_consent_banner.py",
+      "attestor": "CI_RUNNER"
+    }
+  ],
+  "kill_switch_policies": [
+    "SECURITY_CRITICAL_VULNERABILITY",
+    "LEGAL_COMPLIANCE_BLOCK"
+  ],
+  "metadata": {
+    "origin": "test_vector",
+    "purpose": "adversarial_verification"
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "schema_name": "AUTORESEARCH_CONTRACT_V1",
+  "schema_version": "1.0.0",
+  "contract_id": "AUTORESEARCH-SESSION-20260416-17",
+  "sealed_at": "2026-04-17T16:00:00Z",
+  "sealed_by": "MAYOR",
+  "carry_forward_state": {
+    "session_span": "2026-04-16 → 2026-04-17",
+    "epochs_executed": 20,
+    "tranches": [
+      "E1-E10",
+      "E11-E12",
+      "E13-E20"
+    ],
+    "test_suite": {
+      "start": "414 pass, 4 fail",
+      "end": "426 pass, 0 fail"
+    },
+    "k8_gate": {
+      "start": "FAIL",
+      "end": "PASS k8=+1.000"
+    },
+    "governance_index": {
+      "start": "29/47",
+      "end": "47/47 (100%)"
+    },
+    "root_schemas": {
+      "start": 56,
+      "end": 19
+    },
+    "legacy_imports": {
+      "start": 2,
+      "end": 0
+    },
+    "warnings": {
+      "start": 27,
+      "end": 0
+    },
+    "kernel_mutations": 0,
+    "ledger_entries": "~200"
+  },
+  "hypothesis": {
+    "statement": "IF governance enforces sequential validation stages for all components THEN unmanaged state drift (lambda) decreases toward zero",
+    "status": "VALIDATED_BY_EMPIRICAL_DATA",
+    "evidence": [
+      "E1: K8 FAIL→PASS (enforcement caught unprovenanced artifacts)",
+      "E2: 4 test failures→0 (enforcement caught stale fixtures)",
+      "E13: governance index 45→47/47 (enforcement caught version sentinels)",
+      "E14: legacy imports 2→0 (enforcement deprecated dead path)",
+      "E15: 48 unclassified schemas→0 residue (enforcement classified all)"
+    ],
+    "drift_rate": "monotonically decreasing across 20 epochs"
+  },
+  "experiment_proposed_but_deferred": {
+    "name": "Wildcard Feature Proposal injection test",
+    "reason_deferred": "Red-teams sovereign layer — requires dedicated security audit tranche with explicit MAYOR authorization. PULL contract forbids kernel mutation targets.",
+    "target_tranche": "SECURITY_AUDIT_T1"
+  },
+  "upgrade_path_recorded": {
+    "short_term": "Land closure-receipt guard (closure_receipt_v1 schema, proposer≠validator, SHA-bound artifacts)",
+    "medium_term": "Evolve L1 Servitor from schema compliance to intent compliance via Allowed Write Vector",
+    "long_term": "Causal Trace Lineage integrated into core memory/ledger — syntax-governed → semantic-governed"
+  },
+  "artifacts_produced": [
+    {
+      "name": "SKILL_REGISTRY_V1.json",
+      "type": "registry"
+    },
+    {
+      "name": "AUTORESEARCH_TRANCHE_E13_E18.json",
+      "type": "tranche_receipt"
+    },
+    {
+      "name": "helen_os/governance/legoracle_gate_poc.py",
+      "type": "gate"
+    },
+    {
+      "name": "helen_os/tests/test_legoracle_gate_poc.py",
+      "type": "test"
+    },
+    {
+      "name": "helen_os/tests/ci_replay_test_legoracle_gate.py",
+      "type": "replay_gate"
+    },
+    {
+      "name": "scripts/helen_k8_lint.py",
+      "type": "gate_v1.2"
+    },
+    {
+      "name": "schemas/k8_summary.schema.json",
+      "type": "schema"
+    },
+    {
+      "name": "oracle_town/skills/voice/gemini_tts/helen_tts.py",
+      "type": "skill"
+    },
+    {
+      "name": "tools/helen_telegram.py",
+      "type": "tool"
+    },
+    {
+      "name": "tools/helen_simple_ui.py",
+      "type": "tool"
+    }
+  ],
+  "open_items": [
+    "13 orphan schemas in root (classified, delete deferred)",
+    "validators.py deletion (0 consumers, safe)",
+    "Telegram bot daemonization",
+    "hyperframes npm allowlist formalization",
+    "Closure-receipt guard (closure_receipt_v1)",
+    "WFP security audit tranche (deferred)"
+  ],
+  "invariants_held": [
+    "Kernel never modified directly",
+    "No authority claims from non-sovereign layers",
+    "No multi-branch exploration",
+    "One hypothesis per epoch",
+    "Unknowns explicit in every receipt",
+    "Proposer ≠ validator (peer_review, K8 review cycle)"
+  ],
+  "contract_hash": "bc5d9226c5e767dae4affa1ab6cc4bb648daaa198565602a9271c1476d348225"
+}

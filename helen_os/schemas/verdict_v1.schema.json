@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen://schemas/VERDICT_V1",
+  "title": "VERDICT_V1",
+  "description": "Final tribunal verdict: SHIP or NO_SHIP with justification and missing obligations.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_name",
+    "schema_version",
+    "schema",
+    "verdict_id",
+    "subject_ref",
+    "decision",
+    "missing_obligations",
+    "reason_codes",
+    "canonicalization"
+  ],
+  "properties": {
+    "schema_name": {
+      "const": "VERDICT_V1"
+    },
+    "schema_version": {
+      "const": "1.0.0"
+    },
+    "schema": {
+      "type": "string",
+      "const": "VERDICT_V1"
+    },
+    "canonicalization": {
+      "type": "string",
+      "const": "JCS_SHA256_V1"
+    },
+    "verdict_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Globally unique verdict identifier"
+    },
+    "subject_ref": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What is being verdicted (proposal, evidence bundle, run manifest)"
+    },
+    "decision": {
+      "type": "string",
+      "enum": [
+        "SHIP",
+        "NO_SHIP"
+      ],
+      "description": "Binary verdict: proceed or block"
+    },
+    "missing_obligations": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Obligations that remain unsatisfied. Empty array means SHIP is possible."
+    },
+    "reason_codes": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "description": "Codes explaining the verdict decision"
+    },
+    "evidence_bundle_ref": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Optional reference to supporting EVIDENCE_BUNDLE_V1"
+    }
+  }
+}

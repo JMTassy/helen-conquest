@@ -1,0 +1,9 @@
+{
+  "channel": "HER",
+  "type": "witness_note",
+  "content": "Ledger review: found 0 contradiction(s) in recent events.",
+  "witness_injection_type": "LRI",
+  "contradictions": [],
+  "confidence": 1.0,
+  "timestamp_utc": null
+}

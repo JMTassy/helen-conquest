@@ -1,0 +1,2 @@
+Test observation for dashboard validation.
+Dashboard should load all emulation outputs correctly.

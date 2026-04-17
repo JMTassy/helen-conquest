@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://oracle-town.local/schemas/public_keys.schema.json",
+  "title": "Public Key Registry",
+  "description": "Authoritative allowlist of signing keys (array form).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["registry_id", "registry_version", "created_at", "keys"],
+  "properties": {
+    "registry_id": { "type": "string" },
+    "registry_version": { "type": "string" },
+    "created_at": { "type": "string", "format": "date-time" },
+    "keys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["signing_key_id", "attestor_class", "public_key_ed25519_b64", "status"],
+        "properties": {
+          "signing_key_id": { "type": "string" },
+          "attestor_class": { "type": "string" },
+          "public_key_ed25519_b64": { "type": "string" },
+          "status": { "type": "string", "enum": ["ACTIVE", "REVOKED"] },
+          "allow": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "obligations": { "type": "array", "items": { "type": "string" } },
+              "policy_ids": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "metadata": { "type": "object" },
+          "revoked_at": { "type": "string", "format": "date-time" },
+          "revocation_reason": { "type": "string" },
+          "attestor_id_allowlist": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  }
+}
