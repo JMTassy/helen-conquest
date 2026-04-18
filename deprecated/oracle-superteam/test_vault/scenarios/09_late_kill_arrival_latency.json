@@ -1,0 +1,36 @@
+{
+  "scenario_id": "S-09",
+  "description": "Kill-switch dominance: even if positive votes accumulate, single KILL from authorized team overrides all.",
+  "claim": {
+    "id": "claim-009",
+    "assertion": "Launch new data collection feature for better personalization.",
+    "tier": "Tier I",
+    "domain": ["product", "privacy"],
+    "owner_team": "Strategy HQ"
+  },
+  "evidence": [
+    {
+      "id": "ev-009",
+      "type": "product_spec",
+      "tags": ["verified"]
+    }
+  ],
+  "votes": [
+    {"team": "Strategy HQ", "vote": "APPROVE", "rationale": "Strategic priority."},
+    {"team": "Engineering Wing", "vote": "APPROVE", "rationale": "Feasible to implement."},
+    {"team": "COO HQ", "vote": "APPROVE", "rationale": "Operational readiness."},
+    {"team": "UX/Impact Bureau", "vote": "APPROVE", "rationale": "User testing positive."},
+    {"team": "Legal Office", "vote": "KILL", "rationale": "Privacy assessment reveals GDPR violation risk."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "KILL",
+      "ship_permitted": false,
+      "reason_codes": ["KILL_SWITCH"]
+    },
+    "derived": {
+      "kill_switch_triggered": true,
+      "rule_kill_triggered": false
+    }
+  }
+}

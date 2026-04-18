@@ -1,0 +1,10 @@
+{
+  "run_id": "RUN_KILLSWITCH_001",
+  "claim_id": "CLM_KILL_TEST",
+  "decision": "NO_SHIP",
+  "blocking_obligations": [],
+  "kill_switch_triggered": true,
+  "attestations_checked": 0,
+  "timestamp": "2026-01-21T21:29:49.672256",
+  "code_version": "oracle_town_v2.0.0"
+}

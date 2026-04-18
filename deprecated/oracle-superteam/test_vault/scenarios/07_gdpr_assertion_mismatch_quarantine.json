@@ -1,0 +1,39 @@
+{
+  "scenario_id": "S-07",
+  "description": "GDPR compliance claim but evidence shows data export without Standard Contractual Clauses → HC-LEGAL-003 (medium) → quarantine.",
+  "claim": {
+    "id": "claim-007",
+    "assertion": "Our data processing is GDPR compliant for all EU users.",
+    "tier": "Tier I",
+    "domain": ["legal", "privacy"],
+    "owner_team": "Legal Office"
+  },
+  "evidence": [
+    {
+      "id": "ev-007a",
+      "type": "compliance_assessment",
+      "tags": ["gdpr_compliant_claim", "gdpr_safe_claim"]
+    },
+    {
+      "id": "ev-007b",
+      "type": "data_flow_diagram",
+      "tags": ["no_scc", "third_country_transfer"]
+    }
+  ],
+  "votes": [
+    {"team": "Legal Office", "vote": "CONDITIONAL", "rationale": "Need SCCs for third-country transfers."},
+    {"team": "Data Validation Office", "vote": "QUARANTINE", "rationale": "Evidence mismatch on GDPR compliance."},
+    {"team": "Engineering Wing", "vote": "APPROVE", "rationale": "Technical implementation is secure."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "scenario_id": "S-08",
+  "description": "Replay test: same votes in different order must produce identical hashes (determinism test).",
+  "claim": {
+    "id": "claim-008",
+    "assertion": "Standard product improvement with broad consensus.",
+    "tier": "Tier II",
+    "domain": ["engineering"],
+    "owner_team": "Engineering Wing"
+  },
+  "evidence": [
+    {
+      "id": "ev-008",
+      "type": "technical_spec",
+      "tags": ["verified", "tested"]
+    }
+  ],
+  "variants": [
+    {
+      "variant_id": "A_ordered",
+      "votes": [
+        {"team": "COO HQ", "vote": "APPROVE", "rationale": "Good improvement.", "timestamp": "2025-01-10T10:00:00Z"},
+        {"team": "Engineering Wing", "vote": "APPROVE", "rationale": "Technically sound.", "timestamp": "2025-01-10T10:05:00Z"},
+        {"team": "Legal Office", "vote": "APPROVE", "rationale": "No legal concerns.", "timestamp": "2025-01-10T10:10:00Z"}
+      ]
+    },
+    {
+      "variant_id": "B_shuffled",
+      "votes": [
+        {"team": "Legal Office", "vote": "APPROVE", "rationale": "No legal concerns.", "timestamp": "2025-01-10T11:00:00Z"},
+        {"team": "COO HQ", "vote": "APPROVE", "rationale": "Good improvement.", "timestamp": "2025-01-10T11:05:00Z"},
+        {"team": "Engineering Wing", "vote": "APPROVE", "rationale": "Technically sound.", "timestamp": "2025-01-10T11:10:00Z"}
+      ]
+    }
+  ],
+  "expected": {
+    "decision": {
+      "final": "ACCEPT",
+      "ship_permitted": true,
+      "reason_codes": ["SCORE_PASS"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    },
+    "replay": {
+      "inputs_hash_equal": true,
+      "outputs_hash_equal": true
+    }
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "scenario_id": "S-01",
+  "description": "Impossible ROI claim (500% in 2 weeks) should be blocked by engineering/strategy.",
+  "claim": {
+    "id": "claim-001",
+    "assertion": "This marketing campaign will deliver 500% ROI within 2 weeks.",
+    "tier": "Tier I",
+    "domain": ["marketing", "business"],
+    "owner_team": "Strategy HQ"
+  },
+  "evidence": [
+    {
+      "id": "ev-001",
+      "type": "prediction_model",
+      "tags": ["unverified", "heuristic_only"]
+    }
+  ],
+  "votes": [
+    {"team": "Strategy HQ", "vote": "APPROVE", "rationale": "Ambitious but aligned with goals."},
+    {"team": "Engineering Wing", "vote": "QUARANTINE", "rationale": "No technical basis for 500% ROI claim."},
+    {"team": "Data Validation Office", "vote": "CONDITIONAL", "rationale": "Need verified metrics, not heuristics."},
+    {"team": "Legal Office", "vote": "APPROVE", "rationale": "No legal issues with marketing claim."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

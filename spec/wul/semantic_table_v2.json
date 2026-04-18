@@ -1,0 +1,154 @@
+{
+  "kind": "WUL_ML_SEMANTIC_TABLE",
+  "version": "2.0.0",
+  "table_id": "SEM_TABLE_V2_CORE",
+  "oracle_resistant": true,
+  "notes": [
+    "Glyphs carry no privileged meaning outside this table.",
+    "All semantics are versioned and externalized.",
+    "Unlisted glyphs are RESERVED and must fail closed in core mode."
+  ],
+  "sorts": {
+    "Ent":       { "description": "entity or reference" },
+    "Evt":       { "description": "event node" },
+    "State":     { "description": "state node" },
+    "Field":     { "description": "measurable field or signal" },
+    "Rel":       { "description": "relation node" },
+    "Constraint":{ "description": "constraint object" },
+    "Evidence":  { "description": "evidence object" },
+    "Policy":    { "description": "policy or governance object" },
+    "Time":      { "description": "time reference" },
+    "Bool":      { "description": "boolean" },
+    "Real":      { "description": "real scalar" },
+    "Const":     { "description": "named constant" },
+    "Unit":      { "description": "unit value" },
+    "World":     { "description": "context or world" },
+    "Set[Ent]":  { "description": "set of entities" }
+  },
+  "semantic_tags": {
+    "⧉": {
+      "tag": "EVENT",
+      "sort": "Evt",
+      "status": "ACTIVE",
+      "description": "event node"
+    },
+    "⧊": {
+      "tag": "STATE",
+      "sort": "State",
+      "status": "ACTIVE",
+      "description": "state node"
+    },
+    "⧋": {
+      "tag": "FIELD",
+      "sort": "Field",
+      "status": "ACTIVE",
+      "description": "field or signal node"
+    },
+    "⧌": {
+      "tag": "RELATION",
+      "sort": "Rel",
+      "status": "ACTIVE",
+      "description": "relation node"
+    },
+    "⧍": {
+      "tag": "CONTEXT",
+      "sort": "World",
+      "status": "ACTIVE",
+      "description": "context or world"
+    },
+    "⧎": {
+      "tag": "EVIDENCE",
+      "sort": "Evidence",
+      "status": "ACTIVE",
+      "description": "evidence node"
+    },
+    "⧏": {
+      "tag": "CONSTRAINT",
+      "sort": "Constraint",
+      "status": "ACTIVE",
+      "description": "constraint node"
+    },
+    "⧐": {
+      "tag": "POLICY",
+      "sort": "Policy",
+      "status": "ACTIVE",
+      "description": "governance or policy node"
+    }
+  },
+  "logic_glyphs": {
+    "⨀": {
+      "op": "NOT",
+      "input_sorts": ["Bool"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⨁": {
+      "op": "AND",
+      "input_sorts": ["Bool", "Bool"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⨂": {
+      "op": "OR",
+      "input_sorts": ["Bool", "Bool"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⨃": {
+      "op": "IMPLIES",
+      "input_sorts": ["Bool", "Bool"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⨄": {
+      "op": "IFF",
+      "input_sorts": ["Bool", "Bool"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⨋": {
+      "op": "ASSERT",
+      "input_sorts": ["Bool"],
+      "output_sort": "Constraint",
+      "status": "ACTIVE"
+    },
+    "⨌": {
+      "op": "OBSERVE",
+      "input_sorts": ["Field"],
+      "output_sort": "Evidence",
+      "status": "ACTIVE"
+    },
+    "⨍": {
+      "op": "REJECT",
+      "input_sorts": ["Bool"],
+      "output_sort": "Constraint",
+      "status": "ACTIVE"
+    }
+  },
+  "quantifiers": {
+    "⩀": {
+      "quantifier": "FORALL",
+      "status": "ACTIVE"
+    },
+    "⩃": {
+      "quantifier": "EXISTS",
+      "status": "ACTIVE"
+    },
+    "⩂": {
+      "quantifier": "UNIQUE",
+      "status": "ACTIVE"
+    },
+    "⩈": {
+      "quantifier": "FORALL_TIME",
+      "status": "RESERVED"
+    },
+    "⩉": {
+      "quantifier": "EXISTS_TIME",
+      "status": "RESERVED"
+    }
+  },
+  "reserved_glyph_policy": {
+    "default_status": "RESERVED",
+    "behavior": "FAIL_CLOSED"
+  }
+}

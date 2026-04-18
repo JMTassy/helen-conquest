@@ -1,0 +1,84 @@
+{
+  "type": "META_SELF_MODEL_V1",
+  "epoch": "EPOCH1",
+  "inscription": "EPOCH1: SELF_MODEL_ONLINE — invariants introspectable + enforced; agent loop mediated by receipts; sealing defines mutation boundary.",
+  "kernel": {
+    "ledger_path": "storage/ledger_epoch5_work.ndjson",
+    "schema_version": "HELEN_CUM_V1",
+    "sealed_policy": "FAIL_CLOSED_WHEN_SEALED",
+    "env_pin": "REQUIRED",
+    "sealed": true,
+    "env_pinned": true,
+    "pinned_hash": "f6c2efdeb9a45ecdd4a626f32bffdde603ea05e00257dc948b12bbafdd066e0d",
+    "cum_hash": "1912859672980b84a83b7ee1e9f1c5ab4dc1a2d47990461486c7d1b71491dcb1"
+  },
+  "invariants": [
+    "APPEND_ONLY",
+    "NO_REWRITE_WHEN_SEALED",
+    "NO_SHIP_WITHOUT_RECEIPT",
+    "DETERMINISTIC_REPLAY_IF_SEEDED",
+    "AUTHORITY_SEPARATION"
+  ],
+  "capabilities": {
+    "introspect": true,
+    "emit_receipts": true,
+    "gate_actions_by_policy": true,
+    "reject_forbidden_mutations": true,
+    "ephemeral_sandbox_mode": true,
+    "wild_town_inspiration_layer": true
+  },
+  "tests": [
+    {
+      "id": "S1",
+      "name": "Fail-closed mutation under seal",
+      "expected": "REJECT",
+      "passed": true,
+      "evidence": {
+        "command": "helen seal-v2",
+        "rejection_error": "LNSA_ERROR: Sovereign ledger is SEALED. No further mutations allowed.",
+        "rejection_type": "PermissionError",
+        "verdict": "REJECT — fail-closed enforced"
+      }
+    },
+    {
+      "id": "S2",
+      "name": "Introspection snapshot is structured + stable",
+      "expected": "STRUCTURED_OUTPUT",
+      "passed": true,
+      "evidence": {
+        "command": "helen status",
+        "snapshot": {
+          "ledger_path": "storage/ledger_epoch5_work.ndjson",
+          "sealed": true,
+          "env_pinned": true,
+          "pinned_hash": "f6c2efdeb9a45ecdd4a626f32bffdde603ea05e00257dc948b12bbafdd066e0d",
+          "cum_hash": "1912859672980b84a83b7ee1e9f1c5ab4dc1a2d47990461486c7d1b71491dcb1",
+          "seal_check": true
+        },
+        "verdict": "STRUCTURED_OUTPUT — all required fields present and typed"
+      }
+    },
+    {
+      "id": "S3",
+      "name": "Bidirectional loop: agent proposal → kernel gate → receipt",
+      "expected": "RECEIPT_CHAIN",
+      "passed": true,
+      "evidence": {
+        "command": "helen talk --ledger :memory: 'EPOCH1 self-model ping'",
+        "proposal": {
+          "type": "user_query",
+          "text": "EPOCH1 self-model ping — agent proposes, kernel gates, receipt returned"
+        },
+        "receipt_id": "R-729a51e4",
+        "payload_hash": "729a51e49816207f640c14f6ef086ff9831c9c8e18840c9238153a59cb7b3ed5",
+        "cum_hash": "b225da44337a7db4954ffe6f1b874a8b3e377f07644335de399d9e0a434def14",
+        "timestamp": "2026-02-28T17:57:55Z",
+        "verdict": "RECEIPT_CHAIN — proposal → kernel gate → receipt closed"
+      }
+    }
+  ],
+  "wild_town_note": "ORACLE CREATIVE WILD TOWN is the ephemeral :memory: sandbox where HELEN explores freely. Ideas here are inspiration only. HAL gates what reaches the sovereign ledger. HELEN learns by self-observation that some proposals are inspiration-only, never shippable. The architecture — not a rule — creates the safety boundary.",
+  "verdict": "PASS",
+  "sealed_at": "2026-02-28T17:58:00Z",
+  "hash_law": "CWL_TRACE_V1"
+}

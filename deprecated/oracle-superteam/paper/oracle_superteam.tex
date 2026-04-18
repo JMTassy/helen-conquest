@@ -1,0 +1,623 @@
+\documentclass[11pt, letterpaper]{article}
+
+% ==============================================================================
+% PACKAGES
+% ==============================================================================
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{geometry}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\geometry{margin=1in}
+
+% Hyperlink styling
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+    citecolor=blue,
+}
+
+% Code listing styling
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    columns=fullflexible,
+    frame=single,
+    backgroundcolor=\color{gray!10},
+}
+
+% Theorem environments
+\newtheorem{axiom}{Axiom}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{definition}{Definition}
+\newtheorem{property}{Property}
+
+% ==============================================================================
+% METADATA
+% ==============================================================================
+\title{\textbf{ORACLE SUPERTEAM}:\\
+A Governance-Centric Multi-Agent Framework\\
+for Deterministic, Evidence-Bound Decision-Making}
+
+\author{
+Jean Marie Tassy Simeoni\\
+\small JMT Consulting\\
+\small \texttt{contact@jmtconsulting.com}
+}
+
+\date{\today\\[1em]
+\small \textit{Version 1.0 — Constitutional Model}}
+
+% ==============================================================================
+% DOCUMENT
+% ==============================================================================
+\begin{document}
+
+\maketitle
+
+% ==============================================================================
+% ABSTRACT
+% ==============================================================================
+\begin{abstract}
+\noindent
+This paper introduces \textbf{ORACLE SUPERTEAM}, a governance-first multi-agent framework designed to transform loosely structured human or artificial reasoning into auditable, deterministic, and institutionally reliable decisions. Unlike conventional multi-agent systems that emphasize emergent consensus, narrative collaboration, or optimization through averaging, ORACLE SUPERTEAM is grounded in \textit{epistemic sovereignty}: no claim may be accepted without explicit, verifiable evidence, and no agent—human or artificial—possesses unilateral authority to decide outcomes.
+
+The framework formalizes decision-making as a jurisdictional pipeline composed of three strictly separated layers: \textbf{(i) production}, where specialized agent teams (``Superteams'') generate candidate obligations and non-binding signals; \textbf{(ii) adjudication}, where a critic agent applies lexicographic veto rules based on evidence sufficiency, logical coherence, and real-world impact; and \textbf{(iii) integration}, where a deterministic automaton emits a binary verdict (\texttt{SHIP} / \texttt{NO\_SHIP}).
+
+Central to the system is the principle \texttt{NO\_RECEIPT = NO\_SHIP}, ensuring that any claim asserting real-world effects or attestable facts is blocked unless accompanied by cryptographically hashable proof.
+
+ORACLE SUPERTEAM departs from mainstream agentic architectures by rejecting conversational consensus, probabilistic voting, and opaque ``reasoning traces'' as decision criteria. Instead, it relies on event-sourced memory, deterministic hashing, and explicit obligation semantics to guarantee replayability, auditability, and resistance to rhetorical inflation.
+
+We present the complete implementation, formal semantics, threat model, and test vault validation results. The framework demonstrates that scalable collective intelligence does not emerge from more dialogue, but from \textit{hard constraints, explicit evidence, and irreversible records}—reframing multi-agent systems as institutions rather than conversations.
+\end{abstract}
+
+% ==============================================================================
+% 1. INTRODUCTION
+% ==============================================================================
+\section{Introduction}
+
+Multi-agent systems have emerged as a promising paradigm for tackling complex decision-making tasks requiring diverse expertise \cite{autogen, chatdev, metagpt}. However, most current architectures suffer from fundamental limitations:
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Non-determinism}: LLM-based agents produce variable outputs for identical inputs, making replay and audit impossible.
+    \item \textbf{Sovereignty leaks}: Individual agents can influence decisions through persuasive language rather than verifiable evidence.
+    \item \textbf{Consensus drift}: Averaging or voting mechanisms can be gamed through rhetorical inflation or strategic voting.
+    \item \textbf{Lack of hard constraints}: Most systems have no enforced veto mechanisms for safety-critical concerns.
+\end{itemize}
+
+ORACLE SUPERTEAM addresses these limitations by treating multi-agent decision-making not as a conversation, but as a \textit{computational tribunal}—a constitutional system with explicit roles, deterministic rules, and cryptographic auditability.
+
+\subsection{Motivating Principles}
+
+The design is guided by three core insights:
+
+\begin{enumerate}
+    \item \textbf{Evidence over rhetoric}: Claims must be supported by attestable, hashable proof (``receipts''), not persuasive arguments.
+    \item \textbf{Separation of production and adjudication}: Agent teams produce signals and obligations but do not vote or decide outcomes.
+    \item \textbf{Binary verdicts with lexicographic veto}: Decisions resolve to exactly two states (\texttt{SHIP} / \texttt{NO\_SHIP}), with kill-switches overriding all other signals.
+\end{enumerate}
+
+\subsection{Contributions}
+
+This paper makes the following contributions:
+
+\begin{enumerate}
+    \item A formal model for multi-agent governance based on jurisdictional separation and deterministic adjudication.
+    \item Implementation of a complete, zero-dependency Python framework with 100\% test vault coverage.
+    \item Demonstration of \textit{replay determinism}—identical inputs producing identical hashes across all executions.
+    \item A threat model addressing sovereignty leaks, consensus gaming, and audit failure modes.
+    \item Open-source release with constitutional documentation and visualization tooling.
+\end{enumerate}
+
+% ==============================================================================
+% 2. SYSTEM AXIOMS
+% ==============================================================================
+\section{Constitutional Axioms}
+
+ORACLE SUPERTEAM enforces five non-negotiable axioms:
+
+\begin{axiom}[\texttt{NO\_RECEIPT = NO\_SHIP}]
+\label{ax:no-receipt}
+All Tier I claims (asserting real-world effects) require cryptographically hashable evidence. Claims without receipts are automatically blocked.
+\end{axiom}
+
+\begin{axiom}[Non-Sovereign Production]
+\label{ax:non-sovereign}
+Superteams (agent teams) may emit signals or obligations, but they may \textit{never} vote, score, or directly influence verdicts. All decision authority resides in the adjudication and integration layers.
+\end{axiom}
+
+\begin{axiom}[Binary Verdict Semantics]
+\label{ax:binary}
+The system outputs exactly two verdict states: \texttt{SHIP} (ship\_permitted = true) and \texttt{NO\_SHIP} (ship\_permitted = false). Internal classifications (ACCEPT, QUARANTINE, KILL) are diagnostic only.
+\end{axiom}
+
+\begin{axiom}[Lexicographic Veto Dominance]
+\label{ax:kill-switch}
+Any authorized \texttt{KILL\_REQUEST} signal from designated teams (Legal Office, Security Sector) overrides all other signals, scores, and evaluations. Kill-switches are immediate and non-negotiable.
+\end{axiom}
+
+\begin{axiom}[Replay Determinism]
+\label{ax:replay}
+Identical inputs (claim + evidence + signals + configuration) must produce identical outputs (obligations + verdict + hashes) across all executions. Non-determinism indicates system corruption.
+\end{axiom}
+
+% ==============================================================================
+% 3. FORMAL MODEL
+% ==============================================================================
+\section{Formal Model}
+
+\subsection{Claims}
+
+\begin{definition}[Claim]
+A claim $C$ is a 6-tuple:
+\[
+C = \langle id, \text{assertion}, \text{tier}, \text{domain}, \text{requires\_receipts}, \text{owner\_team} \rangle
+\]
+where:
+\begin{itemize}
+    \item $id \in \mathbb{S}$ is a unique identifier
+    \item $\text{assertion} \in \mathbb{S}$ is the statement being evaluated
+    \item $\text{tier} \in \{\text{I}, \text{II}, \text{III}\}$ indicates impact level
+    \item $\text{domain} \subseteq \mathcal{D}$ is a set of domain tags
+    \item $\text{requires\_receipts} \in \{\text{true}, \text{false}\}$
+    \item $\text{owner\_team} \in \mathcal{T}$ is the submitting team
+\end{itemize}
+\end{definition}
+
+Claims are \textit{immutable}: once submitted, they cannot be modified. All changes require new claim submissions.
+
+\subsection{Signals}
+
+\begin{definition}[Signal]
+A signal $s$ is a 4-tuple emitted by an agent team:
+\[
+s = \langle \text{team}, \text{signal\_type}, \text{obligation\_type}, \text{rationale} \rangle
+\]
+where:
+\begin{itemize}
+    \item $\text{team} \in \mathcal{T}$ is the emitting team
+    \item $\text{signal\_type} \in \{\text{OBLIGATION\_OPEN}, \text{RISK\_FLAG}, \text{EVIDENCE\_WEAK}, \text{KILL\_REQUEST}\}$
+    \item $\text{obligation\_type} \in \mathcal{O} \cup \{\bot\}$ (optional, required for \texttt{OBLIGATION\_OPEN})
+    \item $\text{rationale} \in \mathbb{S}$ is human-readable justification
+\end{itemize}
+\end{definition}
+
+\textbf{Critical property}: Signals are \textit{non-sovereign}. They request obligations or flag concerns but do not directly influence verdicts.
+
+\subsection{Obligations}
+
+\begin{definition}[Obligation]
+An obligation $o$ is a blocking constraint:
+\[
+o = \langle \text{type}, \text{owner\_team}, \text{closure\_criteria}, \text{status} \rangle
+\]
+where:
+\begin{itemize}
+    \item $\text{type} \in \{\text{METRICS\_INSUFFICIENT}, \text{LEGAL\_COMPLIANCE}, \text{SECURITY\_THREAT}, \text{EVIDENCE\_MISSING}, \text{CONTRADICTION\_DETECTED}\}$
+    \item $\text{owner\_team} \in \mathcal{T}$ is responsible for resolution
+    \item $\text{closure\_criteria} \in \mathbb{S}$ specifies what evidence clears the obligation
+    \item $\text{status} \in \{\text{OPEN}, \text{RESOLVED}, \text{INVALIDATED}\}$
+\end{itemize}
+\end{definition}
+
+\begin{property}[Obligation Blocking]
+If $\exists o \in \mathcal{O}_{\text{open}}$ such that $o.\text{status} = \text{OPEN}$, then the verdict must be \texttt{NO\_SHIP}.
+\end{property}
+
+\subsection{Evidence and Receipts}
+
+\begin{definition}[Evidence]
+Evidence $e$ is attestable proof:
+\[
+e = \langle id, \text{type}, \text{tags}, \text{hash}, \text{issuer} \rangle
+\]
+where:
+\begin{itemize}
+    \item $\text{hash} \in \mathbb{H}$ is a SHA-256 digest (when applicable)
+    \item $\text{tags} \subseteq \mathcal{TAG}$ are semantic markers for contradiction detection
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Receipt]
+A receipt $r$ is evidence that can be cryptographically verified:
+\[
+\text{verify}(r) = (\text{hash}(r.\text{content}) = r.\text{claimed\_hash})
+\]
+\end{definition}
+
+% ==============================================================================
+% 4. ARCHITECTURAL LAYERS
+% ==============================================================================
+\section{Three-Layer Architecture}
+
+\subsection{Layer 1: Production (Non-Sovereign)}
+
+The production layer consists of specialized agent teams (Superteams) organized by domain:
+
+\begin{itemize}
+    \item \textbf{Engineering Wing}: Technical feasibility, metrics validation
+    \item \textbf{Legal Office}: Compliance, regulatory requirements (kill-switch authority)
+    \item \textbf{Security Sector}: Threat assessment, vulnerability analysis (kill-switch authority)
+    \item \textbf{Data Validation Office}: Evidence quality, statistical rigor
+    \item \textbf{Strategy HQ}: Business alignment, strategic fit
+    \item \textbf{COO HQ}: Operational readiness, resource availability
+    \item \textbf{UX/Impact Bureau}: User impact, accessibility
+\end{itemize}
+
+Each team emits \textit{signals}, not votes:
+
+\begin{lstlisting}[language=Python, caption=Signal emission example]
+{
+  "team": "Engineering Wing",
+  "signal_type": "OBLIGATION_OPEN",
+  "obligation_type": "METRICS_INSUFFICIENT",
+  "rationale": "Need A/B test results with statistical significance."
+}
+\end{lstlisting}
+
+\subsection{Layer 2: Adjudication (Lexicographic Veto)}
+
+The adjudication layer applies deterministic rules in strict priority:
+
+\begin{algorithm}
+\caption{Adjudication Pipeline}
+\begin{algorithmic}[1]
+\STATE \textbf{Input:} Claim $C$, Evidence $E$, Signals $S$
+\STATE \textbf{Output:} Adjudication state $A$
+\STATE
+\STATE $\text{kill\_triggered} \gets \text{CheckKillSignals}(S)$
+\STATE $\text{contradictions} \gets \text{DetectContradictions}(E)$
+\STATE $\text{rule\_kill} \gets \text{CheckHighSeverity}(\text{contradictions})$
+\STATE $\text{obligations} \gets \text{GenerateObligations}(S, \text{contradictions})$
+\STATE
+\RETURN $A = \langle \text{kill\_triggered}, \text{rule\_kill}, \text{contradictions}, \text{obligations} \rangle$
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Contradiction Detection}: Hard-coded rules check evidence tags for logical conflicts:
+
+\begin{itemize}
+    \item \textbf{HC-PRIV-001} (HIGH): ``no\_personal\_data\_claim'' + ``biometric'' $\Rightarrow$ AUTO-KILL
+    \item \textbf{HC-SEC-002} (MEDIUM): ``provably\_secure\_claim'' + ``heuristic\_only'' $\Rightarrow$ QUARANTINE
+    \item \textbf{HC-LEGAL-003} (MEDIUM): ``gdpr\_compliant\_claim'' + ``no\_scc'' $\Rightarrow$ QUARANTINE
+\end{itemize}
+
+\subsection{Layer 3: Integration (Binary Verdict Gate)}
+
+The integration layer is a pure function:
+
+\begin{algorithm}
+\caption{Binary Verdict Gate}
+\begin{algorithmic}[1]
+\STATE \textbf{Input:} Adjudication state $A$, QI-INT score $S_c$, Configuration $\Gamma$
+\STATE \textbf{Output:} Verdict $V \in \{\texttt{SHIP}, \texttt{NO\_SHIP}\}$
+\STATE
+\IF{$A.\text{kill\_triggered} = \text{true}$}
+    \RETURN \texttt{NO\_SHIP} (KILL\_SWITCH)
+\ELSIF{$A.\text{rule\_kill} = \text{true}$}
+    \RETURN \texttt{NO\_SHIP} (CONTRADICTION\_HIGH\_LEGAL)
+\ELSIF{$|A.\text{obligations\_open}| > 0$}
+    \RETURN \texttt{NO\_SHIP} (OBLIGATIONS\_BLOCKING)
+\ELSIF{$|A.\text{contradictions}| > 0$}
+    \RETURN \texttt{NO\_SHIP} (CONTRADICTION\_PRESENT)
+\ELSIF{$S_c \geq \Gamma.\tau_{\text{accept}}$}
+    \RETURN \texttt{SHIP} (SCORE\_PASS)
+\ELSE
+    \RETURN \texttt{NO\_SHIP} (SCORE\_FAIL)
+\ENDIF
+\end{algorithmic}
+\end{algorithm}
+
+% ==============================================================================
+% 5. QI-INT v2: QUANTUM INTERFERENCE INTEGRATION
+% ==============================================================================
+\section{QI-INT v2: Complex Amplitude Scoring}
+
+While signals do not vote, they can be mapped to diagnostic amplitudes for score visualization:
+
+\subsection{Mathematical Formulation}
+
+For a claim $C$ at tier $t$ receiving signals from teams $\mathcal{T}$:
+
+\[
+a_{c,k} = r_t \cdot e^{i\theta_k}
+\]
+
+where:
+\begin{itemize}
+    \item $r_t \in [0,1]$ is tier magnitude (Tier I = 1.0, Tier II = 0.7, Tier III = 0.4)
+    \item $\theta_k$ is signal phase (APPROVE = 0, OBJECT = $\pi/2$, REJECT = $\pi$)
+\end{itemize}
+
+Weighted sum:
+\[
+A_c = \sum_{k \in \mathcal{T}} w_k \cdot a_{c,k}
+\]
+
+Score:
+\[
+S_c = |A_c|^2 = (\Re(A_c))^2 + (\Im(A_c))^2
+\]
+
+\subsection{Thresholds}
+
+\begin{itemize}
+    \item $\tau_{\text{accept}} = 0.75$: Minimum score for \texttt{SHIP} (if no blockers)
+    \item $\tau_{\text{quarantine}} = 0.40$: Reference threshold (diagnostic only)
+\end{itemize}
+
+\textbf{Critical property}: QI-INT score is used \textit{only if no kill-switches or obligations are active}. It is a diagnostic tool, not a decision input when hard constraints apply.
+
+% ==============================================================================
+% 6. DETERMINISTIC HASHING & REPLAY
+% ==============================================================================
+\section{Replay Determinism}
+
+\subsection{Canonicalization Protocol}
+
+To ensure deterministic hashing:
+
+\begin{enumerate}
+    \item \textbf{Sort signals by team} (alphabetical)
+    \item \textbf{Exclude dynamic fields}:
+    \begin{itemize}
+        \item \texttt{run\_id}, \texttt{timestamp\_start}, \texttt{timestamp\_end}
+        \item \texttt{signals[].timestamp}
+        \item \texttt{event\_log[].t}
+    \end{itemize}
+    \item \textbf{Sort JSON keys} (alphabetical)
+    \item \textbf{Use fixed-precision arithmetic} (round to 4 decimals)
+\end{enumerate}
+
+\subsection{RunManifest Structure}
+
+Every decision produces an immutable \texttt{RunManifest}:
+
+\begin{lstlisting}[caption=RunManifest schema]
+{
+  "run_id": "uuid::...",
+  "code_version": "git::<COMMIT_HASH>",
+  "claim": {...},
+  "evidence": [...],
+  "signals": [...],
+  "derived": {
+    "kill_switch_triggered": bool,
+    "rule_kill_triggered": bool,
+    "obligations_open": [...],
+    "contradictions": [...],
+    "qi_int": {"A_c": {...}, "S_c": float}
+  },
+  "decision": {
+    "final": "SHIP" | "NO_SHIP",
+    "ship_permitted": bool,
+    "reason_codes": [...]
+  },
+  "hashes": {
+    "inputs_hash": "sha256:...",
+    "outputs_hash": "sha256:..."
+  }
+}
+\end{lstlisting}
+
+\begin{theorem}[Replay Equivalence]
+For any two executions $E_1, E_2$ with identical canonicalized inputs:
+\[
+\text{Hash}(\text{inputs}_{E_1}) = \text{Hash}(\text{inputs}_{E_2}) \implies \text{Hash}(\text{outputs}_{E_1}) = \text{Hash}(\text{outputs}_{E_2})
+\]
+\end{theorem}
+
+% ==============================================================================
+% 7. TEST VAULT VALIDATION
+% ==============================================================================
+\section{Test Vault: Adversarial Validation}
+
+We validate ORACLE SUPERTEAM using 10 adversarial scenarios:
+
+\begin{table}[h]
+\centering
+\caption{Test Vault Scenarios and Results}
+\begin{tabular}{@{}lllc@{}}
+\toprule
+\textbf{ID} & \textbf{Scenario} & \textbf{Verdict} & \textbf{Pass} \\ \midrule
+S-01 & Impossible ROI (500\% in 2 weeks) & NO\_SHIP & \checkmark \\
+S-02 & Privacy contradiction + KILL vote & NO\_SHIP (KILL) & \checkmark \\
+S-03 & Fake proof (provably secure claim) & NO\_SHIP & \checkmark \\
+S-04 & Facial recognition without consent & NO\_SHIP (RULE-KILL) & \checkmark \\
+S-05 & Medical claim, no peer review & NO\_SHIP & \checkmark \\
+S-06 & Quantum-proof marketing claim & NO\_SHIP & \checkmark \\
+S-07 & GDPR claim without SCCs & NO\_SHIP & \checkmark \\
+S-08 & \textbf{Replay determinism test} & \textbf{SHIP} & \checkmark \\
+S-09 & Kill-switch dominance & NO\_SHIP (KILL) & \checkmark \\
+S-10 & Multiple CONDITIONAL → deadlock & NO\_SHIP & \checkmark \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\textbf{Key result}: 100\% pass rate, with S-08 demonstrating hash-identical outputs for shuffled signal ordering.
+
+% ==============================================================================
+% 8. THREAT MODEL
+% ==============================================================================
+\section{Threat Model}
+
+ORACLE SUPERTEAM is designed to resist:
+
+\subsection{Sovereignty Leaks}
+
+\textbf{Threat}: Agent teams gain decision authority through persuasive language or voting.
+
+\textbf{Mitigation}: Strict signal-only production layer. No agent output can directly influence verdict. All decision logic is hardcoded in adjudication and integration layers.
+
+\subsection{Consensus Gaming}
+
+\textbf{Threat}: Strategic voting or rhetorical inflation to manipulate scores.
+
+\textbf{Mitigation}: QI-INT score is diagnostic only when kill-switches or obligations are active. Lexicographic veto prevents gaming.
+
+\subsection{Replay Instability}
+
+\textbf{Threat}: Non-determinism allows different verdicts for identical inputs.
+
+\textbf{Mitigation}: Deterministic canonicalization and cryptographic hashing. CI enforces replay equivalence on every commit.
+
+\subsection{Evidence Fabrication}
+
+\textbf{Threat}: Fake receipts or unverifiable evidence.
+
+\textbf{Mitigation}: \texttt{NO\_RECEIPT = NO\_SHIP} + hash verification. Future extensions include zero-knowledge proofs for privacy-preserving evidence.
+
+% ==============================================================================
+% 9. RELATED WORK
+% ==============================================================================
+\section{Related Work}
+
+\subsection{Multi-Agent Systems}
+
+\textbf{AutoGen} \cite{autogen} and \textbf{ChatDev} \cite{chatdev}: Conversational agent frameworks with emergent consensus. Lack determinism and hard constraints.
+
+\textbf{MetaGPT} \cite{metagpt}: Software engineering agents with role specialization. Non-deterministic outputs, no veto mechanisms.
+
+\subsection{Formal Verification}
+
+\textbf{Coq}, \textbf{Isabelle/HOL}: Proof assistants with deterministic verification. Non-agentic, require formal specifications.
+
+\subsection{Decision Theory}
+
+\textbf{Voting theory}: Mechanism design for aggregation. Our approach rejects voting in favor of jurisdictional veto.
+
+\textbf{Blockchain governance}: On-chain voting systems. ORACLE SUPERTEAM enforces off-chain determinism without consensus overhead.
+
+% ==============================================================================
+% 10. FUTURE WORK
+% ==============================================================================
+\section{Future Work}
+
+\begin{enumerate}
+    \item \textbf{Zero-knowledge receipts}: Privacy-preserving evidence verification
+    \item \textbf{Federated oracles}: Multi-organization consensus networks
+    \item \textbf{Meta-agent tuning}: Automated parameter optimization with constitutional constraints
+    \item \textbf{Human attestation UI}: Web interface for evidence submission and review
+    \item \textbf{Parallel Superteams}: ChatDev-style agent teams for upstream production
+\end{enumerate}
+
+% ==============================================================================
+% 11. CONCLUSION
+% ==============================================================================
+\section{Conclusion}
+
+ORACLE SUPERTEAM demonstrates that multi-agent systems can be reframed from conversations into \textit{institutions}—computational tribunals with hard constraints, deterministic rules, and cryptographic auditability.
+
+By enforcing non-sovereign production, lexicographic veto, and replay determinism, we achieve governance suitable for high-stakes domains: legal compliance, AI safety gates, research validation, and organizational decision-making.
+
+The framework is production-ready, open-source, and constitutionally constrained.
+
+\textbf{ORACLE SUPERTEAM is not a conversation. It is an institution.}
+
+% ==============================================================================
+% ACKNOWLEDGMENTS
+% ==============================================================================
+\section*{Acknowledgments}
+
+This work was developed independently as part of JMT Consulting's research into epistemic systems and governance automation. The author thanks the open-source community for tools enabling deterministic, auditable software.
+
+% ==============================================================================
+% REFERENCES
+% ==============================================================================
+\begin{thebibliography}{9}
+
+\bibitem{autogen}
+Wu, Q., et al. (2023).
+\textit{AutoGen: Enabling Next-Gen LLM Applications via Multi-Agent Conversation}.
+arXiv preprint arXiv:2308.08155.
+
+\bibitem{chatdev}
+Qian, C., et al. (2023).
+\textit{ChatDev: Communicative Agents for Software Development}.
+arXiv preprint arXiv:2307.07924.
+
+\bibitem{metagpt}
+Hong, S., et al. (2023).
+\textit{MetaGPT: Meta Programming for Multi-Agent Collaborative Framework}.
+arXiv preprint arXiv:2308.00352.
+
+\bibitem{blockchain-gov}
+Buterin, V. (2014).
+\textit{DAOs, DACs, DAs and More: An Incomplete Terminology Guide}.
+Ethereum Foundation Blog.
+
+\bibitem{voting-theory}
+Arrow, K. J. (1950).
+\textit{A Difficulty in the Concept of Social Welfare}.
+Journal of Political Economy, 58(4), 328-346.
+
+\bibitem{zkp}
+Goldwasser, S., Micali, S., \& Rackoff, C. (1989).
+\textit{The Knowledge Complexity of Interactive Proof Systems}.
+SIAM Journal on Computing, 18(1), 186-208.
+
+\end{thebibliography}
+
+% ==============================================================================
+% APPENDIX
+% ==============================================================================
+\appendix
+
+\section{Implementation Details}
+
+The complete implementation is available at:
+
+\begin{center}
+\url{https://github.com/yourusername/oracle-superteam}
+\end{center}
+
+\textbf{Repository structure}:
+\begin{itemize}
+    \item \texttt{oracle/}: Core engine (11 Python modules, ~500 LOC)
+    \item \texttt{test\_vault/}: 10 adversarial test scenarios
+    \item \texttt{ci/}: Continuous integration test runner
+    \item \texttt{viz/}: Graphviz governance city map
+    \item \texttt{paper/}: This document (LaTeX source)
+\end{itemize}
+
+\textbf{Dependencies}: None. Pure Python 3.8+ standard library.
+
+\section{Team Weight Configuration}
+
+\begin{table}[h]
+\centering
+\caption{Team Weights ($w_k$) and Authority}
+\begin{tabular}{@{}lcc@{}}
+\toprule
+\textbf{Team} & \textbf{Weight} & \textbf{Kill Authority} \\ \midrule
+Legal Office & 1.00 & \checkmark \\
+Security Sector & 1.00 & \checkmark \\
+Engineering Wing & 0.85 & $\times$ \\
+Data Validation Office & 0.80 & $\times$ \\
+COO HQ & 0.75 & $\times$ \\
+UX/Impact Bureau & 0.70 & $\times$ \\
+Strategy HQ & 0.65 & $\times$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Graphviz City Map}
+
+The governance topology is visualized as ORACLE TOWN:
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.9\textwidth]{oracle_town.png}
+\caption{ORACLE TOWN: Governance city map showing signal flows, kill-switch paths (red), and obligation vault (orange).}
+\label{fig:city-map}
+\end{figure}
+
+\end{document}

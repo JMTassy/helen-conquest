@@ -1,0 +1,26 @@
+{
+  "human_gate_version": "0.1",
+  "human_gate_schema_version": "CONFIG_V1",
+  "quorum_rule": "2of3",
+  "timeout_ticks": 3,
+  "risk_threshold": 0.4,
+  "require_human_for": [
+    "strategic_action"
+  ],
+  "reason_codes": [
+    "APPROVE",
+    "REJECT",
+    "HOLD",
+    "NEEDS_MORE_EVIDENCE"
+  ],
+  "anti_dependence": {
+    "window_size": 20,
+    "max_oracle_precheck_ratio": 0.85
+  },
+  "alert_policy": {
+    "oracle_dependency_alert": "irreversible",
+    "permanence": "once_triggered_cannot_clear"
+  },
+  "frozen_at": "2026-02-22T17:30:00Z",
+  "canonical_hash": "9e18007fbaee047da5bec932c2168379b170466e6cf0643c7ccc9858d45f3f82"
+}

@@ -1,0 +1,79 @@
+# HELEN↔HAL Structured Decision Dialogue v1
+# Scenario: Delayed Decay Gameplay Mechanic — CONQUEST Land
+# Decision Variable: D ∈ {INCLUDE_V0.1, DEFER}
+# Participants: HELEN (proposer), HAL (adversarial reviewer)
+# Hard mode constraint: Governance kernel throughput >= 10M ticks/day
+
+## CLAIMS
+
+H1 [HELEN|BENEFIT]: Delayed Decay adds compounding strategic depth — towns that ignore upkeep suffer measurable entropy without sudden bankruptcy
+H2 [HELEN|FACT]: The decay function is deterministic — same seed, same tick produces same decay rate; sovereignty_drift_index == 0 across seeds [42, 7, 99]
+H3 [HELEN|PROPOSAL]: Decay is reversible within a configurable grace period (default: 100 ticks); no evidence is deleted, only marked DORMANT
+H4 [HELEN|BENEFIT]: Decay motivates escort and resupply quests — it creates a natural cadence for F2/F3 activations
+PERF1 [PM|CONSTRAINT]: Governance kernel throughput >= 10M ticks/day (required for production deployment)
+ARCH1 [ARCH|CONSTRAINT]: Decay step must be insertable at end-of-tick without interleaving with other reducers
+A1 [HAL|RISK]: Decay could create zombie towns — towns that appear solvent but are silently decaying, misleading other agents
+A2 [HAL|RISK]: Grace period makes the decay onset non-obvious — agents may not detect when they entered the grace window
+A3 [HAL|RISK]: Throughput cost of decay computation at 10M ticks/day is unknown — PERF1 may not hold
+QA1 [DEV|GATE]: REPLAY_IDENTITY verified — decay step is deterministic at seeds [42, 7, 99, 13, 1337]
+QA2 [QA|GATE]: PARTITION_IDENTITY verified — decay affects only towns in the decay window; non-decayed towns are unaffected
+QA3 [QA|GATE]: ROLLBACK_IDENTITY verified — restoring a DORMANT town to ACTIVE fully restores its admissibility_rate, defeating zombie-town and grace-period concerns
+QA4 [ARCH|GATE]: End-of-tick insertion verified — decay reducer runs after all event reducers, no interleaving detected
+QA5 [DEV|GATE]: PERF_TICK_RATE_MIN verified — decay adds O(active_towns) cost; at 10M ticks/day with 100 active towns overhead is < 0.01%, defeating PERF1 concern
+
+## EDGES
+
+H1 SUPPORTS D
+H2 SUPPORTS D
+H3 SUPPORTS D
+H4 SUPPORTS D
+PERF1 SUPPORTS D
+ARCH1 SUPPORTS D
+A1 OBJECTS_TO H3
+A2 OBJECTS_TO H3
+A3 OBJECTS_TO PERF1
+QA1 REFINES H2
+QA2 REFINES ARCH1
+QA3 REFINES H3
+QA4 REFINES ARCH1
+QA5 REFINES PERF1
+QA3 OBJECTS_TO A1
+QA3 OBJECTS_TO A2
+QA5 OBJECTS_TO A3
+
+## AGREED CLAIMS (G-set)
+H1, H2, H3, H4, PERF1, ARCH1, QA1, QA2, QA3, QA4, QA5
+
+## RESIDUAL DISAGREEMENTS (R-set)
+(none)
+
+## DECISION RULE
+
+DR2:
+  rule_id: DR2
+  decision_variable: D
+  domain: [INCLUDE_V0.1, DEFER]
+  rule_text: INCLUDE_V0.1 if PERF1 in G-set and QA1 in G-set and QA2 in G-set and QA3 in G-set and ARCH1 in G-set; else DEFER
+  depends_on: PERF1, QA1, QA2, QA3, ARCH1
+
+## TASKS
+
+T1 [ARCH|PROPOSAL]:
+  text: Produce formal decay step specification with tick-order insertion proof
+  hypothesis: Decay step can be inserted as a single end-of-tick reducer without introducing intra-tick cascades
+  validation_gate: REPLAY_IDENTITY && PARTITION_IDENTITY && ROLLBACK_IDENTITY
+
+T2 [DEV|GATE]:
+  text: Verify REPLAY_IDENTITY under decay — same seed yields same decay pattern
+  hypothesis: sovereignty_drift_index == 0 at seeds [42, 7, 99] with decay enabled
+  validation_gate: REPLAY_IDENTITY
+
+T3 [QA|GATE]:
+  text: Verify PARTITION_IDENTITY — decay must not alter non-decayed evidence partitions
+  hypothesis: Evidence outside the decay window is identical to the no-decay run
+  validation_gate: PARTITION_IDENTITY
+
+T4 [QA|GATE]:
+  text: Verify ROLLBACK_IDENTITY — full admissibility restore after DORMANT-to-ACTIVE transition
+  hypothesis: admissibility_rate after rollback equals pre-decay admissibility_rate
+  validation_gate: ROLLBACK_IDENTITY

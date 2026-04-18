@@ -1,0 +1,52 @@
+{
+  "generated_at_epoch": 1769702080,
+  "generated_at_iso": "2026-01-29T15:54:40.294968Z",
+  "items": [
+    {
+      "id": "evidence/ORACLE_TOWN_EMULATION_EVIDENCE.md",
+      "mtime_epoch": 1769636635,
+      "path": "ORACLE_TOWN_EMULATION_EVIDENCE.md",
+      "sha256": "b87fa435a9433bab525b33e877c475f19ce39dccd0c87b125a0392f25f483425",
+      "size_bytes": 12910
+    },
+    {
+      "id": "run/briefcase.json",
+      "mtime_epoch": 1769636437,
+      "path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/runs/runA_no_ship_missing_receipts/briefcase.json",
+      "sha256": "54eb5a7708b6f8b8dd838830626849a2dd17df0aefbc70afe533501754b4911b",
+      "size_bytes": 768
+    },
+    {
+      "id": "run/decision_record.json",
+      "mtime_epoch": 1769186235,
+      "path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/runs/runA_no_ship_missing_receipts/decision_record.json",
+      "sha256": "6968104020494bf54cd979fa1a92a3812cab8d930b63c1bfade2176b10a0a653",
+      "size_bytes": 646
+    },
+    {
+      "id": "run/hashes.json",
+      "mtime_epoch": 1769186235,
+      "path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/runs/runA_no_ship_missing_receipts/hashes.json",
+      "sha256": "434dcefa07560a68e474216753efcc3ac4e634de2dd747592f3e7062470ac325",
+      "size_bytes": 475
+    },
+    {
+      "id": "run/ledger.json",
+      "mtime_epoch": 1769636437,
+      "path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/runs/runA_no_ship_missing_receipts/ledger.json",
+      "sha256": "17322c64f848795947ac48698a49a28aadf5ec20f18b1383bcd2c85a768f46c0",
+      "size_bytes": 912
+    },
+    {
+      "id": "run/policy.json",
+      "mtime_epoch": 1769636437,
+      "path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/runs/runA_no_ship_missing_receipts/policy.json",
+      "sha256": "0a731921788afa4a4c5bd7bbc1211ce1500885a8feec6d1be9edda772379acdb",
+      "size_bytes": 1113
+    }
+  ],
+  "items_count": 6,
+  "manifest_sha256": "f166b3d35737e28e5c407710f36d54bdc2e9b58197bb3a953b1a25e7e5874472",
+  "run_filter": "runA_no_ship_missing_receipts",
+  "schema_version": "oracle_town_audit_manifest_v1"
+}

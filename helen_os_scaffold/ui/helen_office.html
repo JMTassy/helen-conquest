@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HELEN OS — Governance Visualization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Courier New', monospace;
+      background: #0a0e27;
+      color: #e0e0e0;
+      overflow: hidden;
+    }
+
+    #container {
+      display: flex;
+      height: 100vh;
+      flex-direction: column;
+    }
+
+    #header {
+      background: #1a1a2e;
+      border-bottom: 2px solid #d4af37;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #header h1 {
+      font-size: 18px;
+      color: #d4af37;
+      letter-spacing: 2px;
+    }
+
+    #header-right {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #16c784;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.5;
+      }
+    }
+
+    #theme-selector {
+      padding: 5px 10px;
+      background: #2a3f5f;
+      border: 1px solid #4a9eff;
+      color: #4a9eff;
+      cursor: pointer;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    #theme-selector:hover {
+      background: #4a9eff;
+      color: #1a1a2e;
+    }
+
+    #main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    #helen-game-container {
+      flex: 1;
+      background: #000000;
+      position: relative;
+    }
+
+    #sidebar {
+      width: 300px;
+      background: #1a1a2e;
+      border-left: 2px solid #d4af37;
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    #sidebar h2 {
+      font-size: 14px;
+      color: #d4af37;
+      margin-bottom: 10px;
+      border-bottom: 1px solid #d4af37;
+      padding-bottom: 5px;
+    }
+
+    .sidebar-section {
+      margin-bottom: 15px;
+      font-size: 12px;
+    }
+
+    .claim-item {
+      background: #2a3f5f;
+      padding: 8px;
+      margin-bottom: 5px;
+      border-left: 2px solid #4a9eff;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .claim-item:hover {
+      background: #3a5f7f;
+      border-left-color: #d4af37;
+    }
+
+    .claim-id {
+      font-weight: bold;
+      color: #4a9eff;
+    }
+
+    .claim-kind {
+      font-size: 10px;
+      color: #aaaaaa;
+      margin-top: 2px;
+    }
+
+    .receipt-item {
+      background: #2a5f2a;
+      padding: 8px;
+      margin-bottom: 5px;
+      border-left: 2px solid #16c784;
+      font-size: 11px;
+    }
+
+    .receipt-verdict {
+      font-weight: bold;
+      color: #16c784;
+    }
+
+    .gate-status {
+      font-size: 10px;
+      color: #aaaaaa;
+      margin-top: 3px;
+    }
+
+    #stats {
+      background: #2a3f5f;
+      padding: 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      margin-bottom: 10px;
+    }
+
+    .stat-line {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      color: #aaaaaa;
+    }
+
+    .stat-value {
+      color: #ffd700;
+      font-weight: bold;
+    }
+
+    /* Scrollbar styling */
+    #sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #sidebar::-webkit-scrollbar-track {
+      background: #1a1a2e;
+    }
+
+    #sidebar::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 3px;
+    }
+
+    #sidebar::-webkit-scrollbar-thumb:hover {
+      background: #ffd700;
+    }
+  </style>
+</head>
+<body>
+  <div id="container">
+    <!-- Header -->
+    <div id="header">
+      <h1>⚙️ HELEN OS — Governance Visualization</h1>
+      <div id="header-right">
+        <div class="status-indicator">
+          <div class="status-dot"></div>
+          <span id="status-text">Connected</span>
+        </div>
+        <select id="theme-selector">
+          <option value="pixel-cozy">🎨 Pixel Cozy</option>
+          <option value="governance-formal">📋 Governance Formal</option>
+          <option value="digital-minimal">⬜ Digital Minimal</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div id="main">
+      <!-- Phaser game canvas -->
+      <div id="helen-game-container"></div>
+
+      <!-- Right sidebar -->
+      <div id="sidebar">
+        <!-- Statistics -->
+        <div id="stats">
+          <div class="stat-line">
+            <span class="stat-label">Current Phase:</span>
+            <span class="stat-value" id="phase-value">EXPLORATION</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Active Claims:</span>
+            <span class="stat-value" id="claims-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Recent Receipts:</span>
+            <span class="stat-value" id="receipts-count">0</span>
+          </div>
+          <div class="stat-line">
+            <span class="stat-label">Last Updated:</span>
+            <span class="stat-value" id="last-updated">--:--</span>
+          </div>
+        </div>
+
+        <!-- Active claims list -->
+        <h2>📦 Active Claims</h2>
+        <div class="sidebar-section" id="claims-list">
+          <div style="color: #aaaaaa; font-size: 11px">No active claims</div>
+        </div>
+
+        <!-- Recent receipts list -->
+        <h2>📜 Recent Receipts</h2>
+        <div class="sidebar-section" id="receipts-list">
+          <div style="color: #aaaaaa; font-size: 11px">No receipts yet</div>
+        </div>
+
+        <!-- Gate status -->
+        <h2>🔒 Gate Status</h2>
+        <div class="sidebar-section" id="gates-status">
+          <div style="color: #aaaaaa; font-size: 11px">Waiting for state...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Load Phaser -->
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.js"></script>
+
+  <!-- Load HELEN UI script -->
+  <script src="../helen_os/ui/phases.scene.js"></script>
+  <script src="../helen_os/ui/ui-controller.js"></script>
+
+  <script>
+    /**
+     * UI Controller initialization
+     * Sets up state polling, theme switching, sidebar updates
+     */
+
+    // Theme switching
+    document.getElementById('theme-selector').addEventListener('change', (e) => {
+      const theme = e.target.value;
+      localStorage.setItem('helen-ui-theme', theme);
+      // Reload page to apply new theme
+      location.reload();
+    });
+
+    // Load saved theme from localStorage
+    const savedTheme = localStorage.getItem('helen-ui-theme') || 'pixel-cozy';
+    document.getElementById('theme-selector').value = savedTheme;
+
+    // Initialize UI controller
+    if (typeof UIController !== 'undefined') {
+      const controller = new UIController();
+      controller.start();
+    }
+  </script>
+</body>
+</html>

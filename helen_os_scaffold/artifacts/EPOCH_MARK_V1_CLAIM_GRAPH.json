@@ -1,0 +1,125 @@
+{
+  "type": "EPOCH_MARK_V1",
+  "epoch": "CLAIM_GRAPH",
+  "name": "CLAIM_GRAPH_V1_ONLINE",
+  "inscription": "CLAIM_GRAPH_V1: dialogue \u2192 typed DAG \u2192 receipt. No authority tokens. DR2 is a rule, not a decision. G-set/R-set computed mechanically. source_digest anchors to fixture.",
+  "modules": {
+    "claim_graph_init": {
+      "path": "helen_os/claim_graph/__init__.py",
+      "sha256": "591128953043f84433a6a47989f54c07794952e6761535cabab77418fca7758e"
+    },
+    "claim_graph_schemas": {
+      "path": "helen_os/claim_graph/schemas.py",
+      "sha256": "dda920c50a586fa0f7292f636c379010cfca3a6c5bb41110561047541eed5939"
+    },
+    "claim_graph_canon": {
+      "path": "helen_os/claim_graph/canon.py",
+      "sha256": "fa406a0b56886b5c1e6aec0fb266da8c7d943bc9012356fad4622301e6cd000c"
+    },
+    "claim_graph_graph_ops": {
+      "path": "helen_os/claim_graph/graph_ops.py",
+      "sha256": "be74bf8748c7b45e2ade6ec0de3990cd3e5a0eeef8a970d320238935e648dba6"
+    },
+    "claim_graph_dialogue": {
+      "path": "helen_os/claim_graph/dialogue_ingest.py",
+      "sha256": "4e460c7b2848885e43b9e2bfe83e73ab91af42fdc020823a775d94fb0c293afd"
+    },
+    "claim_graph_claim_node": {
+      "path": "helen_os/claim_graph/claim_node.py",
+      "sha256": "ae7195d0c8f5417ca5b552d71cdd26e24bf826cc2c1749dc482549ccaa8d8585"
+    },
+    "claim_graph_graph": {
+      "path": "helen_os/claim_graph/graph.py",
+      "sha256": "16473bcf281574c5b28afa3ec678f594726ff92eecc41c33f20b58cf7eb9c702"
+    },
+    "claim_graph_decision": {
+      "path": "helen_os/claim_graph/decision_rule.py",
+      "sha256": "08dc5bd48c647e428dd6e8d5f5ccc69c0fbc689f95c564b4e02dcfb1ee5a2522"
+    },
+    "claim_graph_hal_dlg": {
+      "path": "helen_os/claim_graph/hal_dialogue.py",
+      "sha256": "cf0b01a6b25d21ab476404b211d7eb661d2b0e6593e30fac4551d566919caccb"
+    },
+    "claim_graph_run_sim": {
+      "path": "helen_os/claim_graph/run_claim_graph.py",
+      "sha256": "5e82190be3d62306487dcd46f839e77afc0f1c6770c2fbdb4b788e3e14d4f41b"
+    },
+    "epoch4_init": {
+      "path": "helen_os/epoch4/__init__.py",
+      "sha256": "94a02d1d01f264ea431bbcbb1a3ae683b434cc3ad5445f4d37367f69de5b81ea"
+    },
+    "epoch4_run": {
+      "path": "helen_os/epoch4/run_epoch4.py",
+      "sha256": "31c0ee3f68f8aab9e73ec6c97408c0ed0b8df8862362aeb83eb66eeec6fa6408"
+    }
+  },
+  "tests": {
+    "test_cg1_nodes": {
+      "path": "tests/test_claim_graph_cg1_nodes.py",
+      "sha256": "67fe41513fea461ae5fa55b3901f9b98c0f269ca0e4fc33c2e0330183da25c16"
+    },
+    "test_cg2_dr2": {
+      "path": "tests/test_claim_graph_cg2_dr2.py",
+      "sha256": "a125635cdf2be25e5a86c835a6c873d8932f3317eb5435e479595131cdff853e"
+    },
+    "test_cg3_dialogue": {
+      "path": "tests/test_claim_graph_cg3_dialogue.py",
+      "sha256": "2c99197d0da3810b2f691e4a0590479916f903c4c99e6571ece6544a94626a85"
+    },
+    "test_epoch4": {
+      "path": "tests/test_epoch4_claim_graph_v1.py",
+      "sha256": "b008a611dc09fed65e46cde610c63beb63354611fdf21a176e9941d9d61fcb3c"
+    }
+  },
+  "artifacts": {
+    "CLAIM_GRAPH_V1": {
+      "path": "artifacts/CLAIM_GRAPH_V1.json",
+      "sha256": "163de9f80f86f066d1ab310bbb907d3b20b357aaeb263a6058927f37e02eaf9b"
+    },
+    "EPOCH_MARK_V1_EPOCH3": {
+      "path": "artifacts/EPOCH_MARK_V1_EPOCH3.json",
+      "sha256": "5961980e2b3379c30422281d0946ac58835c8cb6b56863a41bd66573dd2fe5cf"
+    }
+  },
+  "fixtures": {
+    "decay_dialogue_v1": {
+      "path": "fixtures/decay_dialogue_v1.txt",
+      "sha256": "fb38948a139a3096d7962dd264a5db6a4d5ff21759eb48dc9f2301eb3be19f4f"
+    }
+  },
+  "content_hashes": {
+    "claim_graph_init": "591128953043f84433a6a47989f54c07794952e6761535cabab77418fca7758e",
+    "claim_graph_schemas": "dda920c50a586fa0f7292f636c379010cfca3a6c5bb41110561047541eed5939",
+    "claim_graph_canon": "fa406a0b56886b5c1e6aec0fb266da8c7d943bc9012356fad4622301e6cd000c",
+    "claim_graph_graph_ops": "be74bf8748c7b45e2ade6ec0de3990cd3e5a0eeef8a970d320238935e648dba6",
+    "claim_graph_dialogue": "4e460c7b2848885e43b9e2bfe83e73ab91af42fdc020823a775d94fb0c293afd",
+    "claim_graph_claim_node": "ae7195d0c8f5417ca5b552d71cdd26e24bf826cc2c1749dc482549ccaa8d8585",
+    "claim_graph_graph": "16473bcf281574c5b28afa3ec678f594726ff92eecc41c33f20b58cf7eb9c702",
+    "claim_graph_decision": "08dc5bd48c647e428dd6e8d5f5ccc69c0fbc689f95c564b4e02dcfb1ee5a2522",
+    "claim_graph_hal_dlg": "cf0b01a6b25d21ab476404b211d7eb661d2b0e6593e30fac4551d566919caccb",
+    "claim_graph_run_sim": "5e82190be3d62306487dcd46f839e77afc0f1c6770c2fbdb4b788e3e14d4f41b",
+    "epoch4_init": "94a02d1d01f264ea431bbcbb1a3ae683b434cc3ad5445f4d37367f69de5b81ea",
+    "epoch4_run": "31c0ee3f68f8aab9e73ec6c97408c0ed0b8df8862362aeb83eb66eeec6fa6408",
+    "test_cg1_nodes": "67fe41513fea461ae5fa55b3901f9b98c0f269ca0e4fc33c2e0330183da25c16",
+    "test_cg2_dr2": "a125635cdf2be25e5a86c835a6c873d8932f3317eb5435e479595131cdff853e",
+    "test_cg3_dialogue": "2c99197d0da3810b2f691e4a0590479916f903c4c99e6571ece6544a94626a85",
+    "test_epoch4": "b008a611dc09fed65e46cde610c63beb63354611fdf21a176e9941d9d61fcb3c",
+    "CLAIM_GRAPH_V1": "163de9f80f86f066d1ab310bbb907d3b20b357aaeb263a6058927f37e02eaf9b",
+    "EPOCH_MARK_V1_EPOCH3": "5961980e2b3379c30422281d0946ac58835c8cb6b56863a41bd66573dd2fe5cf",
+    "decay_dialogue_v1": "fb38948a139a3096d7962dd264a5db6a4d5ff21759eb48dc9f2301eb3be19f4f"
+  },
+  "manifest_sha256": "38f9c2472b6e689519b1d0c8eac2c80961efaf5b8c21624e1d1112a4976cb7d2",
+  "manifest_sha256_scheme": "SHA256(canonical_json(content_hashes))",
+  "epoch_receipt": {
+    "receipt_id": "R-c65310d4",
+    "payload_hash": "c65310d44a82d5fdb8bddc0f9b60f10acb7f96d203e969d036f5d177ae607981",
+    "cum_hash": "7e29770fa34963228cceda13fa2a090ca4d056466cf341de9bda3594c3646767",
+    "timestamp": "2026-03-01T03:06:23.475296Z",
+    "kernel_mode": ":memory: (ephemeral)"
+  },
+  "verdict": "PASS",
+  "marked_at": "2026-03-01T03:06:23.475326+00:00",
+  "hash_law": "CWL_CANONICAL_V1",
+  "artifact_sha256": "b90be72a4a7249623aac8524635811224615dff74c87771e7ff8faf3faaa9d5b",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

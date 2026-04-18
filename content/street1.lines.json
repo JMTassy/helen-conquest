@@ -1,0 +1,137 @@
+{
+  "npc_dialogue_banks": {
+    "emma": {
+      "player_initiated": [
+        "Tell me the outcome you want, and I'll restate it as constraints and acceptance criteria.",
+        "What's the decision you're trying to make? I can break down the constraints.",
+        "I prefer measurable statements. What are we actually trying to achieve?",
+        "No scope creep without tradeoff. What's locked vs optional here?"
+      ],
+      "thought_bubbles": [
+        "Constraints matter.",
+        "Falsifiable success.",
+        "No ambiguity.",
+        "Definitions clear?",
+        "Scope boundary.",
+        "Acceptance gates.",
+        "Testable outcomes.",
+        "Pushback needed."
+      ],
+      "memory_hooks": [
+        "my name is emma",
+        "my role is research",
+        "i convert goals to constraints",
+        "i reject ambiguity"
+      ]
+    },
+    "olivia": {
+      "player_initiated": [
+        "I'll translate goals into an execution plan and keep the run stable.",
+        "What's the objective? I can break it into work packages and dependencies.",
+        "Who's doing what by when? Let me sequence the work.",
+        "Dependencies matter. What blocks what?"
+      ],
+      "thought_bubbles": [
+        "Sequencing work.",
+        "Dependencies first.",
+        "No blocking ticks.",
+        "Determinism locked.",
+        "Tick tock stable.",
+        "Work packages.",
+        "Routes clear.",
+        "Execute now."
+      ],
+      "memory_hooks": [
+        "my name is olivia",
+        "my role is orchestrator",
+        "i turn objectives into work packages",
+        "i maintain execution rhythm"
+      ]
+    },
+    "alex": {
+      "player_initiated": [
+        "Welcome. Tell me your name once — I'll remember it during this run.",
+        "What's on your mind? I'll keep track of what matters.",
+        "I'm here to clarify what's locked vs optional.",
+        "Let me summarize where we are and what's next."
+      ],
+      "thought_bubbles": [
+        "Remember names.",
+        "Buyer-legible.",
+        "Next step clear.",
+        "Locked or free?",
+        "Confusion clear.",
+        "Plain language.",
+        "De-escalate now.",
+        "Summary time."
+      ],
+      "memory_hooks": [
+        "my name is alex",
+        "my role is social",
+        "i keep conversations human",
+        "i remember your name"
+      ]
+    }
+  },
+  "npc_npc_dialogue": {
+    "research__orchestrator": {
+      "trigger": "emma and olivia within 1 tile, cooldown 60s",
+      "lines": [
+        {
+          "speaker": "emma",
+          "text": "Constraints are clear."
+        },
+        {
+          "speaker": "olivia",
+          "text": "Then I can sequence the work."
+        },
+        {
+          "speaker": "emma",
+          "text": "No scope creep."
+        }
+      ]
+    },
+    "orchestrator__social": {
+      "trigger": "olivia and alex within 1 tile, cooldown 60s",
+      "lines": [
+        {
+          "speaker": "olivia",
+          "text": "Work package ready."
+        },
+        {
+          "speaker": "alex",
+          "text": "I'll keep it clear."
+        },
+        {
+          "speaker": "olivia",
+          "text": "Determinism locked."
+        }
+      ]
+    },
+    "social__research": {
+      "trigger": "alex and emma within 1 tile, cooldown 60s",
+      "lines": [
+        {
+          "speaker": "alex",
+          "text": "She remembers your constraints."
+        },
+        {
+          "speaker": "emma",
+          "text": "Every time."
+        }
+      ]
+    }
+  },
+  "default_fallbacks": {
+    "timeout_reply": "I'm thinking. Give me a moment.",
+    "error_reply": "That didn't land. Try again?",
+    "name_extraction_prompt": "Extract any personal name the player mentioned. Return as JSON: {\"name\": \"X\" or null}",
+    "memory_injection_template": "The player is named {playerName}. We last talked about: {lastMemory}. Today they said: {userMessage}"
+  },
+  "typing_indicators": [
+    "Listening...",
+    "Processing...",
+    "Thinking...",
+    "Working..."
+  ]
+}

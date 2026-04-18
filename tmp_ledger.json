@@ -1,0 +1,37 @@
+{
+  "run_id": "R-TEST-001",
+  "claim_id": "CLM-TEST-001",
+  "policy_hash": "sha256:9e5766bbcd09da47661df3a150575a55c2779be73e8db49782fc37ce12b482fa",
+  "attestations": [
+    {
+      "attestation_id": "ATT-T1",
+      "run_id": "R-TEST-001",
+      "claim_id": "CLM-TEST-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "ci_runner_01",
+      "attestor_class": "CI_RUNNER",
+      "policy_hash": "sha256:9e5766bbcd09da47661df3a150575a55c2779be73e8db49782fc37ce12b482fa",
+      "evidence_digest": "sha256:abc123",
+      "signing_key_id": "key-2026-01-ci",
+      "signature": "ed25519:5oaiIgATqoSh3W40NRdkS8hapxDo+twd452USqr9oKOQD9NaHNJPN63WMOQdF/uU3cZWTAia7wcrDng+zuyFDw==",
+      "policy_match": 1,
+      "timestamp": "2026-01-23T17:20:24.854052"
+    },
+    {
+      "attestation_id": "ATT-T2",
+      "run_id": "R-TEST-001",
+      "claim_id": "CLM-TEST-001",
+      "obligation_name": "gdpr_consent_banner",
+      "attestor_id": "legal_reviewer_01",
+      "attestor_class": "LEGAL",
+      "policy_hash": "sha256:9e5766bbcd09da47661df3a150575a55c2779be73e8db49782fc37ce12b482fa",
+      "evidence_digest": "sha256:ghi789",
+      "signing_key_id": "key-2026-01-legal",
+      "signature": "ed25519:9Vy1pK5RVDsWsscMlVZTB8VlybDhsrWm512kN+AWG/anbvYEc/7oTqtsrU4PpS2dbIJT+/lcpChkSPAL2UQADA==",
+      "policy_match": 1,
+      "timestamp": "2026-01-23T17:20:24.854054"
+    }
+  ],
+  "ledger_digest": "sha256:ledger-test",
+  "timestamp": "2026-01-23T17:20:24.868393"
+}

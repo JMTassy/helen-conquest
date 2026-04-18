@@ -1,0 +1,21 @@
+{
+  "run_id": "R-TEST-001",
+  "claim_id": "CLM-TEST-001",
+  "claim_type": "CHANGE_REQUEST",
+  "required_obligations": [
+    {
+      "name": "gdpr_consent_banner",
+      "type": "CODE_PROOF",
+      "severity": "HARD",
+      "description": "Implement GDPR consent banner",
+      "required_evidence": [
+        "consent_flow_diagram"
+      ]
+    }
+  ],
+  "requested_tests": [],
+  "kill_switch_policies": [],
+  "metadata": {
+    "policy_hash": "sha256:9e5766bbcd09da47661df3a150575a55c2779be73e8db49782fc37ce12b482fa"
+  }
+}

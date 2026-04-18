@@ -1,0 +1,10 @@
+{
+  "run_id": "RUN_MODE_A_001",
+  "claim_id": "CLM_COMMENTARY_001",
+  "decision": "SHIP",
+  "blocking_obligations": [],
+  "kill_switch_triggered": false,
+  "attestations_checked": 0,
+  "timestamp": "2026-01-21T21:33:02.741831",
+  "code_version": "oracle_town_v2.0.0"
+}

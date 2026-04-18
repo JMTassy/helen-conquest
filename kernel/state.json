@@ -1,0 +1,25 @@
+{
+  "node": "Avalon",
+  "type": "ISLAND",
+  "version": 1,
+  "initialized": "2026-02-12T00:00:00Z",
+  "mode": "ACTIVE",
+  "cycle": 1,
+  "focus_agent": "CreativeEngine",
+  "last_update": "2026-02-12T00:00:00Z",
+  "kernel_metadata": {
+    "kernel_version": "1.0",
+    "agent_count": 3,
+    "max_agents_phase1": 3,
+    "node_type": "personal_castle",
+    "district_link": null
+  },
+  "metrics": {
+    "cycles_completed": 0,
+    "domain_switches": 0,
+    "agent_boundary_violations": 0,
+    "entropy_drift": 0.00,
+    "isolation_violations": 0
+  },
+  "sealed_decisions": 0
+}

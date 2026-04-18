@@ -1,0 +1,347 @@
+{
+  "type": "EPOCH_MARK_V1",
+  "epoch": "EPOCH3",
+  "name": "SIM_LOOP_ONLINE",
+  "inscription": "EPOCH3: SIM_LOOP_ONLINE \u2014 CONQUEST: HELEN Internal Sim Loop active. 3 quest types (SOLVE_PARADOX, ALTER_REALITY, EXPLORE_TEMPORAL) drive A\u2192B\u2192C sim phases with shadow world W'. 3-gate evaluation (\u262f/\u25c9/\u231b). Loop completes \u2192 initiate next quest.",
+  "modules": {
+    "meta_self_model": {
+      "path": "helen_os/meta/self_model.py",
+      "sha256": "ab7bdcf5a218c47e7d1849448ac399d07e8423af9993c0432c87a98a18485095"
+    },
+    "meta_wild_policy": {
+      "path": "helen_os/meta/wild_policy.py",
+      "sha256": "31806a772cbe3b45990dafc6605b395a6c3a073f78d638564811ad6e7b4001c5"
+    },
+    "meta_transmutation": {
+      "path": "helen_os/meta/transmutation.py",
+      "sha256": "e66ad96859fc23f9b7136df8039a10e246bae0301169a2d19d21f22391b588ce"
+    },
+    "meta_canonical": {
+      "path": "helen_os/meta/canonical.py",
+      "sha256": "95a40409f6c96f061add397c676ff18db48f433d1e45876dc17d4fedc1ee9ed1"
+    },
+    "seeds_conquest_land": {
+      "path": "helen_os/seeds/worlds/conquest_land.py",
+      "sha256": "da2c0077434e8dbb1493b7ec1ff06c1a366fdc353ec6243194ebfdc64365f932"
+    },
+    "seeds_wild_town": {
+      "path": "helen_os/seeds/worlds/wild_town.py",
+      "sha256": "7777987ad7dfa492d487403548a40b8abf46c9e7888ebdc7a8af5eda40db6bb8"
+    },
+    "epoch2_metrics": {
+      "path": "helen_os/epoch2/metrics.py",
+      "sha256": "1da4cb730378432cd946a4a47ba037d8747a4442e04549ec1786bce5c3c4c15e"
+    },
+    "epoch2_sigma_gate": {
+      "path": "helen_os/epoch2/sigma_gate.py",
+      "sha256": "f733fd5eed8f69f29a88b4a139a77c6072bb336576f356ec40f5c8c14f70291c"
+    },
+    "epoch2_law_ledger": {
+      "path": "helen_os/epoch2/law_ledger.py",
+      "sha256": "0e3ae4a17880d5cda1a803515ce6999b16bb398bfec02e1e39f4858a61e5c4a5"
+    },
+    "epoch2_town_birth": {
+      "path": "helen_os/epoch2/town_birth.py",
+      "sha256": "608b126c0f92b0a67eb0a35af051df9cca8afb65f969fee10167ebf2797b2c77"
+    },
+    "epoch2_run": {
+      "path": "helen_os/epoch2/run_epoch2.py",
+      "sha256": "1572ac5c27555a09fa2ce50d3ef1105ecbb1e8962b3952b32065e4043cfda1a7"
+    },
+    "epoch3_quest_bank": {
+      "path": "helen_os/epoch3/quest_bank.py",
+      "sha256": "8157d2799f6b017aa2617765eb6e26e600f4adf5b794b474b2387a2f52749685"
+    },
+    "epoch3_sim_loop": {
+      "path": "helen_os/epoch3/sim_loop.py",
+      "sha256": "5662d2beea4390d709e68ef5b612b0c7ab184d7e9b93665f4f78679bd4c87dbf"
+    },
+    "epoch3_evaluation": {
+      "path": "helen_os/epoch3/evaluation.py",
+      "sha256": "8c220650f81af7422edb9ffc959edb8f2106d64ad1c65297228b2060a263cc90"
+    },
+    "epoch3_run": {
+      "path": "helen_os/epoch3/run_epoch3.py",
+      "sha256": "b02defbacd7f6129d535b3e88fd768a9d0b233c3be99d2db2c97e45bf56e40bc"
+    }
+  },
+  "tests": {
+    "EPOCH1_S1": {
+      "path": "tests/test_epoch1_s1_fail_closed.py",
+      "sha256": "c4355aca752eab045a51d47ec2cf3ba8fda4bc9480b73835d771be1beaa4d1c2"
+    },
+    "EPOCH1_S2": {
+      "path": "tests/test_epoch1_s2_introspection.py",
+      "sha256": "0c574135ef55f41f1c5f1fa500c00d4cecb3991583901462e5295cdb18e643c5"
+    },
+    "EPOCH1_S3": {
+      "path": "tests/test_epoch1_s3_loop_receipt.py",
+      "sha256": "b63fa6724774ece292b319826d8b0744900492a5eca2aebab05783ab1e3904b4"
+    },
+    "WILD_T1": {
+      "path": "tests/test_wild_town_t1_no_ship.py",
+      "sha256": "9320049e11880be76bf54be7e539fe401ed6b1068979fa2ecee4dacfbf02aa5c"
+    },
+    "WILD_T2": {
+      "path": "tests/test_wild_town_t2_transmutation.py",
+      "sha256": "862a1a16b9ef682e39a5778b98e59af9efd2f52f3917f656aaaf2adbc931cc6b"
+    },
+    "WILD_T3": {
+      "path": "tests/test_wild_town_t3_hal_boundary.py",
+      "sha256": "edfef8493cec8dc9cf9ab18612beee6f7acd0f7d5c96944a770e2d6a2fdc333a"
+    },
+    "CANONICAL_C": {
+      "path": "tests/test_canonical_sha256.py",
+      "sha256": "92570e9bf97baf9ef0e1664d9e6c041496be1277dbca611742d898be26697e57"
+    },
+    "EPOCH2_E1": {
+      "path": "tests/test_epoch2_e1_metrics.py",
+      "sha256": "e04e7927093da11bbecfda6413b6d66caba37a2fff1062a3fd46c20a0ab7f995"
+    },
+    "EPOCH2_E2": {
+      "path": "tests/test_epoch2_e2_sigma_gate.py",
+      "sha256": "e8927c624b321bb4712ee34c5c9ea1d429000fb0658caec20117e7f7471ff79d"
+    },
+    "EPOCH2_E3": {
+      "path": "tests/test_epoch2_e3_law_ledger.py",
+      "sha256": "fad6496cbb316c372ede91effb9da5456074a257136540cea028b50c084eeb36"
+    },
+    "EPOCH2_E4": {
+      "path": "tests/test_epoch2_e4_town_birth.py",
+      "sha256": "74d3c2ccc01383e8f741293ce60c866c881124a11ff3ae38c44ed7129a20fd9e"
+    },
+    "EPOCH3_Q1": {
+      "path": "tests/test_epoch3_q1_paradox.py",
+      "sha256": "124b426b23d0d9c56679be3758e9ddef4bbbe8cc2b5dcd5259d3e4f9d7f185b8"
+    },
+    "EPOCH3_Q2": {
+      "path": "tests/test_epoch3_q2_reality.py",
+      "sha256": "beaa5cb1c3b34d2e71aff8519dde7db2b6c83f1fb19f219aff916fa3ab591258"
+    },
+    "EPOCH3_Q3": {
+      "path": "tests/test_epoch3_q3_temporal.py",
+      "sha256": "972d64c5dfc64f056c6755fcff9c336f7c5261b3ecfc3c50ac58310b82ec5c60"
+    }
+  },
+  "artifacts": {
+    "META_SELF_MODEL_V1_EPOCH1": {
+      "path": "artifacts/META_SELF_MODEL_V1_EPOCH1.json",
+      "sha256": "3bbd83b196eff67f4e8d20ef8b81a2461f4376b3ffa3689306df68f379d75e80"
+    },
+    "EPOCH_MARK_V1_EPOCH1": {
+      "path": "artifacts/EPOCH_MARK_V1_EPOCH1.json",
+      "sha256": "10f5fb44f76b20e8d7c065fc1483e54c40ce02bb7c74e1efb1c00bba9d7e2ca1"
+    },
+    "EPOCH2_RUN_V1": {
+      "path": "artifacts/EPOCH2_RUN_V1.json",
+      "sha256": "4eb18649df094eaf2965b18ae0c43acbc6f468dcd8d68a3e0297178a26c0a779"
+    },
+    "EPOCH_MARK_V1_EPOCH2": {
+      "path": "artifacts/EPOCH_MARK_V1_EPOCH2.json",
+      "sha256": "22a07ce0f8ad2e33e12037adcca370f12a0905bc153693990cf7b323ce8c6394"
+    },
+    "EPOCH3_RUN_V1": {
+      "path": "artifacts/EPOCH3_RUN_V1.json",
+      "sha256": "fa1d90de91ebba1062bf58ba5dda614a86678a9a2c10adbde4e714fb98606c4d"
+    },
+    "MANIFESTO_FULL_V1": {
+      "path": "artifacts/MANIFESTO_FULL_V1.json",
+      "sha256": "a4b35713821328902c83fa082fb1e79e7ca48793135b69ff654a97da4c4c355c"
+    }
+  },
+  "epoch1_modules": {
+    "meta_self_model": {
+      "path": "helen_os/meta/self_model.py",
+      "sha256": "ab7bdcf5a218c47e7d1849448ac399d07e8423af9993c0432c87a98a18485095"
+    },
+    "meta_wild_policy": {
+      "path": "helen_os/meta/wild_policy.py",
+      "sha256": "31806a772cbe3b45990dafc6605b395a6c3a073f78d638564811ad6e7b4001c5"
+    },
+    "meta_transmutation": {
+      "path": "helen_os/meta/transmutation.py",
+      "sha256": "e66ad96859fc23f9b7136df8039a10e246bae0301169a2d19d21f22391b588ce"
+    },
+    "meta_canonical": {
+      "path": "helen_os/meta/canonical.py",
+      "sha256": "95a40409f6c96f061add397c676ff18db48f433d1e45876dc17d4fedc1ee9ed1"
+    },
+    "seeds_conquest_land": {
+      "path": "helen_os/seeds/worlds/conquest_land.py",
+      "sha256": "da2c0077434e8dbb1493b7ec1ff06c1a366fdc353ec6243194ebfdc64365f932"
+    },
+    "seeds_wild_town": {
+      "path": "helen_os/seeds/worlds/wild_town.py",
+      "sha256": "7777987ad7dfa492d487403548a40b8abf46c9e7888ebdc7a8af5eda40db6bb8"
+    }
+  },
+  "epoch2_modules": {
+    "epoch2_metrics": {
+      "path": "helen_os/epoch2/metrics.py",
+      "sha256": "1da4cb730378432cd946a4a47ba037d8747a4442e04549ec1786bce5c3c4c15e"
+    },
+    "epoch2_sigma_gate": {
+      "path": "helen_os/epoch2/sigma_gate.py",
+      "sha256": "f733fd5eed8f69f29a88b4a139a77c6072bb336576f356ec40f5c8c14f70291c"
+    },
+    "epoch2_law_ledger": {
+      "path": "helen_os/epoch2/law_ledger.py",
+      "sha256": "0e3ae4a17880d5cda1a803515ce6999b16bb398bfec02e1e39f4858a61e5c4a5"
+    },
+    "epoch2_town_birth": {
+      "path": "helen_os/epoch2/town_birth.py",
+      "sha256": "608b126c0f92b0a67eb0a35af051df9cca8afb65f969fee10167ebf2797b2c77"
+    },
+    "epoch2_run": {
+      "path": "helen_os/epoch2/run_epoch2.py",
+      "sha256": "1572ac5c27555a09fa2ce50d3ef1105ecbb1e8962b3952b32065e4043cfda1a7"
+    }
+  },
+  "epoch3_modules": {
+    "epoch3_quest_bank": {
+      "path": "helen_os/epoch3/quest_bank.py",
+      "sha256": "8157d2799f6b017aa2617765eb6e26e600f4adf5b794b474b2387a2f52749685"
+    },
+    "epoch3_sim_loop": {
+      "path": "helen_os/epoch3/sim_loop.py",
+      "sha256": "5662d2beea4390d709e68ef5b612b0c7ab184d7e9b93665f4f78679bd4c87dbf"
+    },
+    "epoch3_evaluation": {
+      "path": "helen_os/epoch3/evaluation.py",
+      "sha256": "8c220650f81af7422edb9ffc959edb8f2106d64ad1c65297228b2060a263cc90"
+    },
+    "epoch3_run": {
+      "path": "helen_os/epoch3/run_epoch3.py",
+      "sha256": "b02defbacd7f6129d535b3e88fd768a9d0b233c3be99d2db2c97e45bf56e40bc"
+    }
+  },
+  "epoch1_tests": {
+    "EPOCH1_S1": {
+      "path": "tests/test_epoch1_s1_fail_closed.py",
+      "sha256": "c4355aca752eab045a51d47ec2cf3ba8fda4bc9480b73835d771be1beaa4d1c2"
+    },
+    "EPOCH1_S2": {
+      "path": "tests/test_epoch1_s2_introspection.py",
+      "sha256": "0c574135ef55f41f1c5f1fa500c00d4cecb3991583901462e5295cdb18e643c5"
+    },
+    "EPOCH1_S3": {
+      "path": "tests/test_epoch1_s3_loop_receipt.py",
+      "sha256": "b63fa6724774ece292b319826d8b0744900492a5eca2aebab05783ab1e3904b4"
+    },
+    "WILD_T1": {
+      "path": "tests/test_wild_town_t1_no_ship.py",
+      "sha256": "9320049e11880be76bf54be7e539fe401ed6b1068979fa2ecee4dacfbf02aa5c"
+    },
+    "WILD_T2": {
+      "path": "tests/test_wild_town_t2_transmutation.py",
+      "sha256": "862a1a16b9ef682e39a5778b98e59af9efd2f52f3917f656aaaf2adbc931cc6b"
+    },
+    "WILD_T3": {
+      "path": "tests/test_wild_town_t3_hal_boundary.py",
+      "sha256": "edfef8493cec8dc9cf9ab18612beee6f7acd0f7d5c96944a770e2d6a2fdc333a"
+    },
+    "CANONICAL_C": {
+      "path": "tests/test_canonical_sha256.py",
+      "sha256": "92570e9bf97baf9ef0e1664d9e6c041496be1277dbca611742d898be26697e57"
+    }
+  },
+  "epoch2_tests": {
+    "EPOCH2_E1": {
+      "path": "tests/test_epoch2_e1_metrics.py",
+      "sha256": "e04e7927093da11bbecfda6413b6d66caba37a2fff1062a3fd46c20a0ab7f995"
+    },
+    "EPOCH2_E2": {
+      "path": "tests/test_epoch2_e2_sigma_gate.py",
+      "sha256": "e8927c624b321bb4712ee34c5c9ea1d429000fb0658caec20117e7f7471ff79d"
+    },
+    "EPOCH2_E3": {
+      "path": "tests/test_epoch2_e3_law_ledger.py",
+      "sha256": "fad6496cbb316c372ede91effb9da5456074a257136540cea028b50c084eeb36"
+    },
+    "EPOCH2_E4": {
+      "path": "tests/test_epoch2_e4_town_birth.py",
+      "sha256": "74d3c2ccc01383e8f741293ce60c866c881124a11ff3ae38c44ed7129a20fd9e"
+    }
+  },
+  "epoch3_tests": {
+    "EPOCH3_Q1": {
+      "path": "tests/test_epoch3_q1_paradox.py",
+      "sha256": "124b426b23d0d9c56679be3758e9ddef4bbbe8cc2b5dcd5259d3e4f9d7f185b8"
+    },
+    "EPOCH3_Q2": {
+      "path": "tests/test_epoch3_q2_reality.py",
+      "sha256": "beaa5cb1c3b34d2e71aff8519dde7db2b6c83f1fb19f219aff916fa3ab591258"
+    },
+    "EPOCH3_Q3": {
+      "path": "tests/test_epoch3_q3_temporal.py",
+      "sha256": "972d64c5dfc64f056c6755fcff9c336f7c5261b3ecfc3c50ac58310b82ec5c60"
+    }
+  },
+  "content_hashes": {
+    "meta_self_model": "ab7bdcf5a218c47e7d1849448ac399d07e8423af9993c0432c87a98a18485095",
+    "meta_wild_policy": "31806a772cbe3b45990dafc6605b395a6c3a073f78d638564811ad6e7b4001c5",
+    "meta_transmutation": "e66ad96859fc23f9b7136df8039a10e246bae0301169a2d19d21f22391b588ce",
+    "meta_canonical": "95a40409f6c96f061add397c676ff18db48f433d1e45876dc17d4fedc1ee9ed1",
+    "seeds_conquest_land": "da2c0077434e8dbb1493b7ec1ff06c1a366fdc353ec6243194ebfdc64365f932",
+    "seeds_wild_town": "7777987ad7dfa492d487403548a40b8abf46c9e7888ebdc7a8af5eda40db6bb8",
+    "epoch2_metrics": "1da4cb730378432cd946a4a47ba037d8747a4442e04549ec1786bce5c3c4c15e",
+    "epoch2_sigma_gate": "f733fd5eed8f69f29a88b4a139a77c6072bb336576f356ec40f5c8c14f70291c",
+    "epoch2_law_ledger": "0e3ae4a17880d5cda1a803515ce6999b16bb398bfec02e1e39f4858a61e5c4a5",
+    "epoch2_town_birth": "608b126c0f92b0a67eb0a35af051df9cca8afb65f969fee10167ebf2797b2c77",
+    "epoch2_run": "1572ac5c27555a09fa2ce50d3ef1105ecbb1e8962b3952b32065e4043cfda1a7",
+    "epoch3_quest_bank": "8157d2799f6b017aa2617765eb6e26e600f4adf5b794b474b2387a2f52749685",
+    "epoch3_sim_loop": "5662d2beea4390d709e68ef5b612b0c7ab184d7e9b93665f4f78679bd4c87dbf",
+    "epoch3_evaluation": "8c220650f81af7422edb9ffc959edb8f2106d64ad1c65297228b2060a263cc90",
+    "epoch3_run": "b02defbacd7f6129d535b3e88fd768a9d0b233c3be99d2db2c97e45bf56e40bc",
+    "EPOCH1_S1": "c4355aca752eab045a51d47ec2cf3ba8fda4bc9480b73835d771be1beaa4d1c2",
+    "EPOCH1_S2": "0c574135ef55f41f1c5f1fa500c00d4cecb3991583901462e5295cdb18e643c5",
+    "EPOCH1_S3": "b63fa6724774ece292b319826d8b0744900492a5eca2aebab05783ab1e3904b4",
+    "WILD_T1": "9320049e11880be76bf54be7e539fe401ed6b1068979fa2ecee4dacfbf02aa5c",
+    "WILD_T2": "862a1a16b9ef682e39a5778b98e59af9efd2f52f3917f656aaaf2adbc931cc6b",
+    "WILD_T3": "edfef8493cec8dc9cf9ab18612beee6f7acd0f7d5c96944a770e2d6a2fdc333a",
+    "CANONICAL_C": "92570e9bf97baf9ef0e1664d9e6c041496be1277dbca611742d898be26697e57",
+    "EPOCH2_E1": "e04e7927093da11bbecfda6413b6d66caba37a2fff1062a3fd46c20a0ab7f995",
+    "EPOCH2_E2": "e8927c624b321bb4712ee34c5c9ea1d429000fb0658caec20117e7f7471ff79d",
+    "EPOCH2_E3": "fad6496cbb316c372ede91effb9da5456074a257136540cea028b50c084eeb36",
+    "EPOCH2_E4": "74d3c2ccc01383e8f741293ce60c866c881124a11ff3ae38c44ed7129a20fd9e",
+    "EPOCH3_Q1": "124b426b23d0d9c56679be3758e9ddef4bbbe8cc2b5dcd5259d3e4f9d7f185b8",
+    "EPOCH3_Q2": "beaa5cb1c3b34d2e71aff8519dde7db2b6c83f1fb19f219aff916fa3ab591258",
+    "EPOCH3_Q3": "972d64c5dfc64f056c6755fcff9c336f7c5261b3ecfc3c50ac58310b82ec5c60",
+    "META_SELF_MODEL_V1_EPOCH1": "3bbd83b196eff67f4e8d20ef8b81a2461f4376b3ffa3689306df68f379d75e80",
+    "EPOCH_MARK_V1_EPOCH1": "10f5fb44f76b20e8d7c065fc1483e54c40ce02bb7c74e1efb1c00bba9d7e2ca1",
+    "EPOCH2_RUN_V1": "4eb18649df094eaf2965b18ae0c43acbc6f468dcd8d68a3e0297178a26c0a779",
+    "EPOCH_MARK_V1_EPOCH2": "22a07ce0f8ad2e33e12037adcca370f12a0905bc153693990cf7b323ce8c6394",
+    "EPOCH3_RUN_V1": "fa1d90de91ebba1062bf58ba5dda614a86678a9a2c10adbde4e714fb98606c4d",
+    "MANIFESTO_FULL_V1": "a4b35713821328902c83fa082fb1e79e7ca48793135b69ff654a97da4c4c355c"
+  },
+  "manifest_sha256": "53c23894f0f0d49d8e58fd0d553835cf79fa920c887bbbcc19deac3532c2f4c1",
+  "manifest_sha256_scheme": "SHA256(canonical_json(content_hashes))",
+  "epoch_receipt": {
+    "receipt_id": "R-b7748b44",
+    "payload_hash": "b7748b443f3d0be93d0a6e73b60228ae77415110044f0edef01638a8748b8313",
+    "cum_hash": "39ea577cd0399dffdb888b591851ae6691b19c1caced7fabfe7195568fbc6d67",
+    "timestamp": "2026-02-28T23:11:03.948187Z",
+    "kernel_mode": ":memory: (ephemeral \u2014 canonical epoch anchor)",
+    "receipt_role": "canonical_epoch_anchor"
+  },
+  "quest_types": [
+    "SOLVE_PARADOX",
+    "ALTER_REALITY",
+    "EXPLORE_TEMPORAL"
+  ],
+  "sim_phases": [
+    "A:Observation",
+    "B:Experimentation",
+    "C:Integration"
+  ],
+  "eval_gates": [
+    "\u262f:contradiction_resolved",
+    "\u25c9:reality_transformed",
+    "\u231b:temporal_insights_gained"
+  ],
+  "verdict": "PASS",
+  "marked_at": "2026-02-28T23:11:03.948233+00:00",
+  "hash_law": "CWL_CANONICAL_V1",
+  "artifact_sha256": "5bece5afe217b79ce24840d2569aeb5389465653c7fa69ea99fc3e05791848c4",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

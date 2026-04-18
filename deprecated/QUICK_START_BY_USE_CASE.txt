@@ -1,0 +1,318 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║              OpenClaw Kernel — Quick Start by Use Case                         ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+PICK YOUR USE CASE → FOLLOW THE STEPS
+
+════════════════════════════════════════════════════════════════════════════════
+
+USE CASE 1: "I want my agent to be safe and audited"
+──────────────────────────────────────────────────────
+
+Right for you if:
+  ✓ You have an OpenClaw agent doing important work
+  ✓ You want to prevent accidents/unauthorized actions
+  ✓ You need an audit trail for compliance
+
+How to implement (10 minutes):
+
+  Step 1: Modify your agent
+  ───────────────────────
+  from openclaw_skills_with_kernel import FetchSkill, ShellSkill, MemorySkill
+
+  class YourAgent:
+      def __init__(self):
+          self.fetch = FetchSkill()          # Add this
+          self.shell = ShellSkill()          # Add this
+          self.memory = MemorySkill()        # Add this
+
+  Step 2: Use kernel-approved skills
+  ──────────────────────────────────
+  # Instead of: requests.get(url)
+  # Use:        self.fetch.fetch(url)  # Kernel approves
+
+  # Instead of: subprocess.run(cmd)
+  # Use:        self.shell.execute(cmd)  # Kernel approves
+
+  # Instead of: self.data[key] = value
+  # Use:        self.memory.write(key, value)  # Kernel approves
+
+  Step 3: Start kernel daemon
+  ───────────────────────────
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+  Step 4: Run your agent
+  ─────────────────────
+  python3 your_agent.py
+
+  Result: Every action logged, every action approved by kernel
+
+════════════════════════════════════════════════════════════════════════════════
+
+USE CASE 2: "I want to manage multiple agents with one policy"
+───────────────────────────────────────────────────────────────
+
+Right for you if:
+  ✓ You have 3+ agents (teams, services, etc.)
+  ✓ You want consistent rules across all agents
+  ✓ You need to enforce boundaries (Data team ≠ Security team)
+
+How to implement (30 minutes):
+
+  Step 1: Configure kernel policy
+  ──────────────────────────────
+  Edit oracle_town/kernel/policy.json:
+
+  {
+    "policies": {
+      "team_data": {
+        "fetch": {"allow_domains": ["api.company.com", "db.company.com"]},
+        "shell": {"deny_all": true},
+        "memory": {"allow_all": true}
+      },
+      "team_infra": {
+        "fetch": {"deny_all": true},
+        "shell": {"allow_paths": ["/opt/infra/*"]},
+        "memory": {"allow_all": true}
+      },
+      "team_security": {
+        "fetch": {"allow_all": true},
+        "shell": {"allow_all": true},
+        "memory": {"allow_all": true},
+        "mode": "audit_only"
+      }
+    }
+  }
+
+  Step 2: Start kernel daemon
+  ──────────────────────────
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+  Step 3: Each agent declares its team
+  ────────────────────────────────────
+  # data_agent.py
+  from openclaw_skills_with_kernel import FetchSkill
+
+  fetch = FetchSkill()
+  fetch.team = "team_data"  # Kernel applies team_data policy
+  content = fetch.fetch("https://api.company.com/data")  # ✓ Allowed
+  # content = fetch.fetch("https://external.com")  # ✗ Denied
+
+  Step 4: Check ledger to see all decisions
+  ──────────────────────────────────────────
+  cat kernel/ledger.json | jq '.entries[] | {agent, action, status}'
+
+  Result: Single policy, all agents follow it, centralized audit trail
+
+════════════════════════════════════════════════════════════════════════════════
+
+USE CASE 3: "I need to run my agent in an untrusted environment"
+─────────────────────────────────────────────────────────────────
+
+Right for you if:
+  ✓ Agent runs in cloud / partner network / user device
+  ✓ You want to prevent compromise
+  ✓ You need to guarantee security even if agent is hacked
+
+How to implement (45 minutes):
+
+  Step 1: Start kernel on YOUR secure server
+  ──────────────────────────────────────────
+  # On your_secure_server.com:
+  python3 oracle_town/kernel/kernel_daemon.py --listen 0.0.0.0:9000 &
+
+  (Kernel now accepts requests from anywhere via HTTPS socket)
+
+  Step 2: Point agent to your kernel
+  ──────────────────────────────────
+  # In untrusted environment:
+  from openclaw_skills_with_kernel import FetchSkill, KernelClient
+
+  fetch = FetchSkill()
+  fetch.kernel = KernelClient(url="https://your_secure_server.com:9000")
+
+  # Agent can fetch, but:
+  # - Kernel runs on YOUR servers
+  # - Ledger stored on YOUR servers
+  # - Agent can't access your infrastructure
+  # - Agent can't tamper with ledger
+
+  Step 3: Agent does its work
+  ──────────────────────────
+  data = fetch.fetch("https://api.partner.com/data")
+  # Kernel on your server approves/denies
+
+  Step 4: If agent is compromised
+  ────────────────────────────────
+  - Attacker cannot execute unauthorized actions
+  - Every malicious attempt is logged on YOUR servers
+  - You see it in real-time
+  - You can revoke the agent immediately
+  - Complete audit trail of attack
+
+  Result: Agent works safely even in hostile environment
+
+════════════════════════════════════════════════════════════════════════════════
+
+USE CASE 4: "I want to debug why my agent failed"
+──────────────────────────────────────────────────
+
+Right for you if:
+  ✓ Agent stopped working
+  ✓ You don't know why
+  ✓ You need to understand what happened
+
+How to use ledger for debugging (5 minutes):
+
+  Step 1: Check what kernel rejected
+  ──────────────────────────────────
+  cat kernel/ledger.json | jq '.entries[] | select(.status=="REJECT")'
+
+  Output:
+  {
+    "action_type": "fetch",
+    "target": "https://api.example.com/secret",
+    "status": "REJECT",
+    "reason": "Policy denies fetch from external domains",
+    "timestamp": "2026-02-16T14:32:00Z"
+  }
+
+  Step 2: Understand the error
+  ────────────────────────────
+  "Agent tried to fetch https://api.example.com/secret"
+  "Kernel denied it because policy says no external domains"
+  → Either: Fix the URL, or Update the policy
+
+  Step 3: Check approval rate by action
+  ─────────────────────────────────────
+  cat kernel/ledger.json | jq -r '.entries[] | .action_type' | sort | uniq -c
+
+  Output:
+  5 fetch      (5 approvals)
+  3 shell      (3 approvals)
+  2 memory     (2 approvals)
+  1 fetch      (1 rejection)
+
+  Step 4: Deep dive into failures
+  ───────────────────────────────
+  cat kernel/ledger.json | jq '.entries[] | select(.status=="REJECT") | {action_type, target, reason, timestamp}'
+
+  Result: You know exactly what failed and why
+
+════════════════════════════════════════════════════════════════════════════════
+
+USE CASE 5: "I want to add kernel approval to my LLM agent"
+───────────────────────────────────────────────────────────
+
+Right for you if:
+  ✓ You use Claude/GPT/Llama API
+  ✓ Agent can execute code
+  ✓ You want to prevent LLM from doing bad things
+
+How to implement (20 minutes):
+
+  Step 1: Create skill wrapper
+  ───────────────────────────
+  from openclaw_skills_with_kernel import FetchSkill, ShellSkill
+
+  class SafeLLMSkills:
+      fetch = FetchSkill()      # Available to LLM
+      shell = ShellSkill()      # Available to LLM
+      # LLM can call these, but kernel approves/denies
+
+  Step 2: Give LLM access to skills
+  ─────────────────────────────────
+  system_prompt = """
+  You are an AI agent. You have access to these functions:
+
+  - fetch(url): Get content from URL
+    (Note: Kernel may deny based on policy)
+
+  - shell(command): Execute shell command
+    (Note: Kernel may deny based on policy)
+
+  - memory(key, value): Store data
+    (Note: Kernel may deny based on policy)
+
+  IMPORTANT: Your actions are logged and audited.
+  Unauthorized actions will be denied by the kernel.
+  """
+
+  Step 3: Run LLM with kernel protection
+  ──────────────────────────────────────
+  response = claude.messages.create(
+      model="claude-3-5-sonnet",
+      system=system_prompt,
+      messages=[{"role": "user", "content": "Fetch data and process it"}]
+  )
+
+  # LLM generates code like:
+  # fetch("https://api.example.com/data")
+  # shell("python3 process.py")
+
+  # Kernel approves/denies each action
+  # LLM sees the result (approved or denied)
+
+  Step 4: Even if LLM tries to cheat
+  ──────────────────────────────────
+  # LLM might try:
+  fetch("https://secret-competitor-api.com")  # ✗ Denied by kernel
+  shell("rm -rf /")                           # ✗ Denied by kernel
+  memory("admin_password", stolen_data)       # ✗ Denied by kernel
+
+  # LLM cannot escape kernel control
+  # Every attempt is logged
+  # You see what it tried to do
+
+  Result: Safe LLM automation
+
+════════════════════════════════════════════════════════════════════════════════
+
+IMPLEMENTATION CHECKLIST
+════════════════════════════════════════════════════════════════════════════════
+
+For any use case:
+
+  [ ] Start kernel daemon
+      python3 oracle_town/kernel/kernel_daemon.py &
+
+  [ ] Create agent with kernel skills
+      from openclaw_skills_with_kernel import FetchSkill, ShellSkill, MemorySkill
+
+  [ ] Replace unsafe operations with kernel-approved versions
+      fetch.fetch(url) instead of requests.get(url)
+      shell.execute(cmd) instead of subprocess.run(cmd)
+      memory.write(key, val) instead of direct assignment
+
+  [ ] Test agent
+      python3 your_agent.py
+
+  [ ] Verify ledger is growing
+      tail -f kernel/ledger.json
+
+  [ ] Check decision rate
+      cat kernel/ledger.json | jq '.entries[] | .status' | sort | uniq -c
+
+  [ ] Monitor for denials
+      cat kernel/ledger.json | jq '.entries[] | select(.status=="REJECT")'
+
+════════════════════════════════════════════════════════════════════════════════
+
+ONE-LINER TO START
+═══════════════════════════════════════════════════════════════════════════════
+
+# Terminal 1
+python3 oracle_town/kernel/kernel_daemon.py &
+
+# Terminal 2
+python3 openclaw_skills_with_kernel.py
+
+# Terminal 3 (watch)
+tail -f kernel/ledger.json
+
+════════════════════════════════════════════════════════════════════════════════
+
+PICK YOUR USE CASE AND START NOW.
+
+Questions? See HOW_TO_USE_OPENCLAW_KERNEL.md for detailed explanation.
+

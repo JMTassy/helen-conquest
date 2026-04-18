@@ -1,0 +1,122 @@
+version: '3.9'
+
+services:
+  # Ollama service with Gemma 4 model
+  ollama:
+    image: ollama/ollama:latest
+    container_name: helen_ollama
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:11434/api/tags"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - helen_network
+    command: serve
+
+  # HELEN API server (FastAPI /do_next endpoint)
+  helen_api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: helen_api
+    environment:
+      - OLLAMA_HOST=http://ollama:11434
+      - HELEN_MODEL=gemma:4b
+      - HELEN_SESSION_DIR=/persistent/sessions
+      - HELEN_LEDGER_PATH=/persistent/ledger.ndjson
+      - HELEN_MEMORY_DB=/persistent/helen.db
+      - PYTHONUNBUFFERED=1
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./helen_city:/app/helen_city
+      - persistent_storage:/persistent
+      - ./GOVERNANCE/CONSTITUTION:/app/constitution
+    depends_on:
+      ollama:
+        condition: service_healthy
+    networks:
+      - helen_network
+    command: python -m helen_api_server_v1
+
+  # AIRI Avatar frontend (Vue.js + Live2D)
+  airi_frontend:
+    build:
+      context: ./helen_city/airi/apps/stage-web
+      dockerfile: Dockerfile
+    container_name: helen_airi
+    environment:
+      - VITE_API_URL=http://localhost:8000
+      - VITE_WS_URL=ws://localhost:8000
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./helen_city/airi/apps/stage-web/src:/app/src
+      - ./helen_city/airi/public:/app/public
+    depends_on:
+      - helen_api
+    networks:
+      - helen_network
+    command: npm run dev
+
+  # Telegram webhook bridge (optional)
+  telegram_bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile.telegram
+    container_name: helen_telegram
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - HELEN_API_URL=http://helen_api:8000
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:8001}
+    ports:
+      - "8001:8001"
+    volumes:
+      - persistent_storage:/persistent
+    depends_on:
+      - helen_api
+    networks:
+      - helen_network
+    command: python -m helen_integrations.telegram_bridge
+    profiles:
+      - telegram
+
+  # Line webhook bridge (optional)
+  line_bridge:
+    build:
+      context: .
+      dockerfile: Dockerfile.line
+    container_name: helen_line
+    environment:
+      - LINE_CHANNEL_TOKEN=${LINE_CHANNEL_TOKEN:-}
+      - LINE_CHANNEL_SECRET=${LINE_CHANNEL_SECRET:-}
+      - HELEN_API_URL=http://helen_api:8000
+      - WEBHOOK_URL=${WEBHOOK_URL:-http://localhost:8002}
+    ports:
+      - "8002:8002"
+    volumes:
+      - persistent_storage:/persistent
+    depends_on:
+      - helen_api
+    networks:
+      - helen_network
+    command: python -m helen_integrations.line_bridge
+    profiles:
+      - line
+
+volumes:
+  ollama_data:
+    driver: local
+  persistent_storage:
+    driver: local
+
+networks:
+  helen_network:
+    driver: bridge

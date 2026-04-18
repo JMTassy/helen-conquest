@@ -1,0 +1,268 @@
+{
+  "demo_run": {
+    "seed": 42,
+    "duration_seconds": 90,
+    "audience": "executive, 60-second proof of life",
+    "proof_points": [
+      "autonomous_movement",
+      "real_chat_dialogue",
+      "session_memory_persistence",
+      "npc_npc_interaction"
+    ]
+  },
+  "script": [
+    {
+      "timestamp_ms": 0,
+      "action": "RESET_RUN",
+      "params": {
+        "seed": 42,
+        "player_name": "Demo User"
+      },
+      "narrative": "Game resets to seed 42. All NPCs in spawn positions. Player is at (12, 7)."
+    },
+    {
+      "timestamp_ms": 3000,
+      "action": "PLAYER_WALK",
+      "params": {
+        "target_x": 2,
+        "target_y": 2,
+        "speed": "normal"
+      },
+      "narrative": "Player walks toward Research Lab (Emma's location). Takes ~3 seconds."
+    },
+    {
+      "timestamp_ms": 6000,
+      "action": "CAMERA_FOCUS",
+      "params": {
+        "x": 2,
+        "y": 2,
+        "zoom": 1.0
+      },
+      "narrative": "Camera centers on Research Lab. Emma is visible, idle at her spawn point."
+    },
+    {
+      "timestamp_ms": 8000,
+      "action": "NPC_CLICK",
+      "params": {
+        "npc_id": "emma",
+        "npc_name": "Emma"
+      },
+      "expected_outcome": {
+        "immediate": "Emma enters TALKING mode. Thought bubble shows 'Listening...'. Chat panel shows cached first line: 'Tell me the outcome you want, and I'll restate it as constraints and acceptance criteria.'",
+        "acceptance_moment": "User sees Emma's response without network lag (cached)."
+      },
+      "narrative": "PROOF POINT 1: Emma is responsive. Cached first line appears instantly."
+    },
+    {
+      "timestamp_ms": 11000,
+      "action": "CHAT_SEND",
+      "params": {
+        "message": "POC delivery in 2 weeks",
+        "npc_id": "emma"
+      },
+      "expected_outcome": {
+        "immediate": "Emma enters THINKING mode. Thought bubble updates to 'Processing...'. HUD shows 1 active LLM request.",
+        "delayed": "After ~1.5s, Emma replies: 'Two weeks is your constraint. What are the acceptance criteria? What's locked vs optional?'",
+        "memory_write": "Fact extracted: 'user mentioned POC delivery in 2 weeks'",
+        "acceptance_moment": "User sees memory hook triggered (Emma remembers the timeline)."
+      },
+      "narrative": "PROOF POINT 2: Real LLM dialogue, not canned. Emma responds to the specific message."
+    },
+    {
+      "timestamp_ms": 14000,
+      "action": "WAIT",
+      "params": {
+        "duration_ms": 3000
+      },
+      "narrative": "Wait for LLM response to arrive. Demo observer sees the 'Thinking...' state persist, then resolve."
+    },
+    {
+      "timestamp_ms": 17000,
+      "action": "PLAYER_WALK",
+      "params": {
+        "target_x": 10,
+        "target_y": 2,
+        "speed": "normal"
+      },
+      "narrative": "Player walks to POC Factory (Olivia's location). Emma transitions back to IDLE and resumes waypoint walk."
+    },
+    {
+      "timestamp_ms": 20000,
+      "action": "OBSERVE_NPC_NPC",
+      "params": {
+        "npc_a": "emma",
+        "npc_b": "olivia",
+        "expected_distance": 8
+      },
+      "narrative": "Emma and Olivia are within the same street section. No interaction yet (distance > 1 tile)."
+    },
+    {
+      "timestamp_ms": 23000,
+      "action": "CAMERA_FOCUS",
+      "params": {
+        "x": 10,
+        "y": 2,
+        "zoom": 1.0
+      },
+      "narrative": "Camera centers on POC Factory. Olivia is visible, transitioning between waypoints."
+    },
+    {
+      "timestamp_ms": 25000,
+      "action": "NPC_CLICK",
+      "params": {
+        "npc_id": "olivia",
+        "npc_name": "Olivia"
+      },
+      "expected_outcome": {
+        "immediate": "Olivia enters TALKING mode. Thought bubble shows 'Listening...'. Chat panel shows cached first line: 'I'll translate goals into an execution plan and keep the run stable.'",
+        "acceptance_moment": "User sees Olivia's role is clearly different from Emma's."
+      },
+      "narrative": "PROOF POINT 3a: Three distinct NPC personalities in action. Olivia is the operator."
+    },
+    {
+      "timestamp_ms": 28000,
+      "action": "CHAT_SEND",
+      "params": {
+        "message": "Emma just told me about the 2-week timeline. Can you break that into milestones?",
+        "npc_id": "olivia"
+      },
+      "expected_outcome": {
+        "immediate": "Olivia enters THINKING mode.",
+        "delayed": "After ~1.5s, Olivia replies: 'Two weeks means we need week 1 delivery and week 2 validation. I'll sequence the work packages.'",
+        "acceptance_moment": "User realizes Olivia's reply references the 2-week constraint that Emma just mentioned."
+      },
+      "narrative": "PROOF POINT 3b: System memory is working. Olivia knows about the timeline."
+    },
+    {
+      "timestamp_ms": 31000,
+      "action": "WAIT",
+      "params": {
+        "duration_ms": 3000
+      },
+      "narrative": "Wait for Olivia's LLM response to arrive."
+    },
+    {
+      "timestamp_ms": 34000,
+      "action": "PLAYER_WALK",
+      "params": {
+        "target_x": 18,
+        "target_y": 2,
+        "speed": "normal"
+      },
+      "narrative": "Player walks to Corner Café (Alex's location). Olivia transitions back to IDLE."
+    },
+    {
+      "timestamp_ms": 37000,
+      "action": "OBSERVE_NPC_NPC",
+      "params": {
+        "npc_a": "emma",
+        "npc_b": "olivia",
+        "observe_for_ms": 2000
+      },
+      "expected_outcome": {
+        "interaction": "Emma and Olivia may trigger an NPC-NPC scripted exchange if proximity ≤ 1 tile and cooldown expired. Example: Emma: 'Constraints are clear.' Olivia: 'Then I can sequence the work.'"
+      },
+      "narrative": "OPTIONAL ACCEPTANCE MOMENT: NPC-NPC dialogue demonstrates system sophistication."
+    },
+    {
+      "timestamp_ms": 40000,
+      "action": "CAMERA_FOCUS",
+      "params": {
+        "x": 18,
+        "y": 2,
+        "zoom": 1.0
+      },
+      "narrative": "Camera centers on Corner Café. Alex is visible, idle at her spawn point."
+    },
+    {
+      "timestamp_ms": 42000,
+      "action": "NPC_CLICK",
+      "params": {
+        "npc_id": "alex",
+        "npc_name": "Alex"
+      },
+      "expected_outcome": {
+        "immediate": "Alex enters TALKING mode. Thought bubble shows 'Listening...'. Chat panel shows cached first line: 'Welcome. Tell me your name once — I'll remember it during this run.'",
+        "acceptance_moment": "User sees Alex's role as the social interface."
+      },
+      "narrative": "PROOF POINT 4a: Alex is the human-facing interface. Already knows the system's constraints and actors."
+    },
+    {
+      "timestamp_ms": 45000,
+      "action": "CHAT_SEND",
+      "params": {
+        "message": "My name is Jamie. Can you recap what Emma and Olivia said?",
+        "npc_id": "alex"
+      },
+      "expected_outcome": {
+        "immediate": "Alex enters THINKING mode.",
+        "delayed": "After ~2s, Alex replies: 'Jamie, Emma locked the 2-week constraint. Olivia is breaking it into milestones. Here's what matters: delivery week 1, validation week 2. No scope creep without tradeoff.'",
+        "memory_write": "Fact extracted: 'player name is Jamie'",
+        "acceptance_moment": "User sees Alex remember the name AND synthesize the conversation."
+      },
+      "narrative": "PROOF POINT 4b: System memory persists across conversations. Alex references both Emma and Olivia by name and context."
+    },
+    {
+      "timestamp_ms": 48000,
+      "action": "WAIT",
+      "params": {
+        "duration_ms": 3000
+      },
+      "narrative": "Wait for Alex's LLM response to arrive."
+    },
+    {
+      "timestamp_ms": 52000,
+      "action": "HUD_OBSERVATION",
+      "params": {
+        "target": "ACTIVE_AGENTS"
+      },
+      "narrative": "HUD shows: 3 agents active, 0 current LLM requests. All NPCs in IDLE or WALKING state."
+    },
+    {
+      "timestamp_ms": 55000,
+      "action": "PLAYER_WALK",
+      "params": {
+        "target_x": 12,
+        "target_y": 7,
+        "speed": "normal"
+      },
+      "narrative": "Player walks back to starting position. All NPCs resume autonomous movement and routine waypoint loops."
+    },
+    {
+      "timestamp_ms": 65000,
+      "action": "RESET_RUN",
+      "params": {
+        "seed": 42,
+        "player_name": "Demo User"
+      },
+      "narrative": "Game resets to same seed (42). All NPCs return to spawn positions exactly as before."
+    },
+    {
+      "timestamp_ms": 68000,
+      "action": "DETERMINISM_PROOF",
+      "params": {
+        "message": "Replay identical run with same seed. NPC positions, timing, and dialogue should be byte-for-byte identical."
+      },
+      "expected_outcome": {
+        "acceptance_moment": "Demo observer sees that RESET_RUN produces an identical initial state. Same seed = same game state = deterministic replay proof."
+      },
+      "narrative": "PROOF POINT 5 (Optional): Deterministic replay is foundational. Same seed, same street, same conversations (if player inputs identical)."
+    },
+    {
+      "timestamp_ms": 90000,
+      "action": "DEMO_END",
+      "params": {
+        "total_duration": "90 seconds"
+      },
+      "narrative": "Demo complete. Executive summary:\n1. NPCs move autonomously (Emma, Olivia, Alex all walked routes).\n2. Chat is real: specific replies to player messages, not canned.\n3. Memory works: Alex knew Jamie's name, Olivia referenced the 2-week constraint.\n4. NPC-NPC interaction possible (triggers demonstrated in script).\n5. Determinism: RESET with same seed produces identical initial state.\n\nDefinition of Done: Executive understands the system in under 60 seconds by observing autonomy, chatting, and witnessing memory recall."
+    }
+  ],
+  "acceptance_criteria": {
+    "autonomy_proof": "All 3 NPCs visible moving through their waypoint routines without player input",
+    "chat_proof": "Player can click any NPC and receive a contextual reply within 2.5s",
+    "memory_proof": "At least one NPC references something the player said earlier in the demo (e.g., 'Jamie' or '2 weeks')",
+    "npc_npc_proof": "Two NPCs within 1 tile trigger a scripted exchange visible to the player",
+    "determinism_proof": "RESET_RUN(seed=42) produces identical initial state to first run; executive can verify by comparing NPC positions before any movement"
+  },
+  "definition_of_done": "Executive watches 90-second demo, sees all 5 proof points, understands the system, can predict outcomes. No further explanation needed."
+}

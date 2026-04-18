@@ -1,0 +1,564 @@
+{
+  "schema_name": "ROOT_SCHEMAS_CONSUMER_AUDIT_V2",
+  "audit_type": "E22_EXTENDED",
+  "file_types_scanned": [
+    ".py",
+    ".js",
+    ".ts",
+    ".md",
+    ".json",
+    ".yaml",
+    ".toml",
+    ".cfg",
+    ".html",
+    ".sh",
+    ".ndjson"
+  ],
+  "excludes": [
+    "worktrees/",
+    "__pycache__",
+    ".venv/",
+    ".git/",
+    "node_modules/"
+  ],
+  "total_schemas": 19,
+  "results": [
+    {
+      "file": "dialogue_event.canonical.schema.json",
+      "classification": "DOC_ONLY",
+      "total_refs": 3,
+      "py_refs": 0,
+      "md_refs": 3,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "IMPLEMENTATION_COMPLETE.md",
+        "CANONICAL_DIALOGUE_BREAKTHROUGH.md",
+        "DEPLOYMENT_COMPLETE.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "IMPLEMENTATION_COMPLETE.md",
+          "line": "./IMPLEMENTATION_COMPLETE.md:148:\u2502   \u251c\u2500\u2500 dialogue_event.canonical.schema.json        # Event structure schema"
+        },
+        {
+          "file": "CANONICAL_DIALOGUE_BREAKTHROUGH.md",
+          "line": "./CANONICAL_DIALOGUE_BREAKTHROUGH.md:239:- **`dialogue_event.canonical.schema.json`** - JSON Schema for the event struct"
+        },
+        {
+          "file": "DEPLOYMENT_COMPLETE.md",
+          "line": "./DEPLOYMENT_COMPLETE.md:143:- \u2705 Schemas defined (dialogue_event.canonical.schema.json)"
+        }
+      ]
+    },
+    {
+      "file": "gate_evaluated_v1.schema.json",
+      "classification": "CONFIG_REF",
+      "total_refs": 2,
+      "py_refs": 0,
+      "md_refs": 1,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "config/schema_manifest_v1.json",
+        "docs/architecture/ARTIFACT_SCHEMAS_V1.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "config/schema_manifest_v1.json",
+          "line": "./config/schema_manifest_v1.json:38:    \"gate_evaluated_v1.schema.json\": {"
+        },
+        {
+          "file": "docs/architecture/ARTIFACT_SCHEMAS_V1.md",
+          "line": "./docs/architecture/ARTIFACT_SCHEMAS_V1.md:134:### GateEvaluated (`gate_evaluated_v1.schema.json`)"
+        }
+      ]
+    },
+    {
+      "file": "gate_report_v1.schema.json",
+      "classification": "CONFIG_REF",
+      "total_refs": 3,
+      "py_refs": 0,
+      "md_refs": 2,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "config/schema_manifest_v1.json",
+        "docs/architecture/ARTIFACT_SCHEMAS_V1.md",
+        "docs/architecture/ROUTING_LAW_V1.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "config/schema_manifest_v1.json",
+          "line": "./config/schema_manifest_v1.json:26:    \"gate_report_v1.schema.json\": {"
+        },
+        {
+          "file": "docs/architecture/ARTIFACT_SCHEMAS_V1.md",
+          "line": "./docs/architecture/ARTIFACT_SCHEMAS_V1.md:88:### GateReport (`gate_report_v1.schema.json`)"
+        },
+        {
+          "file": "docs/architecture/ROUTING_LAW_V1.md",
+          "line": "./docs/architecture/ROUTING_LAW_V1.md:121:  gate_report_v1.json            # GateReport (all gates complete)"
+        }
+      ]
+    },
+    {
+      "file": "hal_output.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 6,
+      "py_refs": 2,
+      "md_refs": 2,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 1,
+      "ref_files": [
+        "HER_HAL_INTEGRATION.md",
+        "town/ledger_v1.ndjson",
+        "FORMAL_DIALOGUE_BRIDGE.md",
+        "tools/street1_runner.py",
+        "tools/street1_runner_with_dialogue.py",
+        "tools/street1_test_harness.sh"
+      ],
+      "sample_lines": [
+        {
+          "file": "HER_HAL_INTEGRATION.md",
+          "line": "./HER_HAL_INTEGRATION.md:13:1. **Schema Validation** (`hal_output.schema.json`)"
+        },
+        {
+          "file": "town/ledger_v1.ndjson",
+          "line": "./town/ledger_v1.ndjson:186:{\"type\": \"user_msg\", \"seq\": 185, \"payload\": {\"schema\": \"USER_MSG_V1\", \"channel_contract\": \"H"
+        },
+        {
+          "file": "FORMAL_DIALOGUE_BRIDGE.md",
+          "line": "./FORMAL_DIALOGUE_BRIDGE.md:367:                   hal_output.json"
+        }
+      ]
+    },
+    {
+      "file": "hal_reason_codes.enum.json",
+      "classification": "RUNTIME",
+      "total_refs": 3,
+      "py_refs": 1,
+      "md_refs": 2,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "tools/street1_runner_with_dialogue.py",
+        "IMPLEMENTATION_COMPLETE.md",
+        "CANONICAL_DIALOGUE_BREAKTHROUGH.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "tools/street1_runner_with_dialogue.py",
+          "line": "./tools/street1_runner_with_dialogue.py:140:    schema_path = Path(__file__).parent.parent / \"schemas\" / \"hal_reason_cod"
+        },
+        {
+          "file": "IMPLEMENTATION_COMPLETE.md",
+          "line": "./IMPLEMENTATION_COMPLETE.md:149:\u2502   \u2514\u2500\u2500 hal_reason_codes.enum.json                  # 50+ stable codes"
+        },
+        {
+          "file": "CANONICAL_DIALOGUE_BREAKTHROUGH.md",
+          "line": "./CANONICAL_DIALOGUE_BREAKTHROUGH.md:244:- **`hal_reason_codes.enum.json`** - Enumeration of stable reason codes"
+        }
+      ]
+    },
+    {
+      "file": "helen.wul_slab.v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 1,
+      "py_refs": 1,
+      "md_refs": 0,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "tools/golden_loop_test.py"
+      ],
+      "sample_lines": [
+        {
+          "file": "tools/golden_loop_test.py",
+          "line": "./tools/golden_loop_test.py:193:    \"helen.wul_slab.v1\": {"
+        }
+      ]
+    },
+    {
+      "file": "k8_summary.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 3,
+      "py_refs": 1,
+      "md_refs": 0,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 1,
+      "ref_files": [
+        "artifacts/k8_summary.json",
+        "scripts/helen_k8_lint.py",
+        "town/ledger_v1.ndjson"
+      ],
+      "sample_lines": [
+        {
+          "file": "artifacts/k8_summary.json",
+          "line": "./artifacts/k8_summary.json:2:  \"schema\": \"K8_SUMMARY_V1\","
+        },
+        {
+          "file": "scripts/helen_k8_lint.py",
+          "line": "./scripts/helen_k8_lint.py:600:        \"schema\": \"K8_SUMMARY_V1\","
+        },
+        {
+          "file": "town/ledger_v1.ndjson",
+          "line": "./town/ledger_v1.ndjson:134:{\"type\": \"user_msg\", \"seq\": 133, \"payload\": {\"schema\": \"USER_MSG_V1\", \"channel_contract\": \"H"
+        }
+      ]
+    },
+    {
+      "file": "mayor_packet_v1.schema.json",
+      "classification": "CONFIG_REF",
+      "total_refs": 2,
+      "py_refs": 0,
+      "md_refs": 1,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "config/schema_manifest_v1.json",
+        "docs/architecture/ARTIFACT_SCHEMAS_V1.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "config/schema_manifest_v1.json",
+          "line": "./config/schema_manifest_v1.json:32:    \"mayor_packet_v1.schema.json\": {"
+        },
+        {
+          "file": "docs/architecture/ARTIFACT_SCHEMAS_V1.md",
+          "line": "./docs/architecture/ARTIFACT_SCHEMAS_V1.md:113:### MayorPacket (`mayor_packet_v1.schema.json`)"
+        }
+      ]
+    },
+    {
+      "file": "plugin_receipt.schema.json",
+      "classification": "CONFIG_REF",
+      "total_refs": 1,
+      "py_refs": 0,
+      "md_refs": 0,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "registries/plugins_allowlist.json"
+      ],
+      "sample_lines": [
+        {
+          "file": "registries/plugins_allowlist.json",
+          "line": "./registries/plugins_allowlist.json:6:  \"policy\": \"Each plugin must emit a plugin_receipt.schema.json-conformant receipt"
+        }
+      ]
+    },
+    {
+      "file": "receipt_payload.v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 1,
+      "py_refs": 1,
+      "md_refs": 0,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "tools/validate_receipt_linkage.py"
+      ],
+      "sample_lines": [
+        {
+          "file": "tools/validate_receipt_linkage.py",
+          "line": "./tools/validate_receipt_linkage.py:8:  1. Every RECEIPT payload with schema == \"RECEIPT_PAYLOAD_V1\" must have:"
+        }
+      ]
+    },
+    {
+      "file": "schema_pack_manifest_v1.json",
+      "classification": "DOC_ONLY",
+      "total_refs": 1,
+      "py_refs": 0,
+      "md_refs": 1,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "HELEN_OS_SESSION_RECAP_2026_03_12.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "HELEN_OS_SESSION_RECAP_2026_03_12.md",
+          "line": "./HELEN_OS_SESSION_RECAP_2026_03_12.md:312:a81c2cf Freeze governance layer: canonical.py, schema_registry.py, reason_cod"
+        }
+      ]
+    },
+    {
+      "file": "seal_v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 17,
+      "py_refs": 5,
+      "md_refs": 6,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 4,
+      "ref_files": [
+        "tools/end_session.py",
+        "tools/accept_payload_meta.sh",
+        "tools/validate_seal_v1.py",
+        "cwl_boot_validator.py",
+        "town/ledger_v1_SESSION_20260223.ndjson",
+        "town/ledger_v1.ndjson",
+        "town/ledger.ndjson",
+        "create_synthetic_ledger_v1_0_1.py",
+        "CANONICAL_JSON_REFACTOR_COMPLETED.md",
+        "synthetic_ledger_v1_0_1.ndjson"
+      ],
+      "sample_lines": [
+        {
+          "file": "tools/end_session.py",
+          "line": "./tools/end_session.py:30:        \"schema\": \"SEAL_V1\","
+        },
+        {
+          "file": "tools/accept_payload_meta.sh",
+          "line": "./tools/accept_payload_meta.sh:11:#   6. SEAL_V1 closure               (validate_seal_v1.py)"
+        },
+        {
+          "file": "tools/validate_seal_v1.py",
+          "line": "./tools/validate_seal_v1.py:10:  3. payload.schema == \"SEAL_V1\""
+        }
+      ]
+    },
+    {
+      "file": "skill_library_state_v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 41,
+      "py_refs": 27,
+      "md_refs": 7,
+      "json_refs": 2,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 4,
+      "ref_files": [
+        "HELEN_OS_SESSION_RECAP_2026_03_12.md",
+        "schemas/schema_pack_manifest_v1.json",
+        "MEMBRANE_BASELINE_CHECKPOINT.md",
+        "test_init_quick.py",
+        "helen_os/tests/test_init_determinism_against_chaos.py",
+        "helen_os/api/init_helen_wedge.py",
+        "LAUNCH_HELEN.sh",
+        "helen_state.json",
+        "MEMBRANE_PROVEN_CLAIMS.md",
+        "HELEN_PRECISE_STATUS.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "HELEN_OS_SESSION_RECAP_2026_03_12.md",
+          "line": "./HELEN_OS_SESSION_RECAP_2026_03_12.md:483:- `skill_library_state_v1.schema.json` \u2705"
+        },
+        {
+          "file": "schemas/schema_pack_manifest_v1.json",
+          "line": "./schemas/schema_pack_manifest_v1.json:36:      \"file\": \"skill_library_state_v1.json\""
+        },
+        {
+          "file": "MEMBRANE_BASELINE_CHECKPOINT.md",
+          "line": "./MEMBRANE_BASELINE_CHECKPOINT.md:85:3. **`skill_library_state_v1.json`**"
+        }
+      ]
+    },
+    {
+      "file": "skill_promotion_packet_v1.json",
+      "classification": "RUNTIME",
+      "total_refs": 37,
+      "py_refs": 20,
+      "md_refs": 7,
+      "json_refs": 5,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 4,
+      "ref_files": [
+        "LAUNCH_HELEN.sh",
+        "HELEN_OS_SESSION_RECAP_2026_03_12.md",
+        "schemas/schema_pack_manifest_v1.json",
+        "AUTONOMY_STACK_COMPLETE.md",
+        "HELEN_PRECISE_STATUS.md",
+        "helen_os/validators.py",
+        "helen_os/tests/test_integration_skill_discovery_pipeline.py",
+        "helen_os/tests/test_autoresearch_eval_receipt_pipeline.py",
+        "helen_os/tests/test_temple_bridge_v1.py",
+        "helen_os/tests/test_replay_proof_v1.py"
+      ],
+      "sample_lines": [
+        {
+          "file": "LAUNCH_HELEN.sh",
+          "line": "./LAUNCH_HELEN.sh:147:                print(\"\\n  <JSON packet>     \u2014 Submit SKILL_PROMOTION_PACKET_V1\")"
+        },
+        {
+          "file": "HELEN_OS_SESSION_RECAP_2026_03_12.md",
+          "line": "./HELEN_OS_SESSION_RECAP_2026_03_12.md:29:3. SKILL_PROMOTION_PACKET_V1 \u2014 read-only promotion request"
+        },
+        {
+          "file": "schemas/schema_pack_manifest_v1.json",
+          "line": "./schemas/schema_pack_manifest_v1.json:21:      \"schema_name\": \"SKILL_PROMOTION_PACKET_V1\","
+        }
+      ]
+    },
+    {
+      "file": "street1_event.v1.schema.json",
+      "classification": "DOC_ONLY",
+      "total_refs": 2,
+      "py_refs": 0,
+      "md_refs": 2,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "STREET1_LEDGER.md",
+        "STREET1_DELIVERY_RECEIPT.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "STREET1_LEDGER.md",
+          "line": "./STREET1_LEDGER.md:31:- `schema_version`: \"STREET1_EVENT_V1\""
+        },
+        {
+          "file": "STREET1_DELIVERY_RECEIPT.md",
+          "line": "./STREET1_DELIVERY_RECEIPT.md:167:  \u251c\u2500 street1_event.v1.schema.json     (event schema)"
+        }
+      ]
+    },
+    {
+      "file": "street1_summary.v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 6,
+      "py_refs": 1,
+      "md_refs": 4,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 0,
+      "ref_files": [
+        "test_street1_ledger.sh",
+        "STREET1_DELIVERY_RECEIPT.md",
+        "scripts/street1_rollup.py",
+        "DETERMINISM_SWEEP_REAL_DEPLOYMENT.md",
+        "START_HERE_REAL_DETERMINISM.md",
+        "STREET1_LEDGER.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "test_street1_ledger.sh",
+          "line": "./test_street1_ledger.sh:62:assert summary['schema_version'] == 'STREET1_SUMMARY_V1', 'wrong schema_version'"
+        },
+        {
+          "file": "STREET1_DELIVERY_RECEIPT.md",
+          "line": "./STREET1_DELIVERY_RECEIPT.md:74:\u2713 schema_version: STREET1_SUMMARY_V1"
+        },
+        {
+          "file": "scripts/street1_rollup.py",
+          "line": "./scripts/street1_rollup.py:28:SUMMARY_SCHEMA_VERSION = \"STREET1_SUMMARY_V1\""
+        }
+      ]
+    },
+    {
+      "file": "task_list_v1.schema.json",
+      "classification": "CONFIG_REF",
+      "total_refs": 2,
+      "py_refs": 0,
+      "md_refs": 1,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "config/schema_manifest_v1.json",
+        "docs/architecture/ARTIFACT_SCHEMAS_V1.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "config/schema_manifest_v1.json",
+          "line": "./config/schema_manifest_v1.json:20:    \"task_list_v1.schema.json\": {"
+        },
+        {
+          "file": "docs/architecture/ARTIFACT_SCHEMAS_V1.md",
+          "line": "./docs/architecture/ARTIFACT_SCHEMAS_V1.md:63:### TaskList (`task_list_v1.schema.json`)"
+        }
+      ]
+    },
+    {
+      "file": "town_routing_policy.schema.json",
+      "classification": "DOC_ONLY",
+      "total_refs": 1,
+      "py_refs": 0,
+      "md_refs": 1,
+      "json_refs": 0,
+      "html_refs": 0,
+      "sh_refs": 0,
+      "other_refs": 0,
+      "ref_files": [
+        "VALIDATION_CONTRACT_V1.md"
+      ],
+      "sample_lines": [
+        {
+          "file": "VALIDATION_CONTRACT_V1.md",
+          "line": "./VALIDATION_CONTRACT_V1.md:117:**Schema:** `town_routing_policy.schema.json`"
+        }
+      ]
+    },
+    {
+      "file": "verdict_payload.v1.schema.json",
+      "classification": "RUNTIME",
+      "total_refs": 6,
+      "py_refs": 3,
+      "md_refs": 1,
+      "json_refs": 1,
+      "html_refs": 0,
+      "sh_refs": 1,
+      "other_refs": 0,
+      "ref_files": [
+        "tools/validate_verdict_payload.py",
+        "tools/accept_payload_meta.sh",
+        "tools/validate_receipt_linkage.py",
+        "registries/plugins_allowlist.json",
+        "CANONICAL_JSON_REFACTOR_COMPLETED.md",
+        "helen_os_scaffold/verify_all.py"
+      ],
+      "sample_lines": [
+        {
+          "file": "tools/validate_verdict_payload.py",
+          "line": "./tools/validate_verdict_payload.py:4:Validates VERDICT events in NDJSON ledger against VERDICT_PAYLOAD_V1 schema."
+        },
+        {
+          "file": "tools/accept_payload_meta.sh",
+          "line": "./tools/accept_payload_meta.sh:9:#   4. VERDICT_PAYLOAD_V1 schema     (validate_verdict_payload.py)"
+        },
+        {
+          "file": "tools/validate_receipt_linkage.py",
+          "line": "./tools/validate_receipt_linkage.py:77:      - payload.schema == \"VERDICT_PAYLOAD_V1\""
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "ORPHAN": 0,
+    "RUNTIME": 10,
+    "CONFIG_REF": 5,
+    "DOC_ONLY": 4,
+    "OTHER_REF": 0
+  }
+}

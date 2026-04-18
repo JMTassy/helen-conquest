@@ -1,0 +1,85 @@
+{
+  "timestamp": "2026-02-16T21:07:09.385446",
+  "mode": "automatic",
+  "cycles": [
+    {
+      "cycle": 1,
+      "timestamp": "2026-02-16T21:07:01.048338",
+      "skills_executed": [],
+      "decisions": {
+        "fetch": "REJECT",
+        "shell": "REJECT",
+        "memory": "REJECT"
+      }
+    },
+    {
+      "cycle": 2,
+      "timestamp": "2026-02-16T21:07:03.119359",
+      "skills_executed": [],
+      "decisions": {
+        "fetch": "REJECT",
+        "shell": "REJECT",
+        "memory": "REJECT"
+      }
+    },
+    {
+      "cycle": 3,
+      "timestamp": "2026-02-16T21:07:05.185913",
+      "skills_executed": [],
+      "decisions": {
+        "fetch": "REJECT",
+        "shell": "REJECT",
+        "memory": "REJECT"
+      }
+    },
+    {
+      "cycle": 4,
+      "timestamp": "2026-02-16T21:07:07.247591",
+      "skills_executed": [],
+      "decisions": {
+        "fetch": "REJECT",
+        "shell": "REJECT",
+        "memory": "REJECT"
+      }
+    },
+    {
+      "cycle": 5,
+      "timestamp": "2026-02-16T21:07:09.315491",
+      "skills_executed": [],
+      "decisions": {
+        "fetch": "REJECT",
+        "shell": "REJECT",
+        "memory": "REJECT"
+      }
+    }
+  ],
+  "analysis": {
+    "total_entries": 19,
+    "approval_rate": 0.0,
+    "decisions": {
+      "ACCEPT": 0,
+      "REJECT": 0
+    },
+    "by_action_type": {
+      "unknown": {
+        "total": 0,
+        "accepts": 0,
+        "rejects": 0,
+        "approval_rate": 0
+      }
+    }
+  },
+  "insights": [
+    "\u2717 LOW: 0.0% approval rate (many rejected operations)",
+    "\nAction Types Attempted:",
+    "  \u2022 unknown: 0/0 approved (0% approval rate)",
+    "\nRecommendations:",
+    "  \u2022 All operations approved (excellent safety profile)",
+    "\n\u2713 Kernel is responsive (logged 19 decisions)",
+    "\nOptimization Opportunities:",
+    "  \u2022 Kernel approval latency: < 100ms (from logs)",
+    "  \u2022 Failure resilience: Excellent (fail-closed on kernel timeout)",
+    "  \u2022 Audit trail: Complete (every decision logged)",
+    "  \u2022 Scalability: Ready for production (socket-based IPC)"
+  ]
+}

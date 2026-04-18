@@ -1,0 +1,25 @@
+{
+  "acceptance_gate_stdout": "================================================================================\nACCEPTANCE GATE: Payload/Meta Split\n================================================================================\n\nGate 1: Hash chain integrity\nTraceback (most recent call last):\n  File \"/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/tools/validate_hash_chain.py\", line 96, in <module>\n    main(sys.argv[1])\n    ~~~~^^^^^^^^^^^^^\n  File \"/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/tools/validate_hash_chain.py\", line 55, in main\n    if obj[\"seq\"] != expected_seq:\n       ~~~^^^^^^^\nKeyError: 'seq'\n[FAIL] Hash chain validation failed",
+  "core_files_missing": [],
+  "core_files_present": [
+    "tools/ndjson_writer.py",
+    "tools/validate_hash_chain.py",
+    "tools/validate_turn_schema.py",
+    "tools/test_meta_invariance.py",
+    "tools/accept_payload_meta.sh",
+    ".github/workflows/payload_meta.yml"
+  ],
+  "hash_chain_stdout": "Traceback (most recent call last):\n  File \"/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/tools/validate_hash_chain.py\", line 96, in <module>\n    main(sys.argv[1])\n    ~~~~^^^^^^^^^^^^^\n  File \"/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/tools/validate_hash_chain.py\", line 55, in main\n    if obj[\"seq\"] != expected_seq:\n       ~~~^^^^^^^\nKeyError: 'seq'",
+  "head_sha": "f3bd0bb8ded2b859320e79227b9b0134f198ccf4",
+  "meta_invariance_stdout": "Usage: python3 tools/test_meta_invariance.py <ledger.ndjson>",
+  "python_version": "Python 3.14.3",
+  "schema_stdout": "[PASS] turn schema verified",
+  "sha256": {
+    ".github/workflows/payload_meta.yml": "a8a9adbe470a5aa76355af996a94dd28015fc3cd107a3491ad1ab9a6e811a265",
+    "tools/accept_payload_meta.sh": "5f15c4dcd9af41211a22d57debfbb54a18234ff9d465702540befdd3dc4dc00c",
+    "tools/ndjson_writer.py": "8b2b82db6c9ff6bfb90c25c25396fb9bb79aedb9d1b0d5fb4cd9509ebbb47b05",
+    "tools/test_meta_invariance.py": "a1fa757eb7ae9adb17870c08f9cfb8719739d3d7edb8580181b8b670c23fbec5",
+    "tools/validate_hash_chain.py": "04bc036db0091ffc7f6e4e483351aad77c11c9f6a4100144c95fa7471d95e5d2",
+    "tools/validate_turn_schema.py": "00ee45b56a3e4738d69cb69237dab216832f013145bb8881f246fc5a7f6f582c"
+  }
+}

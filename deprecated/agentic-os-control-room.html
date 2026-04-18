@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agentic OS • Retro Control Room</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #000;
+      font-family: 'Courier New', monospace;
+      overflow: hidden;
+      image-rendering: pixelated;
+      image-rendering: -moz-crisp-edges;
+      image-rendering: crisp-edges;
+    }
+
+    #controlRoom {
+      width: 100vw;
+      height: 100vh;
+      max-width: 1920px;
+      max-height: 1080px;
+      margin: 0 auto;
+      background: #0a0a1e;
+      border: 4px solid #00ff00;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* CRT scanlines effect */
+    #controlRoom::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.15) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0,0,0,0.15) 3px
+      );
+      pointer-events: none;
+      z-index: 1000;
+      animation: scanline 8s linear infinite;
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(4px); }
+    }
+
+    /* Top Bar */
+    #topBar {
+      height: 60px;
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      padding: 16px 24px;
+      color: #00ff00;
+      font-size: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .status-indicator {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      background: #00ff00;
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+      margin-right: 8px;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Main Content Area */
+    #mainContent {
+      flex: 1;
+      display: flex;
+      gap: 20px;
+      padding: 20px;
+      overflow: hidden;
+    }
+
+    .panel {
+      border: 2px solid #00ff00;
+      background: rgba(0,0,0,0.85);
+      padding: 16px;
+      color: #00ff00;
+      overflow: hidden;
+      box-shadow: 0 0 20px rgba(0,255,0,0.3);
+    }
+
+    #leftPanel {
+      width: 350px;
+      flex-shrink: 0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    #centerGraph {
+      flex: 1;
+      min-width: 600px;
+      position: relative;
+    }
+
+    #rightPanel {
+      width: 380px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Canvas */
+    #graphCanvas {
+      width: 100%;
+      height: 100%;
+      image-rendering: pixelated;
+    }
+
+    /* Progress bars */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      margin: 8px 0;
+    }
+
+    .bar {
+      flex: 1;
+      height: 16px;
+      background: #001a00;
+      border: 1px solid #00ff00;
+      margin: 0 8px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      background: #00ff00;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,0,0.5);
+    }
+
+    /* Blinking cursor */
+    .cursor {
+      animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+      0%, 49% { opacity: 1; }
+      50%, 100% { opacity: 0; }
+    }
+
+    /* Log scroll */
+    #logScroll {
+      flex: 1;
+      overflow-y: auto;
+      background: #000;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 13px;
+      border: 1px solid #00ff00;
+      line-height: 1.5;
+    }
+
+    #logScroll::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #logScroll::-webkit-scrollbar-track {
+      background: #001a00;
+    }
+
+    #logScroll::-webkit-scrollbar-thumb {
+      background: #00ff00;
+    }
+
+    .log-entry {
+      margin: 4px 0;
+      opacity: 0;
+      animation: fadeIn 0.3s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    .log-error {
+      color: #ff0000;
+    }
+
+    .log-warning {
+      color: #ffaa00;
+    }
+
+    .log-success {
+      color: #00ffaa;
+    }
+
+    /* SPARC Score */
+    #sparcDisplay {
+      text-align: center;
+      padding: 16px;
+      border: 1px solid #00ff00;
+      margin: 12px 0;
+      background: #000;
+    }
+
+    #sparcScore {
+      font-size: 32px;
+      font-weight: bold;
+      color: #00ffaa;
+      text-shadow: 0 0 10px rgba(0,255,170,0.8);
+    }
+
+    /* Buttons */
+    button {
+      font-family: 'Courier New', monospace;
+      cursor: pointer;
+      border: none;
+      font-weight: bold;
+      transition: all 0.1s;
+    }
+
+    #buildBtn {
+      width: 300px;
+      height: 70px;
+      background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%);
+      border: 4px solid #004400;
+      color: #000;
+      font-size: 22px;
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 6px 0 #002200, 0 0 20px rgba(0,255,0,0.5);
+      z-index: 10;
+    }
+
+    #buildBtn:hover {
+      background: linear-gradient(180deg, #00ffaa 0%, #00cc00 100%);
+    }
+
+    #buildBtn:active {
+      transform: translateX(-50%) translateY(4px);
+      box-shadow: 0 2px 0 #002200;
+    }
+
+    #buildBtn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #exportBtn {
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+      background: linear-gradient(180deg, #0088ff 0%, #0055aa 100%);
+      border: 3px solid #003366;
+      color: #fff;
+      box-shadow: 0 4px 0 #001a33;
+      display: none;
+      animation: glow 2s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 4px 0 #001a33, 0 0 10px rgba(0,136,255,0.5); }
+      50% { box-shadow: 0 4px 0 #001a33, 0 0 30px rgba(0,136,255,1); }
+    }
+
+    #exportBtn:active {
+      transform: translateY(4px);
+      box-shadow: none;
+    }
+
+    /* Bottom Bar */
+    #bottomBar {
+      height: 40px;
+      background: #000;
+      border-top: 2px solid #00ff00;
+      padding: 8px 24px;
+      color: #00ff00;
+      font-size: 14px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    /* Speech bubbles */
+    .speech-bubble {
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      max-width: 200px;
+      z-index: 100;
+      animation: float 0.3s ease-out;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .speech-bubble::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-left: 8px solid transparent;
+      border-right: 8px solid transparent;
+      border-top: 8px solid rgba(255,255,255,0.95);
+    }
+
+    @keyframes float {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Easter egg glitch */
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-2px, 2px); }
+      40% { transform: translate(-2px, -2px); }
+      60% { transform: translate(2px, 2px); }
+      80% { transform: translate(2px, -2px); }
+      100% { transform: translate(0); }
+    }
+
+    .glitch {
+      animation: glitch 0.3s;
+    }
+  </style>
+</head>
+<body>
+  <div id="controlRoom">
+    <!-- Top Bar -->
+    <div id="topBar">
+      <div>
+        <span class="status-indicator"></span>
+        <strong>AGENTIC OS v0.1</strong> • LIVE
+      </div>
+      <div>EP01: MEDIA GATEWAY</div>
+      <div id="countdown">00:00:00</div>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent">
+      <!-- Left Panel: System Vitals -->
+      <div id="leftPanel" class="panel">
+        <div style="border-bottom: 1px solid #00ff00; margin-bottom: 12px; padding-bottom: 8px;">
+          <strong>━━ SYSTEM VITALS ━━</strong>
+        </div>
+        <pre id="vitalsText" style="font-size: 13px; line-height: 1.8;"></pre>
+        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid #00ff00;">
+          &gt; <span class="cursor">█</span> AWAITING COMMAND...
+        </div>
+      </div>
+
+      <!-- Center Panel: Graph -->
+      <div id="centerGraph" class="panel">
+        <canvas id="graphCanvas"></canvas>
+      </div>
+
+      <!-- Right Panel: Output -->
+      <div id="rightPanel" class="panel">
+        <div style="border-bottom: 1px solid #00ff00; margin-bottom: 12px; padding-bottom: 8px;">
+          <strong>🏭 POC FACTORY OUTPUT</strong>
+        </div>
+        <div id="logScroll"></div>
+        <div id="sparcDisplay">
+          <div style="font-size: 14px; margin-bottom: 8px;">📊 SPARC SCORE</div>
+          <div id="sparcScore">0.0</div>
+          <div style="font-size: 12px; margin-top: 8px;">/ 10.0</div>
+        </div>
+        <button id="exportBtn">★ EXPORT POC #<span id="pocNum">1</span> ★</button>
+      </div>
+    </div>
+
+    <!-- Bottom Bar -->
+    <div id="bottomBar">
+      Click BUILD POC to start • Press F11 for full immersion • Easter eggs everywhere 🎮
+    </div>
+
+    <!-- Build Button -->
+    <button id="buildBtn">🚀 BUILD POC</button>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════
+    // CORE STATE MANAGEMENT
+    // ═══════════════════════════════════════
+    const state = {
+      memory: 847,
+      maxMemory: 1024,
+      trust: 98.7,
+      uptime: 0,
+      pocCount: 0,
+      agentsOnline: 3847,
+      maxAgents: 10000,
+      humansActive: 9112,
+      maxHumans: 50000,
+      phase: 'idle',
+      building: false,
+      easterEggCount: 0
+    };
+
+    // ═══════════════════════════════════════
+    // CANVAS & GRAPH SETUP
+    // ═══════════════════════════════════════
+    const canvas = document.getElementById('graphCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width - 32;
+      canvas.height = rect.height - 32;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    ctx.imageSmoothingEnabled = false;
+
+    // Node definitions with character references
+    const nodes = {
+      tv5: { x: 0.5, y: 0.1, label: 'TV5 STUDIO', color: '#00ffff', emoji: '📺', size: 40 },
+      design: { x: 0.25, y: 0.3, label: 'DESIGN', color: '#ff00ff', emoji: '🎨', char: 'Mario', size: 35 },
+      research: { x: 0.75, y: 0.3, label: 'RESEARCH', color: '#ff9900', emoji: '🔍', char: 'Gordon', size: 30 },
+      orchestrator: { x: 0.5, y: 0.45, label: 'ORCHESTRATOR', color: '#00ff00', emoji: '🧠', char: 'Brain', size: 45 },
+      code: { x: 0.25, y: 0.6, label: 'CODE', color: '#ffff00', emoji: '💻', char: 'Link', size: 35 },
+      search: { x: 0.5, y: 0.6, label: 'SEARCH', color: '#ff00aa', emoji: '🔎', char: 'Pac-Man', size: 30 },
+      memory: { x: 0.75, y: 0.6, label: 'MEMORY', color: '#0088ff', emoji: '💾', char: 'GLaDOS', size: 35 },
+      test: { x: 0.35, y: 0.8, label: 'TEST', color: '#ff0000', emoji: '🔬', char: 'Samus', size: 35 },
+      deploy: { x: 0.65, y: 0.8, label: 'DEPLOY', color: '#00ffaa', emoji: '🚀', char: 'Freeman', size: 35 },
+      factory: { x: 0.5, y: 0.95, label: 'POC FACTORY', color: '#ffffff', emoji: '🏭', size: 40 }
+    };
+
+    // Graph edges
+    const edges = [
+      ['tv5', 'design'],
+      ['tv5', 'research'],
+      ['design', 'orchestrator'],
+      ['research', 'orchestrator'],
+      ['orchestrator', 'code'],
+      ['orchestrator', 'search'],
+      ['orchestrator', 'memory'],
+      ['code', 'test'],
+      ['search', 'test'],
+      ['memory', 'deploy'],
+      ['test', 'deploy'],
+      ['deploy', 'factory']
+    ];
+
+    let activeNode = null;
+    let particleFlow = [];
+    let speechBubbles = [];
+
+    // ═══════════════════════════════════════
+    // ANIMATION & RENDERING
+    // ═══════════════════════════════════════
+    function animate() {
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw edges
+      ctx.lineWidth = 2;
+      edges.forEach(([from, to]) => {
+        const fromNode = nodes[from];
+        const toNode = nodes[to];
+        const x1 = fromNode.x * canvas.width;
+        const y1 = fromNode.y * canvas.height;
+        const x2 = toNode.x * canvas.width;
+        const y2 = toNode.y * canvas.height;
+
+        ctx.strokeStyle = '#00ff0033';
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+      });
+
+      // Draw particles flowing along edges
+      particleFlow = particleFlow.filter(particle => {
+        particle.progress += 0.02;
+        if (particle.progress > 1) return false;
+
+        const fromNode = nodes[particle.from];
+        const toNode = nodes[particle.to];
+        const x = fromNode.x + (toNode.x - fromNode.x) * particle.progress;
+        const y = fromNode.y + (toNode.y - fromNode.y) * particle.progress;
+
+        ctx.fillStyle = particle.color;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = particle.color;
+        ctx.beginPath();
+        ctx.arc(x * canvas.width, y * canvas.height, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+
+        return true;
+      });
+
+      // Draw nodes
+      Object.entries(nodes).forEach(([key, node]) => {
+        const x = node.x * canvas.width;
+        const y = node.y * canvas.height;
+        const isActive = activeNode === key;
+        const size = node.size;
+
+        // Glow effect for active nodes
+        if (isActive) {
+          ctx.shadowBlur = 20;
+          ctx.shadowColor = node.color;
+        }
+
+        // Node background
+        ctx.fillStyle = isActive ? '#ffffff' : node.color;
+        ctx.beginPath();
+        ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Node emoji
+        ctx.shadowBlur = 0;
+        ctx.font = `${size * 0.6}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.emoji, x, y);
+
+        // Label
+        ctx.font = '11px monospace';
+        ctx.fillStyle = node.color;
+        ctx.fillText(node.label, x, y + size / 2 + 15);
+      });
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+
+    // ═══════════════════════════════════════
+    // UI UPDATES
+    // ═══════════════════════════════════════
+    function updateVitals() {
+      const uptime = formatTime(state.uptime);
+      const memoryBar = createBar(state.memory, state.maxMemory);
+      const agentsBar = createBar(state.agentsOnline, state.maxAgents);
+      const humansBar = createBar(state.humansActive, state.maxHumans);
+      const trustBar = createBar(state.trust, 100);
+      const pocBar = createBar(state.pocCount, 20);
+
+      document.getElementById('vitalsText').textContent = `
+⚡ UPTIME
+${memoryBar} ${uptime}
+
+🧠 MEMORY (ruvector + AgentDB)
+${memoryBar} ${state.memory} MB / ${state.maxMemory} MB
+Hottest: "French cinema 2024"
+
+🤖 AGENTS ONLINE
+${agentsBar} ${state.agentsOnline.toLocaleString()} / ${state.maxAgents.toLocaleString()}
+Busiest: Orchestrator #7
+
+👥 HUMANS ACTIVE
+${humansBar} ${state.humansActive.toLocaleString()} / ${state.maxHumans.toLocaleString()}
+Top city: PARIS (2,103)
+
+🔒 TRUST LEVEL
+${trustBar} ${state.trust.toFixed(1)}% (${getTrustLabel()})
+Last incident: 00:00:00
+
+📊 POCs SHIPPED THIS EPISODE
+${pocBar} ${state.pocCount} / 20
+      `.trim();
+    }
+
+    function createBar(value, max) {
+      const percent = Math.min(100, (value / max) * 100);
+      const filled = Math.floor(percent / 6.25);
+      const empty = 16 - filled;
+      return '█'.repeat(filled) + '░'.repeat(empty);
+    }
+
+    function getTrustLabel() {
+      if (state.trust >= 95) return 'EXCELLENT';
+      if (state.trust >= 80) return 'GOOD';
+      if (state.trust >= 60) return 'DEGRADED';
+      return 'CRITICAL';
+    }
+
+    function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function addLog(text, type = 'normal') {
+      const log = document.getElementById('logScroll');
+      const entry = document.createElement('div');
+      entry.className = 'log-entry';
+      if (type === 'error') entry.classList.add('log-error');
+      if (type === 'warning') entry.classList.add('log-warning');
+      if (type === 'success') entry.classList.add('log-success');
+
+      const time = new Date().toLocaleTimeString('en-US', { hour12: false });
+      entry.textContent = `${time} > ${text}`;
+      log.appendChild(entry);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══════════════════════════════════════
+    // BUILD POC SEQUENCE
+    // ═══════════════════════════════════════
+    async function buildPOC() {
+      if (state.building) return;
+      state.building = true;
+      document.getElementById('buildBtn').disabled = true;
+
+      addLog('User clicked BUILD POC');
+      addLog('Initializing pipeline...', 'normal');
+      await sleep(1000);
+
+      // TV5 Studio request
+      activeNode = 'tv5';
+      addLog('TV5 Studio: "Need player for Lupin"', 'normal');
+      createParticle('tv5', 'design', '#00ffff');
+      createParticle('tv5', 'research', '#00ffff');
+      await sleep(2000);
+
+      // Design phase
+      activeNode = 'design';
+      addLog('Design Agent (Mario): "Mockup ready!"', 'success');
+      createParticle('design', 'orchestrator', '#ff00ff');
+      await sleep(2000);
+
+      // Orchestrator coordination
+      activeNode = 'orchestrator';
+      addLog('Orchestrator (Brain): "Coordinating agents..."', 'normal');
+      createParticle('orchestrator', 'code', '#00ff00');
+      createParticle('orchestrator', 'search', '#00ff00');
+      createParticle('orchestrator', 'memory', '#00ff00');
+      await sleep(2000);
+
+      // Code phase
+      activeNode = 'code';
+      addLog('Code Agent (Link): "React component generated"', 'success');
+      createParticle('code', 'test', '#ffff00');
+      await sleep(2000);
+
+      // Test phase
+      activeNode = 'test';
+      addLog('Test Agent (Samus): "Running Jest tests..."', 'normal');
+      await sleep(1500);
+      addLog('Test Agent: "3/5 tests passing, 2 flaky"', 'warning');
+      await sleep(1000);
+
+      // CRISIS: Memory failure
+      activeNode = 'memory';
+      addLog('⚠️  Memory Agent (GLaDOS): "AgentDB unresponsive"', 'error');
+      addLog('GLaDOS: "I think I\'m dying... not joking"', 'error');
+      state.trust = 42; // Easter egg: Hitchhiker's Guide
+      state.easterEggCount++;
+      updateVitals();
+      await sleep(2000);
+
+      // Recovery
+      addLog('Orchestrator: "Rerouting to Postgres..."', 'warning');
+      await sleep(1500);
+      addLog('Memory Agent: "Fallback successful"', 'success');
+      addLog('Postgres: "I got you, fam 🐘"', 'success');
+      state.trust = 98.7;
+      updateVitals();
+      createParticle('memory', 'deploy', '#0088ff');
+      await sleep(2000);
+
+      // Deploy phase
+      activeNode = 'deploy';
+      addLog('Deploy Agent (Freeman): "Rise and shine..."', 'normal');
+      addLog('Deploy Agent: "Shipping to Netlify..."', 'normal');
+      createParticle('deploy', 'factory', '#00ffaa');
+      await sleep(2000);
+
+      // Final validation
+      activeNode = 'factory';
+      addLog('POC Factory: "Running final checks..."', 'normal');
+      await sleep(1500);
+
+      // SPARC score animation
+      const targetScore = 8.2;
+      let currentScore = 0;
+      const scoreInterval = setInterval(() => {
+        currentScore += 0.2;
+        if (currentScore >= targetScore) {
+          currentScore = targetScore;
+          clearInterval(scoreInterval);
+          addLog(`✓ SPARC SCORE: ${targetScore}/10 — APPROVED`, 'success');
+          addLog('QA Agent (Cave Johnson): "Science has been done!"', 'success');
+          document.getElementById('exportBtn').style.display = 'block';
+        }
+        document.getElementById('sparcScore').textContent = currentScore.toFixed(1);
+      }, 100);
+
+      await sleep(2000);
+      addLog('═══════════════════════════════════', 'success');
+      addLog(`✓ POC #${state.pocCount + 1} DEPLOYED SUCCESSFULLY`, 'success');
+      addLog('═══════════════════════════════════', 'success');
+
+      state.pocCount++;
+      document.getElementById('pocNum').textContent = state.pocCount;
+      updateVitals();
+
+      activeNode = null;
+      state.building = false;
+      document.getElementById('buildBtn').disabled = false;
+      document.getElementById('buildBtn').textContent = '🚀 BUILD ANOTHER POC';
+    }
+
+    function createParticle(from, to, color) {
+      particleFlow.push({ from, to, color, progress: 0 });
+    }
+
+    // ═══════════════════════════════════════
+    // EXPORT FUNCTIONALITY
+    // ═══════════════════════════════════════
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const timestamp = new Date().toISOString();
+      const content = `
+# TV5 Player POC #${state.pocCount}
+Built by Agentic OS in 45 seconds
+Generated: ${timestamp}
+
+## SPARC Score
+${document.getElementById('sparcScore').textContent}/10
+
+## Contributors
+- Design: Mario (Nintendo, 1985)
+- Code: Link (The Legend of Zelda, 1986)
+- Test: Samus Aran (Metroid, 1986)
+- Deploy: Gordon Freeman (Half-Life, 1998)
+- Memory: GLaDOS (Portal, 2007)
+- Orchestrator: The Brain (Pinky & The Brain, 1995)
+
+## Trust Level
+${state.trust.toFixed(1)}% (${getTrustLabel()})
+
+## Easter Eggs Found
+${state.easterEggCount} / 10
+
+---
+🧠 Generated by Agentic OS Control Room
+🎮 Powered by geek culture references
+🚀 Zero bugs, maximum vibes
+      `.trim();
+
+      const blob = new Blob([content], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `tv5-player-poc-${state.pocCount}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      addLog(`Downloaded POC #${state.pocCount} package`, 'success');
+
+      // Play Windows XP sound (easter egg reference in log)
+      addLog('*Windows XP shutdown sound plays*', 'normal');
+    });
+
+    // ═══════════════════════════════════════
+    // EASTER EGGS & INTERACTIONS
+    // ═══════════════════════════════════════
+
+    // Konami Code: ↑↑↓↓←→←→BA
+    const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiProgress = 0;
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === konamiCode[konamiProgress]) {
+        konamiProgress++;
+        if (konamiProgress === konamiCode.length) {
+          addLog('🎮 KONAMI CODE ACTIVATED!', 'success');
+          addLog('Secret Agent "Solid Snake" unlocked!', 'success');
+          state.easterEggCount++;
+          document.getElementById('controlRoom').classList.add('glitch');
+          setTimeout(() => {
+            document.getElementById('controlRoom').classList.remove('glitch');
+          }, 500);
+          konamiProgress = 0;
+        }
+      } else {
+        konamiProgress = 0;
+      }
+    });
+
+    // Click on canvas to interact with nodes
+    canvas.addEventListener('click', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / canvas.width;
+      const y = (e.clientY - rect.top) / canvas.height;
+
+      Object.entries(nodes).forEach(([key, node]) => {
+        const distance = Math.sqrt(Math.pow(x - node.x, 2) + Math.pow(y - node.y, 2));
+        if (distance < 0.05) {
+          handleNodeClick(key, node);
+        }
+      });
+    });
+
+    function handleNodeClick(key, node) {
+      // Easter eggs for specific nodes
+      if (key === 'search') {
+        addLog('Pac-Man: *WAKKA WAKKA* 👻', 'success');
+        addLog('Bug chomped!', 'success');
+        state.easterEggCount++;
+      } else if (key === 'code') {
+        addLog('Link: *plays Zelda secret sound* 🎵', 'success');
+        addLog('You found a Triforce piece!', 'success');
+        state.easterEggCount++;
+      } else if (key === 'memory' && state.trust < 50) {
+        addLog('GLaDOS: "This was a triumph..."', 'normal');
+        addLog('GLaDOS: "I\'m making a note here: huge success"', 'normal');
+        state.easterEggCount++;
+      } else if (key === 'test') {
+        addLog('Samus: *fires arm cannon at bugs* 💥', 'success');
+        state.easterEggCount++;
+      } else {
+        addLog(`${node.char || key}: "${node.label} online"`, 'normal');
+      }
+    }
+
+    // Random glitch on memory bar (640K Easter egg)
+    setInterval(() => {
+      if (Math.random() < 0.05) { // 5% chance every interval
+        const vitalsText = document.getElementById('vitalsText');
+        const original = vitalsText.textContent;
+        vitalsText.textContent = vitalsText.textContent.replace(
+          /🧠 MEMORY.*\n.*\n.*/,
+          '🧠 MEMORY\n████░░░░░░░░░░░░ 640 KB\n"640K ought to be enough" - Bill Gates'
+        );
+        setTimeout(() => {
+          vitalsText.textContent = original;
+        }, 1000);
+      }
+    }, 10000);
+
+    // ═══════════════════════════════════════
+    // INITIALIZATION
+    // ═══════════════════════════════════════
+    updateVitals();
+    addLog('═════════════════════════════════════');
+    addLog('  AGENTIC OS CONTROL ROOM v0.1');
+    addLog('═════════════════════════════════════');
+    addLog('System initialized successfully', 'success');
+    addLog('All agents online and ready', 'success');
+    addLog('Click BUILD POC to begin...', 'normal');
+    addLog('─────────────────────────────────────');
+
+    // Uptime counter
+    setInterval(() => {
+      state.uptime++;
+      document.getElementById('countdown').textContent = formatTime(state.uptime);
+      updateVitals();
+    }, 1000);
+
+    // Build button handler
+    document.getElementById('buildBtn').addEventListener('click', buildPOC);
+
+    // Welcome message after 3 seconds
+    setTimeout(() => {
+      addLog('💡 Tip: Try clicking on the nodes!', 'normal');
+    }, 3000);
+  </script>
+</body>
+</html>

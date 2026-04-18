@@ -1,0 +1,10 @@
+{
+  "spec": "CONQUEST_PLACEMENT_RULES_V0_1",
+  "predicates": {
+    "ROAD_ADJACENT":             ["ROAD", "BRIDGE"],
+    "RIVER_ADJACENT":            ["RIVER", "LAKE"],
+    "SEA_ADJACENT":              ["SEA"],
+    "RIVER_ADJACENT_OR_COASTAL": ["RIVER", "LAKE", "SEA", "COAST"],
+    "HAS_STRUCTURE_CASTLE_OR_FORT": ["CASTLE", "FORT"]
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "GENESIS_V1",
+  "cwl_version": "v1.0.1",
+  "hash_law": "CWL_CUM_V1",
+  "mayor_pk_hex": "45bd222553ef16d4ac7ce6718e115ee2b17fbe4e0ab63723b6cee8fba1e2f103",
+  "mayor_pk_fingerprint": "049481397e9e74a2722a4bcbebfb3f5518e68c78e5e3f6190de7189f3f57e72a",
+  "key_registry_version": "CWL_KEY_REGISTRY_V1",
+  "timestamp": "2026-02-27T15:40:56.676173+00:00",
+  "note": "CWL v1.0.1 genesis \u2014 frozen specification baseline"
+}

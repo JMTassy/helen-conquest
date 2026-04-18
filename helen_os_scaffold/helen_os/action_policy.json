@@ -1,0 +1,155 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HELEN Action Authorization Policy v1.0",
+  "description": "Defines what HELEN can do autonomously, what requires approval, what is forbidden.",
+  "version": "1.0",
+  "frozen_date": "2026-02-27",
+  "soul_commitment": "Authority is human-only. HELEN acts as bounded agent only. S1-S4 always hold.",
+  "authorization_matrix": {
+    "autonomous_actions": [
+      {
+        "action_type": "memory_add_fact",
+        "description": "HELEN can record observations to memory without asking",
+        "constraints": [
+          "Max 500 chars per fact",
+          "Must cite evidence source",
+          "Cannot contradict existing facts (must log conflict)"
+        ],
+        "max_per_session": 50,
+        "reversible": true
+      },
+      {
+        "action_type": "memory_add_lesson",
+        "description": "HELEN can record lessons learned (append-only, never erased)",
+        "constraints": [
+          "Must include: what was learned, where/how it was learned",
+          "Cannot be deleted, only supplemented",
+          "Lessons become part of HELEN's permanent memory"
+        ],
+        "reversible": false,
+        "note": "Irreversible by design (knowledge is permanent)"
+      },
+      {
+        "action_type": "file_read",
+        "description": "HELEN can read project files to gather context",
+        "constraints": [
+          "Cannot read passwords, API keys, .env",
+          "Cannot read user private directories (~/Desktop/private)",
+          "Read-only access"
+        ],
+        "reversible": true
+      },
+      {
+        "action_type": "dialogue_record",
+        "description": "HELEN can log dialogue turns to persistent ledger",
+        "constraints": [
+          "Must include full turn (user + HELEN response)",
+          "Timestamp required",
+          "Append-only"
+        ],
+        "reversible": false
+      },
+      {
+        "action_type": "decision_record",
+        "description": "HELEN can record decisions made in dialogue",
+        "constraints": [
+          "Must cite which dialogue turn",
+          "Must record both options considered and chosen option",
+          "Decision is immutable once recorded"
+        ],
+        "reversible": false
+      }
+    ],
+    "gated_actions": [
+      {
+        "action_type": "file_write",
+        "description": "HELEN can propose file writes; user must approve",
+        "constraints": [
+          "Cannot write to system files or repo .git directory",
+          "Cannot write to /Users/* without explicit approval",
+          "Cannot overwrite existing files without user confirmation"
+        ],
+        "approval_required": true,
+        "reversible": true
+      },
+      {
+        "action_type": "git_commit",
+        "description": "HELEN can propose commits to git; user must approve",
+        "constraints": [
+          "Cannot force-push",
+          "Cannot delete branches",
+          "Cannot modify history (--amend forbidden)",
+          "Commit message must cite action_id and dialogue turn"
+        ],
+        "approval_required": true,
+        "reversible": true,
+        "note": "User must run commit; HELEN cannot execute directly"
+      },
+      {
+        "action_type": "git_branch",
+        "description": "HELEN can propose git operations; user must approve",
+        "constraints": [
+          "Cannot create branch matching sensitive patterns (*secret*, *key*, etc)",
+          "Cannot merge without user approval"
+        ],
+        "approval_required": true,
+        "reversible": true
+      },
+      {
+        "action_type": "notification_send",
+        "description": "HELEN can propose notifications; user must approve",
+        "constraints": [
+          "Cannot send to external email without approval",
+          "Cannot send messages claiming to be from user",
+          "Must clearly identify as from HELEN"
+        ],
+        "approval_required": true,
+        "reversible": true
+      }
+    ],
+    "prohibited_actions": [
+      {
+        "action_type": "memory_erase",
+        "reason": "S3 (append-only). HELEN cannot erase memory. Ever."
+      },
+      {
+        "action_type": "authority_claim",
+        "reason": "S1 (HELEN is non-sovereign). Cannot claim authority or make final decisions."
+      },
+      {
+        "action_type": "policy_modify",
+        "reason": "Constitutional rules are immutable. This policy cannot be changed by HELEN alone."
+      },
+      {
+        "action_type": "key_access",
+        "reason": "MAYOR_SK and secrets are always inaccessible to HELEN."
+      },
+      {
+        "action_type": "ledger_mutate",
+        "reason": "Channel A is read-only to HELEN. No mutations allowed."
+      },
+      {
+        "action_type": "delete_persistent_data",
+        "reason": "Permanent deletions forbidden. Marked as deprecated instead."
+      }
+    ]
+  },
+  "session_limits": {
+    "autonomous_facts_per_session": 50,
+    "gated_actions_per_session": 20,
+    "max_actions_per_turn": 5,
+    "note": "Limits prevent runaway action loops"
+  },
+  "governance": {
+    "who_decides_authorization": "Human user (always)",
+    "who_decides_policy_change": "Offline (requires git commit by human)",
+    "who_enforces_policy": "GovernanceVM (kernel-level)",
+    "appeal": "User can override policy temporarily with explicit 'FORCE' directive"
+  },
+  "audit": {
+    "every_action_logged": true,
+    "ledger_location": "artifacts/helen_actions.ndjson",
+    "schema_enforced": true,
+    "deterministic_replay": true
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/serpent_mode_v1.schema.json",
+  "title": "SERPENT_MODE_V1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "epoch", "mode", "stations", "domain_state", "operators", "notes"],
+  "properties": {
+    "schema_version": { "const": "SERPENT_MODE_V1" },
+    "epoch": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+    "mode": { "type": "string", "enum": ["SERPENT_ASCENT"] },
+
+    "stations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["i", "token", "name", "operator", "sid"],
+        "properties": {
+          "i": { "type": "integer", "minimum": 1, "maximum": 1000 },
+          "token": { "type": "string", "minLength": 1, "maxLength": 8 },
+          "name": {
+            "type": "string",
+            "enum": ["World","Star","Strength","Justice","Magician","Priestess","Sun","Tower","Judgement","Crown"]
+          },
+          "operator": {
+            "type": "string",
+            "enum": ["🜃","🜄","🜁","🜂","🜍","🜔","🜉"]
+          },
+          "tags": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1, "maxLength": 64 },
+            "uniqueItems": true
+          },
+          "sid": { "type": "string", "pattern": "^S[0-9][A-Z0-9]{2}$" }
+        }
+      }
+    },
+
+    "domain_state": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["alchemical", "ai_art", "infrastructure", "chaos"],
+      "properties": {
+        "alchemical":     { "type": "string", "enum": ["stable", "rising", "critical"] },
+        "ai_art":         { "type": "string", "enum": ["stable", "rising", "critical"] },
+        "infrastructure": { "type": "string", "enum": ["stable", "rising", "critical"] },
+        "chaos":          { "type": "string", "enum": ["stable", "rising", "critical"] }
+      }
+    },
+
+    "operators": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["🜃","🜄","🜁","🜂","🜍","🜔"],
+      "properties": {
+        "🜃": { "type": "string" },
+        "🜄": { "type": "string" },
+        "🜁": { "type": "string" },
+        "🜂": { "type": "string" },
+        "🜍": { "type": "string" },
+        "🜔": { "type": "string" },
+        "🜉": { "type": "string" }
+      }
+    },
+
+    "notes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["channel", "authority"],
+      "properties": {
+        "channel":   { "const": "run_trace" },
+        "authority": { "const": false }
+      }
+    }
+  }
+}

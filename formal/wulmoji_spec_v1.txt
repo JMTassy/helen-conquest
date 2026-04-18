@@ -1,0 +1,26 @@
+WULMOJI SPEC V1
+═══════════════════════════════════════
+
+🌑 = inversion trigger / threshold crossing / phase boundary
+⚡ = energy surge / activation / sudden shift
+⇄ = bidirectional / cycle / feedback loop / reflection
+♡ = affect channel / emotional resonance / value binding
+◇ = shield / boundary / containment / structural constraint
+🔗 = linkage / connection / causal binding
+🧬 = emergence / self-organization / pattern formation
+🎯 = target / intention / objective coupling
+
+SYNTAX RULES:
+─────────────
+- Read left-to-right as sequence (🌑⚡ = "inversion then surge")
+- Stack vertically for layered meanings (🌑 / ⚡ / ♡ = "inversion, then surge, anchored by affect")
+- Use ⇄ to denote reflection/mirroring points
+
+EXAMPLE:
+────────
+🌑⚡⇄♡ = "Inversion threshold triggered → energy surge → bidirectional feedback → emotional binding"
+
+DETERMINISM:
+────────────
+This spec is pinned to SHA256. Any change increments version (V2, V3, ...).
+References to V1 are immutable and auditable via git hash.

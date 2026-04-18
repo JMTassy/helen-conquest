@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CONQUESTLAND — Hex Map Renderer</title>
+  <style>
+    :root {
+      --bg:       #0d1117;
+      --surface:  #161b22;
+      --border:   #30363d;
+      --text:     #c9d1d9;
+      --muted:    #8b949e;
+      --accent:   #58a6ff;
+      --warn:     #d29922;
+      --ok:       #3fb950;
+      --fail:     #f85149;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Menlo', 'Consolas', monospace;
+      background: var(--bg);
+      color: var(--text);
+      display: grid;
+      grid-template-columns: 300px 1fr 280px;
+      grid-template-rows: 48px 1fr;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Top bar ─────────────────────────────────────────────── */
+    #topbar {
+      grid-column: 1 / -1;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 16px;
+      font-size: 13px;
+    }
+    #topbar h1 { font-size: 14px; font-weight: 600; color: var(--accent); letter-spacing: 1px; }
+    #topbar .sep { color: var(--border); }
+    #status-bar { color: var(--muted); flex: 1; }
+    #topbar .badge {
+      padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600;
+    }
+    .badge-ok   { background: #1a3a1a; color: var(--ok);   border: 1px solid var(--ok); }
+    .badge-fail { background: #3a1a1a; color: var(--fail); border: 1px solid var(--fail); }
+    .badge-info { background: #1a2a3a; color: var(--accent); border: 1px solid var(--accent); }
+
+    /* ── Left panel: JSON input ──────────────────────────────── */
+    #left-panel {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #left-panel h2 {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    #json-input {
+      flex: 1;
+      background: var(--bg);
+      color: var(--text);
+      border: none;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 11px;
+      resize: none;
+      outline: none;
+      line-height: 1.4;
+    }
+    #render-btn {
+      margin: 8px;
+      padding: 7px 14px;
+      background: var(--accent);
+      color: #0d1117;
+      border: none;
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: opacity 0.15s;
+    }
+    #render-btn:hover { opacity: 0.85; }
+    #generate-btn {
+      margin: 0 8px 8px;
+      padding: 6px 14px;
+      background: #1e2a1e;
+      color: var(--ok);
+      border: 1px solid var(--ok);
+      border-radius: 4px;
+      font-family: inherit;
+      font-size: 11px;
+      cursor: pointer;
+    }
+    #generate-btn:hover { background: #2a3a2a; }
+    .seed-row { display: flex; gap: 6px; margin: 0 8px 8px; }
+    .seed-row input {
+      flex: 1; padding: 4px 8px;
+      background: var(--bg); color: var(--text);
+      border: 1px solid var(--border); border-radius: 4px;
+      font-family: inherit; font-size: 11px;
+    }
+
+    /* ── SVG canvas ──────────────────────────────────────────── */
+    #canvas-wrap {
+      overflow: hidden;
+      position: relative;
+      background: #0a0e14;
+      cursor: grab;
+    }
+    #canvas-wrap:active { cursor: grabbing; }
+    #hex-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* ── Right panel: hex info ───────────────────────────────── */
+    #right-panel {
+      background: var(--surface);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    #right-panel h2 {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      padding: 10px 12px 8px;
+      border-bottom: 1px solid var(--border);
+      text-transform: uppercase; letter-spacing: 1px;
+    }
+    #hex-info {
+      flex: 1;
+      overflow-y: auto;
+      padding: 10px 12px;
+      font-size: 11px;
+      line-height: 1.8;
+    }
+    .info-row { display: flex; justify-content: space-between; }
+    .info-key { color: var(--muted); }
+    .info-val { color: var(--text); text-align: right; max-width: 150px; word-break: break-all; }
+    .info-section { color: var(--accent); font-weight: 600; margin: 10px 0 4px; font-size: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    .info-list { color: var(--text); padding-left: 8px; }
+    #legend {
+      border-top: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 10px;
+    }
+    #legend h3 { color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .legend-row { display: flex; align-items: center; gap: 6px; margin: 3px 0; }
+    .legend-dot { width: 12px; height: 12px; border-radius: 2px; flex-shrink: 0; }
+
+    /* ── Tooltip ─────────────────────────────────────────────── */
+    #tooltip {
+      position: fixed;
+      background: rgba(13,17,23,0.95);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      pointer-events: none;
+      z-index: 100;
+      display: none;
+      max-width: 220px;
+    }
+    #tooltip .tt-id   { color: var(--accent); font-weight: 600; }
+    #tooltip .tt-terr { color: var(--ok); }
+    #tooltip .tt-str  { color: var(--warn); }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div id="topbar">
+  <h1>CONQUESTLAND HEX MAP</h1>
+  <span class="sep">|</span>
+  <span id="status-bar">No world loaded — paste JSON or generate sample</span>
+  <span id="badge-sv" class="badge" style="display:none"></span>
+  <span class="badge badge-info">CASTLE_CENTERED_WORLDGEN_V0_1</span>
+</div>
+
+<!-- Left panel -->
+<div id="left-panel">
+  <h2>World JSON</h2>
+  <textarea id="json-input" placeholder='Paste output of generate_world_around_castle() here…
+{
+  "world_seed": 42,
+  "castle_id": "CASTLE_001",
+  "anchor": {"q": 0, "r": 0, "hex_id": "H0_0"},
+  "radius": 16,
+  "hexes": [...]
+}'></textarea>
+  <button id="render-btn" onclick="renderFromInput()">▶ Render Map</button>
+  <div class="seed-row">
+    <input type="number" id="seed-input" value="42" placeholder="seed">
+    <input type="number" id="radius-input" value="8" placeholder="radius" min="1" max="24">
+  </div>
+  <button id="generate-btn" onclick="generateSample()">⚙ Generate Sample</button>
+</div>
+
+<!-- SVG canvas -->
+<div id="canvas-wrap">
+  <svg id="hex-svg" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="castle-glow">
+        <feGaussianBlur stdDeviation="3" result="blur"/>
+        <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+    </defs>
+    <g id="hex-layer"></g>
+    <g id="label-layer"></g>
+  </svg>
+</div>
+
+<!-- Right panel -->
+<div id="right-panel">
+  <h2>Hex Inspector</h2>
+  <div id="hex-info">
+    <span style="color: var(--muted); font-size: 11px;">Click any hex to inspect.</span>
+  </div>
+  <div id="legend">
+    <h3>Terrain Legend</h3>
+    <div id="legend-items"></div>
+  </div>
+</div>
+
+<!-- Tooltip -->
+<div id="tooltip">
+  <div class="tt-id" id="tt-id"></div>
+  <div class="tt-terr" id="tt-terr"></div>
+  <div class="tt-str"  id="tt-str"></div>
+</div>
+
+<script>
+/* ── Constants ─────────────────────────────────────────────────────────── */
+
+const TERRAIN_COLORS = {
+  VOID:     '#0d1117',
+  SEA:      '#1a3a5c',
+  COAST:    '#2a6ca8',
+  RIVER:    '#1565c0',
+  LAKE:     '#0277bd',
+  PLAIN:    '#558b2f',
+  FOREST:   '#1b5e20',
+  HILL:     '#6d4c41',
+  MOUNTAIN: '#546e7a',
+  MARSH:    '#33691e',
+  DESERT:   '#f57f17',
+  ROAD:     '#8d6e63',
+  BRIDGE:   '#bf8f5b',
+};
+
+const TERRAIN_STROKE = {
+  VOID: '#000', SEA: '#0d2a4a', COAST: '#1a5a90', RIVER: '#0d47a1',
+  LAKE: '#01579b', PLAIN: '#33691e', FOREST: '#1a3a1a', HILL: '#4a3020',
+  MOUNTAIN: '#37474f', MARSH: '#1b5e20', DESERT: '#e65100',
+  ROAD: '#5d4037', BRIDGE: '#8a6030',
+};
+
+const STRUCTURE_ICONS = {
+  CASTLE:     '♜',
+  FORT:       '⛫',
+  WATCHTOWER: '⬛',
+  TOWN:       '⌂',
+  CITY:       '⊕',
+  FARM:       '⚜',
+  HARBOR:     '⚓',
+  MINE:       '⛏',
+  TEMPLE:     '⛩',
+  MARKET:     '⌘',
+};
+
+const OVERLAY_COLORS = {
+  CLAIMABLE:  '#3fb950',
+  UNCLAIMED:  '#8b949e',
+  CLAIMED:    '#ffd700',
+  FORTIFIED:  '#ff6b35',
+  SEALED:     '#9c27b0',
+  RESOURCE_LOCKED: '#2196f3',
+  DUEL_PENDING:    '#ff1744',
+};
+
+/* ── Viewport state ─────────────────────────────────────────────────────── */
+
+let vp = { x: 0, y: 0, scale: 1.0 };
+let dragging = false;
+let dragStart = { x: 0, y: 0, vx: 0, vy: 0 };
+let currentWorld = null;
+let hexSize = 26;
+
+/* ── Flat-top hex geometry ──────────────────────────────────────────────── */
+
+function hexCorners(cx, cy, size) {
+  const pts = [];
+  for (let i = 0; i < 6; i++) {
+    const angle = Math.PI / 180 * (60 * i);  // flat-top: starts at 0°
+    pts.push([cx + size * Math.cos(angle), cy + size * Math.sin(angle)]);
+  }
+  return pts;
+}
+
+function axialToPixel(q, r, size) {
+  const x = size * (3 / 2) * q;
+  const y = size * (Math.sqrt(3) / 2 * q + Math.sqrt(3) * r);
+  return { x, y };
+}
+
+/* ── SVG helpers ────────────────────────────────────────────────────────── */
+
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function svgEl(tag, attrs = {}) {
+  const el = document.createElementNS(SVG_NS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  return el;
+}
+
+/* ── Render ─────────────────────────────────────────────────────────────── */
+
+function renderWorld(world) {
+  currentWorld = world;
+  const hexes = world.hexes || [];
+
+  const hexLayer   = document.getElementById('hex-layer');
+  const labelLayer = document.getElementById('label-layer');
+  hexLayer.innerHTML   = '';
+  labelLayer.innerHTML = '';
+
+  // Compute bounding box
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  const pixelCache = {};
+  for (const h of hexes) {
+    const p = axialToPixel(h.q, h.r, hexSize);
+    pixelCache[h.hex_id] = p;
+    minX = Math.min(minX, p.x);
+    maxX = Math.max(maxX, p.x);
+    minY = Math.min(minY, p.y);
+    maxY = Math.max(maxY, p.y);
+  }
+  const worldW = maxX - minX + hexSize * 2;
+  const worldH = maxY - minY + hexSize * 2;
+
+  // Center viewport on castle (H0_0 or anchor)
+  const anchorId = (world.anchor && world.anchor.hex_id) || 'H0_0';
+  const anchorP  = pixelCache[anchorId] || { x: (minX + maxX) / 2, y: (minY + maxY) / 2 };
+  const svgWrap  = document.getElementById('canvas-wrap');
+  const vpW      = svgWrap.clientWidth;
+  const vpH      = svgWrap.clientHeight;
+  vp.x   = vpW / 2 - anchorP.x;
+  vp.y   = vpH / 2 - anchorP.y;
+  vp.scale = 1.0;
+
+  for (const h of hexes) {
+    const p       = pixelCache[h.hex_id];
+    const corners = hexCorners(p.x, p.y, hexSize - 1.5);
+    const pts     = corners.map(c => c.join(',')).join(' ');
+
+    const fill    = TERRAIN_COLORS[h.terrain]  || '#555';
+    const stroke  = TERRAIN_STROKE[h.terrain]  || '#444';
+
+    // Is this the castle?
+    const isCastle = (h.hex_id === anchorId);
+
+    // Hex polygon
+    const poly = svgEl('polygon', {
+      points:       pts,
+      fill:         fill,
+      stroke:       isCastle ? '#ffd700' : stroke,
+      'stroke-width': isCastle ? 2.5 : 1,
+    });
+    if (isCastle) poly.setAttribute('filter', 'url(#castle-glow)');
+
+    poly.style.cursor = 'pointer';
+    poly.addEventListener('mouseenter', e => showTooltip(e, h));
+    poly.addEventListener('mousemove',  e => moveTooltip(e));
+    poly.addEventListener('mouseleave', () => hideTooltip());
+    poly.addEventListener('click', () => inspectHex(h));
+    hexLayer.appendChild(poly);
+
+    // Overlay ring indicator (small arc at outer edge)
+    const primaryOverlay = (h.overlay || [])[0];
+    if (primaryOverlay && OVERLAY_COLORS[primaryOverlay]) {
+      const ovlColor = OVERLAY_COLORS[primaryOverlay];
+      const oCorners = hexCorners(p.x, p.y, hexSize - 2.5);
+      const oPts = oCorners.map(c => c.join(',')).join(' ');
+      const ovlPoly = svgEl('polygon', {
+        points: oPts,
+        fill:   'none',
+        stroke: ovlColor,
+        'stroke-width': 1.5,
+        opacity: 0.7,
+        'pointer-events': 'none',
+      });
+      labelLayer.appendChild(ovlPoly);
+    }
+
+    // Structure icon
+    if (h.structure && STRUCTURE_ICONS[h.structure]) {
+      const icon = svgEl('text', {
+        x: p.x, y: p.y + 4,
+        'text-anchor': 'middle',
+        'dominant-baseline': 'middle',
+        'font-size': isCastle ? '14' : '11',
+        fill: isCastle ? '#ffd700' : '#fff',
+        opacity: isCastle ? 1 : 0.9,
+        'pointer-events': 'none',
+      });
+      icon.textContent = STRUCTURE_ICONS[h.structure];
+      labelLayer.appendChild(icon);
+    }
+
+    // Generation entropy dot (tiny ring in corner)
+    if (h.generation_entropy !== undefined && h.generation_entropy > 0.7) {
+      const dotX = p.x + hexSize * 0.45;
+      const dotY = p.y - hexSize * 0.45;
+      const dot  = svgEl('circle', {
+        cx: dotX, cy: dotY, r: 2.5,
+        fill: 'rgba(255,200,50,0.7)',
+        'pointer-events': 'none',
+      });
+      labelLayer.appendChild(dot);
+    }
+  }
+
+  // Update status bar
+  const sv = world.survivability || {};
+  const badgeSv = document.getElementById('badge-sv');
+  badgeSv.style.display = 'inline';
+  if (sv.ok) {
+    badgeSv.className = 'badge badge-ok';
+    badgeSv.textContent = '✓ SURVIVABLE';
+  } else {
+    badgeSv.className = 'badge badge-fail';
+    badgeSv.textContent = `✗ NOT SURVIVABLE (${(sv.violations || []).length})`;
+  }
+
+  document.getElementById('status-bar').textContent =
+    `seed=${world.world_seed} | ${hexes.length} hexes | radius=${world.radius} | castle=${anchorId}`;
+
+  applyViewport();
+  buildLegend(hexes);
+}
+
+/* ── Viewport pan/zoom ──────────────────────────────────────────────────── */
+
+function applyViewport() {
+  const g = document.getElementById('hex-layer').parentElement || document.getElementById('hex-svg').querySelector('g');
+  const transform = `translate(${vp.x}px, ${vp.y}px) scale(${vp.scale})`;
+  document.getElementById('hex-layer').style.transform   = transform;
+  document.getElementById('label-layer').style.transform = transform;
+}
+
+const canvasWrap = document.getElementById('canvas-wrap');
+
+canvasWrap.addEventListener('mousedown', e => {
+  dragging  = true;
+  dragStart = { x: e.clientX, y: e.clientY, vx: vp.x, vy: vp.y };
+});
+window.addEventListener('mouseup', () => { dragging = false; });
+window.addEventListener('mousemove', e => {
+  if (!dragging) return;
+  vp.x = dragStart.vx + (e.clientX - dragStart.x);
+  vp.y = dragStart.vy + (e.clientY - dragStart.y);
+  applyViewport();
+});
+canvasWrap.addEventListener('wheel', e => {
+  e.preventDefault();
+  const factor = e.deltaY > 0 ? 0.9 : 1.1;
+  const rect   = canvasWrap.getBoundingClientRect();
+  const mx     = e.clientX - rect.left;
+  const my     = e.clientY - rect.top;
+  vp.x = mx - (mx - vp.x) * factor;
+  vp.y = my - (my - vp.y) * factor;
+  vp.scale *= factor;
+  vp.scale   = Math.max(0.15, Math.min(8, vp.scale));
+  applyViewport();
+}, { passive: false });
+
+/* ── Tooltip ────────────────────────────────────────────────────────────── */
+
+const tooltip = document.getElementById('tooltip');
+
+function showTooltip(e, h) {
+  document.getElementById('tt-id').textContent   = h.hex_id;
+  document.getElementById('tt-terr').textContent = `⬡ ${h.terrain}${h.ring !== undefined ? '  ring:' + h.ring : ''}`;
+  const sv = h.structure ? `⚑ ${h.structure}` : (h.overlay || []).join(', ') || '';
+  document.getElementById('tt-str').textContent = sv;
+  tooltip.style.display = 'block';
+  moveTooltip(e);
+}
+function moveTooltip(e) {
+  tooltip.style.left = (e.clientX + 14) + 'px';
+  tooltip.style.top  = (e.clientY - 10) + 'px';
+}
+function hideTooltip() { tooltip.style.display = 'none'; }
+
+/* ── Hex inspector ──────────────────────────────────────────────────────── */
+
+function inspectHex(h) {
+  const panel = document.getElementById('hex-info');
+  const row = (k, v) => `<div class="info-row"><span class="info-key">${k}</span><span class="info-val">${v}</span></div>`;
+  const sec = label => `<div class="info-section">${label}</div>`;
+
+  const overlay  = (h.overlay  || []).join(', ') || '—';
+  const resource = (h.resource_profile || []).join(', ') || '—';
+  const entropy  = h.generation_entropy !== undefined ? h.generation_entropy.toFixed(4) : '—';
+  const fog      = h.epistemic_fog       !== undefined ? h.epistemic_fog.toFixed(4)       : '—';
+  const ring     = h.ring !== undefined ? h.ring : '—';
+
+  panel.innerHTML = `
+    ${sec('Identity')}
+    ${row('hex_id',  `<b>${h.hex_id}</b>`)}
+    ${row('q / r',   `${h.q} / ${h.r}`)}
+    ${row('ring',    ring)}
+    ${sec('Substrate')}
+    ${row('terrain',   `<b style="color:#${terrainHex(h.terrain)}">${h.terrain}</b>`)}
+    ${row('structure', h.structure || '—')}
+    ${sec('Sovereignty')}
+    ${row('overlay',        overlay)}
+    ${row('owner_house_id', h.owner_house_id || '—')}
+    ${row('receipt_hash',   h.receipt_hash   || '—')}
+    ${sec('Geography')}
+    ${row('region_id',  h.region_id || '—')}
+    ${row('resources',  resource)}
+    ${sec('Uncertainty')}
+    ${row('gen_entropy', entropy)}
+    ${row('epistemic_fog', fog)}
+  `;
+}
+
+function terrainHex(terrain) {
+  const c = TERRAIN_COLORS[terrain] || '#888888';
+  return c.replace('#', '');
+}
+
+/* ── Legend ─────────────────────────────────────────────────────────────── */
+
+function buildLegend(hexes) {
+  const present = new Set(hexes.map(h => h.terrain).filter(Boolean));
+  const el      = document.getElementById('legend-items');
+  el.innerHTML  = '';
+  for (const [terrain, color] of Object.entries(TERRAIN_COLORS)) {
+    if (!present.has(terrain)) continue;
+    const row = document.createElement('div');
+    row.className = 'legend-row';
+    row.innerHTML = `<div class="legend-dot" style="background:${color}"></div><span>${terrain}</span>`;
+    el.appendChild(row);
+  }
+}
+
+/* ── JSON input ─────────────────────────────────────────────────────────── */
+
+function renderFromInput() {
+  const raw = document.getElementById('json-input').value.trim();
+  if (!raw) {
+    alert('Paste world JSON first.');
+    return;
+  }
+  let world;
+  try {
+    const parsed = JSON.parse(raw);
+    // Accept either world dict or {hexes: [...]} or bare hex list
+    if (Array.isArray(parsed)) {
+      world = { hexes: parsed, world_seed: 0, radius: 0, anchor: { hex_id: 'H0_0' }, survivability: { ok: true, violations: [] } };
+    } else if (parsed.hexes) {
+      world = parsed;
+    } else {
+      throw new Error('Expected world dict with "hexes" array or bare hex list.');
+    }
+  } catch (err) {
+    alert('JSON parse error: ' + err.message);
+    return;
+  }
+  renderWorld(world);
+}
+
+/* ── Sample generator (client-side Python-like worldgen simulation) ──────── */
+// Generates a small sample world using the same deterministic algorithm
+// as castle_centered_generator.py — purely for demo purposes.
+
+function hashSeed(seed, label) {
+  // Deterministic hash: simple LCG approximation for demo
+  let h = 0;
+  const s = `${seed}:${label}`;
+  for (let i = 0; i < s.length; i++) {
+    h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
+  }
+  return Math.abs(h);
+}
+
+function seededRand(seed) {
+  // Mulberry32 PRNG
+  let s = seed >>> 0;
+  return function() {
+    s += 0x6D2B79F5;
+    let t = Math.imul(s ^ s >>> 15, 1 | s);
+    t ^= t + Math.imul(t ^ t >>> 7, 61 | t);
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
+  };
+}
+
+const TERRAIN_LIST = ['PLAIN','FOREST','HILL','MOUNTAIN','MARSH','DESERT','ROAD','COAST','RIVER'];
+const ADJACENCY = {
+  PLAIN:    ['PLAIN','FOREST','HILL','MARSH','DESERT','ROAD','COAST'],
+  FOREST:   ['PLAIN','FOREST','HILL','MARSH'],
+  HILL:     ['PLAIN','FOREST','HILL','MOUNTAIN','ROAD'],
+  MOUNTAIN: ['HILL','MOUNTAIN'],
+  MARSH:    ['PLAIN','FOREST','MARSH','RIVER','COAST'],
+  DESERT:   ['PLAIN','DESERT','HILL'],
+  ROAD:     ['PLAIN','ROAD','HILL','FOREST'],
+  COAST:    ['PLAIN','MARSH','COAST','SEA','RIVER','HARBOR'],
+  RIVER:    ['RIVER','LAKE','COAST','PLAIN','MARSH'],
+  SEA:      ['SEA','COAST'],
+  LAKE:     ['LAKE','RIVER','COAST','MARSH'],
+  BRIDGE:   ['ROAD','RIVER'],
+  VOID:     [],
+};
+const INTERIOR = ['PLAIN','FOREST','HILL','MARSH','DESERT','ROAD'];
+const RESOURCES = { PLAIN:['GRAIN'], FOREST:['WOOD'], HILL:['STONE'], MOUNTAIN:['STONE','IRON'], MARSH:['WATER'], DESERT:[], ROAD:[], COAST:['SALT'], RIVER:['WATER'], SEA:[], LAKE:['WATER'], BRIDGE:[] };
+
+function hexRing(radius) {
+  if (radius === 0) return [[0,0]];
+  const dirs = [[-1,1],[-1,0],[0,-1],[1,-1],[1,0],[0,1]];
+  const result = [];
+  let q = radius, r = 0;
+  for (const [dq,dr] of dirs) {
+    for (let i = 0; i < radius; i++) {
+      result.push([q, r]);
+      q += dq; r += dr;
+    }
+  }
+  return result;
+}
+
+function generateSample() {
+  const seed   = parseInt(document.getElementById('seed-input').value)   || 42;
+  const radius = parseInt(document.getElementById('radius-input').value) || 8;
+
+  const rng      = seededRand(hashSeed(seed, 'terrain'));
+  const rngStruct = seededRand(hashSeed(seed, 'structures'));
+
+  const hexMap = {};
+  const maxR   = Math.max(radius, 1);
+
+  // Build lattice
+  for (let ring = 0; ring <= radius; ring++) {
+    for (const [q,r] of hexRing(ring)) {
+      const hid = `H${q}_${r}`;
+      hexMap[hid] = {
+        hex_id: hid, q, r, ring,
+        terrain: null, structure: null,
+        overlay: [], overlay_primary: null,
+        owner_house_id: null, receipt_hash: null,
+        region_id: null, resource_profile: [],
+        generation_entropy: 0, epistemic_fog: ring / maxR,
+      };
+    }
+  }
+
+  // Castle domain template
+  hexMap['H0_0'].terrain   = 'HILL';
+  hexMap['H0_0'].structure = 'CASTLE';
+  hexMap['H0_0'].generation_entropy = rng();
+
+  const pref1 = ['PLAIN','FOREST','ROAD'];
+  const pref2 = ['PLAIN','FOREST','HILL'];
+  for (const [q,r] of hexRing(1)) {
+    const hid = `H${q}_${r}`;
+    if (hexMap[hid]) {
+      hexMap[hid].terrain = pref1[Math.floor(rng() * pref1.length)];
+      hexMap[hid].generation_entropy = rng();
+    }
+  }
+  for (const [q,r] of hexRing(2)) {
+    const hid = `H${q}_${r}`;
+    if (hexMap[hid]) {
+      hexMap[hid].terrain = pref2[Math.floor(rng() * pref2.length)];
+      hexMap[hid].generation_entropy = rng();
+    }
+  }
+  // Ring 3: quota
+  let ring3 = hexRing(3).map(([q,r]) => `H${q}_${r}`).filter(id => hexMap[id]);
+  let assigned = 0;
+  for (const hid of ring3) {
+    if (assigned === 0) { hexMap[hid].terrain = 'ROAD'; hexMap[hid].generation_entropy = rng(); }
+    else if (assigned === 1 || assigned === 2) { hexMap[hid].terrain = 'PLAIN'; hexMap[hid].generation_entropy = rng(); }
+    assigned++;
+  }
+
+  // WFC for remaining: inner rings first
+  const order = Object.values(hexMap)
+    .filter(h => h.terrain === null)
+    .sort((a,b) => a.ring - b.ring);
+
+  for (const cell of order) {
+    const nbr = [[-1,1],[-1,0],[0,-1],[1,-1],[1,0],[0,1]]
+      .map(([dq,dr]) => hexMap[`H${cell.q+dq}_${cell.r+dr}`])
+      .filter(n => n && n.terrain)
+      .map(n => n.terrain);
+
+    let legal = INTERIOR.slice();
+    if (nbr.length > 0) {
+      let lset = new Set(Object.keys(ADJACENCY));
+      for (const nt of nbr) {
+        const al = new Set(ADJACENCY[nt] || []);
+        lset = new Set([...lset].filter(t => al.has(t)));
+      }
+      lset.delete('VOID');
+      const inner = [...lset].filter(t => INTERIOR.includes(t));
+      legal = inner.length > 0 ? inner : [...lset];
+    }
+    if (legal.length === 0) legal = ['PLAIN'];
+    cell.terrain = legal[Math.floor(rng() * legal.length)];
+    cell.generation_entropy = rng();
+  }
+
+  // Resources
+  for (const cell of Object.values(hexMap)) {
+    cell.resource_profile = RESOURCES[cell.terrain] || [];
+  }
+
+  // Structures (simple random placement)
+  const structs = ['TOWN','FARM','HARBOR','MINE','TEMPLE'];
+  const strTerrain = { TOWN:'PLAIN', FARM:'PLAIN', HARBOR:'COAST', MINE:'HILL', TEMPLE:'HILL' };
+  for (const struct of structs) {
+    const cands = Object.values(hexMap).filter(h => h.terrain === strTerrain[struct] && !h.structure && h.ring > 2);
+    if (cands.length > 0) {
+      const pick = cands[Math.floor(rngStruct() * cands.length)];
+      pick.structure = struct;
+    }
+  }
+
+  // Overlays
+  for (const cell of Object.values(hexMap)) {
+    if (cell.hex_id === 'H0_0') { cell.overlay = ['UNCLAIMED']; continue; }
+    const passable = ['PLAIN','FOREST','HILL','MARSH','DESERT','ROAD','COAST','BRIDGE'].includes(cell.terrain);
+    cell.overlay = passable ? ['CLAIMABLE'] : ['UNCLAIMED'];
+  }
+
+  // Regions (6 Voronoi centroids)
+  const REGIONS = ['NORTH_BASTION','AURIC_MARCH','ORACLE_SPINE','ASHEN_CORRIDOR','TEMPLE_REACH','VERDANT_DELTA'];
+  const rgnRng  = seededRand(hashSeed(seed, 'regions'));
+  const eligible = Object.values(hexMap).filter(h => !['VOID','SEA'].includes(h.terrain));
+  const centroids = [];
+  const pool = [...eligible].sort(() => rgnRng() - 0.5);
+  for (let i = 0; i < 6 && pool.length; i++) centroids.push({ region: REGIONS[i], cell: pool.pop() });
+  for (const h of Object.values(hexMap)) {
+    if (!centroids.length) { h.region_id = REGIONS[0]; continue; }
+    const nearest = centroids.reduce((best, c) => {
+      const d = Math.max(Math.abs(h.q - c.cell.q), Math.abs(h.r - c.cell.r), Math.abs(h.q + h.r - c.cell.q - c.cell.r));
+      return d < best.d ? { d, region: c.region } : best;
+    }, { d: Infinity, region: REGIONS[0] });
+    h.region_id = nearest.region;
+  }
+
+  const hexes = Object.values(hexMap);
+  const world = {
+    world_seed:    seed,
+    castle_id:     'CASTLE_DEMO_001',
+    anchor:        { q: 0, r: 0, hex_id: 'H0_0' },
+    radius,
+    hexes,
+    repair_events: [],
+    survivability: { ok: true, violations: [] },
+  };
+
+  document.getElementById('json-input').value = JSON.stringify(world, null, 2);
+  renderWorld(world);
+}
+
+/* ── Init ─────────────────────────────────────────────────────────────────── */
+
+// Auto-generate on load for instant preview
+window.addEventListener('load', () => {
+  generateSample();
+});
+</script>
+</body>
+</html>

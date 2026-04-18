@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELEN - Persistent Dialogue</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background: #0d1117;
+            color: #c9d1d9;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #header {
+            background: #161b22;
+            border-bottom: 1px solid #30363d;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        #header h1 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #58a6ff;
+        }
+        
+        #status {
+            font-size: 12px;
+            color: #8b949e;
+        }
+        
+        #status.connected::before {
+            content: "●";
+            color: #3fb950;
+            margin-right: 6px;
+        }
+        
+        #dialogue {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .message {
+            display: flex;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.her {
+            justify-content: flex-start;
+        }
+        
+        .message.hal {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 60%;
+            padding: 12px 16px;
+            border-radius: 8px;
+            word-wrap: break-word;
+        }
+        
+        .message.her .message-content {
+            background: #30363d;
+            color: #c9d1d9;
+            border-left: 3px solid #58a6ff;
+        }
+        
+        .message.hal .message-content {
+            background: #161b22;
+            border-left: 3px solid;
+        }
+        
+        .message.hal.pass .message-content {
+            border-color: #3fb950;
+            color: #3fb950;
+        }
+        
+        .message.hal.warn .message-content {
+            border-color: #d29922;
+            color: #d29922;
+        }
+        
+        .message.hal.block .message-content {
+            border-color: #f85149;
+            color: #f85149;
+        }
+        
+        .message-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #58a6ff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .message.hal .message-label {
+            color: #d292b8;
+        }
+        
+        #input-area {
+            background: #161b22;
+            border-top: 1px solid #30363d;
+            padding: 16px 20px;
+            display: flex;
+            gap: 12px;
+        }
+        
+        #input-area input {
+            flex: 1;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #c9d1d9;
+            padding: 10px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+        
+        #input-area input:focus {
+            outline: none;
+            border-color: #58a6ff;
+            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.1);
+        }
+        
+        #input-area button {
+            background: #238636;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        #input-area button:hover {
+            background: #2ea043;
+        }
+        
+        #input-area button:active {
+            background: #238636;
+        }
+        
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: 12px 16px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #8b949e;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+            }
+            30% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>HELEN — Persistent Dialogue</h1>
+        <div id="status">Connecting...</div>
+    </div>
+    
+    <div id="dialogue"></div>
+    
+    <div id="input-area">
+        <input 
+            type="text" 
+            id="message-input" 
+            placeholder="HELEN: say something... (press Enter or click Send)"
+            autocomplete="off"
+        >
+        <button id="send-btn">Send</button>
+    </div>
+    
+    <script>
+        const dialogueDiv = document.getElementById("dialogue");
+        const messageInput = document.getElementById("message-input");
+        const sendBtn = document.getElementById("send-btn");
+        const statusDiv = document.getElementById("status");
+        
+        let isConnected = false;
+        
+        // Check connection on load
+        async function checkStatus() {
+            try {
+                const resp = await fetch("/api/status");
+                const data = await resp.json();
+                isConnected = data.kernel_socket;
+                updateStatus();
+            } catch (e) {
+                isConnected = false;
+                updateStatus();
+            }
+        }
+        
+        function updateStatus() {
+            statusDiv.textContent = isConnected ? "Connected" : "Kernel offline";
+            statusDiv.className = isConnected ? "connected" : "disconnected";
+        }
+        
+        function addMessage(text, role, verdict = null) {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = `message ${role}`;
+            if (verdict) msgDiv.classList.add(verdict.toLowerCase());
+            
+            const label = document.createElement("div");
+            label.className = "message-label";
+            label.textContent = role === "her" ? "[HER]" : `[HAL] ${verdict || "?"}`;
+            
+            const content = document.createElement("div");
+            content.className = "message-content";
+            content.textContent = text;
+            
+            msgDiv.appendChild(label);
+            msgDiv.appendChild(content);
+            dialogueDiv.appendChild(msgDiv);
+            dialogueDiv.scrollTop = dialogueDiv.scrollHeight;
+        }
+        
+        function showTyping() {
+            const msgDiv = document.createElement("div");
+            msgDiv.className = "message hal";
+            msgDiv.id = "typing-indicator";
+            
+            const label = document.createElement("div");
+            label.className = "message-label";
+            label.textContent = "[HAL] …";
+            
+            const content = document.createElement("div");
+            content.className = "message-content";
+            
+            for (let i = 0; i < 3; i++) {
+                const dot = document.createElement("div");
+                dot.className = "typing-dot";
+                content.appendChild(dot);
+            }
+            
+            msgDiv.appendChild(label);
+            msgDiv.appendChild(content);
+            dialogueDiv.appendChild(msgDiv);
+            dialogueDiv.scrollTop = dialogueDiv.scrollHeight;
+        }
+        
+        function removeTyping() {
+            const typing = document.getElementById("typing-indicator");
+            if (typing) typing.remove();
+        }
+        
+        async function sendMessage() {
+            const msg = messageInput.value.trim();
+            if (!msg) return;
+            
+            messageInput.value = "";
+            addMessage(msg, "her");
+            showTyping();
+            sendBtn.disabled = true;
+            
+            try {
+                const resp = await fetch("/api/send", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: msg, op: "fetch" })
+                });
+                
+                const data = await resp.json();
+                removeTyping();
+                
+                if (data.success) {
+                    if (data.her) addMessage(data.her, "hal", data.verdict);
+                } else {
+                    addMessage(`Error: ${data.error || "Unknown error"}`, "hal", "BLOCK");
+                }
+            } catch (e) {
+                removeTyping();
+                addMessage(`Connection error: ${e.message}`, "hal", "BLOCK");
+            } finally {
+                sendBtn.disabled = false;
+                messageInput.focus();
+            }
+        }
+        
+        sendBtn.addEventListener("click", sendMessage);
+        messageInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Check status and set focus
+        checkStatus();
+        setInterval(checkStatus, 3000);
+        messageInput.focus();
+        
+        // Welcome message
+        addMessage("HELEN dialogue interface ready. Type a message and press Enter.", "hal", "PASS");
+    </script>
+</body>
+</html>

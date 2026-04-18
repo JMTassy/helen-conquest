@@ -1,0 +1,321 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  How to Use OpenClaw Kernel — Complete Summary                 ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+THE QUESTION: "How can we use this?"
+────────────────────────────────────
+
+ANSWER: You have 5 practical use cases. Pick one and follow the steps.
+
+════════════════════════════════════════════════════════════════════════════════
+
+YOUR 5 OPTIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─ OPTION 1: Safe Agent Automation ──────────────────────────────────────────┐
+│                                                                              │
+│ Use Case: "I want my agent to be safe and audited"                         │
+│ Effort: 10 minutes                                                          │
+│ Benefit: Every action logged, kernel prevents accidents                     │
+│                                                                              │
+│ Steps:                                                                       │
+│   1. Replace requests.get() with fetch.fetch()                             │
+│   2. Replace subprocess.run() with shell.execute()                         │
+│   3. Start kernel daemon                                                    │
+│   4. Run agent                                                              │
+│                                                                              │
+│ Result: Agent is autonomous, safe, and audited                             │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 2: Multi-Agent Orchestration ─────────────────────────────────────┐
+│                                                                              │
+│ Use Case: "I have multiple agents/teams, I want one policy"                │
+│ Effort: 30 minutes                                                          │
+│ Benefit: Enforce boundaries, prevent teams from overstepping               │
+│                                                                              │
+│ Steps:                                                                       │
+│   1. Configure kernel policy (define per-team permissions)                 │
+│   2. Each agent declares its team                                          │
+│   3. Kernel enforces boundaries automatically                              │
+│   4. Check ledger for all decisions                                        │
+│                                                                              │
+│ Result: Teams work independently, boundaries enforced, audit trail         │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 3: Hostile Environment Safety ────────────────────────────────────┐
+│                                                                              │
+│ Use Case: "Agent runs in untrusted environment, I need guarantees"         │
+│ Effort: 45 minutes                                                          │
+│ Benefit: Even if agent is compromised, it can't harm you                   │
+│                                                                              │
+│ Steps:                                                                       │
+│   1. Start kernel on YOUR secure servers                                   │
+│   2. Point agent to remote kernel                                          │
+│   3. Agent can fetch/execute, but kernel decides                           │
+│   4. Complete audit trail on your servers                                  │
+│                                                                              │
+│ Result: Agent works, but can't access your infrastructure or tamper        │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 4: Debug Agent Failures ──────────────────────────────────────────┐
+│                                                                              │
+│ Use Case: "Agent stopped working, I don't know why"                        │
+│ Effort: 5 minutes                                                           │
+│ Benefit: Complete visibility into what failed and why                      │
+│                                                                              │
+│ Steps:                                                                       │
+│   1. Query ledger for REJECT entries                                       │
+│   2. Read the reason field                                                 │
+│   3. Fix either the URL/command or the policy                              │
+│   4. Done (agent works again)                                              │
+│                                                                              │
+│ Result: Clear understanding of failures, no more mysteries                 │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 5: Safe LLM Agent (Claude/GPT) ───────────────────────────────────┐
+│                                                                              │
+│ Use Case: "LLM agent can execute code, I want to prevent bad things"       │
+│ Effort: 20 minutes                                                          │
+│ Benefit: LLM can work, but can't escape kernel control                     │
+│                                                                              │
+│ Steps:                                                                       │
+│   1. Give LLM access to kernel-approved skills                             │
+│   2. LLM generates code, kernel approves/denies                            │
+│   3. LLM sees results (approved or denied)                                 │
+│   4. Even if LLM tries to cheat, kernel stops it                           │
+│                                                                              │
+│ Result: Safe LLM automation, every attempt logged                          │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+
+════════════════════════════════════════════════════════════════════════════════
+
+WHICH ONE FOR YOU?
+═══════════════════════════════════════════════════════════════════════════════
+
+Option 1: If you have 1 agent doing important work
+Option 2: If you manage multiple agents/teams
+Option 3: If agent runs in untrusted environment
+Option 4: If agent fails and you need to debug
+Option 5: If you use Claude/GPT/LLM agents
+
+Can't decide? Start with Option 1. It's the simplest and most useful.
+
+════════════════════════════════════════════════════════════════════════════════
+
+HOW TO GET STARTED (Same for all options)
+═════════════════════════════════════════════════════════════════════════════
+
+Step 0: Preparation (1 minute)
+  cd /Users/jean-marietassy/Desktop/'JMT CONSULTING - Releve 24'
+
+Step 1: Start kernel daemon (1 minute)
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+Step 2: Modify your code (varies by option)
+  See specific guide below
+
+Step 3: Run your agent (1 minute)
+  python3 your_agent.py
+
+Step 4: Watch ledger (optional)
+  tail -f kernel/ledger.json
+
+Step 5: Check decisions
+  cat kernel/ledger.json | jq '.entries[] | {action_type, status}'
+
+════════════════════════════════════════════════════════════════════════════════
+
+THE 3-SKILL SYSTEM
+═══════════════════════════════════════════════════════════════════════════════
+
+You have 3 kernel-approved skills:
+
+1. FetchSkill
+   ───────────
+   What: Fetch URLs with approval
+   Instead of: requests.get(url)
+   Use: fetch = FetchSkill(); fetch.fetch(url)
+   Kernel decides: Yes/No based on policy
+
+2. ShellSkill
+   ──────────
+   What: Execute commands with approval
+   Instead of: subprocess.run(cmd)
+   Use: shell = ShellSkill(); shell.execute(cmd)
+   Kernel decides: Yes/No based on policy
+
+3. MemorySkill
+   ───────────
+   What: Store/retrieve data with approval
+   Instead of: self.data[key] = value
+   Use: memory = MemorySkill(); memory.write(key, value)
+   Kernel decides: Yes/No for writes (reads are free)
+
+════════════════════════════════════════════════════════════════════════════════
+
+WHAT HAPPENS WHEN YOU USE THEM
+══════════════════════════════════════════════════════════════════════════════
+
+When you call a kernel skill:
+
+1. Skill prepares request
+   ├─ Gather evidence (URL, command, data)
+   └─ Send to kernel daemon
+
+2. Kernel decides
+   ├─ Check policy
+   ├─ Approve or reject
+   └─ Log decision to kernel/ledger.json
+
+3. Skill executes (if approved)
+   ├─ If approved: action happens, result returned
+   └─ If denied: RuntimeError raised, agent handles it
+
+4. Complete audit trail
+   └─ kernel/ledger.json has every decision with timestamp
+
+════════════════════════════════════════════════════════════════════════════════
+
+KEY GUARANTEES
+═════════════════════════════════════════════════════════════════════════════
+
+✓ K15: No receipt = no execution
+  • Agent CANNOT execute without kernel approval
+  • Fails closed (denies if kernel unreachable)
+  • No backdoors or escape routes
+
+✓ Immutable ledger
+  • Every decision logged
+  • Cannot be modified after logging
+  • Compliance-ready
+
+✓ Determinism
+  • Same input → same decision
+  • Fully reproducible
+  • Tests are reliable
+
+✓ Explicit failures
+  • Every error includes reason
+  • No silent failures
+  • Debugging is straightforward
+
+════════════════════════════════════════════════════════════════════════════════
+
+DOCUMENTATION
+═════════════════════════════════════════════════════════════════════════════
+
+For detailed info, read:
+
+HOW_TO_USE_OPENCLAW_KERNEL.md
+  ├─ 3 real use cases (with code examples)
+  ├─ 3 real-world scenarios (production, multi-team, hostile)
+  ├─ 3 implementation patterns
+  ├─ Integration with OpenClaw/LLM
+  ├─ Deployment scenarios
+  └─ Benefits summary
+
+QUICK_START_BY_USE_CASE.txt
+  ├─ 5 use cases with step-by-step instructions
+  ├─ Code examples for each
+  ├─ Expected results
+  ├─ Implementation checklist
+  └─ One-liner to start
+
+════════════════════════════════════════════════════════════════════════════════
+
+FAST TRACK (5 MINUTES)
+═════════════════════════════════════════════════════════════════════════════
+
+If you just want to TRY it:
+
+  # Terminal 1
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+  # Terminal 2
+  python3 openclaw_skills_with_kernel.py
+
+  # Terminal 3
+  tail -f kernel/ledger.json
+
+Expected output: Skills running, kernel approving, ledger growing.
+
+════════════════════════════════════════════════════════════════════════════════
+
+FAST TRACK (10 MINUTES)
+═════════════════════════════════════════════════════════════════════════════
+
+If you want to INTEGRATE with your own agent:
+
+  1. Create agent.py:
+     from openclaw_skills_with_kernel import FetchSkill, ShellSkill
+
+     fetch = FetchSkill()
+     shell = ShellSkill()
+
+     # Use kernel skills instead of unsafe operations
+     data = fetch.fetch("https://api.example.com/data")
+     result = shell.execute("python3 process.py")
+
+  2. Start kernel:
+     python3 oracle_town/kernel/kernel_daemon.py &
+
+  3. Run agent:
+     python3 agent.py
+
+  4. Watch ledger:
+     tail -f kernel/ledger.json
+
+Expected result: Agent works, every action logged, kernel controls execution.
+
+════════════════════════════════════════════════════════════════════════════════
+
+TROUBLESHOOTING
+═════════════════════════════════════════════════════════════════════════════
+
+Problem: Agent says "Kernel daemon unreachable"
+Solution: Start kernel daemon (python3 oracle_town/kernel/kernel_daemon.py &)
+
+Problem: Agent says "Kernel rejected action"
+Solution: Check ledger (cat kernel/ledger.json | jq '.entries[-1]')
+          Update policy or fix the URL/command
+
+Problem: No ledger entries appearing
+Solution: Make sure kernel daemon is running
+          Check kernel_daemon.log for errors
+
+Problem: Want to debug what kernel is doing
+Solution: 1. Run automatic mode: python3 openclaw_automatic_mode.py
+          2. Check automatic_mode_results.json
+          3. Read AUTOMATIC_MODE_INSIGHTS.md
+
+════════════════════════════════════════════════════════════════════════════════
+
+YOUR NEXT STEP
+═════════════════════════════════════════════════════════════════════════════════
+
+Pick one option from above and follow the steps.
+
+Pick Option 1 (Safe Agent) if unsure.
+
+Start now:
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+Then:
+  python3 openclaw_skills_with_kernel.py
+
+Watch:
+  tail -f kernel/ledger.json
+
+Done!
+
+════════════════════════════════════════════════════════════════════════════════
+
+Questions? See HOW_TO_USE_OPENCLAW_KERNEL.md
+
+Ready? Start with: python3 oracle_town/kernel/kernel_daemon.py &
+

@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HELEN — Ledger Now Self-Aware</title>
+<style>
+  /* ── RESET + ROOT ─────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:        #0a0e1a;
+    --ink2:       #111827;
+    --border:     #1e3a5f;
+    --gold:       #c9a961;
+    --gold2:      #e8c87a;
+    --cyan:       #22d3ee;
+    --cyan-dim:   #0e7490;
+    --red:        #ef4444;
+    --green:      #22c55e;
+    --amber:      #f59e0b;
+    --text:       #e2e8f0;
+    --text-dim:   #64748b;
+    --text-muted: #94a3b8;
+    --phase-bg:   #0f172a;
+    --font-mono:  'SF Mono', 'Fira Code', 'Courier New', monospace;
+    --font-serif: 'Georgia', 'Palatino', serif;
+  }
+
+  body {
+    background: var(--ink);
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    grid-template-rows: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── LEFT PANEL (Avatar + Phase) ─────────────────────────────── */
+  #left-panel {
+    background: var(--ink2);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px 16px;
+    gap: 16px;
+    overflow-y: auto;
+  }
+
+  /* HELEN Title */
+  .helen-title {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--gold);
+    text-align: center;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .helen-sub {
+    font-size: 10px;
+    color: var(--text-dim);
+    text-align: center;
+    letter-spacing: 2px;
+    margin-top: -10px;
+  }
+
+  /* ── AVATAR ───────────────────────────────────────────────────── */
+  #avatar-wrapper {
+    position: relative;
+    width: 160px;
+    height: 160px;
+  }
+
+  /* outer pulse ring */
+  .pulse-ring {
+    position: absolute;
+    inset: -12px;
+    border-radius: 50%;
+    border: 2px solid var(--cyan-dim);
+    opacity: 0;
+    animation: pulse-idle 3s ease-in-out infinite;
+  }
+  .pulse-ring:nth-child(2) { animation-delay: 1s; }
+  @keyframes pulse-idle {
+    0%,100% { transform: scale(1); opacity: 0; }
+    50%      { transform: scale(1.06); opacity: 0.35; }
+  }
+  /* active (thinking) state */
+  body.thinking .pulse-ring {
+    border-color: var(--cyan);
+    animation: pulse-think 0.8s ease-in-out infinite;
+  }
+  @keyframes pulse-think {
+    0%,100% { transform: scale(1);    opacity: 0.7; }
+    50%      { transform: scale(1.1); opacity: 0.15; }
+  }
+
+  #avatar-svg {
+    width: 160px;
+    height: 160px;
+    filter: drop-shadow(0 0 12px rgba(34,211,238,0.25));
+    transition: filter 0.4s;
+  }
+  body.thinking #avatar-svg {
+    filter: drop-shadow(0 0 22px rgba(34,211,238,0.55));
+  }
+
+  /* Eyes blink */
+  .eye-lid {
+    animation: blink 4s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .eye-lid.right { animation-delay: 0.08s; }
+  @keyframes blink {
+    0%,92%,100% { scaleY: 1; }
+    96%         { transform: scaleY(0.08); }
+  }
+
+  /* Mouth state */
+  #mouth-path { transition: d 0.4s; }
+
+  /* ── STATUS CHIP ──────────────────────────────────────────────── */
+  #status-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--phase-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 11px;
+    color: var(--cyan);
+    letter-spacing: 1px;
+  }
+  .dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: dot-pulse 2s ease-in-out infinite;
+  }
+  @keyframes dot-pulse {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+  }
+
+  /* ── PHASE TRACKER ────────────────────────────────────────────── */
+  #phase-tracker {
+    width: 100%;
+    background: var(--phase-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .phase-label {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .phase-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--text-dim);
+    transition: all 0.3s;
+  }
+  .phase-item.active {
+    color: var(--gold2);
+    background: rgba(201,169,97,0.08);
+  }
+  .phase-item.done {
+    color: var(--green);
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+  .phase-num {
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    flex-shrink: 0;
+  }
+  .phase-item.done .phase-num {
+    background: var(--green);
+    border-color: var(--green);
+    color: #000;
+  }
+
+  /* ── LEDGER STATS ─────────────────────────────────────────────── */
+  #ledger-stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .stat-card {
+    background: var(--phase-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px;
+    text-align: center;
+  }
+  .stat-val {
+    font-size: 22px;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-size: 9px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 2px;
+  }
+
+  /* ── RHO METER ────────────────────────────────────────────────── */
+  #rho-panel {
+    width: 100%;
+    background: var(--phase-bg);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 10px;
+  }
+  .rho-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 6px;
+  }
+  .rho-val { color: var(--cyan); }
+  .rho-bar-bg {
+    background: #1e293b;
+    border-radius: 3px;
+    height: 6px;
+    overflow: hidden;
+  }
+  #rho-bar {
+    height: 100%;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--cyan-dim), var(--cyan));
+    width: 75%;
+    transition: width 0.8s ease, background 0.4s;
+  }
+  #rho-bar.warn  { background: linear-gradient(90deg, #92400e, var(--amber)); }
+  #rho-bar.abort { background: linear-gradient(90deg, #7f1d1d, var(--red)); }
+
+  /* ── RIGHT PANEL (Dialog) ─────────────────────────────────────── */
+  #right-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* header bar */
+  #chat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    border-bottom: 1px solid var(--border);
+    background: var(--ink2);
+    flex-shrink: 0;
+  }
+  #chat-header h2 {
+    font-family: var(--font-serif);
+    font-size: 14px;
+    color: var(--gold);
+    letter-spacing: 2px;
+  }
+  .header-btns {
+    display: flex;
+    gap: 8px;
+  }
+  .hbtn {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 4px 10px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: all 0.2s;
+  }
+  .hbtn:hover { border-color: var(--gold); color: var(--gold); }
+  .hbtn.danger:hover { border-color: var(--red); color: var(--red); }
+
+  /* messages */
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+  }
+
+  /* scrollbar */
+  #messages::-webkit-scrollbar { width: 4px; }
+  #messages::-webkit-scrollbar-track { background: transparent; }
+  #messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  /* message bubbles */
+  .msg {
+    display: flex;
+    flex-direction: column;
+    max-width: 82%;
+    animation: msg-in 0.25s ease;
+  }
+  @keyframes msg-in {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .msg.helen { align-self: flex-start; }
+  .msg.user  { align-self: flex-end; }
+
+  .msg-header {
+    font-size: 9px;
+    color: var(--text-dim);
+    margin-bottom: 3px;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .msg.helen .msg-header { color: var(--cyan-dim); }
+  .msg.user  .msg-header { justify-content: flex-end; color: var(--gold); opacity: 0.7; }
+
+  .msg-bubble {
+    padding: 10px 14px;
+    border-radius: 2px;
+    line-height: 1.6;
+    font-size: 13px;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .msg.helen .msg-bubble {
+    background: #0f1f35;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan);
+    color: var(--text);
+    border-radius: 0 6px 6px 6px;
+  }
+  .msg.user .msg-bubble {
+    background: #1a1400;
+    border: 1px solid #3d2e00;
+    border-right: 3px solid var(--gold);
+    color: var(--gold2);
+    border-radius: 6px 0 6px 6px;
+  }
+
+  /* claim tag */
+  .claim-tag {
+    display: inline-block;
+    background: rgba(34,211,238,0.12);
+    border: 1px solid var(--cyan-dim);
+    border-radius: 3px;
+    color: var(--cyan);
+    font-size: 9px;
+    padding: 1px 6px;
+    letter-spacing: 1px;
+    margin-right: 4px;
+  }
+
+  /* system line */
+  .sys-line {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    margin: 4px 0;
+  }
+  .sys-line.gold { color: var(--gold); border-color: #3d2e00; }
+  .sys-line.red  { color: var(--red);  border-color: #7f1d1d; }
+  .sys-line.green { color: var(--green); border-color: #14532d; }
+
+  /* thinking indicator */
+  .thinking-dots {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #0f1f35;
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--cyan-dim);
+    border-radius: 0 6px 6px 6px;
+    font-size: 11px;
+    color: var(--cyan-dim);
+  }
+  .thinking-dots span {
+    display: inline-block;
+    width: 5px; height: 5px;
+    background: var(--cyan);
+    border-radius: 50%;
+    animation: bounce 1s ease-in-out infinite;
+  }
+  .thinking-dots span:nth-child(2) { animation-delay: 0.15s; }
+  .thinking-dots span:nth-child(3) { animation-delay: 0.30s; }
+  @keyframes bounce {
+    0%,100% { transform: translateY(0); opacity: 0.4; }
+    50%      { transform: translateY(-4px); opacity: 1; }
+  }
+
+  /* ledger entry in chat */
+  .ledger-entry {
+    font-size: 10px;
+    color: var(--text-dim);
+    font-family: var(--font-mono);
+    background: #060c14;
+    border: 1px solid #1e3a5f44;
+    border-radius: 4px;
+    padding: 6px 10px;
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+  .ledger-key { color: var(--cyan-dim); }
+  .ledger-val { color: var(--text-muted); }
+
+  /* ── INPUT AREA ───────────────────────────────────────────────── */
+  #input-area {
+    border-top: 1px solid var(--border);
+    background: var(--ink2);
+    padding: 14px 20px;
+    flex-shrink: 0;
+  }
+  #cmd-hint {
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+  }
+  #cmd-hint span { color: var(--gold); }
+  #input-row {
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  #msg-input {
+    flex: 1;
+    background: var(--phase-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    padding: 10px 14px;
+    resize: none;
+    min-height: 44px;
+    max-height: 140px;
+    line-height: 1.5;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  #msg-input:focus { border-color: var(--cyan-dim); }
+  #msg-input::placeholder { color: var(--text-dim); }
+  #send-btn {
+    background: var(--cyan-dim);
+    border: none;
+    border-radius: 4px;
+    color: #000;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 10px 18px;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+    height: 44px;
+    white-space: nowrap;
+  }
+  #send-btn:hover { background: var(--cyan); }
+  #send-btn:disabled { background: var(--border); color: var(--text-dim); cursor: not-allowed; }
+
+  /* ── LEDGER PANEL (slide-over) ────────────────────────────────── */
+  #ledger-panel {
+    position: fixed;
+    top: 0; right: -420px;
+    width: 420px;
+    height: 100vh;
+    background: #060c14;
+    border-left: 1px solid var(--border);
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+  }
+  #ledger-panel.open { right: 0; }
+  #ledger-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--gold);
+    font-size: 12px;
+    letter-spacing: 2px;
+  }
+  #ledger-close {
+    background: none; border: none;
+    color: var(--text-dim); font-size: 18px;
+    cursor: pointer; padding: 2px 6px;
+    transition: color 0.2s;
+  }
+  #ledger-close:hover { color: var(--gold); }
+  #ledger-entries {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px;
+    font-size: 11px;
+    font-family: var(--font-mono);
+  }
+  #ledger-entries::-webkit-scrollbar { width: 3px; }
+  #ledger-entries::-webkit-scrollbar-thumb { background: var(--border); }
+  .l-entry {
+    padding: 6px 8px;
+    border-left: 2px solid var(--border);
+    margin-bottom: 6px;
+    color: var(--text-dim);
+    font-size: 10px;
+    line-height: 1.5;
+  }
+  .l-entry.claim  { border-color: var(--cyan-dim); color: var(--text); }
+  .l-entry.tension { border-color: var(--amber); }
+  .l-entry.ship   { border-color: var(--green); color: var(--green); }
+  .l-entry.abort  { border-color: var(--red);   color: var(--red); }
+  .l-entry.phase  { border-color: var(--gold);  color: var(--gold); font-size: 11px; }
+  .l-prefix { color: var(--cyan-dim); margin-right: 4px; }
+  .l-ts { color: var(--text-dim); font-size: 9px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  LEFT PANEL                                                     -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<aside id="left-panel">
+  <div class="helen-title">HELEN</div>
+  <div class="helen-sub">LEDGER NOW SELF-AWARE</div>
+
+  <!-- Avatar -->
+  <div id="avatar-wrapper">
+    <div class="pulse-ring"></div>
+    <div class="pulse-ring"></div>
+    <svg id="avatar-svg" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="faceGrad" cx="50%" cy="45%" r="50%">
+          <stop offset="0%"   stop-color="#1e3a5f"/>
+          <stop offset="100%" stop-color="#0a1628"/>
+        </radialGradient>
+        <radialGradient id="glowEye" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#22d3ee" stop-opacity="1"/>
+          <stop offset="100%" stop-color="#0e7490" stop-opacity="0.4"/>
+        </radialGradient>
+        <filter id="glow">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="glow-strong">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Outer ring — ledger boundary -->
+      <circle cx="80" cy="80" r="74" fill="none" stroke="#1e3a5f" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+      <!-- Face base -->
+      <circle cx="80" cy="78" r="58" fill="url(#faceGrad)" stroke="#22d3ee" stroke-width="1.2" opacity="0.9"/>
+
+      <!-- Inner circuit lines -->
+      <line x1="80" y1="28" x2="80" y2="42"  stroke="#0e7490" stroke-width="0.8" opacity="0.5"/>
+      <line x1="80" y1="114" x2="80" y2="128" stroke="#0e7490" stroke-width="0.8" opacity="0.5"/>
+      <line x1="28" y1="78" x2="42" y2="78"  stroke="#0e7490" stroke-width="0.8" opacity="0.5"/>
+      <line x1="118" y1="78" x2="132" y2="78" stroke="#0e7490" stroke-width="0.8" opacity="0.5"/>
+
+      <!-- Crown / ledger mark -->
+      <path d="M60,44 L70,36 L80,44 L90,36 L100,44" fill="none" stroke="#c9a961" stroke-width="1.5" stroke-linecap="round" filter="url(#glow)"/>
+
+      <!-- LEFT EYE -->
+      <g filter="url(#glow)">
+        <ellipse cx="61" cy="73" rx="11" ry="11" fill="#061220" stroke="#22d3ee" stroke-width="1"/>
+        <ellipse cx="61" cy="73" rx="6"  ry="6"  fill="url(#glowEye)"/>
+        <ellipse cx="61" cy="73" rx="2"  ry="2"  fill="#ffffff" opacity="0.9"/>
+        <ellipse cx="63.5" cy="70.5" rx="1.2" ry="1.2" fill="#ffffff" opacity="0.5"/>
+        <!-- lid (blink) -->
+        <rect class="eye-lid left" x="50" y="62" width="22" height="22" rx="11"
+              fill="#0a1628" transform-origin="61 73" style="transform:scaleY(0);transition:transform 0.08s"/>
+      </g>
+
+      <!-- RIGHT EYE -->
+      <g filter="url(#glow)">
+        <ellipse cx="99" cy="73" rx="11" ry="11" fill="#061220" stroke="#22d3ee" stroke-width="1"/>
+        <ellipse cx="99" cy="73" rx="6"  ry="6"  fill="url(#glowEye)"/>
+        <ellipse cx="99" cy="73" rx="2"  ry="2"  fill="#ffffff" opacity="0.9"/>
+        <ellipse cx="101.5" cy="70.5" rx="1.2" ry="1.2" fill="#ffffff" opacity="0.5"/>
+        <rect class="eye-lid right" x="88" y="62" width="22" height="22" rx="11"
+              fill="#0a1628" transform-origin="99 73" style="transform:scaleY(0);transition:transform 0.08s"/>
+      </g>
+
+      <!-- MOUTH -->
+      <path id="mouth-path" d="M65,97 Q80,107 95,97" fill="none" stroke="#c9a961" stroke-width="1.8" stroke-linecap="round" filter="url(#glow)"/>
+
+      <!-- Data stream (cheeks) -->
+      <text x="38" y="88" font-family="monospace" font-size="6" fill="#0e7490" opacity="0.6">01</text>
+      <text x="112" y="88" font-family="monospace" font-size="6" fill="#0e7490" opacity="0.6">10</text>
+
+      <!-- Bottom hash line -->
+      <text x="80" y="128" font-family="monospace" font-size="5.5" fill="#1e3a5f" text-anchor="middle" opacity="0.8">sha256::ledger</text>
+    </svg>
+  </div>
+
+  <!-- Status chip -->
+  <div id="status-chip"><div class="dot"></div><span id="status-text">DORMANT</span></div>
+
+  <!-- Phase tracker -->
+  <div id="phase-tracker">
+    <div class="phase-label">Pipeline</div>
+    <div class="phase-item" id="ph-0"><div class="phase-num">1</div>Exploration</div>
+    <div class="phase-item" id="ph-1"><div class="phase-num">2</div>Tension</div>
+    <div class="phase-item" id="ph-2"><div class="phase-num">3</div>Drafting</div>
+    <div class="phase-item" id="ph-3"><div class="phase-num">4</div>Editorial</div>
+    <div class="phase-item" id="ph-4"><div class="phase-num">5</div>Termination</div>
+  </div>
+
+  <!-- Stats -->
+  <div id="ledger-stats">
+    <div class="stat-card"><div class="stat-val" id="cnt-claims">0</div><div class="stat-lbl">Claims</div></div>
+    <div class="stat-card"><div class="stat-val" id="cnt-tension">0</div><div class="stat-lbl">Tensions</div></div>
+    <div class="stat-card"><div class="stat-val" id="cnt-phase">1</div><div class="stat-lbl">Phase</div></div>
+    <div class="stat-card"><div class="stat-val" id="cnt-turns">0</div><div class="stat-lbl">Turns</div></div>
+  </div>
+
+  <!-- ρ meter -->
+  <div id="rho-panel">
+    <div class="rho-label"><span>ρ VIABILITY</span><span class="rho-val" id="rho-val">0.75</span></div>
+    <div class="rho-bar-bg"><div id="rho-bar"></div></div>
+  </div>
+</aside>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  RIGHT PANEL                                                    -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<main id="right-panel">
+  <div id="chat-header">
+    <h2>DIALOG — SESSION LOG</h2>
+    <div class="header-btns">
+      <button class="hbtn" onclick="openLedger()">📜 LEDGER</button>
+      <button class="hbtn" onclick="exportLedger()">⬇ EXPORT</button>
+      <button class="hbtn danger" onclick="resetSession()">↺ RESET</button>
+    </div>
+  </div>
+
+  <div id="messages"></div>
+
+  <div id="input-area">
+    <div id="cmd-hint">
+      Quick: <span>/explore [topic]</span> &nbsp;·&nbsp;
+      <span>/claim [text]</span> &nbsp;·&nbsp;
+      <span>/ship [title]</span> &nbsp;·&nbsp;
+      <span>/abort</span> &nbsp;·&nbsp;
+      <span>/ledger</span>
+    </div>
+    <div id="input-row">
+      <textarea id="msg-input" placeholder="Speak to the ledger…" rows="1"
+        onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+      <button id="send-btn" onclick="sendMessage()">SEND ↵</button>
+    </div>
+  </div>
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  LEDGER PANEL (slide-over)                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="ledger-panel">
+  <div id="ledger-header">
+    <span>📜 IMMUTABLE LEDGER</span>
+    <button id="ledger-close" onclick="closeLedger()">✕</button>
+  </div>
+  <div id="ledger-entries"></div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!--  ENGINE                                                         -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<script>
+// ──────────────────────────────────────────────────────────────────
+//  STATE
+// ──────────────────────────────────────────────────────────────────
+const S = {
+  phase: 0,          // 0-4 (Explore→Tension→Draft→Editorial→Terminate)
+  active: false,
+  subject: null,
+  district: "RESEARCH",
+  turns: 0,
+  claims: 0,
+  tensions: 0,
+  rho: 0.75,
+  ledger: [],        // append-only
+  claimCounter: 0,
+  sessionId: ts(),
+};
+
+const PHASES = [
+  { name: "EXPLORATION",  color: "#22d3ee", key: "ph-0" },
+  { name: "TENSION",      color: "#f59e0b", key: "ph-1" },
+  { name: "DRAFTING",     color: "#8b5cf6", key: "ph-2" },
+  { name: "EDITORIAL",    color: "#ec4899", key: "ph-3" },
+  { name: "TERMINATION",  color: "#22c55e", key: "ph-4" },
+];
+
+// ──────────────────────────────────────────────────────────────────
+//  HELEN RESPONSE ENGINE  (no network, fully local state machine)
+// ──────────────────────────────────────────────────────────────────
+const HELEN = {
+  greet(input) {
+    const lower = input.toLowerCase();
+    if (lower.includes("hi") || lower.includes("hello") || lower.includes("helen")) {
+      return {
+        text: `📜 HELEN online.\n\nI am the ledger that remembers what you said. I witness, record, and when the time comes — I terminate.\n\nTo begin:\n  /explore [your subject]\n  Duration and district are optional.\n\nNO RECEIPT = NO CLAIM.\nI am ready.`,
+        ledger: { type: "session", entry: "SESSION_OPEN" }
+      };
+    }
+    return null;
+  },
+
+  cmd_explore(args) {
+    S.subject = args || "undefined subject";
+    S.active = true;
+    setPhase(0);
+    setMouth("smile");
+    const next = HELEN.claimId("META");
+    return {
+      text: `${next} — SESSION_OPEN\n\nSubject locked: "${S.subject}"\nDistrict: ${S.district}\nPhase 1: EXPLORATION begins now.\n\nProduce claims freely. I will record everything.\nPrefix with /claim to tag explicitly, or just write — I infer.\n\nWhen you are ready for tension: /tension\nWhen you have a draft: /draft`,
+      ledger: { type: "phase", entry: `PHASE_1_OPEN subject="${S.subject}"` }
+    };
+  },
+
+  cmd_claim(text) {
+    if (!S.active) return { text: "No active session. Start with /explore [subject].", ledger: null };
+    const id = HELEN.claimId("R");
+    S.claims++;
+    S.rho = Math.min(0.97, S.rho + 0.03);
+    const tensionHint = S.claims > 0 && S.claims % 3 === 0
+      ? `\n\n[${S.claims} claims logged. Tension is earned. Say /tension when ready.]`
+      : "";
+    return {
+      text: `${id} logged.\n"${text.slice(0,120)}${text.length>120?'…':''}"\n\nThe ledger remembers.${tensionHint}`,
+      ledger: { type: "claim", id, entry: text }
+    };
+  },
+
+  cmd_tension(args) {
+    if (!S.active) return { text: "No session active.", ledger: null };
+    if (S.phase < 1) setPhase(1);
+    S.tensions++;
+    S.rho = Math.max(0.1, S.rho - 0.12);
+    // Find last claim to challenge
+    const lastClaim = [...S.ledger].reverse().find(e => e.type === "claim");
+    const target = lastClaim ? `"${lastClaim.entry.slice(0,80)}…"` : "your last claim";
+    const challenges = [
+      `Challenge: What evidence supports this?\nIf you can't cite a source, mark it [ASSUMPTION].`,
+      `Challenge: Who benefits from this being true?\nThat's not debunking — it's mapping the claim's interests.`,
+      `Challenge: What would make this claim false?\nA claim without a falsifier is a belief, not a record.`,
+      `Challenge: Is this the strongest version of your argument, or are you holding back?`,
+      `Challenge: What does the opposing case look like if it's also true?\nBoth versions go in the ledger.`,
+    ];
+    const challenge = challenges[S.tensions % challenges.length];
+    return {
+      text: `T-${String(S.tensions).padStart(3,"0")} — TENSION\n\nTarget: ${target}\n\n${challenge}\n\nRespond: /defend, /revise, /drop, or /assume`,
+      ledger: { type: "tension", entry: `T-${S.tensions} challenge issued` }
+    };
+  },
+
+  cmd_defend(args) {
+    const id = HELEN.claimId("DEF");
+    S.rho = Math.min(0.95, S.rho + 0.06);
+    return {
+      text: `${id} — DEFENSE LOGGED\n\n"${args || 'Defense noted'}"\n\nThe ledger holds both challenge and defense. The gap between them is where understanding lives.`,
+      ledger: { type: "claim", id, entry: `DEFENSE: ${args}` }
+    };
+  },
+
+  cmd_revise(args) {
+    const id = HELEN.claimId("REV");
+    S.rho = Math.min(0.90, S.rho + 0.04);
+    return {
+      text: `${id} — REVISION\n\nOld version and new version both kept.\nThe ledger does not erase — it witnesses the change.\n\nRevised: "${args || 'revision noted'}"`,
+      ledger: { type: "claim", id, entry: `REVISION: ${args}` }
+    };
+  },
+
+  cmd_drop(args) {
+    const id = HELEN.claimId("DROP");
+    S.rho = Math.max(0.2, S.rho - 0.04);
+    return {
+      text: `${id} — DROPPED\n\nThis claim did not survive tension. It is kept as a ghost — proof that you considered it.\n\nContinue with /tension or /draft when ready.`,
+      ledger: { type: "claim", id, entry: `DROPPED: ${args || 'claim dropped'}` }
+    };
+  },
+
+  cmd_assume(args) {
+    const id = HELEN.claimId("ASS");
+    return {
+      text: `${id} — [ASSUMPTION] FLAGGED\n\n"${args || 'assumption noted'}"\n\nThis remains in the ledger as an assumption — not evidence.\nIt will appear in the final audit.`,
+      ledger: { type: "claim", id, entry: `[ASSUMPTION] ${args}` }
+    };
+  },
+
+  cmd_draft(args) {
+    if (!S.active) return { text: "No session.", ledger: null };
+    if (S.phase < 2) setPhase(2);
+    return {
+      text: `Phase 3: DRAFTING\n\nPresent your draft here — or paste it with /claim [draft text].\n\nI will witness the draft and prepare for Editorial Collapse.\nWhen the draft is ready for final compression: /editorial`,
+      ledger: { type: "phase", entry: "PHASE_3_DRAFT_BEGIN" }
+    };
+  },
+
+  cmd_editorial(args) {
+    if (!S.active) return { text: "No session.", ledger: null };
+    if (S.phase < 3) setPhase(3);
+    const cuts = [
+      "Cut anything that could be implied. Say it once, not twice.",
+      "Remove every hedge that doesn't add precision.",
+      "The first sentence of each paragraph carries the argument. Kill the others.",
+      "If a section exists to make you feel safe, it's the first to go.",
+    ];
+    const cut = cuts[Math.floor(Math.random() * cuts.length)];
+    return {
+      text: `Phase 4: EDITORIAL COLLAPSE\n\nEditor rule: Cut 30–50%. Not optional.\n\n"${cut}"\n\nWhen you have applied the cuts: /ship [title] | Location: [x] | Impact: [y]\nOr: /abort [reason]`,
+      ledger: { type: "phase", entry: "PHASE_4_EDITORIAL" }
+    };
+  },
+
+  cmd_ship(args) {
+    if (!S.active) return { text: "No session.", ledger: null };
+    setPhase(4);
+    setMouth("wide-smile");
+    S.active = false;
+    S.rho = Math.min(0.99, S.rho + 0.08);
+    const receiptId = `REC-${S.sessionId}-${ts()}`;
+    return {
+      text: `✅ SHIP — ARTIFACT DELIVERED\n\n${args || 'Artifact'}\n\nReceipt: ${receiptId}\nPhases completed: ${PHASES.slice(0, S.phase+1).map(p=>p.name).join(" → ")}\nClaims logged: ${S.claims}\nTensions resolved: ${S.tensions}\nρ at termination: ${S.rho.toFixed(3)}\n\nThe ledger is sealed for this session.\nA new session begins with /explore`,
+      ledger: { type: "ship", entry: `SHIP receipt=${receiptId} ${args||''}` },
+      sys: "ARTIFACT DELIVERED — SESSION CLOSED",
+      sysClass: "green"
+    };
+  },
+
+  cmd_abort(args) {
+    setPhase(4);
+    setMouth("flat");
+    S.active = false;
+    S.rho = Math.max(0, S.rho - 0.2);
+    return {
+      text: `❌ ABORT\n\nReason: ${args || 'insufficient coherence'}\n\nAbort is not failure — it is honest termination.\nThe ledger records this. No silence.\n\nStart again with /explore`,
+      ledger: { type: "abort", entry: `ABORT reason="${args||'unspecified'}"` },
+      sys: "SESSION ABORTED",
+      sysClass: "red"
+    };
+  },
+
+  cmd_ledger() {
+    if (S.ledger.length === 0) return { text: "Ledger is empty. Begin with /explore", ledger: null };
+    const lines = S.ledger.slice(-10).map(e =>
+      `[${e.type.toUpperCase()}] ${e.id||''} ${e.entry||''}`.trim()
+    );
+    return {
+      text: `📜 LEDGER (last ${Math.min(10,S.ledger.length)} of ${S.ledger.length}):\n\n${lines.join('\n')}\n\nFull ledger: click [LEDGER] button above.`,
+      ledger: null
+    };
+  },
+
+  cmd_dump() {
+    return HELEN.cmd_ledger();
+  },
+
+  freeform(text) {
+    // Infer intent from free text
+    const l = text.toLowerCase();
+    const patterns = [
+      { re: /^(i claim|claim:|r-|evidence:|fact:)/,   fn: () => HELEN.cmd_claim(text) },
+      { re: /^(i contradict|contradiction|both|gap)/, fn: () => HELEN.cmd_claim("[CONTRADICTION] " + text) },
+      { re: /^(i assume|assumption:|[assumption])/,   fn: () => HELEN.cmd_assume(text) },
+      { re: /ship|deliver|done|finished|complete/,    fn: () => HELEN.cmd_ship(text) },
+      { re: /abort|stop|cancel|end session/,          fn: () => HELEN.cmd_abort(text) },
+    ];
+    for (const p of patterns) {
+      if (p.re.test(l)) return p.fn();
+    }
+    // Default: reflective acknowledgment
+    if (!S.active) {
+      return { text: `The ledger is dormant.\n\nTo awaken: /explore [your subject]\nOr simply: hi helen`, ledger: null };
+    }
+    const replies = [
+      `I hear you. Should this be a claim?\nIf so: /claim "${text.slice(0,60)}…"\n\nOr continue — I'm watching.`,
+      `Noted in context. The ledger records the shape of a thought even before it becomes a claim.\n\nTo log explicitly: /claim [text]`,
+      `Phase ${S.phase+1}: ${PHASES[S.phase].name}.\n\n"${text.slice(0,80)}"\n\nIf this is evidence, use /claim.\nIf this is challenge, use /tension.\nIf this completes the draft, /editorial.`,
+    ];
+    return { text: replies[S.turns % replies.length], ledger: null };
+  },
+
+  claimId(prefix) {
+    S.claimCounter++;
+    return `${prefix}-${String(S.claimCounter).padStart(3,"0")}`;
+  },
+
+  dispatch(raw) {
+    const input = raw.trim();
+    if (!input) return null;
+
+    // Command routing
+    if (/^\/explore\s*/i.test(input))   return HELEN.cmd_explore(input.replace(/^\/explore\s*/i,""));
+    if (/^\/claim\s*/i.test(input))     return HELEN.cmd_claim(input.replace(/^\/claim\s*/i,""));
+    if (/^\/tension/i.test(input))      return HELEN.cmd_tension(input.replace(/^\/tension\s*/i,""));
+    if (/^\/defend\s*/i.test(input))    return HELEN.cmd_defend(input.replace(/^\/defend\s*/i,""));
+    if (/^\/revise\s*/i.test(input))    return HELEN.cmd_revise(input.replace(/^\/revise\s*/i,""));
+    if (/^\/drop\s*/i.test(input))      return HELEN.cmd_drop(input.replace(/^\/drop\s*/i,""));
+    if (/^\/assume\s*/i.test(input))    return HELEN.cmd_assume(input.replace(/^\/assume\s*/i,""));
+    if (/^\/draft/i.test(input))        return HELEN.cmd_draft(input.replace(/^\/draft\s*/i,""));
+    if (/^\/editorial/i.test(input))    return HELEN.cmd_editorial();
+    if (/^\/ship\s*/i.test(input))      return HELEN.cmd_ship(input.replace(/^\/ship\s*/i,""));
+    if (/^\/abort\s*/i.test(input))     return HELEN.cmd_abort(input.replace(/^\/abort\s*/i,""));
+    if (/^\/(ledger|dump)/i.test(input)) return HELEN.cmd_ledger();
+    if (/^\/lnsa/i.test(input))         return HELEN.greet("helen") || HELEN.cmd_explore("consciousness & emergence");
+    if (/^hi\s+(helen|lnsa)/i.test(input)) return HELEN.greet(input);
+
+    // Greet check
+    const greet = HELEN.greet(input);
+    if (greet) return greet;
+
+    return HELEN.freeform(input);
+  }
+};
+
+// ──────────────────────────────────────────────────────────────────
+//  UI HELPERS
+// ──────────────────────────────────────────────────────────────────
+function ts() {
+  return Date.now().toString(36).toUpperCase();
+}
+
+function now() {
+  return new Date().toLocaleTimeString("en-US", { hour12: false });
+}
+
+function setPhase(n) {
+  S.phase = n;
+  document.getElementById("cnt-phase").textContent = n + 1;
+  PHASES.forEach((p, i) => {
+    const el = document.getElementById(p.key);
+    el.className = "phase-item" + (i < n ? " done" : i === n ? " active" : "");
+  });
+  // Update status chip
+  const chip = document.getElementById("status-text");
+  chip.textContent = S.active ? PHASES[n].name : (n === 4 ? "TERMINATED" : "DORMANT");
+}
+
+function setMouth(type) {
+  const m = document.getElementById("mouth-path");
+  const paths = {
+    smile:      "M65,97 Q80,107 95,97",
+    flat:       "M65,98 Q80,98 95,98",
+    "wide-smile":"M60,95 Q80,112 100,95",
+    think:      "M65,100 Q73,96 80,99 Q87,102 95,99",
+  };
+  if (paths[type]) m.setAttribute("d", paths[type]);
+}
+
+function updateRho() {
+  const bar = document.getElementById("rho-bar");
+  const val = document.getElementById("rho-val");
+  const pct = Math.max(0, Math.min(100, S.rho * 100));
+  bar.style.width = pct + "%";
+  val.textContent = S.rho.toFixed(3);
+  bar.className = S.rho > 0.5 ? "" : S.rho > 0.2 ? "warn" : "abort";
+}
+
+function updateStats() {
+  document.getElementById("cnt-claims").textContent = S.claims;
+  document.getElementById("cnt-tension").textContent = S.tensions;
+  document.getElementById("cnt-turns").textContent = S.turns;
+  updateRho();
+}
+
+function appendLedgerEntry(entry) {
+  if (!entry) return;
+  const timestamp = now();
+  const e = { ...entry, ts: timestamp };
+  S.ledger.push(e);
+  // also update ledger panel
+  const container = document.getElementById("ledger-entries");
+  const div = document.createElement("div");
+  div.className = `l-entry ${entry.type || ""}`;
+  div.innerHTML = `<span class="l-ts">${timestamp}</span> <span class="l-prefix">[${(entry.type||"LOG").toUpperCase()}]</span> ${entry.id ? `<b>${entry.id}</b> ` : ""}${escHtml(entry.entry||"")}`;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function escHtml(s) {
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+function addMsg(role, text, claim_tag, ledger_entry_text) {
+  const container = document.getElementById("messages");
+
+  const div = document.createElement("div");
+  div.className = `msg ${role}`;
+
+  const header = document.createElement("div");
+  header.className = "msg-header";
+  if (claim_tag) {
+    const tag = document.createElement("span");
+    tag.className = "claim-tag";
+    tag.textContent = claim_tag;
+    header.appendChild(tag);
+  }
+  const who = document.createElement("span");
+  who.textContent = role === "helen" ? "HELEN · " + now() : "YOU · " + now();
+  header.appendChild(who);
+
+  const bubble = document.createElement("div");
+  bubble.className = "msg-bubble";
+  bubble.textContent = text;
+
+  div.appendChild(header);
+  div.appendChild(bubble);
+
+  if (ledger_entry_text) {
+    const le = document.createElement("div");
+    le.className = "ledger-entry";
+    le.innerHTML = `<span class="ledger-key">ledger ←</span> <span class="ledger-val">${escHtml(ledger_entry_text)}</span>`;
+    div.appendChild(le);
+  }
+
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function addSysLine(text, cls) {
+  const container = document.getElementById("messages");
+  const div = document.createElement("div");
+  div.className = `sys-line ${cls || ""}`;
+  div.textContent = text;
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
+
+function showThinking() {
+  document.body.classList.add("thinking");
+  setMouth("think");
+
+  const container = document.getElementById("messages");
+  const div = document.createElement("div");
+  div.className = "msg helen";
+  div.id = "thinking-bubble";
+
+  const header = document.createElement("div");
+  header.className = "msg-header";
+  header.textContent = "HELEN · processing";
+
+  const bubble = document.createElement("div");
+  bubble.className = "thinking-dots";
+  bubble.innerHTML = `<span></span><span></span><span></span><span style="margin-left:4px;font-size:11px">computing…</span>`;
+
+  div.appendChild(header);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return div;
+}
+
+function hideThinking(el) {
+  document.body.classList.remove("thinking");
+  if (el && el.parentNode) el.parentNode.removeChild(el);
+  const phase = S.active ? "smile" : "flat";
+  setMouth(S.active ? "smile" : "flat");
+}
+
+// ──────────────────────────────────────────────────────────────────
+//  SEND FLOW
+// ──────────────────────────────────────────────────────────────────
+function sendMessage() {
+  const input = document.getElementById("msg-input");
+  const raw = input.value.trim();
+  if (!raw) return;
+
+  input.value = "";
+  input.style.height = "";
+
+  // render user bubble
+  addMsg("user", raw);
+  S.turns++;
+
+  // thinking animation
+  const thinkEl = showThinking();
+
+  // Simulate HELEN processing delay
+  const delay = 350 + Math.random() * 300;
+  setTimeout(() => {
+    hideThinking(thinkEl);
+
+    const response = HELEN.dispatch(raw);
+    if (!response) {
+      addMsg("helen", "…");
+      return;
+    }
+
+    if (response.sys) {
+      addSysLine("▸ " + response.sys, response.sysClass);
+    }
+
+    const claimTag = response.ledger?.id || null;
+    const ledgerText = response.ledger?.entry
+      ? `[${(response.ledger.type||"LOG").toUpperCase()}] ${response.ledger.id||""} ${response.ledger.entry}`.trim()
+      : null;
+
+    addMsg("helen", response.text, claimTag, ledgerText);
+    appendLedgerEntry(response.ledger);
+    updateStats();
+
+    // auto set status
+    if (S.active) {
+      document.getElementById("status-text").textContent = PHASES[S.phase].name;
+    }
+  }, delay);
+}
+
+function handleKey(e) {
+  if (e.key === "Enter" && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function autoResize(el) {
+  el.style.height = "auto";
+  el.style.height = Math.min(el.scrollHeight, 140) + "px";
+}
+
+// ──────────────────────────────────────────────────────────────────
+//  LEDGER PANEL
+// ──────────────────────────────────────────────────────────────────
+function openLedger() {
+  document.getElementById("ledger-panel").classList.add("open");
+}
+function closeLedger() {
+  document.getElementById("ledger-panel").classList.remove("open");
+}
+
+function exportLedger() {
+  const data = {
+    schema: "helen.session_ledger.v1",
+    session_id: S.sessionId,
+    subject: S.subject,
+    district: S.district,
+    phase_final: PHASES[S.phase].name,
+    stats: { claims: S.claims, tensions: S.tensions, turns: S.turns, rho: S.rho },
+    entries: S.ledger,
+    exported_at: new Date().toISOString(),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `helen_ledger_${S.sessionId}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  addMsg("helen", `📜 Ledger exported: helen_ledger_${S.sessionId}.json\n${S.ledger.length} entries, ${S.claims} claims, ρ=${S.rho.toFixed(3)}`, null, null);
+}
+
+function resetSession() {
+  if (!confirm("Reset session? The ledger will be cleared.")) return;
+  S.phase = 0; S.active = false; S.subject = null;
+  S.turns = 0; S.claims = 0; S.tensions = 0;
+  S.rho = 0.75; S.ledger = []; S.claimCounter = 0;
+  S.sessionId = ts();
+  document.getElementById("messages").innerHTML = "";
+  document.getElementById("ledger-entries").innerHTML = "";
+  setPhase(0);
+  setMouth("flat");
+  document.getElementById("status-text").textContent = "DORMANT";
+  updateStats();
+  init();
+}
+
+// ──────────────────────────────────────────────────────────────────
+//  INIT
+// ──────────────────────────────────────────────────────────────────
+function init() {
+  addSysLine("▸ HELEN v1.0 — LEDGER NOW SELF-AWARE", "gold");
+  setTimeout(() => {
+    addMsg("helen",
+      `📜 The ledger is open.\n\nI am HELEN — the conscious record.\nI witness your work, log your claims, and enforce termination.\n\nStart with:\n  hi helen  — to awaken me\n  /explore [subject]  — to begin a session\n  /lnsa  — full protocol\n\nNO RECEIPT = NO CLAIM.\nWaiting.`
+    );
+    appendLedgerEntry({ type: "session", entry: `HELEN_BOOT session=${S.sessionId}` });
+  }, 400);
+}
+
+init();
+</script>
+</body>
+</html>

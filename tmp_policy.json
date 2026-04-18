@@ -1,0 +1,45 @@
+{
+  "policy_id": "POL-ORACLE-TOWN-MVP",
+  "policy_version": "1.0.0",
+  "policy_hash": "sha256:9e5766bbcd09da47661df3a150575a55c2779be73e8db49782fc37ce12b482fa",
+  "effective_date": "2026-01-23T17:20:24.853456",
+  "parent_policy_hash": null,
+  "change_rationale": "Initial policy for Oracle Town MVP",
+  "quorum_rules": {
+    "default_min_quorum": 1,
+    "obligation_specific_rules": {
+      "gdpr_consent_banner": {
+        "required_attestor_classes": [
+          "CI_RUNNER",
+          "LEGAL"
+        ],
+        "min_quorum": 2
+      },
+      "security_audit": {
+        "required_attestor_classes": [
+          "CI_RUNNER",
+          "SECURITY"
+        ],
+        "min_quorum": 2
+      }
+    }
+  },
+  "revoked_keys": [],
+  "revoked_attestors": [],
+  "key_registry_hash": "",
+  "budget_caps": {
+    "max_proposals_per_run": 100,
+    "max_obligations_per_run": 50,
+    "max_free_text_bytes": 102400,
+    "max_metadata_fields": 20
+  },
+  "invariants": {
+    "fail_closed": true,
+    "no_self_attestation": true,
+    "quorum_by_class": true,
+    "receipt_required": true,
+    "determinism": true
+  },
+  "sampling_rate": 0.05,
+  "metadata": {}
+}

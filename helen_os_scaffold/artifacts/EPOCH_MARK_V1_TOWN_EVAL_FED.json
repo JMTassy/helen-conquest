@@ -1,0 +1,58 @@
+{
+  "type": "EPOCH_MARK_V1",
+  "epoch": "TOWN_EVAL_FEDERATION",
+  "name": "TOWN_EVAL_FEDERATION_SHIPPED",
+  "inscription": "TOWN_EVAL_FEDERATION: T0\u2013T5 servitors + Alpha/Beta/Gamma egregores + Godmode \u2192 FED_EVAL_V1 receipt. 6/6 PASS. 196 tests total. No receipt \u2192 no federation.",
+  "modules": {
+    "eval/__init__": {
+      "path": "helen_os/eval/__init__.py",
+      "sha256": "1872bba058a58783b01ae203b249c04be22eb9702e4a266ad60a03fda9e82da0"
+    },
+    "eval/schemas": {
+      "path": "helen_os/eval/schemas.py",
+      "sha256": "496928ea5c711083f28b783a4522a5cd7dc52e6c9d0f14b95f036469c48ff267"
+    },
+    "eval/servitors": {
+      "path": "helen_os/eval/servitors.py",
+      "sha256": "c6bf5c03e6a6cf268deb0488704fed32e24ddc968e0532688798ecf6cd0aea18"
+    },
+    "eval/egregores": {
+      "path": "helen_os/eval/egregores.py",
+      "sha256": "6b0d08493dc4952c85f9bc65c7bbf9f639d6a42bb7e9e791dbd509678f33dd55"
+    },
+    "eval/godmode": {
+      "path": "helen_os/eval/godmode.py",
+      "sha256": "dc15da1affb39c94fddc0f41744b362c6c714d78dd9a37edbc6bff107394f069"
+    },
+    "eval/run_fed_eval": {
+      "path": "helen_os/eval/run_fed_eval.py",
+      "sha256": "6bcf2bd4c4ccc6b15cd8cf50402a846c650738045fc4af9135d418710f11a5c5"
+    }
+  },
+  "tests": {
+    "test_town_eval_federation": {
+      "path": "tests/test_town_eval_federation.py",
+      "sha256": "2f24729f680bc26b034dbee3c4b36ec3d37b453e24ba325d7f9c3e9a8fc31f89"
+    },
+    "test_kernel_isolation": {
+      "path": "tests/test_kernel_isolation.py",
+      "sha256": "4a5198e20de07e702b10a41a4ebaa746cb43a4adbcf39597432d2f5e0163fd15"
+    }
+  },
+  "artifacts": {
+    "FED_EVAL_V1": {
+      "path": "artifacts/FED_EVAL_V1.json",
+      "sha256": "c9640a4fad0d85f4b456b199bed0466d704d46ee443e0c8778056c00ea8580c1"
+    }
+  },
+  "test_count": 196,
+  "new_tests": 13,
+  "servitor_count": 6,
+  "egregore_count": 3,
+  "verdict": "PASS",
+  "marked_at": "2026-03-01T11:15:40.214209+00:00",
+  "manifest_sha256": "9fddb65e8f5d81eafe9756e14b12d1f6351a5ebf47013bacbb5c1b71e1c56a71",
+  "artifact_sha256": "2173a2b5fa8e5ec7b10c513417988d34e3ccf9523301de3f4b8a1cd47c108fcb",
+  "artifact_sha256_scheme": "CWL_CANONICAL_V1",
+  "hash_law": "CWL_CANONICAL_V1"
+}

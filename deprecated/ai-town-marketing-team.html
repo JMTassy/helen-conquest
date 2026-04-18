@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Town • Marketing Team Discussion</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a1e;
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      overflow: hidden;
+      image-rendering: pixelated;
+    }
+
+    #aiTown {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* CRT Effect */
+    #aiTown::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.15) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0,0,0,0.15) 3px
+      );
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* Header */
+    #header {
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10;
+    }
+
+    #header h1 {
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .pulse {
+      width: 10px;
+      height: 10px;
+      background: #00ff00;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 10px #00ff00; }
+      50% { opacity: 0.3; box-shadow: 0 0 5px #00ff00; }
+    }
+
+    /* Main Container */
+    #mainContainer {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* Left Panel - The Town Street */
+    #townStreet {
+      width: 400px;
+      border-right: 2px solid #00ff00;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    #streetCanvas {
+      flex: 1;
+      image-rendering: pixelated;
+    }
+
+    #agentControls {
+      border-top: 2px solid #00ff00;
+      padding: 12px;
+      background: #000;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .agent-card {
+      background: rgba(0,255,0,0.1);
+      border: 1px solid #00ff00;
+      padding: 8px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+
+    .agent-card h3 {
+      font-size: 14px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .agent-card textarea {
+      width: 100%;
+      background: #000;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 6px;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .agent-emoji {
+      font-size: 18px;
+      display: inline-block;
+    }
+
+    /* Center Panel - Discussion */
+    #discussion {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: rgba(0,0,0,0.3);
+    }
+
+    #discussionHeader {
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #chatFeed {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    #chatFeed::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #chatFeed::-webkit-scrollbar-track {
+      background: #001a00;
+    }
+
+    #chatFeed::-webkit-scrollbar-thumb {
+      background: #00ff00;
+    }
+
+    .message {
+      display: flex;
+      gap: 12px;
+      animation: slideIn 0.3s ease-out;
+      opacity: 0;
+      animation-fill-mode: forwards;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .message-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      border: 2px solid;
+      position: relative;
+    }
+
+    .message-content {
+      flex: 1;
+      background: rgba(0,0,0,0.6);
+      border: 1px solid;
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .message-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .message-name {
+      font-weight: bold;
+    }
+
+    .message-text {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .typing-indicator {
+      display: inline-block;
+      opacity: 0.5;
+    }
+
+    .typing-indicator::after {
+      content: '...';
+      animation: dots 1.5s infinite;
+    }
+
+    @keyframes dots {
+      0%, 20% { content: '.'; }
+      40% { content: '..'; }
+      60%, 100% { content: '...'; }
+    }
+
+    /* Right Panel - Control Center */
+    #controlCenter {
+      width: 350px;
+      border-left: 2px solid #00ff00;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #topicInput {
+      border-bottom: 2px solid #00ff00;
+      padding: 16px;
+      background: #000;
+    }
+
+    #topicInput h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    #topicInput input {
+      width: 100%;
+      background: #000;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+    }
+
+    #actionButtons {
+      padding: 16px;
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%);
+      border: 3px solid #004400;
+      color: #000;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 0 #002200;
+      transition: all 0.1s;
+    }
+
+    button:hover {
+      background: linear-gradient(180deg, #00ffaa 0%, #00cc00 100%);
+    }
+
+    button:active {
+      transform: translateY(4px);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: linear-gradient(180deg, #ff9900 0%, #cc7700 100%);
+      border-color: #663300;
+      box-shadow: 0 4px 0 #331100;
+    }
+
+    button.stop {
+      background: linear-gradient(180deg, #ff0000 0%, #aa0000 100%);
+      border-color: #660000;
+      box-shadow: 0 4px 0 #330000;
+    }
+
+    #statsPanel {
+      flex: 1;
+      padding: 16px;
+      overflow-y: auto;
+    }
+
+    #statsPanel h3 {
+      font-size: 14px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid #00ff00;
+      padding-bottom: 6px;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      font-size: 12px;
+    }
+
+    .stat-bar {
+      width: 100%;
+      height: 12px;
+      background: #001a00;
+      border: 1px solid #00ff00;
+      margin: 4px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-bar-fill {
+      height: 100%;
+      background: #00ff00;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 10px rgba(0,255,0,0.5);
+    }
+
+    /* Agent colors */
+    .strategist {
+      border-color: #ff00ff;
+      color: #ff00ff;
+    }
+
+    .creative {
+      border-color: #00ffff;
+      color: #00ffff;
+    }
+
+    .analyst {
+      border-color: #ffff00;
+      color: #ffff00;
+    }
+
+    .brand {
+      border-color: #ff9900;
+      color: #ff9900;
+    }
+
+    .strategist .message-content {
+      border-color: #ff00ff;
+    }
+
+    .creative .message-content {
+      border-color: #00ffff;
+    }
+
+    .analyst .message-content {
+      border-color: #ffff00;
+    }
+
+    .brand .message-content {
+      border-color: #ff9900;
+    }
+
+    .strategist .stat-bar-fill {
+      background: #ff00ff;
+      box-shadow: 0 0 10px rgba(255,0,255,0.5);
+    }
+
+    .creative .stat-bar-fill {
+      background: #00ffff;
+      box-shadow: 0 0 10px rgba(0,255,255,0.5);
+    }
+
+    .analyst .stat-bar-fill {
+      background: #ffff00;
+      box-shadow: 0 0 10px rgba(255,255,0,0.5);
+    }
+
+    .brand .stat-bar-fill {
+      background: #ff9900;
+      box-shadow: 0 0 10px rgba(255,153,0,0.5);
+    }
+
+    /* Presets */
+    #presetsPanel {
+      padding: 16px;
+      border-bottom: 2px solid #00ff00;
+      background: #000;
+    }
+
+    #presetsPanel h3 {
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    #presetsPanel select {
+      width: 100%;
+      background: #000;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+    }
+
+    /* Export */
+    #exportSection {
+      padding: 16px;
+      background: #000;
+      border-top: 2px solid #00ff00;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="aiTown">
+    <!-- Header -->
+    <div id="header">
+      <h1>
+        <div class="pulse"></div>
+        🏙️ AI TOWN • MARKETING TEAM STREET
+      </h1>
+      <div id="timer">Session: 00:00:00</div>
+    </div>
+
+    <!-- Main Container -->
+    <div id="mainContainer">
+      <!-- Left: Town Street Visualization -->
+      <div id="townStreet">
+        <canvas id="streetCanvas"></canvas>
+        <div id="agentControls">
+          <h3 style="margin-bottom: 12px; font-size: 14px;">👥 AGENT PROMPTS</h3>
+
+          <div class="agent-card strategist">
+            <h3><span class="agent-emoji">🎯</span> STRATEGIST</h3>
+            <textarea id="prompt-strategist" placeholder="Define the strategist's role...">You are a Marketing Strategist with 15 years of experience. You think big picture, focus on market positioning, competitive advantage, and long-term brand strategy. You challenge assumptions and ask tough questions.</textarea>
+          </div>
+
+          <div class="agent-card creative">
+            <h3><span class="agent-emoji">🎨</span> CREATIVE DIRECTOR</h3>
+            <textarea id="prompt-creative" placeholder="Define the creative's role...">You are a Creative Director known for bold, innovative campaigns. You focus on storytelling, emotional connection, and breakthrough creative concepts. You push boundaries and aren't afraid to suggest wild ideas.</textarea>
+          </div>
+
+          <div class="agent-card analyst">
+            <h3><span class="agent-emoji">📊</span> DATA ANALYST</h3>
+            <textarea id="prompt-analyst" placeholder="Define the analyst's role...">You are a Data-Driven Marketing Analyst. You ground discussions in metrics, ROI, and customer insights. You reference data, A/B tests, and analytics. You balance creative ideas with business reality.</textarea>
+          </div>
+
+          <div class="agent-card brand">
+            <h3><span class="agent-emoji">💎</span> BRAND MANAGER</h3>
+            <textarea id="prompt-brand" placeholder="Define the brand manager's role...">You are a Brand Manager obsessed with brand consistency, voice, and customer perception. You ensure all ideas align with brand values and protect brand equity. You think about customer experience holistically.</textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Discussion Feed -->
+      <div id="discussion">
+        <div id="discussionHeader">
+          <h2 style="font-size: 16px;">💬 TEAM DISCUSSION</h2>
+          <div id="roundCounter">Round: 0 / 3</div>
+        </div>
+        <div id="chatFeed">
+          <div class="message" style="opacity: 1;">
+            <div class="message-avatar" style="border-color: #00ff00; color: #00ff00;">🏙️</div>
+            <div class="message-content" style="border-color: #00ff00; color: #00ff00;">
+              <div class="message-header">
+                <span class="message-name">AI TOWN SYSTEM</span>
+                <span>00:00:00</span>
+              </div>
+              <div class="message-text">
+                Welcome to AI Town Marketing Street! 🎯<br><br>
+                <strong>How it works:</strong><br>
+                1. Customize each agent's prompt in the left panel<br>
+                2. Enter a marketing topic or challenge<br>
+                3. Click "START DISCUSSION" to watch 4 LLMs collaborate<br>
+                4. Each agent responds in turns (3 rounds)<br>
+                5. Export the conversation as markdown<br><br>
+                <em>Note: This is a SIMULATION - no real LLM calls are made. Replace the simulated responses with actual API calls to OpenAI, Anthropic, etc.</em>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Control Center -->
+      <div id="controlCenter">
+        <div id="presetsPanel">
+          <h3>📋 QUICK PRESETS</h3>
+          <select id="presetSelect">
+            <option value="">-- Select Preset --</option>
+            <option value="productLaunch">🚀 Product Launch</option>
+            <option value="rebrand">🎨 Brand Refresh</option>
+            <option value="crisis">🚨 Crisis Management</option>
+            <option value="social">📱 Social Media Campaign</option>
+            <option value="custom">✏️ Custom Topic</option>
+          </select>
+        </div>
+
+        <div id="topicInput">
+          <h3>🎯 DISCUSSION TOPIC</h3>
+          <input
+            type="text"
+            id="topicField"
+            placeholder="e.g., Launch strategy for AI-powered coffee maker"
+            value="Launch strategy for AI-powered coffee maker targeting Gen Z"
+          />
+        </div>
+
+        <div id="actionButtons">
+          <button id="startBtn">🚀 START DISCUSSION</button>
+          <button id="pauseBtn" class="secondary" disabled>⏸️ PAUSE</button>
+          <button id="stopBtn" class="stop" disabled>⏹️ STOP</button>
+          <button id="clearBtn" class="secondary">🗑️ CLEAR CHAT</button>
+        </div>
+
+        <div id="statsPanel">
+          <h3>📊 AGENT ACTIVITY</h3>
+
+          <div style="margin-bottom: 12px;">
+            <div class="stat-row strategist">
+              <span>🎯 Strategist</span>
+              <span id="stat-strategist-count">0 msgs</span>
+            </div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill strategist" id="stat-strategist-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="stat-row creative">
+              <span>🎨 Creative</span>
+              <span id="stat-creative-count">0 msgs</span>
+            </div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill creative" id="stat-creative-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="stat-row analyst">
+              <span>📊 Analyst</span>
+              <span id="stat-analyst-count">0 msgs</span>
+            </div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill analyst" id="stat-analyst-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div style="margin-bottom: 12px;">
+            <div class="stat-row brand">
+              <span>💎 Brand Manager</span>
+              <span id="stat-brand-count">0 msgs</span>
+            </div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill brand" id="stat-brand-bar" style="width: 0%"></div>
+            </div>
+          </div>
+
+          <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid #00ff00;">
+            <h3 style="font-size: 13px; margin-bottom: 8px;">⚙️ SESSION INFO</h3>
+            <div class="stat-row">
+              <span>Total Messages:</span>
+              <span id="totalMessages">1</span>
+            </div>
+            <div class="stat-row">
+              <span>Current Round:</span>
+              <span id="currentRound">0 / 3</span>
+            </div>
+            <div class="stat-row">
+              <span>Status:</span>
+              <span id="sessionStatus">Idle</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="exportSection">
+          <button id="exportBtn" class="secondary">📥 EXPORT CONVERSATION</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════
+    // STATE MANAGEMENT
+    // ═══════════════════════════════════════
+    const state = {
+      sessionTime: 0,
+      isRunning: false,
+      isPaused: false,
+      currentRound: 0,
+      maxRounds: 3,
+      messages: [],
+      stats: {
+        strategist: 0,
+        creative: 0,
+        analyst: 0,
+        brand: 0
+      }
+    };
+
+    const agents = {
+      strategist: {
+        name: 'Marketing Strategist',
+        emoji: '🎯',
+        color: '#ff00ff',
+        class: 'strategist'
+      },
+      creative: {
+        name: 'Creative Director',
+        emoji: '🎨',
+        color: '#00ffff',
+        class: 'creative'
+      },
+      analyst: {
+        name: 'Data Analyst',
+        emoji: '📊',
+        color: '#ffff00',
+        class: 'analyst'
+      },
+      brand: {
+        name: 'Brand Manager',
+        emoji: '💎',
+        color: '#ff9900',
+        class: 'brand'
+      }
+    };
+
+    // ═══════════════════════════════════════
+    // CANVAS ANIMATION (The Street)
+    // ═══════════════════════════════════════
+    const canvas = document.getElementById('streetCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = 400;
+      canvas.height = canvas.parentElement.offsetHeight - document.getElementById('agentControls').offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const agentPositions = {
+      strategist: { x: 100, y: 150, vx: 0, vy: 0, targetX: 100, targetY: 150 },
+      creative: { x: 300, y: 150, vx: 0, vy: 0, targetX: 300, targetY: 150 },
+      analyst: { x: 100, y: 350, vx: 0, vy: 0, targetX: 100, targetY: 350 },
+      brand: { x: 300, y: 350, vx: 0, vy: 0, targetX: 300, targetY: 350 }
+    };
+
+    let activeSpeaker = null;
+    let speechBubbles = [];
+
+    function animateStreet() {
+      ctx.fillStyle = '#0a0a1e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw street grid
+      ctx.strokeStyle = '#00ff0022';
+      ctx.lineWidth = 1;
+      for (let i = 0; i < canvas.width; i += 40) {
+        ctx.beginPath();
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, canvas.height);
+        ctx.stroke();
+      }
+      for (let i = 0; i < canvas.height; i += 40) {
+        ctx.beginPath();
+        ctx.moveTo(0, i);
+        ctx.lineTo(canvas.width, i);
+        ctx.stroke();
+      }
+
+      // Draw connection lines
+      ctx.strokeStyle = '#00ff0033';
+      ctx.lineWidth = 2;
+      const agentKeys = Object.keys(agentPositions);
+      for (let i = 0; i < agentKeys.length; i++) {
+        for (let j = i + 1; j < agentKeys.length; j++) {
+          const a = agentPositions[agentKeys[i]];
+          const b = agentPositions[agentKeys[j]];
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+
+      // Draw agents
+      Object.entries(agentPositions).forEach(([key, pos]) => {
+        const agent = agents[key];
+        const isActive = activeSpeaker === key;
+        const size = isActive ? 50 : 40;
+
+        // Update position with smooth movement
+        const dx = pos.targetX - pos.x;
+        const dy = pos.targetY - pos.y;
+        pos.vx = dx * 0.1;
+        pos.vy = dy * 0.1;
+        pos.x += pos.vx;
+        pos.y += pos.vy;
+
+        // Glow effect for active speaker
+        if (isActive) {
+          ctx.shadowBlur = 30;
+          ctx.shadowColor = agent.color;
+        }
+
+        // Agent circle
+        ctx.fillStyle = agent.color;
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        // Emoji
+        ctx.font = `${size * 0.6}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(agent.emoji, pos.x, pos.y);
+
+        // Thinking animation for active speaker
+        if (isActive) {
+          const time = Date.now() / 200;
+          for (let i = 0; i < 3; i++) {
+            const offset = Math.sin(time + i * 0.5) * 5;
+            ctx.fillStyle = agent.color;
+            ctx.globalAlpha = 0.6 - i * 0.2;
+            ctx.beginPath();
+            ctx.arc(pos.x + 30, pos.y - 30 - i * 10 + offset, 3, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          ctx.globalAlpha = 1;
+        }
+      });
+
+      requestAnimationFrame(animateStreet);
+    }
+
+    animateStreet();
+
+    // ═══════════════════════════════════════
+    // MESSAGE HANDLING
+    // ═══════════════════════════════════════
+    function addMessage(agentKey, text, isTyping = false) {
+      const chatFeed = document.getElementById('chatFeed');
+      const agent = agents[agentKey];
+      const timestamp = formatTime(state.sessionTime);
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+
+      messageDiv.innerHTML = `
+        <div class="message-avatar ${agent.class}" style="border-color: ${agent.color}; color: ${agent.color};">
+          ${agent.emoji}
+        </div>
+        <div class="message-content ${agent.class}">
+          <div class="message-header">
+            <span class="message-name">${agent.name}</span>
+            <span>${timestamp}</span>
+          </div>
+          <div class="message-text ${isTyping ? 'typing-indicator' : ''}">${text}</div>
+        </div>
+      `;
+
+      chatFeed.appendChild(messageDiv);
+      chatFeed.scrollTop = chatFeed.scrollHeight;
+
+      if (!isTyping) {
+        state.stats[agentKey]++;
+        updateStats();
+        state.messages.push({
+          agent: agentKey,
+          name: agent.name,
+          text: text,
+          timestamp: timestamp
+        });
+      }
+
+      return messageDiv;
+    }
+
+    // ═══════════════════════════════════════
+    // SIMULATED LLM RESPONSES
+    // (Replace with real API calls)
+    // ═══════════════════════════════════════
+    const simulatedResponses = {
+      strategist: [
+        "Let's start with the fundamentals: Who exactly is our Gen Z target? We need to segment beyond age—what's their psychographic profile? Are we targeting early adopters, tech enthusiasts, or sustainability-focused consumers?",
+        "Looking at the competitive landscape, traditional coffee makers have zero emotional connection with Gen Z. Our advantage is the AI element—but we need to position it as a lifestyle enabler, not just a feature. Think: 'Your coffee knows you better than you know yourself.'",
+        "For launch strategy, I propose a tiered approach: 1) Seed with micro-influencers in tech/lifestyle spaces, 2) Create a waitlist with gamification, 3) Launch exclusively on TikTok Shop first. Traditional retail comes later. Gen Z rewards brands that meet them where they are."
+      ],
+      creative: [
+        "Here's the breakthrough concept: What if the coffee maker has a personality? Imagine an AI that learns your mood from your calendar, Spotify, even the weather—and suggests coffee to match. Campaign idea: '#MoodBrew' where the product becomes your morning therapist.",
+        "Visual direction: Forget sleek minimalism. Gen Z wants character. I'm seeing: bold colors, customizable LED lights, AR filters that show your 'coffee aura.' TikTok content: '30 days of the AI roasting me (and my coffee)' user-generated series.",
+        "For the launch event, we go full experiential: a pop-up 'AI Coffee Lab' where people can train their own coffee AI. It's Instagram heaven. We create shareable moments, not just product demos. Every cup becomes content."
+      ],
+      analyst: [
+        "Let's ground this in data. Gen Z coffee consumption is up 23% YoY, but they're 3x more likely to buy based on brand values than features. Our messaging must lead with sustainability and personalization metrics—'Reduces waste by 40%, knows your taste 100%.'",
+        "Looking at CAC for Gen Z: TikTok Shop has 60% lower acquisition costs than Instagram for this demo. But retention is key—our smart features need to show measurable value within 7 days or we'll see 40% returns. We need an onboarding flow that delivers 'wow moments' immediately.",
+        "ROI projection: If we nail the influencer strategy, we're looking at 15:1 ROAS in month one, dropping to 6:1 by month three as we scale. But here's the kicker—the AI creates a data moat. Every brew is a training event. In 12 months, we have the most personalized coffee experience in market. That's defensible."
+      ],
+      brand: [
+        "Brand voice check: We need to sound helpful, not creepy. The AI angle can easily veer into Black Mirror territory. Our positioning should be: 'Empowering your ritual,' not 'AI that knows everything about you.' Subtle but critical distinction.",
+        "On brand consistency: If we're using humor and 'roasting' content, it needs to feel playful, not mean. Gen Z has a low tolerance for brands that punch down. Every touchpoint—packaging, app UI, customer service—should feel like a supportive friend, not a pushy salesperson.",
+        "Customer experience concern: What happens when the AI gets it wrong? We need a brand response for that. I propose we own it with humility: 'Even AI has Mondays.' Turn failures into relatable moments. Build trust through transparency, not perfection."
+      ]
+    };
+
+    // ═══════════════════════════════════════
+    // DISCUSSION FLOW
+    // ═══════════════════════════════════════
+    async function startDiscussion() {
+      if (state.isRunning) return;
+
+      const topic = document.getElementById('topicField').value.trim();
+      if (!topic) {
+        alert('Please enter a discussion topic!');
+        return;
+      }
+
+      state.isRunning = true;
+      state.currentRound = 0;
+      document.getElementById('startBtn').disabled = true;
+      document.getElementById('pauseBtn').disabled = false;
+      document.getElementById('stopBtn').disabled = false;
+      document.getElementById('sessionStatus').textContent = 'Running';
+
+      // System message
+      addMessage('strategist', `📋 NEW TOPIC: "${topic}"`, false);
+      await sleep(1000);
+
+      // Run 3 rounds
+      for (let round = 0; round < state.maxRounds; round++) {
+        if (!state.isRunning) break;
+
+        state.currentRound = round + 1;
+        updateRoundCounter();
+
+        // Each agent speaks in turn
+        for (const [agentKey, agent] of Object.entries(agents)) {
+          if (!state.isRunning) break;
+
+          activeSpeaker = agentKey;
+
+          // Show typing indicator
+          const typingMsg = addMessage(agentKey, 'Thinking', true);
+          await sleep(1500 + Math.random() * 1500);
+
+          // Remove typing, add real message
+          typingMsg.remove();
+
+          // REPLACE THIS with real LLM API call
+          const response = simulatedResponses[agentKey][round] || `Round ${round + 1} response from ${agent.name}`;
+          addMessage(agentKey, response, false);
+
+          activeSpeaker = null;
+          await sleep(800);
+        }
+      }
+
+      // Conclusion
+      await sleep(1000);
+      const conclusionDiv = document.createElement('div');
+      conclusionDiv.className = 'message';
+      conclusionDiv.style.opacity = '1';
+      conclusionDiv.innerHTML = `
+        <div class="message-avatar" style="border-color: #00ff00; color: #00ff00;">✅</div>
+        <div class="message-content" style="border-color: #00ff00; color: #00ff00;">
+          <div class="message-header">
+            <span class="message-name">DISCUSSION COMPLETE</span>
+            <span>${formatTime(state.sessionTime)}</span>
+          </div>
+          <div class="message-text">
+            ${state.maxRounds} rounds completed! The team has explored the topic from multiple angles.<br>
+            Click "EXPORT CONVERSATION" to save this discussion.
+          </div>
+        </div>
+      `;
+      document.getElementById('chatFeed').appendChild(conclusionDiv);
+
+      stopDiscussion();
+    }
+
+    function stopDiscussion() {
+      state.isRunning = false;
+      document.getElementById('startBtn').disabled = false;
+      document.getElementById('pauseBtn').disabled = true;
+      document.getElementById('stopBtn').disabled = true;
+      document.getElementById('sessionStatus').textContent = 'Stopped';
+      activeSpeaker = null;
+    }
+
+    function clearChat() {
+      if (confirm('Clear all messages? This cannot be undone.')) {
+        document.getElementById('chatFeed').innerHTML = '';
+        state.messages = [];
+        state.stats = { strategist: 0, creative: 0, analyst: 0, brand: 0 };
+        state.currentRound = 0;
+        updateStats();
+        updateRoundCounter();
+      }
+    }
+
+    // ═══════════════════════════════════════
+    // UI UPDATES
+    // ═══════════════════════════════════════
+    function updateStats() {
+      const total = Object.values(state.stats).reduce((a, b) => a + b, 0);
+
+      Object.keys(state.stats).forEach(key => {
+        const count = state.stats[key];
+        const percent = total > 0 ? (count / total) * 100 : 0;
+        document.getElementById(`stat-${key}-count`).textContent = `${count} msgs`;
+        document.getElementById(`stat-${key}-bar`).style.width = `${percent}%`;
+      });
+
+      document.getElementById('totalMessages').textContent = state.messages.length + 1; // +1 for system message
+    }
+
+    function updateRoundCounter() {
+      document.getElementById('roundCounter').textContent = `Round: ${state.currentRound} / ${state.maxRounds}`;
+      document.getElementById('currentRound').textContent = `${state.currentRound} / ${state.maxRounds}`;
+    }
+
+    function formatTime(seconds) {
+      const h = Math.floor(seconds / 3600);
+      const m = Math.floor((seconds % 3600) / 60);
+      const s = seconds % 60;
+      return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══════════════════════════════════════
+    // PRESETS
+    // ═══════════════════════════════════════
+    const presets = {
+      productLaunch: {
+        topic: "Launch strategy for AI-powered coffee maker targeting Gen Z",
+        strategist: "You are a Marketing Strategist with 15 years of experience. Focus on market positioning, competitive advantage, and go-to-market strategy. Challenge assumptions.",
+        creative: "You are a Creative Director known for breakthrough campaigns. Focus on storytelling, emotional connection, and bold creative concepts.",
+        analyst: "You are a Data-Driven Marketing Analyst. Ground discussions in metrics, ROI, and customer insights. Balance creativity with business reality.",
+        brand: "You are a Brand Manager obsessed with brand consistency and customer perception. Ensure ideas align with brand values."
+      },
+      rebrand: {
+        topic: "Should we rebrand our 50-year-old company to appeal to millennials?",
+        strategist: "You are a Strategic Brand Consultant. Weigh the risks of alienating existing customers against the opportunity to capture new markets.",
+        creative: "You are a Creative Director who specializes in brand evolution. Find ways to honor heritage while modernizing.",
+        analyst: "You are a Market Research Analyst. Provide data on brand equity, customer sentiment, and competitive positioning.",
+        brand: "You are a Brand Heritage Guardian. Protect what makes the brand valuable while being open to evolution."
+      },
+      crisis: {
+        topic: "Our product was criticized on social media for environmental claims. How do we respond?",
+        strategist: "You are a Crisis Communications Strategist. Focus on damage control, trust rebuilding, and turning crisis into opportunity.",
+        creative: "You are a Communications Creative. Craft authentic, empathetic messaging that rebuilds trust without being defensive.",
+        analyst: "You are a Social Listening Analyst. Provide real-time data on sentiment, reach, and conversation themes.",
+        brand: "You are a Brand Reputation Manager. Ensure the response aligns with brand values and rebuilds customer trust."
+      },
+      social: {
+        topic: "Create a viral TikTok campaign for our B2B SaaS product",
+        strategist: "You are a Social Media Strategist. Make B2B content entertaining while maintaining credibility. Think outside the LinkedIn box.",
+        creative: "You are a TikTok Creative Specialist. Understand platform culture, trends, and what makes content shareable.",
+        analyst: "You are a Social Media Analytics Expert. Focus on engagement metrics, virality coefficients, and conversion tracking.",
+        brand: "You are a B2B Brand Manager navigating consumer platforms. Keep it professional yet authentic."
+      }
+    };
+
+    document.getElementById('presetSelect').addEventListener('change', (e) => {
+      const preset = presets[e.target.value];
+      if (preset) {
+        document.getElementById('topicField').value = preset.topic;
+        document.getElementById('prompt-strategist').value = preset.strategist;
+        document.getElementById('prompt-creative').value = preset.creative;
+        document.getElementById('prompt-analyst').value = preset.analyst;
+        document.getElementById('prompt-brand').value = preset.brand;
+      }
+    });
+
+    // ═══════════════════════════════════════
+    // EXPORT
+    // ═══════════════════════════════════════
+    document.getElementById('exportBtn').addEventListener('click', () => {
+      const topic = document.getElementById('topicField').value;
+      const timestamp = new Date().toISOString();
+
+      let markdown = `# AI Town Marketing Team Discussion\n\n`;
+      markdown += `**Topic:** ${topic}\n`;
+      markdown += `**Date:** ${timestamp}\n`;
+      markdown += `**Duration:** ${formatTime(state.sessionTime)}\n`;
+      markdown += `**Rounds:** ${state.currentRound} / ${state.maxRounds}\n\n`;
+      markdown += `---\n\n`;
+
+      markdown += `## Agent Prompts\n\n`;
+      Object.keys(agents).forEach(key => {
+        markdown += `### ${agents[key].emoji} ${agents[key].name}\n`;
+        markdown += `${document.getElementById(`prompt-${key}`).value}\n\n`;
+      });
+
+      markdown += `---\n\n## Discussion\n\n`;
+
+      state.messages.forEach(msg => {
+        const agent = agents[msg.agent];
+        markdown += `### ${agent.emoji} ${msg.name} • ${msg.timestamp}\n\n`;
+        markdown += `${msg.text}\n\n`;
+      });
+
+      markdown += `---\n\n## Statistics\n\n`;
+      markdown += `- Total Messages: ${state.messages.length}\n`;
+      Object.keys(state.stats).forEach(key => {
+        markdown += `- ${agents[key].name}: ${state.stats[key]} messages\n`;
+      });
+
+      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ai-town-discussion-${Date.now()}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // ═══════════════════════════════════════
+    // EVENT LISTENERS
+    // ═══════════════════════════════════════
+    document.getElementById('startBtn').addEventListener('click', startDiscussion);
+    document.getElementById('stopBtn').addEventListener('click', stopDiscussion);
+    document.getElementById('clearBtn').addEventListener('click', clearChat);
+
+    // Timer
+    setInterval(() => {
+      if (state.isRunning && !state.isPaused) {
+        state.sessionTime++;
+        document.getElementById('timer').textContent = `Session: ${formatTime(state.sessionTime)}`;
+      }
+    }, 1000);
+
+    // Initialize
+    updateStats();
+    updateRoundCounter();
+  </script>
+</body>
+</html>

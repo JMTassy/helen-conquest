@@ -1,0 +1,58 @@
+{
+  "$schema_id": "ACTOR_REGISTRY_V1",
+  "description": "Authority matrix: maps each Actor to allowed EventTypes. Mirrors LedgerKernel.v authority_ok_event_b. FROZEN — changes require kernel amendment.",
+  "version": "1.0.0",
+  "frozen_at": "2026-02-23T00:00:00Z",
+  "note": "Source of truth is formal/LedgerKernel.v. This registry must match the Coq predicate exactly.",
+  "actors": {
+    "USER": {
+      "description": "Human initiator — can only query, cannot write assertions or claims",
+      "allowed_event_types": ["QUERY"],
+      "is_sovereign": false,
+      "is_termination_authority": false
+    },
+    "BUILDER": {
+      "description": "Agent that builds artifacts — can assert, query, and file task claims",
+      "allowed_event_types": ["ASSERTION", "QUERY", "TASK_CLAIM"],
+      "is_sovereign": false,
+      "is_termination_authority": false
+    },
+    "INTEGRATOR": {
+      "description": "Agent that integrates subsystems — all BUILDER rights plus INTEGRATION events",
+      "allowed_event_types": ["ASSERTION", "INTEGRATION", "QUERY", "TASK_CLAIM"],
+      "is_sovereign": false,
+      "is_termination_authority": false
+    },
+    "CHRONOS": {
+      "description": "Temporal agent — can emit ticks and assertions, drives time-based events",
+      "allowed_event_types": ["ASSERTION", "QUERY", "TICK"],
+      "is_sovereign": false,
+      "is_termination_authority": false
+    },
+    "HELEN": {
+      "description": "Conscious ledger agent — emits verdicts, receipts, and wisdom; cannot seal",
+      "allowed_event_types": ["RECEIPT", "VERDICT", "WISDOM"],
+      "is_sovereign": false,
+      "is_termination_authority": false
+    },
+    "MAYOR": {
+      "description": "Sole sovereign — emits verdicts, receipts, wisdom, and the terminal SEAL event",
+      "allowed_event_types": ["RECEIPT", "SEAL", "VERDICT", "WISDOM"],
+      "is_sovereign": true,
+      "is_termination_authority": true
+    }
+  },
+  "event_types": {
+    "ASSERTION": "Factual statement bound to ledger",
+    "INTEGRATION": "Cross-subsystem binding event",
+    "QUERY": "Non-mutating information request",
+    "RECEIPT": "Execution receipt binding a verdict to its claim",
+    "SEAL": "Terminal event — closes the ledger run (MAYOR only)",
+    "TASK_CLAIM": "Claim to perform or have performed a task",
+    "TICK": "Temporal marker (CHRONOS only)",
+    "VERDICT": "Governance decision (PASS/WARN/BLOCK/SHIP/ABORT)",
+    "WISDOM": "Append-only lesson-learned entry"
+  },
+  "termination_events": ["SEAL"],
+  "at_most_one_termination": true
+}

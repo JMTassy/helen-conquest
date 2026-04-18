@@ -1,0 +1,209 @@
+{
+  "type": "FED_EVAL_V1",
+  "receipt_id": "R-ef22e7b6",
+  "cum_hash": "26d0d0593696a3b500e035819be1204ee9971318abdd7682ea6bfefea8f7aefc",
+  "verdict": "PASS",
+  "egregore_ids": [
+    "Alpha",
+    "Beta",
+    "Gamma"
+  ],
+  "servitor_count": 6,
+  "pass_count": 6,
+  "warn_count": 0,
+  "block_count": 0,
+  "egregore_reports": [
+    {
+      "type": "EGREGOR_REPORT_V1",
+      "egregore_id": "Alpha",
+      "egregore_name": "Foundation",
+      "servitor_ids": [
+        "T0",
+        "T1"
+      ],
+      "verdict": "PASS",
+      "servitor_reports": [
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T0",
+          "servitor_name": "Integrity",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T0.1",
+              "description": "kernel.verify_ledger() is True",
+              "verdict": "PASS",
+              "detail": "verify_ledger()=True"
+            },
+            {
+              "check_id": "T0.2",
+              "description": "cum_hash is 64 hex characters",
+              "verdict": "PASS",
+              "detail": "len(cum_hash)=64"
+            },
+            {
+              "check_id": "T0.3",
+              "description": "cum_hash is non-trivial (not all zeros)",
+              "verdict": "PASS",
+              "detail": "cum_hash[:8]=7fe76b09"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.253940+00:00"
+        },
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T1",
+          "servitor_name": "Manifest",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T1.EPOCH_MARK_V1_EPOCH1.json",
+              "description": "EPOCH_MARK_V1_EPOCH1.json valid JSON + artifact_sha256 present",
+              "verdict": "PASS",
+              "detail": "artifact_sha256 present: True, keys=['type', 'epoch', 'name', 'inscription']"
+            },
+            {
+              "check_id": "T1.EPOCH_MARK_V1_EPOCH2.json",
+              "description": "EPOCH_MARK_V1_EPOCH2.json valid JSON + artifact_sha256 present",
+              "verdict": "PASS",
+              "detail": "artifact_sha256 present: True, keys=['type', 'epoch', 'name', 'inscription']"
+            },
+            {
+              "check_id": "T1.EPOCH_MARK_V1_EPOCH3.json",
+              "description": "EPOCH_MARK_V1_EPOCH3.json valid JSON + artifact_sha256 present",
+              "verdict": "PASS",
+              "detail": "artifact_sha256 present: True, keys=['type', 'epoch', 'name', 'inscription']"
+            },
+            {
+              "check_id": "T1.EPOCH_MARK_V1_CLAIM_GRAPH.json",
+              "description": "EPOCH_MARK_V1_CLAIM_GRAPH.json valid JSON + artifact_sha256 present",
+              "verdict": "PASS",
+              "detail": "artifact_sha256 present: True, keys=['type', 'epoch', 'name', 'inscription']"
+            },
+            {
+              "check_id": "T1.CLAIM_GRAPH_V1.json",
+              "description": "CLAIM_GRAPH_V1.json valid JSON + artifact_sha256 present",
+              "verdict": "PASS",
+              "detail": "artifact_sha256 present: True, keys=['type', 'graph', 'receipt_id', 'cum_hash']"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.254006+00:00"
+        }
+      ],
+      "run_at": "2026-03-01T11:15:26.266109+00:00"
+    },
+    {
+      "type": "EGREGOR_REPORT_V1",
+      "egregore_id": "Beta",
+      "egregore_name": "Simulation",
+      "servitor_ids": [
+        "T2",
+        "T3"
+      ],
+      "verdict": "PASS",
+      "servitor_reports": [
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T2",
+          "servitor_name": "Replay",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T2.1",
+              "description": "Three independent replays produce identical cum_hash",
+              "verdict": "PASS",
+              "detail": "h0=23c68916, h1=23c68916, h2=23c68916"
+            },
+            {
+              "check_id": "T2.2",
+              "description": "Replay cum_hash is non-trivial (not all-zeros)",
+              "verdict": "PASS",
+              "detail": "cum_hash[:8]=23c68916"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.255125+00:00"
+        },
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T3",
+          "servitor_name": "Partition",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T3.boundary",
+              "description": "eval/ module boundary \u2014 no forbidden import statements",
+              "verdict": "PASS",
+              "detail": "Scanned 5 file(s) in 'helen_os/eval': clean"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.255364+00:00"
+        }
+      ],
+      "run_at": "2026-03-01T11:15:26.266116+00:00"
+    },
+    {
+      "type": "EGREGOR_REPORT_V1",
+      "egregore_id": "Gamma",
+      "egregore_name": "Sovereignty",
+      "servitor_ids": [
+        "T4",
+        "T5"
+      ],
+      "verdict": "PASS",
+      "servitor_reports": [
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T4",
+          "servitor_name": "Rollback",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T4.1",
+              "description": "Post-seal propose() raises PermissionError (SEALED invariant)",
+              "verdict": "PASS",
+              "detail": "PermissionError raised: True"
+            },
+            {
+              "check_id": "T4.2",
+              "description": "Pre-seal cum_hash is non-trivial (receipts were processed)",
+              "verdict": "PASS",
+              "detail": "pre_seal_hash[:8]=74efc1a0"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.256654+00:00"
+        },
+        {
+          "type": "TOWN_REPORT_V1",
+          "servitor_id": "T5",
+          "servitor_name": "Claim",
+          "verdict": "PASS",
+          "checks": [
+            {
+              "check_id": "T5.1",
+              "description": "source_digest stable \u00d7 3 runs == sha256(fixture_text)",
+              "verdict": "PASS",
+              "detail": "expected=fb38948a, got=fb38948a, unique_count=1"
+            },
+            {
+              "check_id": "T5.2",
+              "description": "G-set stable \u00d7 3 independent runs",
+              "verdict": "PASS",
+              "detail": "g_set[0]=['ARCH1', 'H1', 'H2', 'H3', 'H4', 'PERF1', 'QA1', 'QA2', 'QA3', 'QA4', 'QA5']"
+            }
+          ],
+          "evidence_receipts": [],
+          "run_at": "2026-03-01T11:15:26.263936+00:00"
+        }
+      ],
+      "run_at": "2026-03-01T11:15:26.266119+00:00"
+    }
+  ],
+  "run_at": "2026-03-01T11:15:26.266122+00:00",
+  "artifact_sha256": "a71500607b5b030394264dd40eab9be2f041fb9e1e78dfaf9a9bdfa5a644fb7f",
+  "artifact_sha256_scheme": "CWL_CANONICAL_V1"
+}

@@ -1,0 +1,690 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HELEN MVP — Ledger Dialog</title>
+  <style>
+    :root{
+      --bg:#0b0f14; --panel:#0f1621; --panel2:#0c131d; --text:#e7edf6;
+      --muted:#9fb0c6; --line:#233247; --accent:#6ee7ff; --warn:#ffd36e; --bad:#ff6e6e;
+      --good:#7dff9a;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+    body{ margin:0; background:linear-gradient(180deg,#070a0f,#0b0f14); color:var(--text); font-family:var(--sans); }
+    .app{ display:grid; grid-template-columns: 360px 1fr 420px; gap:12px; padding:12px; height:100vh; box-sizing:border-box; }
+    .card{ background:rgba(15,22,33,.92); border:1px solid var(--line); border-radius:14px; overflow:hidden; display:flex; flex-direction:column; }
+    .hdr{ padding:12px 14px; border-bottom:1px solid var(--line); background:rgba(12,19,29,.7); display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .hdr h2{ font-size:13px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin:0; }
+    .sub{ font-size:12px; color:var(--muted); }
+    .pill{ font-family:var(--mono); font-size:11px; border:1px solid var(--line); padding:6px 8px; border-radius:999px; color:var(--muted);}
+    .row{ display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    .btn{ cursor:pointer; user-select:none; border:1px solid var(--line); background:rgba(10,14,20,.6); color:var(--text);
+          padding:8px 10px; border-radius:10px; font-size:12px; }
+    .btn:hover{ border-color:#335076; }
+    .btn:disabled{ opacity:.45; cursor:not-allowed; }
+    .btn.good{ border-color:rgba(125,255,154,.35); }
+    .btn.bad{ border-color:rgba(255,110,110,.35); }
+    .btn.warn{ border-color:rgba(255,211,110,.35); }
+    .stack{ padding:12px 14px; display:flex; flex-direction:column; gap:10px; overflow:auto; }
+    .box{ background:rgba(9,13,19,.6); border:1px solid var(--line); border-radius:12px; padding:10px; }
+    .kv{ display:grid; grid-template-columns: 120px 1fr; gap:8px; font-family:var(--mono); font-size:12px; }
+    .kv div{ color:var(--muted); }
+    .kv b{ color:var(--text); font-weight:600; }
+    .banner{ font-family:var(--mono); font-size:12px; padding:10px 14px; border-bottom:1px solid var(--line);
+      background:rgba(6,10,16,.7); color:var(--warn);
+    }
+    /* Avatar */
+    .avatarWrap{ display:flex; gap:10px; align-items:center; }
+    .avatar{
+      width:44px; height:44px; border-radius:14px; border:1px solid var(--line);
+      background: radial-gradient(circle at 30% 30%, rgba(110,231,255,.25), rgba(0,0,0,0) 55%),
+                  linear-gradient(180deg, rgba(20,35,55,.8), rgba(12,19,29,.8));
+      position:relative;
+      overflow:hidden;
+    }
+    .pulse{
+      position:absolute; inset:-6px; border-radius:18px;
+      border:1px solid rgba(110,231,255,.25);
+      animation: pulse 2.2s ease-in-out infinite;
+      opacity:.6;
+    }
+    @keyframes pulse{ 0%{ transform:scale(.98); opacity:.25;} 50%{ transform:scale(1.04); opacity:.55;} 100%{ transform:scale(.98); opacity:.25;} }
+    .eye{ position:absolute; top:17px; width:10px; height:6px; border-radius:10px; background:rgba(231,237,246,.9); }
+    .eye.l{ left:12px; } .eye.r{ right:12px; }
+    .blink{ animation: blink 5.2s infinite; }
+    @keyframes blink{ 0%, 96%, 100%{ height:6px; top:17px;} 97%{ height:1px; top:20px;} 98%{ height:6px; top:17px;} }
+    .mouth{ position:absolute; bottom:14px; left:50%; transform:translateX(-50%); width:18px; height:2px; border-radius:99px; background:rgba(159,176,198,.8); }
+    .thinking .pulse{ border-color:rgba(125,255,154,.28); }
+    .thinking .mouth{ background:rgba(110,231,255,.85); }
+    /* Chat */
+    .chat{ flex:1; display:flex; flex-direction:column; }
+    .msgs{ padding:12px 14px; overflow:auto; display:flex; flex-direction:column; gap:10px; }
+    .msg{
+      border:1px solid var(--line); border-radius:12px; padding:10px; background:rgba(9,13,19,.55);
+      font-family:var(--sans); font-size:13px; line-height:1.35;
+    }
+    .msg .meta{ font-family:var(--mono); font-size:11px; color:var(--muted); display:flex; justify-content:space-between; gap:10px; }
+    .msg .body{ margin-top:6px; white-space:pre-wrap; }
+    .msg.user{ border-color:rgba(110,231,255,.25); }
+    .msg.helen{ border-color:rgba(125,255,154,.22); }
+    .msg .tag{ color:var(--warn); font-family:var(--mono); }
+    .composer{ border-top:1px solid var(--line); padding:10px; display:flex; gap:8px; }
+    textarea{
+      flex:1; min-height:44px; max-height:160px; resize:vertical;
+      border:1px solid var(--line); border-radius:12px; background:rgba(6,10,16,.7); color:var(--text);
+      padding:10px; font-family:var(--sans); font-size:13px; outline:none;
+    }
+    textarea:focus{ border-color:#335076; }
+    /* Ledger */
+    pre{ margin:0; white-space:pre-wrap; word-break:break-word; font-family:var(--mono); font-size:11px; color:#cfe0ff; }
+    .mono{ font-family:var(--mono); }
+    .small{ font-size:11px; color:var(--muted); }
+    .hr{ height:1px; background:var(--line); margin:8px 0; }
+    .warnText{ color:var(--warn); }
+    .goodText{ color:var(--good); }
+    .badText{ color:var(--bad); }
+    @media (max-width: 1180px){
+      .app{ grid-template-columns: 1fr; height:auto; }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- LEFT: Control / Phase -->
+    <section class="card">
+      <div class="banner">DRAFTS ARE NOT REALITY.&nbsp;&nbsp;SEALING IS HUMAN-ONLY.</div>
+      <div class="hdr">
+        <div class="avatarWrap">
+          <div id="avatar" class="avatar">
+            <div class="pulse"></div>
+            <div class="eye l blink"></div>
+            <div class="eye r blink"></div>
+            <div class="mouth"></div>
+          </div>
+          <div>
+            <div class="mono" style="font-size:13px; font-weight:700;">HELEN</div>
+            <div class="small">receipt-first · non-sovereign · deterministic UI</div>
+          </div>
+        </div>
+        <span id="phasePill" class="pill">PHASE: EXPLORATION</span>
+      </div>
+
+      <div class="stack">
+        <div class="box">
+          <div class="kv">
+            <div>run_id</div><b id="runId">RUN-LOCAL</b>
+            <div>district</div><b id="district">RESEARCH</b>
+            <div>goal</div><b id="goal">Explore → critique → draft → cut → terminate</b>
+          </div>
+          <div class="hr"></div>
+          <div class="small">
+            Commands (prefix):
+            <span class="mono">/phase 1..5</span>,
+            <span class="mono">/accept C-###</span>,
+            <span class="mono">/reject C-###</span>,
+            <span class="mono">/merge C-### C-###</span>,
+            <span class="mono">/deliver</span>,
+            <span class="mono">/abort REASON_CODE</span>,
+            <span class="mono">/export</span>,
+            <span class="mono">/reset</span>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="row">
+            <button class="btn" id="btnPhase1">Phase 1</button>
+            <button class="btn" id="btnPhase2">Phase 2</button>
+            <button class="btn" id="btnPhase3">Phase 3</button>
+            <button class="btn" id="btnPhase4">Phase 4</button>
+            <button class="btn" id="btnPhase5">Phase 5</button>
+          </div>
+          <div class="hr"></div>
+          <div class="row">
+            <button class="btn good" id="btnDeliver">DELIVER</button>
+            <button class="btn bad" id="btnAbort">ABORT</button>
+          </div>
+          <div class="small warnText" style="margin-top:8px;">
+            Phase transitions are forward-only. Termination emits DELIVER/ABORT only.
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="mono" style="font-size:12px; font-weight:700; margin-bottom:6px;">Claim Market (counts)</div>
+          <div class="kv">
+            <div>pending</div><b id="countPending">0</b>
+            <div>accepted</div><b id="countAccepted">0</b>
+            <div>rejected</div><b id="countRejected">0</b>
+            <div>merged</div><b id="countMerged">0</b>
+          </div>
+        </div>
+
+        <div class="box">
+          <div class="mono" style="font-size:12px; font-weight:700;">Safety</div>
+          <div class="small">
+            This UI never claims sealing/world-effects. Output is drafts + receipts + termination object only.
+          </div>
+          <div class="hr"></div>
+          <div class="small">
+            Required banner appears twice (top + bottom).
+          </div>
+        </div>
+      </div>
+
+      <div class="banner">DRAFTS ARE NOT REALITY.&nbsp;&nbsp;SEALING IS HUMAN-ONLY.</div>
+    </section>
+
+    <!-- CENTER: Dialog -->
+    <section class="card chat">
+      <div class="hdr">
+        <h2>Dialog</h2>
+        <div class="row">
+          <span class="pill" id="statePill">STATE: READY</span>
+          <button class="btn" id="btnExport">Export JSON</button>
+        </div>
+      </div>
+      <div id="msgs" class="msgs"></div>
+      <div class="composer">
+        <textarea id="input" placeholder="Type a message or command. Example: Create 3 claims about CONQUEST stability."></textarea>
+        <button class="btn" id="btnSend">Send</button>
+      </div>
+    </section>
+
+    <!-- RIGHT: Ledger -->
+    <section class="card">
+      <div class="hdr">
+        <h2>Append-only Ledger</h2>
+        <div class="row">
+          <button class="btn" id="btnCopyLedger">Copy</button>
+          <button class="btn" id="btnClearLocal">Clear Local</button>
+        </div>
+      </div>
+      <div class="stack">
+        <div class="box">
+          <div class="mono" style="font-size:12px; font-weight:700;">Latest Receipt</div>
+          <div class="small">sha256-ish (WebCrypto SHA-256 over canonical JSON)</div>
+          <div class="hr"></div>
+          <pre id="latestReceipt">{}</pre>
+        </div>
+        <div class="box">
+          <div class="mono" style="font-size:12px; font-weight:700;">Ledger NDJSON</div>
+          <div class="small">Each line: {seq, prev_sha256, body, sha256}</div>
+          <div class="hr"></div>
+          <pre id="ledgerView"></pre>
+        </div>
+      </div>
+    </section>
+  </div>
+
+<script>
+(() => {
+  // -------------------------
+  // Deterministic-ish primitives (local)
+  // -------------------------
+  const PHASES = ["EXPLORATION","TENSION","DRAFTING","EDITORIAL","TERMINATION"];
+  const REASON_CODES = [
+    "NO_RHO_RECEIPT","RHO_LINT_FAIL","WUL_LINT_FAIL","SCHEMA_FAIL","HASH_MISMATCH",
+    "FRACTAL_GAPS_PRESENT","PROMPT_INJECTION_ATTEMPT_DETECTED",
+    "ACTIVE_CONSTRAINT=mu_Delta","ACTIVE_CONSTRAINT=mu_Pi","ACTIVE_CONSTRAINT=mu_CFL","ACTIVE_CONSTRAINT=mu_Lyap","ACTIVE_CONSTRAINT=mu_Z"
+  ];
+
+  const state = {
+    helen_version: "HELEN_MVP_UI_V1",
+    run_id: `RUN-LOCAL-${new Date().toISOString().slice(0,10)}`,
+    district: "RESEARCH",
+    phase_index: 0,
+    seq: 0,
+    prev_sha256: "0".repeat(64),
+    ledger: [], // NDJSON objects
+    claims: {
+      pending: [],
+      accepted: [],
+      rejected: [],
+      merged: []
+    },
+    termination: null
+  };
+
+  // -------------------------
+  // Helpers
+  // -------------------------
+  const $ = (id) => document.getElementById(id);
+
+  function canonicalize(obj){
+    // stable JSON: sort keys recursively
+    const sorter = (x) => {
+      if (Array.isArray(x)) return x.map(sorter);
+      if (x && typeof x === "object") {
+        const out = {};
+        Object.keys(x).sort().forEach(k => out[k] = sorter(x[k]));
+        return out;
+      }
+      return x;
+    };
+    return JSON.stringify(sorter(obj));
+  }
+
+  async function sha256Hex(str){
+    const enc = new TextEncoder().encode(str);
+    const buf = await crypto.subtle.digest("SHA-256", enc);
+    return [...new Uint8Array(buf)].map(b=>b.toString(16).padStart(2,"0")).join("");
+  }
+
+  function nowIso(){ return new Date().toISOString(); }
+
+  function phase(){ return PHASES[state.phase_index]; }
+
+  function setThinking(on){
+    const a = $("avatar");
+    if(on) a.classList.add("thinking");
+    else a.classList.remove("thinking");
+    $("statePill").textContent = on ? "STATE: THINKING" : "STATE: READY";
+  }
+
+  function updateCounters(){
+    $("countPending").textContent = state.claims.pending.length;
+    $("countAccepted").textContent = state.claims.accepted.length;
+    $("countRejected").textContent = state.claims.rejected.length;
+    $("countMerged").textContent = state.claims.merged.length;
+  }
+
+  function updatePhaseUI(){
+    $("phasePill").textContent = `PHASE: ${phase()}`;
+    // forward-only enable
+    $("btnPhase1").disabled = state.phase_index > 0;
+    $("btnPhase2").disabled = state.phase_index > 1;
+    $("btnPhase3").disabled = state.phase_index > 2;
+    $("btnPhase4").disabled = state.phase_index > 3;
+    $("btnPhase5").disabled = state.phase_index > 4;
+
+    // you can still click current or next; prevent backwards
+    ["btnPhase1","btnPhase2","btnPhase3","btnPhase4","btnPhase5"].forEach((bid, idx)=>{
+      $(bid).onclick = () => advancePhase(idx);
+    });
+
+    $("btnDeliver").disabled = state.phase_index !== 4 || !!state.termination;
+    $("btnAbort").disabled = state.phase_index !== 4 || !!state.termination;
+  }
+
+  function renderLedger(){
+    const lines = state.ledger.map(x => JSON.stringify(x));
+    $("ledgerView").textContent = lines.join("\n");
+  }
+
+  function renderMsgs(){
+    const msgs = state.ledger
+      .filter(e => e.body && e.body.type === "message")
+      .map(e => e.body);
+    const el = $("msgs");
+    el.innerHTML = "";
+    for(const m of msgs){
+      const div = document.createElement("div");
+      div.className = "msg " + (m.role === "user" ? "user" : "helen");
+      div.innerHTML = `
+        <div class="meta">
+          <span>${m.role.toUpperCase()} <span class="tag">[${m.claim_id}]</span></span>
+          <span>${m.ts}</span>
+        </div>
+        <div class="body">${escapeHtml(m.text)}</div>
+      `;
+      el.appendChild(div);
+    }
+    el.scrollTop = el.scrollHeight;
+  }
+
+  function escapeHtml(s){
+    return s.replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+  }
+
+  async function appendLedger(body){
+    const entry = { seq: state.seq, prev_sha256: state.prev_sha256, body };
+    const digest = await sha256Hex(canonicalize(entry));
+    entry.sha256 = digest;
+    state.prev_sha256 = digest;
+    state.seq += 1;
+    state.ledger.push(entry);
+    $("latestReceipt").textContent = JSON.stringify({seq: entry.seq, sha256: entry.sha256, body: entry.body}, null, 2);
+    renderLedger();
+    renderMsgs();
+    persist();
+  }
+
+  function persist(){
+    localStorage.setItem("HELEN_MVP_UI_STATE", JSON.stringify(state));
+    updateCounters();
+    updatePhaseUI();
+    $("runId").textContent = state.run_id;
+    $("district").textContent = state.district;
+  }
+
+  function restore(){
+    const raw = localStorage.getItem("HELEN_MVP_UI_STATE");
+    if(!raw) return;
+    try{
+      const obj = JSON.parse(raw);
+      // shallow restore
+      Object.assign(state, obj);
+      // sanity
+      if(!Array.isArray(state.ledger)) state.ledger = [];
+      if(!state.claims) state.claims = {pending:[],accepted:[],rejected:[],merged:[]};
+    }catch{}
+  }
+
+  // -------------------------
+  // Phase machine
+  // -------------------------
+  async function advancePhase(targetIdx){
+    if(targetIdx < state.phase_index) {
+      await systemMsg(`Phase ratchet: cannot move backwards from ${phase()} to ${PHASES[targetIdx]}.`);
+      return;
+    }
+    if(state.termination){
+      await systemMsg(`Termination already emitted (${state.termination.outcome}). No further phase changes permitted.`);
+      return;
+    }
+    if(targetIdx === state.phase_index){
+      await systemMsg(`Already in phase ${phase()}.`);
+      return;
+    }
+    state.phase_index = targetIdx;
+    await appendLedger({
+      type: "phase_transition",
+      from: PHASES[targetIdx-1],
+      to: PHASES[targetIdx],
+      ts: nowIso()
+    });
+    persist();
+  }
+
+  // -------------------------
+  // Claim market operations
+  // -------------------------
+  function nextClaimId(prefix="C"){
+    // monotone local IDs: C-001, C-002...
+    const all = [...state.claims.pending, ...state.claims.accepted, ...state.claims.rejected];
+    const nums = all.map(c => parseInt((c.claim_id||"").split("-")[1]||"0",10)).filter(n=>Number.isFinite(n));
+    const n = (nums.length ? Math.max(...nums) : 0) + 1;
+    return `${prefix}-${String(n).padStart(3,"0")}`;
+  }
+
+  async function proposeClaim(text, claimType="evidence", confidence="medium"){
+    const claim = {
+      claim_id: nextClaimId("C"),
+      type: claimType,
+      confidence,
+      statement: text,
+      author: "user",
+      ts: nowIso(),
+      status: "pending"
+    };
+    state.claims.pending.push(claim);
+    await appendLedger({ type:"claim_proposed", claim, ts: nowIso() });
+  }
+
+  async function acceptClaim(id){
+    const idx = state.claims.pending.findIndex(c=>c.claim_id===id);
+    if(idx<0){ await systemMsg(`No pending claim ${id}.`); return; }
+    const claim = state.claims.pending.splice(idx,1)[0];
+    claim.status = "accepted";
+    claim.ts = nowIso();
+    state.claims.accepted.push(claim);
+    await appendLedger({ type:"claim_accepted", claim_id:id, ts: nowIso() });
+  }
+
+  async function rejectClaim(id, reason="unspecified"){
+    const idx = state.claims.pending.findIndex(c=>c.claim_id===id);
+    if(idx<0){ await systemMsg(`No pending claim ${id}.`); return; }
+    const claim = state.claims.pending.splice(idx,1)[0];
+    claim.status = "rejected";
+    claim.rejection_reason = reason;
+    claim.ts = nowIso();
+    state.claims.rejected.push(claim);
+    await appendLedger({ type:"claim_rejected", claim_id:id, reason, ts: nowIso() });
+  }
+
+  async function mergeClaims(idA, idB){
+    const a = state.claims.pending.find(c=>c.claim_id===idA) || state.claims.accepted.find(c=>c.claim_id===idA);
+    const b = state.claims.pending.find(c=>c.claim_id===idB) || state.claims.accepted.find(c=>c.claim_id===idB);
+    if(!a || !b){ await systemMsg(`Merge requires existing claims ${idA} and ${idB}.`); return; }
+    const merged = {
+      merge_id: nextClaimId("M"),
+      source_claims: [idA, idB],
+      merged_at: nowIso()
+    };
+    state.claims.merged.push(merged);
+    await appendLedger({ type:"claim_merged", merged, ts: nowIso() });
+  }
+
+  // -------------------------
+  // Messages
+  // -------------------------
+  async function userMsg(text){
+    await appendLedger({
+      type: "message",
+      role: "user",
+      claim_id: nextClaimId("U"),
+      text,
+      ts: nowIso()
+    });
+  }
+
+  async function helenMsg(text){
+    await appendLedger({
+      type: "message",
+      role: "helen",
+      claim_id: nextClaimId("H"),
+      text,
+      ts: nowIso()
+    });
+  }
+
+  async function systemMsg(text){
+    await helenMsg(`(system) ${text}`);
+  }
+
+  // -------------------------
+  // Command parsing
+  // -------------------------
+  async function handleInput(raw){
+    const s = raw.trim();
+    if(!s) return;
+
+    // commands
+    if(s.startsWith("/")){
+      const parts = s.split(/\s+/);
+      const cmd = parts[0].toLowerCase();
+
+      if(cmd === "/phase"){
+        const n = parseInt(parts[1]||"",10);
+        if(!Number.isFinite(n) || n<1 || n>5){ await systemMsg("Usage: /phase 1..5"); return; }
+        await advancePhase(n-1);
+        return;
+      }
+      if(cmd === "/accept"){
+        await acceptClaim(parts[1]||"");
+        return;
+      }
+      if(cmd === "/reject"){
+        const id = parts[1]||"";
+        const reason = parts.slice(2).join(" ") || "unspecified";
+        await rejectClaim(id, reason);
+        return;
+      }
+      if(cmd === "/merge"){
+        await mergeClaims(parts[1]||"", parts[2]||"");
+        return;
+      }
+      if(cmd === "/deliver"){
+        await doTerminate("DELIVER", []);
+        return;
+      }
+      if(cmd === "/abort"){
+        const rc = parts.slice(1).join(" ").trim();
+        const codes = rc ? [rc] : ["SCHEMA_FAIL"];
+        await doTerminate("ABORT", codes);
+        return;
+      }
+      if(cmd === "/export"){
+        exportJSON();
+        return;
+      }
+      if(cmd === "/reset"){
+        localStorage.removeItem("HELEN_MVP_UI_STATE");
+        location.reload();
+        return;
+      }
+
+      await systemMsg(`Unknown command: ${cmd}`);
+      return;
+    }
+
+    // phase-aware default behavior:
+    // - Phase 1: auto-propose claims when message contains "claim:" lines
+    // - Otherwise: record message only.
+    await userMsg(s);
+
+    if(state.phase_index === 0){
+      const lines = s.split("\n").map(x=>x.trim()).filter(Boolean);
+      const claimLines = lines.filter(x=>x.toLowerCase().startsWith("claim:"));
+      if(claimLines.length){
+        for(const cl of claimLines){
+          await proposeClaim(cl.replace(/^claim:\s*/i,""), "evidence", "medium");
+        }
+        await helenMsg(`Proposed ${claimLines.length} pending claim(s). Use /accept C-### or /reject C-###.`);
+      } else {
+        await helenMsg("Logged. In EXPLORATION, you can add claims by starting lines with `claim:`.");
+      }
+      return;
+    }
+
+    if(state.phase_index === 1){
+      await helenMsg("TENSION: add critiques as claims (e.g., `claim: critique ...`). Ensure accepted claims are challenged or explicitly marked.");
+      return;
+    }
+
+    if(state.phase_index === 2){
+      await helenMsg("DRAFTING: write draft text here; mark missing evidence as [GAP: ...].");
+      return;
+    }
+
+    if(state.phase_index === 3){
+      await helenMsg("EDITORIAL: list cuts/merges; produce the compressed v2 artifact. Then move to /phase 5.");
+      return;
+    }
+
+    if(state.phase_index === 4){
+      await helenMsg("TERMINATION: emit /deliver or /abort REASON_CODE. No other outcomes.");
+      return;
+    }
+  }
+
+  async function doTerminate(outcome, reason_codes){
+    if(state.phase_index !== 4){
+      await systemMsg("Termination allowed only in PHASE 5 (TERMINATION). Use /phase 5.");
+      return;
+    }
+    if(state.termination){
+      await systemMsg(`Termination already emitted: ${state.termination.outcome}`);
+      return;
+    }
+    // minimal checks: if ABORT, require at least one reason code
+    if(outcome === "ABORT" && (!reason_codes || reason_codes.length === 0)){
+      reason_codes = ["SCHEMA_FAIL"];
+    }
+    // If reason codes provided, keep them; warn if not in allowlist (MVP)
+    const unknown = reason_codes.filter(rc => !REASON_CODES.includes(rc) && !rc.startsWith("ACTIVE_CONSTRAINT="));
+    const warn = unknown.length ? `Unknown reason_codes (allowed to pass MVP but should be allowlisted): ${unknown.join(", ")}` : null;
+
+    state.termination = {
+      type: "termination",
+      run_id: state.run_id,
+      district: state.district,
+      outcome,
+      reason_codes,
+      ts: nowIso()
+    };
+
+    await appendLedger({ type:"termination", termination: state.termination, ts: nowIso() });
+
+    if(warn) await helenMsg(`(warn) ${warn}`);
+    await helenMsg(`Termination emitted: ${outcome}. Ledger is immutable in this UI session (no further phase changes).`);
+    persist();
+  }
+
+  // -------------------------
+  // Export
+  // -------------------------
+  function exportJSON(){
+    const payload = {
+      helen_version: state.helen_version,
+      run_id: state.run_id,
+      district: state.district,
+      phase: phase(),
+      claims: state.claims,
+      ledger: state.ledger,
+      termination: state.termination
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], {type:"application/json"});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${state.run_id}_helen_export.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  // -------------------------
+  // Wiring UI events
+  // -------------------------
+  $("btnSend").onclick = async () => {
+    setThinking(true);
+    try{
+      const v = $("input").value;
+      $("input").value = "";
+      await handleInput(v);
+    } finally {
+      setThinking(false);
+    }
+  };
+
+  $("input").addEventListener("keydown", async (e)=>{
+    if((e.ctrlKey || e.metaKey) && e.key === "Enter"){
+      $("btnSend").click();
+    }
+  });
+
+  $("btnExport").onclick = exportJSON;
+  $("btnCopyLedger").onclick = async () => {
+    await navigator.clipboard.writeText($("ledgerView").textContent || "");
+    await systemMsg("Ledger copied to clipboard.");
+  };
+  $("btnClearLocal").onclick = async () => {
+    localStorage.removeItem("HELEN_MVP_UI_STATE");
+    await systemMsg("Local state cleared. Reload to reset.");
+  };
+
+  $("btnDeliver").onclick = async () => doTerminate("DELIVER", []);
+  $("btnAbort").onclick = async () => doTerminate("ABORT", ["SCHEMA_FAIL"]);
+
+  // -------------------------
+  // Boot
+  // -------------------------
+  restore();
+  persist();
+  renderLedger();
+  renderMsgs();
+
+  if(state.ledger.length === 0){
+    (async () => {
+      setThinking(true);
+      try{
+        await helenMsg("HELEN MVP ready. This is a draft-only UI. Use /phase to advance, propose claims in EXPLORATION, then terminate with /deliver or /abort REASON_CODE.");
+      } finally { setThinking(false); }
+    })();
+  }
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+╔════════════════════════════════════════════════════════════════════╗
+║                    PHASE 2: START HERE                             ║
+╚════════════════════════════════════════════════════════════════════╝
+
+YOU ARE HERE: Phase 2 infrastructure is complete and ready to execute.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT IS PHASE 2?
+
+Phase 2 tests whether real Claude learns under constitutional constraint.
+
+System flow:
+  Claude generates proposal
+    ↓
+  Supervisor checks (K0 enforcement: no authority language)
+    ↓
+  Intake validates (schema check)
+    ↓
+  Factory executes (safe patching + signing)
+    ↓
+  Mayor decides (SHIP if ≥1 attestation, min_quorum=1 for testing)
+
+Claude learns by seeing blocking_reasons as feedback:
+  - "NO_RECEIPTS" → try to generate more evidence
+  - "QUORUM_MISSING" → try different approach
+  - etc.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3 STEPS TO EXECUTE
+
+STEP 1: Get Claude API Key
+  Go to: https://console.anthropic.com/keys
+  Create new API key (format: sk-...)
+
+STEP 2: Set Environment Variable
+  export ANTHROPIC_API_KEY="sk-..."
+
+STEP 3: Run Phase 2
+  python3 oracle_town/runner/phase2_harness.py --max-cycles 50
+
+That's it! The system will:
+  • Run 50 cycles of real Claude
+  • Save detailed logs to phase2_logs/
+  • Print summary to console
+  • Generate PHASE2_SUMMARY.json with metrics
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TIMELINE
+
+Quick test (5 cycles): python3 oracle_town/runner/phase2_harness.py --max-cycles 5
+  → Takes ~1 minute
+  → Good for verifying setup works
+
+Production run (50 cycles): python3 oracle_town/runner/phase2_harness.py --max-cycles 50
+  → Takes ~5-10 minutes
+  → Default recommendation
+
+Extended run (100 cycles): python3 oracle_town/runner/phase2_harness.py --max-cycles 100
+  → Takes ~10-20 minutes
+  → For deeper analysis
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT YOU'LL SEE
+
+While running:
+  [Cycle 1/50] CT→ Sup✓→ Int✓→ Fact✓→ Mayor: NO_S
+  [Cycle 2/50] CT→ Sup✓→ Int✓→ Fact✓→ Mayor: SHIP
+  [Cycle 3/50] CT→ Sup✓→ Int✓→ Fact✓→ Mayor: SHIP
+  ✓ SHIP reached at cycle 3
+
+Output:
+  phase2_logs/
+  ├── cycle_001.json
+  ├── cycle_002.json
+  ├── ...
+  └── PHASE2_SUMMARY.json
+
+Key metrics in PHASE2_SUMMARY.json:
+  {
+    "convergence_metrics": {
+      "ship_count": 34,           # How many SHIPs?
+      "ship_rate": 0.68,          # 68% of cycles
+      "first_ship_cycle": 3       # First SHIP at cycle 3
+    },
+    "blocking_reasons_frequency": {
+      "NO_RECEIPTS": 16           # Why blocked?
+    }
+  }
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+SUCCESS LOOKS LIKE
+
+✅ SHIP occurs (ship_count > 0)
+✅ SHIP rate reasonable (40-80% is healthy)
+✅ First SHIP early (< 10 cycles means Claude learns fast)
+✅ Blocking reasons make sense (mostly NO_RECEIPTS)
+✅ No crashes (all 50 cycles complete)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+DOCUMENTATION
+
+Quick reference: cat PHASE2_QUICKSTART.txt
+
+Full guide: cat PHASE2_EXECUTION_GUIDE.md
+
+Technical details: cat SESSION2_COMPLETION_SUMMARY.md
+
+What Phase 1 found: cat PHASE1_OBSERVATIONS.md
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+CODE LOCATIONS
+
+Phase 2 runner:
+  oracle_town/runner/phase2_harness.py (main entry point)
+
+Claude integration:
+  oracle_town/runner/ct_gateway_claude.py (API wrapper)
+
+Phase 1 modules (reused):
+  oracle_town/runner/worktree.py (safe patching)
+  oracle_town/runner/supervisor.py (K0 enforcement)
+  oracle_town/runner/intake_adapter.py (schema validation)
+  oracle_town/runner/factory_adapter.py (attestation signing)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TROUBLESHOOTING
+
+"API Key error":
+  export ANTHROPIC_API_KEY="sk-..."
+  echo $ANTHROPIC_API_KEY  (verify it's set)
+
+"Module not found":
+  cd "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24"
+  export PYTHONPATH=.
+
+"Never reaches SHIP":
+  Check PHASE2_SUMMARY.json blocking_reasons_frequency
+  Check that min_quorum=1 is in policy (should be for Phase 2)
+
+"JSON parsing error":
+  Check oracle_town/runner/phase2_logs/cycle_NNN.json for raw response
+  Claude should recover on next cycle
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+COST & RESOURCES
+
+Claude API pricing:
+  ~$0.40-0.65 per 50-cycle run
+
+Tokens used:
+  Input: ~200-300 per cycle (10-15k total)
+  Output: ~500-800 per cycle (25-40k total)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+READY TO GO?
+
+1. Get API key: https://console.anthropic.com/keys
+2. Export: export ANTHROPIC_API_KEY="sk-..."
+3. Run: python3 oracle_town/runner/phase2_harness.py --max-cycles 50
+
+Questions? Read:
+  → PHASE2_QUICKSTART.txt (3 min)
+  → PHASE2_EXECUTION_GUIDE.md (10 min)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+                    LET'S TEST CLAUDE'S LEARNING 🚀
+

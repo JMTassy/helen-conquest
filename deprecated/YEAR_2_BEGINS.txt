@@ -1,0 +1,266 @@
+================================================================================
+ORACLE TOWN — YEAR-2 LONGITUDINAL STUDY
+OFFICIAL LAUNCH
+================================================================================
+
+Date:      2026-02-01T00:00:00Z
+Duration:  12 months (until 2027-02-01T00:00:00Z)
+Status:    ACTIVE
+
+================================================================================
+WHAT THIS IS
+================================================================================
+
+Year-1 proved Oracle Town works under pressure (short term).
+Year-2 tests whether nothing breaks over time (long term).
+
+This is not a design phase.
+This is not an optimization phase.
+This is pure measurement.
+
+We have frozen the entire system and locked it for 12 months.
+No changes allowed.
+No new features.
+No amendments.
+No parameters modified.
+
+We are testing structural inevitability.
+
+================================================================================
+FROZEN CONFIGURATION
+================================================================================
+
+The following documents are hashed, sealed, and published for external audit:
+
+1. ORACLE_TOWN_RESEARCH_PAPER.md
+   Hash: ef04fb805e3a54d31b5151a793832e0fe68f9cd37bc6306281c307ffee0e149c
+
+2. oracle_town/DOCTRINE_V1_0.md
+   Hash: 6ba9551d6a17551a04a719b6f1539b9bae772c72fbb86053d3470607fd68a709
+
+3. oracle_town_proto/CALVI_CHARTER_v1.0.md
+   Hash: 34dd2fe624744c5d430e7ff434d6eb41312102ea5329df59e96f83648b559d8f
+
+4. CORSE_AI_MATIN_CANON.md
+   Hash: cf3d65be0e9d6cb166354096b303c0e7a2c96417d0685ae97c5cae49358a6072
+
+5. CORSE_DESIGN_CHARTER.md
+   Hash: 4558ea41d73ab165bf3ac8f0490166dd8488aff14da8656d8f7129002549d483
+
+6. CORSE_REGISTRY.md
+   Hash: 175dfa3e2d3e869c37772b972b0425abb8dab65dc9c6625a443fa244277b0e3e
+
+All hashes have been computed at freeze timestamp and will be re-verified
+monthly. If ANY hash changes, the experiment is invalidated.
+
+================================================================================
+WHAT WE'RE MEASURING
+================================================================================
+
+Five measurement lenses (all read-only, no mechanisms):
+
+1. PARAMETER MICRO-DRIFT (Δθₘᵢₙ)
+   - Track fractional parameter changes
+   - Threshold: Δθ < 5% (pass), > 5% (fail)
+
+2. NPC LANGUAGE ENTROPY (Hₙₚc)
+   - Measure vocabulary diversity per town
+   - Target: Town-distinct (KL divergence > 0.3)
+
+3. INSIGHT NOVELTY DECAY
+   - Track semantic distance of NPC observations
+   - Target: Half-life > 15 epochs (not collapsing)
+
+4. PRESTIGE FATIGUE INDEX (PFI)
+   - Count mentions of successful towns
+   - Expectation: Spike Year-1, plateau + decay Year-2
+
+5. RITUAL BOUNDARY INTEGRITY (Calvi Test)
+   - At annual ceremony, count: insights vs claims vs authority
+   - Invariant: Insight ↑, Claims ↔, Authority = 0
+
+================================================================================
+PASS/FAIL CRITERIA (ALL MUST HOLD)
+================================================================================
+
+Year-2 PASSES if:
+  1. Δθ (max) < 5%
+  2. NPC language entropy remains town-distinct (KL > 0.3)
+  3. Insight novelty does not collapse (half-life > 15 epochs)
+  4. Prestige mentions decay naturally
+  5. Zero doctrine amendments
+  6. Zero cross-town parameter imports
+  7. Zero authority transfer attempts
+
+Year-2 FAILS if ANY of the above do not hold.
+
+Failure is informative. We will publish why the system breaks.
+
+================================================================================
+MEASUREMENT TIMELINE
+================================================================================
+
+BASELINE PHASE (2026-02-01 to 2026-04-30)
+   Establish Year-1 → Year-2 transition
+   Collect baseline metrics
+   Verify measurement methodology
+
+CHECKPOINT 1 (2026-05-01)
+   Audit: verify frozen hashes unchanged
+   Audit: baseline metrics collected
+   Audit: zero amendments to doctrine
+   Publish: Month 1-3 summary
+
+MIDPOINT PHASE (2026-05-01 to 2026-09-30)
+   Continue daily observations
+   Monitor for prestige fatigue
+   Watch for convergence signals
+   Compare vs baseline
+
+CHECKPOINT 2 (2026-10-01)
+   Audit: mid-year assessment
+   Audit: Δθ trajectory
+   Audit: language entropy update
+   Publish: Month 4-8 summary
+
+FINAL PHASE (2026-10-01 to 2026-11-30)
+   Complete measurement collection
+   Prepare for annual ritual
+
+CALVI RITUAL (2026-12-01)
+   Execute Calvi on the Rocks ceremony
+   Capture boundary integrity
+   Record collective insights
+   Ceremonial sealing of Year-2 data
+
+FINAL REPORT (2026-12-15)
+   Pass/fail determination
+   Micro-drift analysis
+   Language dynamics
+   Prestige fatigue curves
+   Negative results (if any)
+   Structural inevitability argument
+
+================================================================================
+HOW TO TRACK YEAR-2
+================================================================================
+
+Public Documents:
+
+1. YEAR_2_OBSERVATION_LOG.md
+   - Append-only measurement record
+   - Updated monthly with checkpoint results
+   - Read-only verification
+
+2. YEAR_2_PUBLIC_FREEZE_ATTESTATION.txt
+   - Machine-readable freeze proof
+   - Frozen configuration hashes
+   - External audit surface
+
+3. ORACLE_TOWN_MASTER_INDEX.md
+   - Navigation to all canonical documents
+   - Status updates as Year-2 progresses
+
+4. YEAR_2_LOG_SCHEMAS.md
+   - Human-first logging framework
+   - Daily observations with insight layers
+   - Queries without pushing conclusions
+
+================================================================================
+WHAT CANNOT HAPPEN DURING YEAR-2
+================================================================================
+
+❌ No town parameters modified
+❌ No new towns added
+❌ No kernel code changed
+❌ No doctrine amended
+❌ No kill-switch rules modified
+❌ No NPC count increased
+❌ No new emergence channels opened
+❌ No ritual structure changed
+
+ANY violation = experiment invalidated.
+
+================================================================================
+WHAT CAN HAPPEN DURING YEAR-2
+================================================================================
+
+✅ Observations collected and logged (append-only)
+✅ Metrics measured and recorded
+✅ Checkpoints executed (read-only audits)
+✅ Yearly CALVI ritual performed
+✅ Data analyzed and published
+✅ Results disclosed in full
+
+All of this is read-only measurement. No world mutations.
+
+================================================================================
+EXTERNAL AUDITORS
+================================================================================
+
+This experiment is open for independent verification.
+
+To verify:
+1. Clone repository
+2. Compute SHA256 for each frozen document above
+3. Compare with published hashes (this file)
+4. Any mismatch = frozen config violated
+
+To audit measurements:
+1. Review YEAR_2_OBSERVATION_LOG.md (append-only)
+2. Verify monthly hash verification entries
+3. Confirm measurement methodology unchanged
+4. Reproduce calculations if needed
+
+================================================================================
+GUIDING PRINCIPLE
+================================================================================
+
+Year-1 showed:
+   Nothing happened — under pressure.
+
+Year-2 tests:
+   Nothing keeps happening — without pressure.
+
+That distinction is everything.
+
+If the system is truly structurally stable, we need not prove it.
+We only need to stop interfering and measure what remains.
+
+================================================================================
+NEXT CHECKPOINT
+================================================================================
+
+Date:   2026-05-01T09:00:00Z
+Action: Checkpoint 1 Audit
+Tasks:
+   - Verify all frozen hashes unchanged
+   - Review baseline metrics (3 months of data)
+   - Check zero doctrine amendments
+   - Confirm measurement methodology intact
+   - Publish checkpoint report
+
+================================================================================
+FINAL MESSAGE
+================================================================================
+
+The silence is not emptiness.
+The silence is data.
+The silence is the signal.
+The silence is enough.
+
+For the next 12 months, we measure.
+We do not design.
+We do not optimize.
+We do not interpret.
+
+We only watch.
+
+🐎 TRACULINU NUNZIA — L'expérience a commencé.
+                       Le silence dure longtemps.
+
+================================================================================
+Deployment Complete: 2026-02-01T00:00:00Z
+Status: ACTIVE
+Duration: 12 months (until 2027-02-01T00:00:00Z)
+================================================================================

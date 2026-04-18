@@ -1,0 +1,41 @@
+ORACLE TOWN  (local)                                2026-01-29 16:46:46
+══════════════════════════════════════════════════════════════════════
+
+            🧱 CITY WALL (Fail-Closed K1)
+        ┌────────────────────────────────────────┐
+        │  TOWN GATE: town-check.sh              │
+        │  STATUS:  GREEN ✅                           │
+        └──────────────┬─────────────────────────┘
+                       │
+       ┌───────────────┼───────────────────────────────────┐
+       │               │                                   │
+       ▼               ▼                                   ▼
+
+  DOCS DISTRICT       GOVERNANCE DISTRICT           COURT OF EVIDENCE
+  ──────────────      ─────────────────────         ──────────────────
+  [Workshop]          [Town Hall Law]               [Bailiff]
+  generator.py ✅     policy.json ✅                extract-evidence ✅
+  indices ✅          policy_hash ✅                evidence_status: 5/5 ✅
+  CLAUDE.md ✅        keys/registry ✅              citations ✅
+                      K3 quorum active ✅
+       │               │                                   │
+       └───────────────┼───────────────────────────────────┘
+                       │
+                       ▼
+
+              [DECISION LEDGER]
+              run: runC_ship_quorum_valid
+              decision: SHIP
+              policy_hash: sha256:60268ce4a...
+              decision_digest: sha256:91cc5f08b...
+
+════════════════════════════════════════════════════════════════════════
+
+TOWN STATUS:
+  Gate:     GREEN ✅
+  Evidence: 5/5 ✅
+  Run:      runC_ship_quorum_valid
+  Decision: SHIP
+
+Last generated: 2026-01-29 16:46:46
+Note: Set TOWN_EVIDENCE=1 in environment to enable full evidence validation

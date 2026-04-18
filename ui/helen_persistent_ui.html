@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELEN OS | Persistent Dialog</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@300;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0c;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.08);
+            --her-glow: rgba(0, 255, 200, 0.2);
+            --al-glow: rgba(255, 100, 0, 0.2);
+            --text: #e0e0e0;
+            --muted: #888;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        header {
+            padding: 20px 40px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #fff;
+        }
+
+        #moment-status {
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        #moment-status.active {
+            color: #00ffc8;
+            border-color: #00ffc8;
+            box-shadow: 0 0 10px var(--her-glow);
+        }
+
+        main {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .turn {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .user-msg {
+            align-self: flex-end;
+            background: var(--glass);
+            padding: 15px 25px;
+            border-radius: 20px 20px 0 20px;
+            border: 1px solid var(--border);
+            max-width: 80%;
+            font-size: 0.95rem;
+        }
+
+        .dual-voice {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .voice {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 20px;
+            position: relative;
+        }
+
+        .voice::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 20px;
+            pointer-events: none;
+            opacity: 0.1;
+        }
+
+        .her {
+            border-color: rgba(0, 255, 200, 0.3);
+        }
+
+        .her::before {
+            background: radial-gradient(circle at top left, var(--her-glow), transparent);
+        }
+
+        .her-label {
+            color: #00ffc8;
+            font-family: 'Outfit';
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .al {
+            border-color: rgba(255, 100, 0, 0.3);
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.8rem;
+        }
+
+        .al::before {
+            background: radial-gradient(circle at top right, var(--al-glow), transparent);
+        }
+
+        .al-label {
+            color: #ff6400;
+            font-family: 'Monaco';
+            font-weight: 600;
+            font-size: 0.7rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .al-metric {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 4px 0;
+        }
+
+        .al-value {
+            color: #fff;
+        }
+
+        footer {
+            padding: 30px 40px;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        input {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 700px;
+            outline: none;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #00ffc8;
+        }
+
+        button {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 0 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+        }
+
+        button:active {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>HELEN OS / PERSISTENT DIALOG</h1>
+        <div id="moment-status">HER/AL MOMENT: INACTIVE</div>
+    </header>
+
+    <main id="chat-container">
+        <!-- Messages go here -->
+    </main>
+
+    <footer>
+        <input type="text" id="user-input" placeholder="Address the system..." autocomplete="off">
+        <button id="send-btn">SEND</button>
+    </footer>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const momentStatus = document.getElementById('moment-status');
+
+        async function fetchHistory() {
+            const res = await fetch('/api/dialog/history');
+            const data = await res.json();
+            renderHistory(data);
+            checkMoment();
+        }
+
+        async function checkMoment() {
+            const res = await fetch('/api/dialog/moment');
+            const data = await res.json();
+            if (data.ready) {
+                momentStatus.innerText = 'HER/AL MOMENT: ACTIVE';
+                momentStatus.classList.add('active');
+            } else {
+                momentStatus.innerText = 'HER/AL MOMENT: INACTIVE (' + data.metrics.latest_turn + ' turns)';
+                momentStatus.classList.remove('active');
+            }
+        }
+
+        function renderHistory(history) {
+            chatContainer.innerHTML = '';
+            let currentTurn = -1;
+            let turnDiv = null;
+
+            history.forEach(event => {
+                if (event.turn !== currentTurn) {
+                    currentTurn = event.turn;
+                    turnDiv = document.createElement('div');
+                    turnDiv.className = 'turn';
+                    chatContainer.appendChild(turnDiv);
+                }
+
+                if (event.actor === 'user') {
+                    const u = document.createElement('div');
+                    u.className = 'user-msg';
+                    u.innerText = event.intent || event.proposal;
+                    turnDiv.appendChild(u);
+
+                    const dv = document.createElement('div');
+                    dv.className = 'dual-voice';
+                    turnDiv.appendChild(dv);
+                    turnDiv.dualVoice = dv;
+                } else if (event.actor === 'helen' && turnDiv.dualVoice) {
+                    const h = document.createElement('div');
+                    h.className = 'voice her';
+                    h.innerHTML = `<div class="her-label">[HER]</div><div>${event.proposal}</div>`;
+                    turnDiv.dualVoice.appendChild(h);
+                } else if (event.actor === 'mayor' && turnDiv.dualVoice) {
+                    const a = document.createElement('div');
+                    a.className = 'voice al';
+                    a.innerHTML = `<div class="al-label">[AL]</div>
+                        <div class="al-metric"><span>CHECK:</span> <span class="al-value">${event.check}</span></div>
+                        <div class="al-metric"><span>RESULT:</span> <span class="al-value">${event.result}</span></div>
+                        <div class="al-metric"><span>ENTRY:</span> <span class="al-value">${event.entry_id}</span></div>`;
+                    turnDiv.dualVoice.appendChild(a);
+                }
+            });
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        async function sendMessage() {
+            const msg = userInput.value.trim();
+            if (!msg) return;
+            userInput.value = '';
+
+            await fetch('/api/dialog/message', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message: msg })
+            });
+
+            fetchHistory();
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
+
+        fetchHistory();
+        setInterval(checkMoment, 5000);
+    </script>
+</body>
+
+</html>

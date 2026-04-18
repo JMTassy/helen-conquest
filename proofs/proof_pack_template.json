@@ -1,0 +1,64 @@
+{
+  "proof_pack_version": "v1",
+  "proof_pack_id": "PP-<sha256[:8]>",
+  "claim": "System reached <REGIME> at tick <N> with <N> egregors",
+  "evidence": {
+    "simulation_seed": 42,
+    "simulation_ticks": 100,
+    "regime": "POLITICS"
+  },
+  "inputs": {
+    "artifact_refs": [
+      {
+        "type": "evidence_bundle",
+        "id": "EB-<hash8>",
+        "schema_hash": "4b155a6ee94d7c14acd1fb140a4e66dcde4126620fe1b7712d60f72a55df7a3a",
+        "bundle_hash": "<64-hex>"
+      },
+      {
+        "type": "issue_list",
+        "id": "IL-<hash8>",
+        "schema_hash": "cfffad017f2148c2ec96252715a4fc6b06e30c656ad921bb5d0a1bc481be4a6f",
+        "issue_list_hash": "<64-hex>"
+      },
+      {
+        "type": "task_list",
+        "id": "TL-<hash8>",
+        "schema_hash": "7e3c4372df35c0aa0eafb0a09f3942f2b943237b247a5bc42e1e78b93a0f067b",
+        "task_list_hash": "<64-hex>"
+      },
+      {
+        "type": "gate_report",
+        "id": "GR-<hash8>",
+        "schema_hash": "830028b713ed445bd2396d7dab1dac1e7070f950d6c7d6d154bcf6cc283e6e8c",
+        "verdict_hash_hex": "<64-hex>"
+      }
+    ],
+    "router_receipt": "<64-hex>",
+    "routing_receipt_hash": "<64-hex>"
+  },
+  "decision": {
+    "layer": "MAYOR",
+    "packet_ref": "MP-<hash8>",
+    "gate_evaluated_ref": "V-<hash8>",
+    "verdict": "PASS",
+    "verdict_hash_hex": "<64-hex>",
+    "mayor_signature": "<64-hex>"
+  },
+  "kernel_commit": {
+    "ledger_entry_hash": "<64-hex>",
+    "cum_hash_before": "<64-hex>",
+    "cum_hash_after": "<64-hex>",
+    "timestamp_utc": "2026-03-07T00:00:00Z"
+  },
+  "config": {
+    "theta_v1_hash": "425d368b7412d49e05987374391af72f595c32a9ff29f2997eaba8673db18563",
+    "schema_manifest_hash": "<64-hex>",
+    "code_hash_engine": "a26703a",
+    "env_hash_seal_v2": "<seal-v2-identity-hash>"
+  },
+  "metadata": {
+    "frozen_date": "2026-03-07",
+    "proof_pack_canonical_hash": "<64-hex>"
+  }
+}

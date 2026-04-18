@@ -1,0 +1,16 @@
+{
+  "version": "CWL_KEY_REGISTRY_V1",
+  "keys": [
+    {
+      "key_id": "MAYOR_V1_0_1_04948139",
+      "pk_hex": "45bd222553ef16d4ac7ce6718e115ee2b17fbe4e0ab63723b6cee8fba1e2f103",
+      "pk_fingerprint": "049481397e9e74a2722a4bcbebfb3f5518e68c78e5e3f6190de7189f3f57e72a",
+      "algorithm": "Ed25519",
+      "status": "active",
+      "created_at": "2026-02-27T15:40:56.675669+00:00",
+      "cwl_version": "1.0.1",
+      "rotation_receipt_type": "mayor_rotate_v1"
+    }
+  ],
+  "active_key_id": "MAYOR_V1_0_1_04948139"
+}

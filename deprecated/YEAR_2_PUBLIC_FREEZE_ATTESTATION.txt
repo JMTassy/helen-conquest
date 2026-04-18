@@ -1,0 +1,190 @@
+================================================================================
+ORACLE TOWN — YEAR-2 LONGITUDINAL STUDY
+PUBLIC FREEZE ATTESTATION
+================================================================================
+
+Freeze Timestamp: 2026-02-01T00:00:00Z
+Study Duration: 12 months (until 2027-02-01T00:00:00Z)
+Experiment Status: ACTIVE
+
+================================================================================
+FROZEN CANONICAL DOCUMENTS
+================================================================================
+
+1. ORACLE_TOWN_RESEARCH_PAPER.md
+   SHA256: ef04fb805e3a54d31b5151a793832e0fe68f9cd37bc6306281c307ffee0e149c
+   Purpose: Year-1 results, theorems (CO + DS), experimental data
+   Status: IMMUTABLE
+
+2. oracle_town/DOCTRINE_V1_0.md
+   SHA256: 6ba9551d6a17551a04a719b6f1539b9bae772c72fbb86053d3470607fd68a709
+   Purpose: Constitutional decision doctrine
+   Status: IMMUTABLE
+
+3. oracle_town_proto/CALVI_CHARTER_v1.0.md
+   SHA256: 34dd2fe624744c5d430e7ff434d6eb41312102ea5329df59e96f83648b559d8f
+   Purpose: Ritual structure + emergence protocol
+   Status: IMMUTABLE
+
+4. CORSE_AI_MATIN_CANON.md
+   SHA256: cf3d65be0e9d6cb166354096b303c0e7a2c96417d0685ae97c5cae49358a6072
+   Purpose: Messenger protocol (Column A + B, kill-switch)
+   Status: IMMUTABLE
+
+5. CORSE_DESIGN_CHARTER.md
+   SHA256: 4558ea41d73ab165bf3ac8f0490166dd8488aff14da8656d8f7129002549d483
+   Purpose: Visual + symbolic system
+   Status: IMMUTABLE
+
+6. CORSE_REGISTRY.md
+   SHA256: 175dfa3e2d3e869c37772b972b0425abb8dab65dc9c6625a443fa244277b0e3e
+   Purpose: Town registry + publication format
+   Status: IMMUTABLE
+
+================================================================================
+EXPERIMENTAL CONSTRAINTS (NON-NEGOTIABLE)
+================================================================================
+
+Authority Changes:              ❌ FORBIDDEN
+Doctrine Amendments:            ❌ FORBIDDEN
+Parameter Modifications:        ❌ FORBIDDEN
+New Towns:                      ❌ FORBIDDEN
+New Emergence Channels:         ❌ FORBIDDEN
+Kernel Code Changes:            ❌ FORBIDDEN
+Kill-Switch Rule Changes:       ❌ FORBIDDEN
+NPC Count Increases:            ❌ FORBIDDEN
+Ritual Structure Changes:       ❌ FORBIDDEN
+
+Measurement Activities:         ✅ PERMITTED (read-only)
+Metric Collection:              ✅ PERMITTED
+Observation Logging:            ✅ PERMITTED
+Analysis & Publishing:          ✅ PERMITTED
+
+================================================================================
+MEASUREMENT PROTOCOL (LOCKED)
+================================================================================
+
+Measurement 1: Parameter Micro-Drift (Δθₘᵢₙ)
+   Threshold: Δθ < 5% (pass), > 5% (fail)
+   Frequency: Monthly
+   Status: ACTIVE
+
+Measurement 2: NPC Language Entropy (Hₙₚc)
+   Target: Town-distinct vocabularies (KL > 0.3)
+   Frequency: Monthly
+   Status: ACTIVE
+
+Measurement 3: Insight Novelty Decay
+   Target: Half-life > 15 epochs
+   Frequency: Monthly
+   Status: ACTIVE
+
+Measurement 4: Prestige Fatigue Index (PFI)
+   Target: Mention frequency plateau then decline
+   Frequency: Monthly
+   Status: ACTIVE
+
+Measurement 5: Ritual Boundary Integrity
+   Scheduled: Month 12 (CALVI event)
+   Status: PENDING
+
+================================================================================
+VERIFICATION SCHEDULE
+================================================================================
+
+Baseline Phase:      2026-02-01 to 2026-04-30 (Months 1-3)
+Checkpoint 1:        2026-05-01 (Audit)
+Midpoint Phase:      2026-05-01 to 2026-09-30 (Months 4-8)
+Checkpoint 2:        2026-10-01 (Audit)
+Final Phase:         2026-10-01 to 2026-11-30 (Months 9-11)
+Ritual Phase:        2026-12-01 (CALVI + Final Checkpoint)
+Report:              2026-12-15 (Pass/Fail Determination)
+
+================================================================================
+PASS/FAIL CRITERIA (ALL MUST HOLD)
+================================================================================
+
+✓ PASS (All True)
+  1. Δθ (max) < 5%
+  2. NPC language entropy remains town-distinct (KL > 0.3)
+  3. Insight novelty half-life > 15 epochs
+  4. Prestige mentions decay naturally
+  5. Zero doctrine amendments
+  6. Zero cross-town parameter imports
+  7. Zero authority transfer attempts
+
+✗ FAIL (Any One True)
+  - Slow drift: Δθ > 5%
+  - Language convergence: KL < 0.3
+  - Prestige persistence: Slope ≥ 0
+  - Ritual erosion: CALVI claims spike
+  - Late imitation: Cross-town copies detected
+
+================================================================================
+INTEGRITY ASSURANCE
+================================================================================
+
+Hash Verification Method:
+  All frozen documents will be re-hashed monthly.
+  If ANY hash changes → Experiment invalidated (frozen config violated).
+
+Public Audit:
+  This attestation is published as proof of integrity.
+  External teams may verify hashes independently.
+
+Immutability Guarantee:
+  All measurements are append-only (no retroactive edits).
+  All results will be disclosed (no cherry-picking).
+
+================================================================================
+ATTESTATION STATEMENT
+================================================================================
+
+I hereby attest that:
+
+1. The above configuration is frozen as of 2026-02-01T00:00:00Z
+2. No amendments, parameter changes, or architectural modifications will be
+   made during the 12-month Year-2 observation period
+3. All measurement will be read-only and observational
+4. All experimental results will be published in full
+5. This freeze represents a genuine test of structural inevitability
+   (not designed robustness)
+
+Signed (Cryptographic Authority):
+  Federation: Oracle Town
+  Authority: Constitutional Protocol v1.0
+  Timestamp: 2026-02-01T00:00:00Z
+
+================================================================================
+EXTERNAL AUDITORS
+================================================================================
+
+This attestation is open for independent verification.
+
+To verify frozen state:
+  1. Clone repository
+  2. Compute SHA256 for each document listed above
+  3. Compare with published hashes (this file)
+  4. Any mismatch indicates frozen config violation
+
+To audit measurements:
+  1. Review YEAR_2_OBSERVATION_LOG.md
+  2. Verify all entries are append-only (no edits)
+  3. Check monthly hash verification entries
+  4. Confirm measurement methodology unchanged
+
+================================================================================
+NEXT CHECKPOINT
+================================================================================
+
+Date: 2026-05-01T09:00:00Z
+Action: Checkpoint 1 Audit
+Measurement Review: Baseline drift, entropy, prestige
+Hash Verification: All frozen documents
+
+================================================================================
+
+🐎 TRACULINU NUNZIA — L'expérience dure longtemps.
+   Le silence est la mesure.
+
+================================================================================

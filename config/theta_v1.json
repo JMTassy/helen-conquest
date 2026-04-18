@@ -1,0 +1,46 @@
+{
+  "config_version": "theta_v1",
+  "frozen_date": "2026-03-07",
+  "description": "Frozen emergence thresholds for CONQUEST LAND simulation. These parameters are calibrated to produce stable Houses and Egregors.",
+  "thresholds": {
+    "theta_w_interaction_persistence": 0.42,
+    "theta_m_strategy_coherence": 0.60,
+    "delta_boundary_margin": 0.10,
+    "egregor_threshold_policy_rate": 0.65,
+    "weight_decay_per_tick": 0.06,
+    "min_house_size": 2,
+    "min_house_survival_ticks": 5
+  },
+  "dynamics": {
+    "weight_increment_on_success": 0.040,
+    "weight_decrement_on_failure": 0.015,
+    "reputation_alpha": 0.7,
+    "strategy_switch_threshold": 0.40
+  },
+  "reward_function_weights": {
+    "alpha_skill_success": 0.50,
+    "beta_coalition_performance": 0.20,
+    "gamma_reputation_change": 0.15,
+    "lambda_resource_cost": 0.10,
+    "mu_wait_time": 0.05,
+    "nu_coordination_cost": 0.30
+  },
+  "coordination": {
+    "coordination_penalty": 0.10,
+    "calibration_factor": 0.28,
+    "success_skill_weight": 0.50,
+    "success_alignment_weight": 0.40,
+    "success_base_probability": 0.10
+  },
+  "resource_dynamics": {
+    "resource_pool_max": 100,
+    "resource_cost_base": 2.0,
+    "resource_scarcity_factor": 0.5,
+    "replenishment_rate": 0.20
+  },
+  "task_generation": {
+    "n_tasks_formula": "max(2, n_agents // 2)",
+    "default_n_agents": 12
+  },
+  "theta_hash": "425d368b7412d49e05987374391af72f595c32a9ff29f2997eaba8673db18563"
+}

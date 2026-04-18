@@ -1,0 +1,82 @@
+{
+  "schema": "helen.termination_policy.v1",
+  "version": "1.0",
+  "description": "Declarative rules for DELIVER/ABORT decisions. Mayor evaluates these deterministically.",
+  "mode": "DELIVER_OR_ABORT",
+  "rules": [
+    {
+      "id": "VIABILITY_CLAIM_REQUIRES_RHO",
+      "description": "VIABILITY claims require valid rho_lint receipt with inf_rho > 0",
+      "condition": {
+        "claim_class": "VIABILITY",
+        "requires": {
+          "k_rho": true
+        }
+      },
+      "enforcement": {
+        "missing_receipt": "ABORT",
+        "reason_code": "NO_RHO_RECEIPT",
+        "active_constraint": "NO_RHO_RECEIPT"
+      }
+    },
+    {
+      "id": "ATTESTATION_FAIL_BLOCKS_DELIVER",
+      "description": "If any district attestation verdict is FAIL, decision must be ABORT",
+      "condition": {
+        "attestations": [
+          {
+            "verdict": "FAIL"
+          }
+        ]
+      },
+      "enforcement": {
+        "action": "ABORT",
+        "reason_code": "from_attestation",
+        "active_constraint": "from_reason_codes"
+      }
+    },
+    {
+      "id": "MISSING_REQUIRED_ATTESTATION",
+      "description": "Required attestations (e.g., LEGAL) must be present",
+      "condition": {
+        "required_districts": ["ENGINEERING", "LEGAL"]
+      },
+      "enforcement": {
+        "missing_district": "ABORT",
+        "reason_code": "MISSING_ATTESTATION",
+        "active_constraint": "MISSING_ATTESTATION"
+      }
+    },
+    {
+      "id": "HASH_VALIDATION_FAILURE",
+      "description": "If any attestation hash is invalid, ABORT (no tampering)",
+      "condition": {
+        "attestations": [
+          {
+            "hash_valid": false
+          }
+        ]
+      },
+      "enforcement": {
+        "action": "ABORT",
+        "reason_code": "HASH_VALIDATION_FAILED",
+        "active_constraint": "TAMPERING_DETECTED"
+      }
+    },
+    {
+      "id": "DEFAULT_DELIVER",
+      "description": "If no blocking rules triggered, decision is DELIVER",
+      "condition": {
+        "all_checks_pass": true
+      },
+      "enforcement": {
+        "action": "DELIVER",
+        "reason_code": "ALL_CHECKS_PASSED"
+      }
+    }
+  ],
+  "metadata": {
+    "created": "2026-02-21T00:00:00Z",
+    "policy_sha256": "policysha" + "0" * 56
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "helen_os_boot": {
+    "kernel_version": "246/246 tests green",
+    "commit": "938a487",
+    "timestamp": "2026-03-19",
+    "layers": {
+      "constitutional_membrane": "28 tests",
+      "append_only_ledger": "4 tests",
+      "autonomy_step": "6 tests",
+      "batch_autonomy": "30+ tests",
+      "skill_discovery": "20+ tests",
+      "ledger_replay": "4 tests",
+      "temple_exploration": "50+ tests"
+    },
+    "avatar": {
+      "name": "HELEN",
+      "persistence": "enabled",
+      "consistency": "frozen until 2026-12-31"
+    },
+    "services": {
+      "kernel": "http://localhost:8000 (python)",
+      "ui": "http://localhost:5173 (vue/vite)",
+      "dialog": "python -m helen_os.cli"
+    },
+    "recovery_procedure": [
+      "bash helen_os/scripts/recover_helen_local.sh",
+      "npm run dev  # starts UI at localhost:5173",
+      "python -m helen_os.cli  # starts kernel dialog"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/conquest_tick_v1.schema.json",
+  "title": "CONQUEST_TICK_V1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "tick_id",
+    "timestamp",
+    "epoch",
+    "input_ref",
+    "state_before",
+    "state_after",
+    "metrics",
+    "authority"
+  ],
+  "properties": {
+    "schema_version": { "const": "CONQUEST_TICK_V1" },
+
+    "tick_id": {
+      "type": "string",
+      "pattern": "^tick_[a-f0-9]{12}$"
+    },
+
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+
+    "epoch": {
+      "type": "integer",
+      "minimum": 0
+    },
+
+    "input_ref": {
+      "type": "object",
+      "required": ["serpent_ast_hash"],
+      "properties": {
+        "serpent_ast_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+
+    "state_before": {
+      "type": "object"
+    },
+
+    "state_after": {
+      "type": "object"
+    },
+
+    "metrics": {
+      "type": "object",
+      "required": ["delta_score"],
+      "properties": {
+        "delta_score": { "type": "integer" },
+        "stability": { "type": "number" },
+        "entropy": { "type": "number" }
+      },
+      "additionalProperties": false
+    },
+
+    "authority": {
+      "const": false
+    }
+  },
+  "additionalProperties": false
+}

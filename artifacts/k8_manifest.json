@@ -1,6 +1,6 @@
 {
   "schema": "K8_MANIFEST_V1",
-  "run_id": "E20-GATE",
+  "run_id": "RALPH-PRE",
   "version": "v1.2",
   "invariants": [
     "mu_NDWRAP",
@@ -127,7 +127,7 @@
   "changed_count": 11,
   "allow_absent_ledger": false,
   "allow_nested_repo": true,
-  "nested_repo_warning": "git toplevel (/Users/jean-marietassy/Documents) != repo_root (/Users/jean-marietassy/Documents/GitHub/helen_os_v1)",
+  "nested_repo_warning": null,
   "k8_fail_schema": "K8_FAIL_V1",
   "k8_lint_model_id": "k8_lint_v1.2"
 }

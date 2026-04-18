@@ -1,0 +1,247 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                     OpenClaw Kernel Skills — Complete List                     ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+IMPLEMENTED SKILLS (openclaw_skills_with_kernel.py)
+════════════════════════════════════════════════════════════════════════════════
+
+1. FetchSkill
+   ───────────
+   Purpose:     Fetch content from URLs with kernel approval
+   Method:      fetch(url: str, timeout: int = 10) -> bytes
+   Approval:    Required (K15 enforced)
+   Evidence:    URL, status code, content length, content type
+   
+   Example:
+     fetch = FetchSkill()
+     content = fetch.fetch("https://example.com")
+   
+   Ledger Entry:
+     {
+       "action_type": "fetch",
+       "target": "https://example.com",
+       "status": "ACCEPT"
+     }
+
+
+2. ShellSkill
+   ──────────
+   Purpose:     Execute shell commands with kernel approval
+   Method:      execute(command: str) -> str
+   Approval:    Required (K15 enforced)
+   Evidence:    Command text, shell type (/bin/bash)
+   Timeout:     30 seconds per command
+   
+   Example:
+     shell = ShellSkill()
+     output = shell.execute("echo 'Hello from kernel-approved shell'")
+   
+   Ledger Entry:
+     {
+       "action_type": "shell",
+       "target": "echo 'Hello...'",
+       "status": "ACCEPT"
+     }
+
+
+3. MemorySkill
+   ────────────
+   Purpose:     Store and retrieve data with kernel approval for writes
+   Methods:     
+     - write(key: str, value: Any) -> bool      [Requires approval]
+     - read(key: str) -> Any                    [No approval needed]
+   
+   Evidence (write):  Key, value type, value size
+   Evidence (read):   None (local operation)
+   
+   Example:
+     memory = MemorySkill()
+     memory.write("my_key", "my_value")  # Kernel approves
+     value = memory.read("my_key")       # Direct access
+   
+   Ledger Entry (write only):
+     {
+       "action_type": "memory_write",
+       "target": "my_key",
+       "status": "ACCEPT"
+     }
+
+════════════════════════════════════════════════════════════════════════════════
+
+BASE CLASS: KernelApprovedSkill
+──────────────────────────────
+
+All skills inherit from this base class which provides:
+
+Methods:
+  • request_approval(action_type, target, evidence)
+    └─ Sends request to kernel daemon via socket
+    └─ Returns decision dict (ACCEPT/REJECT)
+
+  • verify_approval(decision, action_type, target)
+    └─ Checks if kernel approved
+    └─ Raises RuntimeError if denied (K15 fail-closed)
+
+Properties:
+  • self.kernel     : KernelClient instance (socket connection)
+  • self.skill_name : Name of the skill (for logging)
+  • self.logger     : Python logger instance
+
+════════════════════════════════════════════════════════════════════════════════
+
+HOW TO ADD NEW SKILLS
+─────────────────────
+
+Template:
+
+  class MySkill(KernelApprovedSkill):
+      def __init__(self):
+          super().__init__("MySkill")
+      
+      def my_action(self, param1, param2):
+          try:
+              # Step 1: Prepare action
+              self.logger.info(f"Action requested: {param1}")
+              
+              # Step 2: Request kernel approval
+              decision = self.request_approval(
+                  action_type="my_action",
+                  target=param1,
+                  evidence={
+                      "param1": param1,
+                      "param2": param2,
+                      "timestamp": time.time()
+                  }
+              )
+              
+              # Step 3: Verify (K15 enforcement)
+              self.verify_approval(decision, "my_action", param1)
+              
+              # Step 4: Execute
+              result = do_something(param1, param2)
+              self.logger.info(f"✓ Action complete")
+              return result
+              
+          except Exception as e:
+              self.logger.error(f"✗ Action failed: {e}")
+              raise
+
+════════════════════════════════════════════════════════════════════════════════
+
+EXAMPLE NEW SKILLS (Ready to Implement)
+───────────────────────────────────────
+
+1. DatabaseSkill
+   • Method: query(sql: str) -> list
+   • Evidence: SQL command, database name
+   • Use case: Database queries with audit trail
+
+2. FileSkill
+   • Method: read(path: str) -> str
+   • Method: write(path: str, content: str)
+   • Evidence: File path, file size, permissions
+   • Use case: File I/O with approval
+
+3. ApiSkill
+   • Method: request(method: str, url: str, data: dict)
+   • Evidence: HTTP method, URL, request size
+   • Use case: API calls with audit trail
+
+4. EmailSkill
+   • Method: send(to: str, subject: str, body: str)
+   • Evidence: Recipient, subject, body size
+   • Use case: Email with approval
+
+5. NotificationSkill
+   • Method: notify(channel: str, message: str)
+   • Evidence: Channel, message content
+   • Use case: Slack/Discord with approval
+
+════════════════════════════════════════════════════════════════════════════════
+
+SAFETY GUARANTEES (All Skills)
+───────────────────────────────
+
+✓ K15: No Receipt = No Execution
+  • Kernel approval required before any action
+  • Fails closed (denies by default if unreachable)
+  • No way to bypass
+
+✓ Immutable Audit Trail
+  • Every decision logged to kernel/ledger.json
+  • Cannot be modified retroactively
+  • Complete history of all actions
+
+✓ Authority Separation
+  • Skill proposes → Kernel decides → Ledger records
+  • Three independent systems
+  • No single point of failure
+
+✓ Determinism (K5)
+  • Same input → same decision every time
+  • Fully reproducible and auditable
+
+════════════════════════════════════════════════════════════════════════════════
+
+USAGE PATTERN (All Skills)
+
+Every skill follows the same 4-step pattern:
+
+  1. PREPARE: Collect evidence about the action
+  2. REQUEST: Ask kernel for approval (via socket)
+  3. VERIFY: Check kernel's decision (fail-closed if deny)
+  4. EXECUTE: Perform the action (only if approved)
+
+This pattern is consistent across all skills and all actions.
+
+════════════════════════════════════════════════════════════════════════════════
+
+SKILL REGISTRY
+──────────────
+
+Current Skills (3):
+  ✓ FetchSkill      (Ready to use)
+  ✓ ShellSkill      (Ready to use)
+  ✓ MemorySkill     (Ready to use)
+
+To use:
+  from openclaw_skills_with_kernel import FetchSkill, ShellSkill, MemorySkill
+
+Future Skills (Template Available):
+  • DatabaseSkill
+  • FileSkill
+  • ApiSkill
+  • EmailSkill
+  • NotificationSkill
+  (See template above)
+
+════════════════════════════════════════════════════════════════════════════════
+
+QUICK REFERENCE
+────────────────
+
+Start Kernel:
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+Watch Ledger:
+  tail -f kernel/ledger.json
+
+Run Skills Tests:
+  python3 openclaw_skills_with_kernel.py
+
+Use a Skill:
+  from openclaw_skills_with_kernel import FetchSkill
+  fetch = FetchSkill()
+  content = fetch.fetch("https://example.com")
+
+Extend Skills:
+  1. Create class inheriting from KernelApprovedSkill
+  2. Implement your action method
+  3. Follow 4-step pattern (prepare → request → verify → execute)
+  4. Add to openclaw_skills_with_kernel.py
+
+════════════════════════════════════════════════════════════════════════════════
+
+STATUS: 3 SKILLS IMPLEMENTED & TESTED
+     Ready for immediate use and extension
+

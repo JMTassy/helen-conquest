@@ -1,0 +1,313 @@
+{
+  "spec": "CONQUEST_TILES_V0_1",
+  "version": "0.1.0",
+  "governing_law": "Terrain is solved, structures are placed, sovereignty is receipted.",
+  "layers": {
+    "terrain": [
+      "VOID",
+      "SEA",
+      "COAST",
+      "RIVER",
+      "LAKE",
+      "PLAIN",
+      "FOREST",
+      "HILL",
+      "MOUNTAIN",
+      "MARSH",
+      "DESERT",
+      "ROAD",
+      "BRIDGE"
+    ],
+    "structure": [
+      "VILLAGE",
+      "TOWN",
+      "CITY",
+      "CASTLE",
+      "FORT",
+      "TEMPLE",
+      "MINE",
+      "FARM",
+      "HARBOR",
+      "WATCHTOWER",
+      "RUIN"
+    ],
+    "overlay": [
+      "UNCLAIMED",
+      "CLAIMABLE",
+      "CLAIMED",
+      "CONTESTED",
+      "FORTIFIED",
+      "SEALED",
+      "IMPASSABLE_DECREE",
+      "FOG_OF_WAR",
+      "RESOURCE_LOCKED",
+      "DUEL_PENDING"
+    ]
+  },
+  "terrain_registry": {
+    "VOID": {
+      "passable": false,
+      "water": false,
+      "elevation": -1,
+      "base_resources": []
+    },
+    "SEA": {
+      "passable": false,
+      "water": true,
+      "elevation": 0,
+      "base_resources": ["WATER", "SALT"]
+    },
+    "COAST": {
+      "passable": true,
+      "water": true,
+      "elevation": 0,
+      "base_resources": ["WATER", "SALT"]
+    },
+    "RIVER": {
+      "passable": false,
+      "water": true,
+      "elevation": 0,
+      "base_resources": ["WATER"]
+    },
+    "LAKE": {
+      "passable": false,
+      "water": true,
+      "elevation": 0,
+      "base_resources": ["WATER"]
+    },
+    "PLAIN": {
+      "passable": true,
+      "water": false,
+      "elevation": 1,
+      "base_resources": ["GRAIN"]
+    },
+    "FOREST": {
+      "passable": true,
+      "water": false,
+      "elevation": 1,
+      "base_resources": ["WOOD"]
+    },
+    "HILL": {
+      "passable": true,
+      "water": false,
+      "elevation": 2,
+      "base_resources": ["STONE"]
+    },
+    "MOUNTAIN": {
+      "passable": false,
+      "water": false,
+      "elevation": 3,
+      "base_resources": ["STONE", "IRON"]
+    },
+    "MARSH": {
+      "passable": true,
+      "water": true,
+      "elevation": 1,
+      "base_resources": ["WATER"]
+    },
+    "DESERT": {
+      "passable": true,
+      "water": false,
+      "elevation": 1,
+      "base_resources": []
+    },
+    "ROAD": {
+      "passable": true,
+      "water": false,
+      "elevation": 1,
+      "base_resources": []
+    },
+    "BRIDGE": {
+      "passable": true,
+      "water": false,
+      "elevation": 1,
+      "base_resources": []
+    }
+  },
+  "structure_registry": {
+    "VILLAGE": {
+      "allowed_on": ["PLAIN", "FOREST", "COAST"],
+      "adjacency_requirements": [],
+      "grants_resources": []
+    },
+    "TOWN": {
+      "allowed_on": ["PLAIN", "COAST"],
+      "adjacency_requirements": ["ROAD_ADJACENT"],
+      "grants_resources": []
+    },
+    "CITY": {
+      "allowed_on": ["PLAIN", "COAST"],
+      "adjacency_requirements": ["RIVER_ADJACENT_OR_COASTAL"],
+      "grants_resources": ["GOLD", "KNOWLEDGE"]
+    },
+    "CASTLE": {
+      "allowed_on": ["HILL", "PLAIN"],
+      "adjacency_requirements": [],
+      "grants_resources": []
+    },
+    "FORT": {
+      "allowed_on": ["HILL", "MOUNTAIN"],
+      "adjacency_requirements": [],
+      "grants_resources": []
+    },
+    "TEMPLE": {
+      "allowed_on": ["HILL", "FOREST", "DESERT"],
+      "adjacency_requirements": [],
+      "grants_resources": ["KNOWLEDGE"]
+    },
+    "MINE": {
+      "allowed_on": ["HILL", "MOUNTAIN"],
+      "adjacency_requirements": [],
+      "grants_resources": ["IRON", "STONE"]
+    },
+    "FARM": {
+      "allowed_on": ["PLAIN"],
+      "adjacency_requirements": ["RIVER_ADJACENT"],
+      "grants_resources": ["GRAIN"]
+    },
+    "HARBOR": {
+      "allowed_on": ["COAST"],
+      "adjacency_requirements": ["SEA_ADJACENT"],
+      "grants_resources": ["SALT"]
+    },
+    "WATCHTOWER": {
+      "allowed_on": ["HILL", "MOUNTAIN"],
+      "adjacency_requirements": [],
+      "grants_resources": []
+    },
+    "RUIN": {
+      "allowed_on": [
+        "COAST", "PLAIN", "FOREST", "HILL", "MOUNTAIN", "MARSH", "DESERT"
+      ],
+      "adjacency_requirements": [],
+      "grants_resources": []
+    }
+  },
+  "overlay_registry": {
+    "UNCLAIMED": {
+      "requires_receipt": false,
+      "allowed_if": ["VALID_WORLD_TILE"]
+    },
+    "CLAIMABLE": {
+      "requires_receipt": false,
+      "allowed_if": ["NOT_VOID", "NOT_SEA", "NOT_IMPASSABLE_DECREE"]
+    },
+    "CLAIMED": {
+      "requires_receipt": true,
+      "required_receipt_type": "TERRITORY_CLAIM_RECEIPT_V1"
+    },
+    "CONTESTED": {
+      "requires_receipt": true,
+      "required_receipt_type": "TERRITORY_DISPUTE_RECEIPT_V1"
+    },
+    "FORTIFIED": {
+      "requires_receipt": true,
+      "required_receipt_type": "FORTIFICATION_RECEIPT_V1",
+      "allowed_if": ["HAS_STRUCTURE_CASTLE_OR_FORT", "HAS_OVERLAY_CLAIMED"]
+    },
+    "SEALED": {
+      "requires_receipt": true,
+      "required_receipt_type": "KERNEL_SEAL_RECEIPT_V1"
+    },
+    "IMPASSABLE_DECREE": {
+      "requires_receipt": true,
+      "required_receipt_type": "JUDICIAL_DECREE_RECEIPT_V1"
+    },
+    "FOG_OF_WAR": {
+      "requires_receipt": false,
+      "allowed_if": ["EPISTEMIC_ONLY"]
+    },
+    "RESOURCE_LOCKED": {
+      "requires_receipt": true,
+      "required_receipt_type": "RESOURCE_DECREE_RECEIPT_V1"
+    },
+    "DUEL_PENDING": {
+      "requires_receipt": true,
+      "required_receipt_type": "DUEL_PACKET_RECEIPT_V1"
+    }
+  },
+  "resources": [
+    "STONE",
+    "WOOD",
+    "GRAIN",
+    "IRON",
+    "WATER",
+    "SALT",
+    "GOLD",
+    "KNOWLEDGE"
+  ],
+  "regions": [
+    "NORTH_BASTION",
+    "AURIC_MARCH",
+    "ORACLE_SPINE",
+    "ASHEN_CORRIDOR",
+    "TEMPLE_REACH",
+    "VERDANT_DELTA"
+  ],
+  "region_bias": {
+    "NORTH_BASTION": {
+      "terrain_bias": ["HILL", "MOUNTAIN", "FOREST"],
+      "resource_bias": ["STONE", "IRON", "WOOD"],
+      "castle_density_target": 0.10,
+      "road_density_target": 0.18,
+      "conflict_coefficient": 0.75
+    },
+    "AURIC_MARCH": {
+      "terrain_bias": ["PLAIN", "HILL", "ROAD"],
+      "resource_bias": ["GRAIN", "GOLD", "STONE"],
+      "castle_density_target": 0.08,
+      "road_density_target": 0.26,
+      "conflict_coefficient": 0.60
+    },
+    "ORACLE_SPINE": {
+      "terrain_bias": ["HILL", "FOREST", "TEMPLE"],
+      "resource_bias": ["KNOWLEDGE", "STONE"],
+      "castle_density_target": 0.06,
+      "road_density_target": 0.16,
+      "conflict_coefficient": 0.45
+    },
+    "ASHEN_CORRIDOR": {
+      "terrain_bias": ["DESERT", "HILL", "RUIN"],
+      "resource_bias": ["STONE", "GOLD"],
+      "castle_density_target": 0.05,
+      "road_density_target": 0.12,
+      "conflict_coefficient": 0.80
+    },
+    "TEMPLE_REACH": {
+      "terrain_bias": ["FOREST", "HILL", "MARSH"],
+      "resource_bias": ["KNOWLEDGE", "WOOD", "WATER"],
+      "castle_density_target": 0.04,
+      "road_density_target": 0.10,
+      "conflict_coefficient": 0.35
+    },
+    "VERDANT_DELTA": {
+      "terrain_bias": ["PLAIN", "RIVER", "COAST", "FARM"],
+      "resource_bias": ["GRAIN", "WATER", "SALT"],
+      "castle_density_target": 0.07,
+      "road_density_target": 0.24,
+      "conflict_coefficient": 0.50
+    }
+  },
+  "generation_order": [
+    "SEED",
+    "TERRAIN_WFC",
+    "STRUCTURE_PLACEMENT",
+    "REGION_PARTITION",
+    "LEDGER_INITIALIZATION",
+    "PLAYER_AND_FACTION_ACTIONS"
+  ],
+  "repair_protocol": [
+    "TIER_1_RECOLLAPSE_LOCAL_NEIGHBORHOOD",
+    "TIER_2_NEUTRAL_CONNECTOR_TILE",
+    "TIER_3_IMPASSABLE_DECREE"
+  ],
+  "hard_invariants": [
+    "NO_RECEIPT_NO_CLAIMED",
+    "NO_RECEIPT_NO_FORTIFIED",
+    "NO_RECEIPT_NO_SEALED",
+    "NO_RECEIPT_NO_RESOURCE_LOCKED",
+    "NO_RECEIPT_NO_DUEL_PENDING",
+    "TERRAIN_SOLVED_BEFORE_STRUCTURE",
+    "STRUCTURE_PLACED_BEFORE_SOVEREIGNTY"
+  ]
+}

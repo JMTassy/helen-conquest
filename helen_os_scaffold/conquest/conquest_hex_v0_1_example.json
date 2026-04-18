@@ -1,0 +1,23 @@
+{
+  "spec": "CONQUEST_HEX_V0_1_EXAMPLE",
+  "hex": {
+    "hex_id": "H7",
+    "q": 7,
+    "r": 3,
+    "terrain": "HILL",
+    "structure": "CASTLE",
+    "overlay": ["CLAIMABLE"],
+    "region_id": "ORACLE_SPINE",
+    "owner_house_id": null,
+    "resource_profile": ["STONE"],
+    "generation_entropy": 0.0,
+    "epistemic_fog": true,
+    "receipt_hash": null
+  },
+  "field_notes": {
+    "generation_entropy": "Solver uncertainty at time of terrain WFC — fixed at generation time.",
+    "epistemic_fog": "Player knowledge state — distinct from generation_entropy.  Never collapse these.",
+    "receipt_hash": "Populated only by ledger_init.py or later receipt operations.  null during worldgen.",
+    "owner_house_id": "Populated only after CLAIMED receipt.  null during generation."
+  }
+}

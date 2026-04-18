@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Street 1 — Agent Demo</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #0d0d14;
+    color: #e8e8f0;
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ─ Canvas area ─ */
+  #game-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+  canvas {
+    display: block;
+    image-rendering: pixelated;
+  }
+
+  /* ─ HUD ─ */
+  #hud {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+  }
+  .hud-chip {
+    background: rgba(13,13,20,0.85);
+    border: 1px solid #3a3a5c;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #a0a0cc;
+  }
+  .hud-chip span {
+    color: #7eb8ff;
+    margin-left: 6px;
+  }
+
+  #reset-btn {
+    background: rgba(90,40,40,0.85);
+    border: 1px solid #8b2222;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #ffaaaa;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background 0.15s;
+  }
+  #reset-btn:hover { background: rgba(140,50,50,0.9); }
+
+  /* ─ Status bar ─ */
+  #status-bar {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    z-index: 10;
+  }
+  #status-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #555;
+    transition: background 0.3s;
+  }
+  #status-dot.connected { background: #44ff88; }
+  #status-dot.error     { background: #ff4444; }
+  #status-text {
+    font-size: 11px;
+    color: #666;
+  }
+
+  /* ─ Sidebar ─ */
+  #sidebar {
+    width: 320px;
+    min-width: 280px;
+    background: #111118;
+    border-left: 1px solid #2a2a42;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* NPC tab bar */
+  #npc-tabs {
+    display: flex;
+    border-bottom: 1px solid #2a2a42;
+  }
+  .npc-tab {
+    flex: 1;
+    padding: 10px 6px;
+    font-size: 11px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    color: #555;
+    border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .npc-tab.active {
+    color: #7eb8ff;
+    border-bottom-color: #7eb8ff;
+    background: rgba(126,184,255,0.04);
+  }
+  .npc-tab:hover:not(.active) { color: #888; background: rgba(255,255,255,0.02); }
+
+  /* Persona card */
+  #persona-card {
+    padding: 14px 16px;
+    border-bottom: 1px solid #2a2a42;
+    min-height: 90px;
+  }
+  #persona-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: #c0c0e0;
+    margin-bottom: 4px;
+  }
+  #persona-role {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #7eb8ff;
+    margin-bottom: 6px;
+  }
+  #persona-desc {
+    font-size: 11px;
+    color: #666;
+    line-height: 1.5;
+  }
+
+  /* Chat history */
+  #chat-history {
+    flex: 1;
+    overflow-y: auto;
+    padding: 12px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #chat-history::-webkit-scrollbar { width: 4px; }
+  #chat-history::-webkit-scrollbar-track { background: transparent; }
+  #chat-history::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+
+  .chat-msg {
+    max-width: 88%;
+    padding: 8px 11px;
+    border-radius: 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    animation: fadeIn 0.2s ease;
+  }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; } }
+
+  .chat-msg.player {
+    align-self: flex-end;
+    background: #1e2a3e;
+    border: 1px solid #2a4060;
+    color: #b8d4ff;
+    border-bottom-right-radius: 3px;
+  }
+  .chat-msg.npc {
+    align-self: flex-start;
+    background: #1a1a28;
+    border: 1px solid #2a2a42;
+    color: #c8c8e8;
+    border-bottom-left-radius: 3px;
+  }
+  .chat-msg.npc-npc {
+    align-self: flex-start;
+    background: #12201a;
+    border: 1px solid #1e402e;
+    color: #88d4aa;
+    font-style: italic;
+    font-size: 11px;
+  }
+  .chat-msg .sender {
+    font-size: 9px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 4px;
+    opacity: 0.6;
+  }
+  .chat-msg.fallback { border-style: dashed; }
+
+  /* Typing indicator */
+  #typing-indicator {
+    align-self: flex-start;
+    padding: 8px 12px;
+    background: #1a1a28;
+    border: 1px solid #2a2a42;
+    border-radius: 10px;
+    border-bottom-left-radius: 3px;
+    font-size: 11px;
+    color: #555;
+    display: none;
+    gap: 4px;
+    align-items: center;
+  }
+  #typing-indicator.visible { display: flex; }
+  .dot-pulse { animation: dotpulse 1.4s infinite ease; }
+  .dot-pulse:nth-child(2) { animation-delay: 0.2s; }
+  .dot-pulse:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes dotpulse {
+    0%,80%,100% { opacity: 0.2; } 40% { opacity: 1; }
+  }
+
+  /* Chat input */
+  #chat-input-area {
+    padding: 12px 16px;
+    border-top: 1px solid #2a2a42;
+    display: flex;
+    gap: 8px;
+  }
+  #chat-input {
+    flex: 1;
+    background: #0d0d14;
+    border: 1px solid #2a2a42;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: #e0e0f0;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  #chat-input:focus { border-color: #3a5080; }
+  #chat-input::placeholder { color: #333; }
+  #chat-input:disabled { opacity: 0.4; }
+
+  #send-btn {
+    background: #1e3a5f;
+    border: 1px solid #2a5080;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #7eb8ff;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  #send-btn:hover { background: #264a78; }
+  #send-btn:disabled { opacity: 0.4; cursor: default; }
+
+  /* Click hint */
+  #click-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(13,13,20,0.85);
+    border: 1px solid #2a2a42;
+    border-radius: 20px;
+    padding: 6px 16px;
+    font-size: 11px;
+    color: #555;
+    pointer-events: none;
+    transition: opacity 0.5s;
+    z-index: 10;
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── Game canvas area ──────────────────────────────────────────────── -->
+<div id="game-area">
+  <canvas id="canvas"></canvas>
+
+  <div id="hud">
+    <div class="hud-chip">AGENTS<span id="hud-agents">3</span></div>
+    <div class="hud-chip">SEED<span id="hud-seed">42</span></div>
+    <div class="hud-chip">TICK<span id="hud-tick">0</span></div>
+    <button id="reset-btn">↺ RESET RUN</button>
+  </div>
+
+  <div id="status-bar">
+    <div id="status-dot"></div>
+    <div id="status-text">Connecting…</div>
+  </div>
+
+  <div id="click-hint">Click an NPC to chat</div>
+</div>
+
+<!-- ─── Sidebar ──────────────────────────────────────────────────────── -->
+<div id="sidebar">
+  <div id="npc-tabs">
+    <div class="npc-tab active" data-npc="emma">Emma</div>
+    <div class="npc-tab" data-npc="olivia">Olivia</div>
+    <div class="npc-tab" data-npc="alex">Alex</div>
+  </div>
+
+  <div id="persona-card">
+    <div id="persona-name">Emma</div>
+    <div id="persona-role">Research</div>
+    <div id="persona-desc">Rigorous evaluator. Converts vague goals into constraints and acceptance criteria.</div>
+  </div>
+
+  <div id="chat-history">
+    <!-- Messages will be inserted here -->
+  </div>
+
+  <div id="typing-indicator">
+    <span class="dot-pulse">●</span>
+    <span class="dot-pulse">●</span>
+    <span class="dot-pulse">●</span>
+  </div>
+
+  <div id="chat-input-area">
+    <input id="chat-input" type="text" placeholder="Click an NPC first, then type…" disabled maxlength="200">
+    <button id="send-btn" disabled>Send</button>
+  </div>
+</div>
+
+<script>
+'use strict';
+
+// ─── Persona data (inline — matches content/street1.personas.json) ────────
+const PERSONAS = {
+  emma: {
+    name: 'Emma',
+    role: 'Research',
+    desc: 'Rigorous evaluator. Converts vague goals into constraints and acceptance criteria.',
+    color: '#7eb8ff',
+    spriteColor: '#4488cc',
+  },
+  olivia: {
+    name: 'Olivia',
+    role: 'Orchestrator',
+    desc: 'Operator. Turns objectives into work packages and maintains execution rhythm.',
+    color: '#88d4aa',
+    spriteColor: '#3a8860',
+  },
+  alex: {
+    name: 'Alex',
+    role: 'Social',
+    desc: 'Stakeholder interface. Keeps conversations human and confirms intent.',
+    color: '#ffb87a',
+    spriteColor: '#cc7733',
+  },
+};
+
+// ─── State ───────────────────────────────────────────────────────────────
+let world = null;
+let ws = null;
+let activeNPC = null;   // id of selected NPC
+let isThinking = false;
+let chatHistory = [];   // { role, npc, text, fallback }
+
+// Isometric projection params
+const TILE_W = 64;
+const TILE_H = 32;
+const ORIGIN_X_RATIO = 0.35;  // fraction of canvas width
+const ORIGIN_Y = 80;
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+// ─── Isometric helpers ────────────────────────────────────────────────────
+function isoProject(tx, ty) {
+  const cx = canvas.width * ORIGIN_X_RATIO;
+  return {
+    x: cx + (tx - ty) * (TILE_W / 2),
+    y: ORIGIN_Y + (tx + ty) * (TILE_H / 2),
+  };
+}
+
+function screenToTile(sx, sy) {
+  const cx = canvas.width * ORIGIN_X_RATIO;
+  const dx = sx - cx;
+  const dy = sy - ORIGIN_Y;
+  const tx = (dx / (TILE_W / 2) + dy / (TILE_H / 2)) / 2;
+  const ty = (dy / (TILE_H / 2) - dx / (TILE_W / 2)) / 2;
+  return { tx, ty };
+}
+
+// ─── Resize ───────────────────────────────────────────────────────────────
+function resize() {
+  const area = document.getElementById('game-area');
+  canvas.width  = area.clientWidth;
+  canvas.height = area.clientHeight;
+  if (world) render();
+}
+window.addEventListener('resize', resize);
+resize();
+
+// ─── Render ───────────────────────────────────────────────────────────────
+function render() {
+  if (!world) return;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const gw = world.grid?.width || 24;
+  const gh = world.grid?.height || 14;
+
+  // Draw ground tiles
+  for (let ty = 0; ty < gh; ty++) {
+    for (let tx = 0; tx < gw; tx++) {
+      const { x, y } = isoProject(tx, ty);
+      drawTile(x, y, '#1c1c2a', '#2a2a40');
+    }
+  }
+
+  // Draw buildings
+  if (world.buildings) {
+    for (const b of world.buildings) {
+      drawBuilding(b);
+    }
+  }
+
+  // Draw NPCs
+  if (world.npcs) {
+    for (const npc of world.npcs) {
+      drawNPC(npc);
+    }
+  }
+
+  // Draw player marker
+  if (world.player) {
+    const { x, y } = isoProject(world.player.x, world.player.y);
+    // Shadow
+    ctx.beginPath();
+    ctx.ellipse(x, y + 2, 10, 5, 0, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.4)';
+    ctx.fill();
+    // Body
+    ctx.beginPath();
+    ctx.arc(x, y - 14, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.fill();
+    ctx.strokeStyle = '#7eb8ff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // YOU label
+    ctx.font = '9px monospace';
+    ctx.fillStyle = '#7eb8ff';
+    ctx.textAlign = 'center';
+    ctx.fillText('YOU', x, y - 26);
+  }
+}
+
+function drawTile(x, y, fill, stroke) {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x + TILE_W / 2, y + TILE_H / 2);
+  ctx.lineTo(x, y + TILE_H);
+  ctx.lineTo(x - TILE_W / 2, y + TILE_H / 2);
+  ctx.closePath();
+  ctx.fillStyle = fill;
+  ctx.fill();
+  ctx.strokeStyle = stroke;
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+}
+
+function drawBuilding(b) {
+  const bx = b.rect.x;
+  const by = b.rect.y;
+  const bw = b.rect.w;
+  const bh = b.rect.h;
+  const wallH = 38;
+
+  // Floor (highlight)
+  for (let ty = by; ty < by + bh; ty++) {
+    for (let tx = bx; tx < bx + bw; tx++) {
+      const { x, y } = isoProject(tx, ty);
+      drawTile(x, y, '#1e2030', '#2e3050');
+    }
+  }
+
+  // Front-left wall
+  const tl = isoProject(bx, by + bh);
+  const bl = isoProject(bx, by + bh);
+  const br = isoProject(bx + bw, by + bh);
+
+  ctx.beginPath();
+  ctx.moveTo(tl.x - TILE_W / 2, tl.y + TILE_H / 2);
+  ctx.lineTo(tl.x - TILE_W / 2, tl.y + TILE_H / 2 - wallH);
+  ctx.lineTo(br.x - TILE_W / 2, br.y + TILE_H / 2 - wallH);
+  ctx.lineTo(br.x - TILE_W / 2, br.y + TILE_H / 2);
+  ctx.closePath();
+  ctx.fillStyle = '#151520';
+  ctx.fill();
+  ctx.strokeStyle = '#252535';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Front-right wall
+  const tr = isoProject(bx + bw, by);
+  ctx.beginPath();
+  ctx.moveTo(br.x - TILE_W / 2, br.y + TILE_H / 2);
+  ctx.lineTo(br.x - TILE_W / 2, br.y + TILE_H / 2 - wallH);
+  ctx.lineTo(br.x + TILE_W / 2, br.y - TILE_H / 2 - wallH);
+  ctx.lineTo(br.x + TILE_W / 2, br.y - TILE_H / 2);
+  ctx.closePath();
+  ctx.fillStyle = '#12121c';
+  ctx.fill();
+  ctx.strokeStyle = '#222232';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Roof
+  const r00 = isoProject(bx, by);
+  const r10 = isoProject(bx + bw, by);
+  const r01 = isoProject(bx, by + bh);
+  const r11 = isoProject(bx + bw, by + bh);
+
+  ctx.beginPath();
+  ctx.moveTo(r00.x, r00.y - wallH);
+  ctx.lineTo(r10.x, r10.y - wallH);
+  ctx.lineTo(r11.x - TILE_W / 2 + TILE_W / 2, r11.y + TILE_H / 2 - wallH);
+  ctx.lineTo(r01.x - TILE_W / 2, r01.y + TILE_H / 2 - wallH);
+  ctx.closePath();
+  ctx.fillStyle = '#1e2030';
+  ctx.fill();
+  ctx.strokeStyle = '#3a3a5c';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+
+  // Building label
+  const cx = (bx + bw / 2);
+  const cy = (by + bh / 2);
+  const { x: lx, y: ly } = isoProject(cx, cy);
+  ctx.font = 'bold 10px monospace';
+  ctx.fillStyle = '#4a4a70';
+  ctx.textAlign = 'center';
+  ctx.fillText(b.label.toUpperCase(), lx, ly - wallH - 4);
+}
+
+function drawNPC(npc) {
+  const { x, y } = isoProject(npc.x, npc.y);
+  const p = PERSONAS[npc.id] || { spriteColor: '#888', color: '#aaa', name: npc.id };
+  const isSelected = (activeNPC === npc.id);
+  const isThinkingNPC = (npc.mode === 'THINKING');
+
+  // Shadow
+  ctx.beginPath();
+  ctx.ellipse(x, y + 2, 12, 6, 0, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(0,0,0,0.5)';
+  ctx.fill();
+
+  // Selection ring
+  if (isSelected) {
+    ctx.beginPath();
+    ctx.arc(x, y - 16, 16, 0, Math.PI * 2);
+    ctx.strokeStyle = p.color;
+    ctx.lineWidth = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+  }
+
+  // Body
+  ctx.beginPath();
+  ctx.arc(x, y - 16, 10, 0, Math.PI * 2);
+  ctx.fillStyle = p.spriteColor;
+  ctx.fill();
+
+  // Mode indicator dot
+  let modeColor = '#333';
+  if (npc.mode === 'WALKING')  modeColor = '#44cc88';
+  if (npc.mode === 'TALKING')  modeColor = '#7eb8ff';
+  if (npc.mode === 'THINKING') modeColor = '#ffcc44';
+
+  ctx.beginPath();
+  ctx.arc(x + 7, y - 23, 4, 0, Math.PI * 2);
+  ctx.fillStyle = modeColor;
+  ctx.fill();
+
+  // Name label
+  ctx.font = 'bold 10px system-ui';
+  ctx.fillStyle = '#e0e0f0';
+  ctx.textAlign = 'center';
+  ctx.fillText(p.name, x, y - 30);
+
+  // Thought bubble
+  if (npc.thought) {
+    const text = npc.thought.slice(0, 40);
+    const tw = ctx.measureText(text).width + 16;
+    const th = 18;
+    const tx = x - tw / 2;
+    const ty = y - 52;
+
+    ctx.beginPath();
+    ctx.roundRect(tx, ty, tw, th, 8);
+    ctx.fillStyle = 'rgba(20,20,35,0.92)';
+    ctx.fill();
+    ctx.strokeStyle = isThinkingNPC ? '#ffcc44' : '#2a2a42';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.font = '9px monospace';
+    ctx.fillStyle = isThinkingNPC ? '#ffcc44' : '#888';
+    ctx.textAlign = 'center';
+    ctx.fillText(text, x, ty + 12);
+  }
+}
+
+// ─── WebSocket ────────────────────────────────────────────────────────────
+const WS_URL = `ws://${location.host}`;
+
+function connect() {
+  setStatus('connecting');
+  ws = new WebSocket(WS_URL);
+
+  ws.onopen = () => {
+    setStatus('connected');
+    ws.send(JSON.stringify({ type: 'C_HELLO' }));
+    document.getElementById('click-hint').style.opacity = '1';
+  };
+
+  ws.onmessage = (e) => {
+    const msg = JSON.parse(e.data);
+    handleServerMsg(msg);
+  };
+
+  ws.onclose = () => {
+    setStatus('error');
+    setTimeout(connect, 2000);
+  };
+
+  ws.onerror = () => {
+    setStatus('error');
+  };
+}
+
+function send(msg) {
+  if (ws && ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(msg));
+  }
+}
+
+function setStatus(state) {
+  const dot = document.getElementById('status-dot');
+  const txt = document.getElementById('status-text');
+  dot.className = state;
+  const labels = { connected: 'Connected', connecting: 'Connecting…', error: 'Reconnecting…' };
+  txt.textContent = labels[state] || state;
+}
+
+// ─── Server message handler ───────────────────────────────────────────────
+function handleServerMsg(msg) {
+  switch (msg.type) {
+    case 'S_WORLD_SNAPSHOT':
+      world = msg;
+      document.getElementById('hud-seed').textContent = msg.seed;
+      document.getElementById('hud-agents').textContent = (msg.npcs || []).length;
+      render();
+      break;
+
+    case 'S_WORLD_DELTA':
+      if (!world) break;
+      world.tick = msg.tick;
+      document.getElementById('hud-tick').textContent = msg.tick;
+      if (msg.npcs) {
+        for (const delta of msg.npcs) {
+          const npc = world.npcs.find(n => n.id === delta.id);
+          if (!npc) continue;
+          if (delta.x !== undefined) npc.x = delta.x;
+          if (delta.y !== undefined) npc.y = delta.y;
+          if (delta.mode !== undefined) npc.mode = delta.mode;
+          if (delta.thought !== undefined) npc.thought = delta.thought;
+        }
+      }
+      render();
+      break;
+
+    case 'S_NPC_MODE': {
+      if (!world) break;
+      const npc = world.npcs.find(n => n.id === msg.npcId);
+      if (npc) {
+        npc.mode = msg.mode;
+        npc.thought = msg.thought || '';
+      }
+      if (msg.mode === 'THINKING') {
+        isThinking = true;
+        showTyping(true);
+      } else if (msg.mode === 'IDLE') {
+        isThinking = false;
+        showTyping(false);
+        enableInput(true);
+      }
+      render();
+      break;
+    }
+
+    case 'S_NPC_DIALOGUE':
+      isThinking = false;
+      showTyping(false);
+      enableInput(true);
+      addMessage('npc', msg.npcId, msg.text, msg.fallback);
+      // Reset NPC to idle in world model
+      if (world) {
+        const npc = world.npcs.find(n => n.id === msg.npcId);
+        if (npc && !msg.cached) { npc.mode = 'IDLE'; npc.thought = ''; }
+      }
+      render();
+      break;
+
+    case 'S_NPC_NPC_DIALOGUE':
+      addMessage('npc-npc', msg.speaker, msg.text, false);
+      break;
+
+    case 'S_ERROR':
+      console.error('[WS] Server error:', msg.message);
+      break;
+  }
+}
+
+// ─── Chat UI ──────────────────────────────────────────────────────────────
+function addMessage(role, npcId, text, fallback) {
+  const history = document.getElementById('chat-history');
+  const div = document.createElement('div');
+
+  if (role === 'npc-npc') {
+    div.className = 'chat-msg npc-npc';
+    div.innerHTML = `<div class="sender">${npcId} → street</div>${escHtml(text)}`;
+  } else if (role === 'player') {
+    div.className = 'chat-msg player';
+    div.innerHTML = `<div class="sender">You</div>${escHtml(text)}`;
+  } else {
+    div.className = `chat-msg npc${fallback ? ' fallback' : ''}`;
+    const p = PERSONAS[npcId] || { name: npcId };
+    div.innerHTML = `<div class="sender" style="color:${(PERSONAS[npcId]?.color)||'#aaa'}">${p.name}</div>${escHtml(text)}`;
+  }
+
+  history.appendChild(div);
+  history.scrollTop = history.scrollHeight;
+}
+
+function showTyping(show) {
+  const ti = document.getElementById('typing-indicator');
+  if (show) {
+    ti.classList.add('visible');
+    document.getElementById('chat-history').appendChild(ti);
+    document.getElementById('chat-history').scrollTop = 9999;
+  } else {
+    ti.classList.remove('visible');
+  }
+}
+
+function enableInput(enabled) {
+  document.getElementById('chat-input').disabled = !enabled || !activeNPC;
+  document.getElementById('send-btn').disabled  = !enabled || !activeNPC;
+}
+
+function escHtml(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+// ─── NPC selection UI ─────────────────────────────────────────────────────
+function selectNPC(npcId) {
+  activeNPC = npcId;
+
+  // Update tabs
+  document.querySelectorAll('.npc-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.npc === npcId);
+  });
+
+  // Update persona card
+  const p = PERSONAS[npcId];
+  if (p) {
+    document.getElementById('persona-name').textContent = p.name;
+    document.getElementById('persona-role').textContent = p.role;
+    document.getElementById('persona-desc').textContent = p.desc;
+    document.getElementById('persona-role').style.color = p.color;
+  }
+
+  // Enable input if not thinking
+  if (!isThinking) enableInput(true);
+
+  // Hide click hint
+  document.getElementById('click-hint').style.opacity = '0';
+
+  // Send click to backend
+  send({ type: 'C_NPC_CLICK', npcId });
+  render();
+}
+
+// ─── Canvas click → NPC hit test ─────────────────────────────────────────
+canvas.addEventListener('click', (e) => {
+  if (!world || !world.npcs) return;
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left;
+  const sy = e.clientY - rect.top;
+
+  // Find closest NPC to click
+  let best = null;
+  let bestDist = 30; // pixel radius threshold
+
+  for (const npc of world.npcs) {
+    const { x, y } = isoProject(npc.x, npc.y);
+    const dx = sx - x;
+    const dy = sy - (y - 16);
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < bestDist) { bestDist = dist; best = npc; }
+  }
+
+  if (best) selectNPC(best.id);
+});
+
+// ─── Sidebar tab clicks ───────────────────────────────────────────────────
+document.querySelectorAll('.npc-tab').forEach(tab => {
+  tab.addEventListener('click', () => selectNPC(tab.dataset.npc));
+});
+
+// ─── Send message ─────────────────────────────────────────────────────────
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text || !activeNPC || isThinking) return;
+
+  addMessage('player', null, text, false);
+  input.value = '';
+  enableInput(false);
+  isThinking = true;
+  showTyping(true);
+
+  send({ type: 'C_CHAT_SEND', npcId: activeNPC, text });
+}
+
+document.getElementById('send-btn').addEventListener('click', sendMessage);
+document.getElementById('chat-input').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') sendMessage();
+});
+
+// ─── Reset run ────────────────────────────────────────────────────────────
+document.getElementById('reset-btn').addEventListener('click', () => {
+  if (!ws) return;
+  send({ type: 'C_RESET_RUN', seed: world?.seed ?? 42 });
+  chatHistory = [];
+  document.getElementById('chat-history').innerHTML = '';
+  isThinking = false;
+  showTyping(false);
+  enableInput(false);
+  activeNPC = null;
+  document.getElementById('click-hint').style.opacity = '1';
+  document.querySelectorAll('.npc-tab').forEach(t => {
+    t.classList.toggle('active', t.dataset.npc === 'emma');
+  });
+  selectPersonaCard('emma');
+});
+
+function selectPersonaCard(npcId) {
+  const p = PERSONAS[npcId];
+  if (p) {
+    document.getElementById('persona-name').textContent = p.name;
+    document.getElementById('persona-role').textContent = p.role;
+    document.getElementById('persona-desc').textContent = p.desc;
+    document.getElementById('persona-role').style.color = p.color;
+  }
+}
+
+// ─── Boot ─────────────────────────────────────────────────────────────────
+connect();
+// Render loop (low-rate, most updates are server-pushed)
+setInterval(() => { if (world) render(); }, 100);
+</script>
+</body>
+</html>

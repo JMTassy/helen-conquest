@@ -1,0 +1,116 @@
+{
+  "total_sessions": 200,
+  "seed": 111,
+  "sample_records": [
+    {
+      "session_id": 0,
+      "archetype": "Generalist",
+      "final_knowledge": 50.0,
+      "final_territory": 16,
+      "final_zols": 2109,
+      "final_entropy": 0.6700000000000005,
+      "collapse_turn": -1,
+      "collapse_reason": "none",
+      "winner": false
+    },
+    {
+      "session_id": 1,
+      "archetype": "Generalist",
+      "final_knowledge": 150.0,
+      "final_territory": 11,
+      "final_zols": 1401,
+      "final_entropy": 1.4322057938375785,
+      "collapse_turn": 13,
+      "collapse_reason": "entropy_cascade",
+      "winner": false
+    },
+    {
+      "session_id": 2,
+      "archetype": "Generalist",
+      "final_knowledge": 50.0,
+      "final_territory": 19,
+      "final_zols": 2311,
+      "final_entropy": 0.8125483399593908,
+      "collapse_turn": -1,
+      "collapse_reason": "none",
+      "winner": false
+    },
+    {
+      "session_id": 3,
+      "archetype": "Generalist",
+      "final_knowledge": 250.0,
+      "final_territory": 10,
+      "final_zols": 1169,
+      "final_entropy": 1.0850038719930664,
+      "collapse_turn": 19,
+      "collapse_reason": "stability_collapse",
+      "winner": false
+    },
+    {
+      "session_id": 4,
+      "archetype": "Generalist",
+      "final_knowledge": 100.0,
+      "final_territory": 18,
+      "final_zols": 2069,
+      "final_entropy": 1.9,
+      "collapse_turn": 26,
+      "collapse_reason": "entropy_cascade",
+      "winner": false
+    },
+    {
+      "session_id": 5,
+      "archetype": "Generalist",
+      "final_knowledge": 250.0,
+      "final_territory": 11,
+      "final_zols": 1648,
+      "final_entropy": 1.2122057938375785,
+      "collapse_turn": 15,
+      "collapse_reason": "entropy_cascade",
+      "winner": false
+    },
+    {
+      "session_id": 6,
+      "archetype": "Generalist",
+      "final_knowledge": 100.0,
+      "final_territory": 14,
+      "final_zols": 1663,
+      "final_entropy": 1.9,
+      "collapse_turn": 18,
+      "collapse_reason": "entropy_cascade",
+      "winner": false
+    },
+    {
+      "session_id": 7,
+      "archetype": "Generalist",
+      "final_knowledge": 0.0,
+      "final_territory": 15,
+      "final_zols": 2418,
+      "final_entropy": 0.8200000000000016,
+      "collapse_turn": -1,
+      "collapse_reason": "none",
+      "winner": false
+    },
+    {
+      "session_id": 8,
+      "archetype": "Generalist",
+      "final_knowledge": 50.0,
+      "final_territory": 18,
+      "final_zols": 2086,
+      "final_entropy": 0.7625483399593906,
+      "collapse_turn": -1,
+      "collapse_reason": "none",
+      "winner": false
+    },
+    {
+      "session_id": 9,
+      "archetype": "Generalist",
+      "final_knowledge": 300.0,
+      "final_territory": 10,
+      "final_zols": 1441,
+      "final_entropy": 1.1650038719930662,
+      "collapse_turn": 19,
+      "collapse_reason": "stability_collapse",
+      "winner": false
+    }
+  ]
+}

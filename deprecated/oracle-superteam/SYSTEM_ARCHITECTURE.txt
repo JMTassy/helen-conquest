@@ -1,0 +1,240 @@
+WUL-ORACLE System Architecture
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         WUL-ORACLE INTERACTIVE CLI                           │
+│                         wul_oracle_cli.py                                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                       │
+                ┌──────────────────────┼──────────────────────┐
+                │                      │                      │
+                ▼                      ▼                      ▼
+        ┌───────────────┐      ┌──────────────┐     ┌──────────────┐
+        │   MODE 1      │      │   MODE 2     │     │   MODE 3     │
+        │ Test Claim    │      │  Improve     │     │  Ship        │
+        └───────────────┘      └──────────────┘     └──────────────┘
+                │                      │                      │
+                └──────────────────────┼──────────────────────┘
+                                       │
+                                       ▼
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        GOVERNANCE PIPELINE                                   │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────┐
+│   S0: CONCIERGE      │  Claim Input
+│  ─────────────────   │  ↓ Build Token Tree
+│  Claim → TokenTree   │  ↓ Validate WUL-CORE
+└──────────────────────┘
+           │
+           ▼  [WUL-CORE Validator]
+┌──────────────────────────────────────────────────────────────────────────┐
+│  src/wul/validate.py                                                      │
+│  ────────────────────────────────────────────────────────────────────    │
+│  ✓ Invariant 3.1: No Free Text                                           │
+│  ✓ Invariant 3.2: Bounded Structure (depth ≤ 64, nodes ≤ 512)           │
+│  ✓ Arity Check (R15 = 2, etc.)                                          │
+│  ✓ Mandatory R15 (objective return)                                     │
+│                                                                           │
+│  Input:  Token Tree + Kernel Registry                                   │
+│  Output: ValidationResult(ok, reason, depth, nodes, has_r15)            │
+└──────────────────────────────────────────────────────────────────────────┘
+           │
+           ▼  [Pass]
+┌──────────────────────┐
+│   S1-S3: SUPERTEAM   │  Build Tribunal Bundle
+│  ─────────────────   │  ↓ Simulate Attestations
+│  Tribunal + Ledger   │  ↓ Collect Evidence
+└──────────────────────┘
+           │
+           ▼  [Receipt Gap Computation]
+┌──────────────────────────────────────────────────────────────────────────┐
+│  src/receipt/compute_gap.py                                               │
+│  ────────────────────────────────────────────────────────────────────    │
+│  Paper Definition 4.3: RG = count of unsatisfied HARD obligations        │
+│                                                                           │
+│  Input:  tribunal_bundle.json + attestations_ledger.json                │
+│  Output: (receipt_gap, missing_obligations)                              │
+│                                                                           │
+│  Logic:                                                                  │
+│    for each HARD obligation:                                             │
+│      if NOT (attestation_valid AND policy_match):                        │
+│        receipt_gap++                                                     │
+│        missing_obligations.append(obligation with reason_code)           │
+└──────────────────────────────────────────────────────────────────────────┘
+           │
+           ▼  [Mayor Decision]
+┌──────────────────────────────────────────────────────────────────────────┐
+│  src/mayor/decide.py                                                      │
+│  ────────────────────────────────────────────────────────────────────    │
+│  Paper Invariant 5.2: decision = SHIP iff (kill_switches_pass AND RG=0)  │
+│                                                                           │
+│  Input:  tribunal_bundle + policies + receipt_root_payload              │
+│  Output: decision_record.json (deterministic, no timestamps)             │
+│          decision_record.meta.json (timestamps, audit trail)             │
+│                                                                           │
+│  Pure Function Logic:                                                    │
+│    if kill_switches_pass AND receipt_gap == 0:                           │
+│      decision = SHIP                                                     │
+│      blocking = []                                                       │
+│    else:                                                                 │
+│      decision = NO_SHIP                                                  │
+│      blocking = [typed reason codes with evidence paths]                │
+└──────────────────────────────────────────────────────────────────────────┘
+           │
+           ▼
+┌──────────────────────┐
+│   S5: SHIPMENT       │  decision_record.json
+│  ─────────────────   │  ↓ Schema Validation (2020-12)
+│  Certified Artifact  │  ↓ Three-Gate Check
+└──────────────────────┘     (Schema, Allowlist, Purity)
+           │
+           ▼
+┌────────────────────────────────────────────────────────────┐
+│                    OUTPUT FORMATS                          │
+│  ────────────────────────────────────────────────────────  │
+│  1. LaTeX   → shipment.tex (formal specification)          │
+│  2. Code    → shipment.py  (implementation)                │
+│  3. Text    → shipment.txt (narrative edition)             │
+│                                                            │
+│  + shipment.meta.json (SHA-256, timestamp, hashes)         │
+└────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+CONSTITUTIONAL ENFORCEMENT
+═══════════════════════════════════════════════════════════════════════════════
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  schemas/decision_record.schema.json (JSON Schema 2020-12)               │
+│  ─────────────────────────────────────────────────────────────────────  │
+│  🔒 Schema-Enforced Invariants:                                         │
+│                                                                          │
+│  IF decision == "NO_SHIP" THEN:                                         │
+│    blocking.minItems >= 1  (Invariant 5.1: No Silent Failures)         │
+│                                                                          │
+│  IF decision == "SHIP" THEN:                                            │
+│    blocking.maxItems == 0  (empty array)                                │
+│    receipt_gap == 0        (const)                                      │
+│    kill_switches_pass == true  (const)                                  │
+│    (Invariant 5.2: SHIP Implies Zero Gap)                               │
+│                                                                          │
+│  additionalProperties: false  (no bypass via extra fields)              │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│  reason_codes.json (Closed-Loop Registry)                                │
+│  ─────────────────────────────────────────────────────────────────────  │
+│  30 Canonical Codes:                                                    │
+│    - R15_INVALID                                                        │
+│    - FREE_TEXT_DETECTED                                                 │
+│    - DEPTH_EXCEEDED                                                     │
+│    - RECEIPT_GAP_NONZERO                                                │
+│    - PURITY_VIOLATION                                                   │
+│    - NO_SHIP_WITHOUT_BLOCKING_CODES                                     │
+│    ... (24 more)                                                        │
+│                                                                          │
+│  Enforcement: tests/test_reason_codes_allowlist.py                      │
+│    All blocking[].code MUST be in this allowlist                        │
+│    No ad-hoc codes permitted                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+DATA FLOW
+═══════════════════════════════════════════════════════════════════════════════
+
+┌──────────┐     ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Claim   │────▶│  WUL Token   │────▶│  Validation  │────▶│  Tribunal    │
+│  (Text)  │     │  Tree (Dict) │     │  Result      │     │  Bundle      │
+└──────────┘     └──────────────┘     └──────────────┘     └──────────────┘
+                                              │
+                                              ├─ ok: bool
+                                              ├─ reason: str (if failed)
+                                              ├─ depth: int
+                                              ├─ nodes: int
+                                              └─ has_r15: bool
+
+┌──────────────┐     ┌──────────────┐     ┌──────────────┐
+│  Tribunal    │────▶│  Receipt Gap │────▶│  Mayor       │
+│  + Ledger    │     │  Computation │     │  Decision    │
+└──────────────┘     └──────────────┘     └──────────────┘
+                             │                     │
+                             ├─ receipt_gap: int   ├─ decision: SHIP|NO_SHIP
+                             └─ missing: list      ├─ blocking: list
+                                                   └─ metadata: dict
+
+┌──────────────┐     ┌──────────────┐
+│  Decision    │────▶│  Shipment    │
+│  Record      │     │  Artifact    │
+└──────────────┘     └──────────────┘
+                             │
+                             ├─ shipment.tex/.py/.txt
+                             └─ shipment.meta.json (hash, timestamp)
+
+═══════════════════════════════════════════════════════════════════════════════
+KERNEL REGISTRY (WUL-CORE v0)
+═══════════════════════════════════════════════════════════════════════════════
+
+src/wul/core_kernel.json
+─────────────────────────────────────────────────────────────────────────────
+
+DISCOURSE (5):
+  D01: CLAIM (arity: 1)
+  D02: EVIDENCE_FOR (arity: 1)
+  D03: EVIDENCE_AGAINST (arity: 1)
+  D04: HYPOTHESIS (arity: 1)
+  D05: METRIC (arity: 2)
+
+ENTITIES (7):
+  E01: PROPOSITION (abstract)
+  E02: ARTIFACT (concrete)
+  E03: OBJECTIVE (goal)
+  E04: AGENT (actor)
+  E05: THRESHOLD (value)
+  E06: TIMESTAMP (temporal)
+  E07: HASH (identifier)
+
+RELATIONS (15):
+  R01-R14: Various relations (DEPENDS_ON, IMPLIES, SUPPORTS, etc.)
+  R15: RETURNS_TO (arity: 2) ⚠️ MANDATORY
+
+GOVERNANCE:
+  no_free_text: true
+  max_depth: 64
+  max_nodes: 512
+  max_branching: 8
+  mandatory_relations: ["R15"]
+
+═══════════════════════════════════════════════════════════════════════════════
+FILE LOCATIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+Core Implementation:
+  src/wul/core_kernel.json         ← Kernel registry
+  src/wul/validate.py               ← WUL-CORE validator
+  src/receipt/compute_gap.py        ← Receipt gap computation
+  src/mayor/decide.py               ← Mayor decision function
+
+Schemas & Registries:
+  schemas/decision_record.schema.json  ← 2020-12 with invariants
+  reason_codes.json                    ← 30 canonical codes
+  REASON_CODES.md                      ← Human-readable source
+
+Tests:
+  tests/test_mayor_no_ship_invariant.py     ← Schema enforcement
+  tests/test_reason_codes_allowlist.py      ← Allowlist enforcement
+  tests/fixtures/*.json                     ← Test data
+
+Documentation:
+  WUL_ORACLE_PAPER.tex                      ← Formal specification
+  README_CONSTITUTIONAL_SYSTEM.md           ← System guide
+  README_CLI.md                             ← CLI usage
+  IMPLEMENTATION_COMPLETE.md                ← Status report
+  PAPER_TO_IMPLEMENTATION_MAP.md            ← Traceability
+  VERIFICATION_CHECKLIST.md                 ← Test matrix
+
+Interactive CLI:
+  wul_oracle_cli.py                         ← Main emulator
+
+═══════════════════════════════════════════════════════════════════════════════
+END OF SYSTEM ARCHITECTURE
+═══════════════════════════════════════════════════════════════════════════════

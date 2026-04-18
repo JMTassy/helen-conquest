@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CONQUEST — Le Plateau en Mouvement</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0d0d0d;
+  --panel: #111;
+  --border: #222;
+  --gold: #c9a84c;
+  --gold-dim: #6b5520;
+  --red: #c0392b;
+  --green: #27ae60;
+  --blue: #2980b9;
+  --purple: #8e44ad;
+  --cyan: #16a085;
+  --text: #e0e0e0;
+  --dim: #555;
+  --bright: #fff;
+}
+
+body {
+  font-family: 'Courier New', monospace;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ─────────────────────────────────── */
+header {
+  text-align: center;
+  padding: 18px 20px 10px;
+  border-bottom: 1px solid var(--border);
+}
+header h1 {
+  font-size: 1.5em;
+  color: var(--gold);
+  letter-spacing: 6px;
+  text-transform: uppercase;
+}
+header .tagline {
+  color: var(--dim);
+  font-size: 0.78em;
+  letter-spacing: 3px;
+  margin-top: 4px;
+}
+
+/* ── LAYOUT ─────────────────────────────────── */
+.main {
+  display: grid;
+  grid-template-columns: 260px 1fr 280px;
+  gap: 0;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - 64px);
+}
+
+/* ── PANELS ─────────────────────────────────── */
+.panel {
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 14px;
+}
+.panel:last-child { border-right: none; }
+.panel-title {
+  font-size: 0.68em;
+  letter-spacing: 3px;
+  color: var(--gold-dim);
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+}
+
+/* ── PLAYERS ─────────────────────────────────── */
+.player-card {
+  border: 1px solid var(--border);
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.player-card:hover { border-color: var(--gold-dim); }
+.player-card.active { border-color: var(--gold); }
+.player-card.in-prison { opacity: 0.55; }
+.player-name {
+  font-size: 0.85em;
+  font-weight: bold;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.player-archetype {
+  font-size: 0.65em;
+  color: var(--dim);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+.player-zols {
+  font-size: 1.1em;
+  color: var(--gold);
+  font-weight: bold;
+  margin: 4px 0;
+}
+.prison-badge {
+  font-size: 0.6em;
+  color: var(--red);
+  border: 1px solid var(--red);
+  padding: 1px 4px;
+  border-radius: 2px;
+  letter-spacing: 1px;
+}
+.player-bar {
+  height: 3px;
+  background: var(--border);
+  margin-top: 6px;
+  border-radius: 1px;
+  overflow: hidden;
+}
+.player-bar-fill {
+  height: 100%;
+  background: var(--gold);
+  transition: width 0.4s ease;
+}
+
+/* ── TERRITOIRE ─────────────────────────────── */
+.territory-dots {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+  margin-top: 5px;
+}
+.t-dot {
+  width: 8px; height: 8px;
+  border-radius: 1px;
+  background: var(--border);
+}
+.t-dot.owned { background: var(--gold); }
+
+/* ── PLATEAU (centre) ───────────────────────── */
+.plateau-panel {
+  display: flex;
+  flex-direction: column;
+  padding: 14px;
+  gap: 10px;
+  overflow-y: auto;
+}
+
+/* Tour + Epoch */
+.turn-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0a0a0a;
+  border: 1px solid var(--border);
+  padding: 8px 12px;
+  font-size: 0.78em;
+}
+.turn-label { color: var(--dim); letter-spacing: 2px; }
+.turn-num { color: var(--gold); font-size: 1.3em; font-weight: bold; }
+.epoch-label { color: var(--cyan); letter-spacing: 2px; }
+
+/* Plateau grid */
+.plateau-grid-wrapper {
+  display: flex;
+  justify-content: center;
+}
+.plateau-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  max-width: 340px;
+  width: 100%;
+}
+.territoire {
+  aspect-ratio: 1;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  position: relative;
+  min-height: 80px;
+  background: #0a0a0a;
+}
+.territoire:hover { border-color: var(--gold-dim); }
+.territoire.owned-0 { border-color: #c0392b; background: rgba(192,57,43,0.1); }
+.territoire.owned-1 { border-color: #2980b9; background: rgba(41,128,185,0.1); }
+.territoire.owned-2 { border-color: #27ae60; background: rgba(39,174,96,0.1); }
+.territoire.owned-3 { border-color: #8e44ad; background: rgba(142,68,173,0.1); }
+.territoire.owned-4 { border-color: #c9a84c; background: rgba(201,168,76,0.1); }
+.territoire.owned-5 { border-color: #e67e22; background: rgba(230,126,34,0.1); }
+.territoire.contested { animation: pulse 1s infinite; }
+@keyframes pulse {
+  0%,100% { border-color: var(--gold); }
+  50% { border-color: var(--dim); }
+}
+.t-name {
+  font-size: 0.65em;
+  letter-spacing: 1px;
+  color: var(--dim);
+  text-transform: uppercase;
+  text-align: center;
+  padding: 2px;
+}
+.t-price {
+  font-size: 0.7em;
+  color: var(--gold-dim);
+}
+.t-owner-glyph {
+  font-size: 1.4em;
+  margin: 2px 0;
+}
+.t-flag {
+  position: absolute;
+  top: 3px;
+  right: 4px;
+  font-size: 0.6em;
+  color: var(--gold);
+}
+
+/* Duel arena */
+.duel-arena {
+  border: 1px solid var(--border);
+  background: #080808;
+  padding: 12px;
+  border-radius: 2px;
+  min-height: 80px;
+  font-size: 0.82em;
+  line-height: 1.7;
+}
+.duel-arena.active { border-color: var(--gold); }
+.duel-log-entry { color: var(--dim); }
+.duel-log-entry.highlight { color: var(--text); }
+.duel-log-entry.win { color: var(--green); }
+.duel-log-entry.loss { color: var(--red); }
+.duel-log-entry.gold { color: var(--gold); }
+.duel-log-entry.info { color: var(--cyan); }
+
+/* QCM question */
+.qcm-panel {
+  border: 1px solid var(--gold-dim);
+  background: #080808;
+  padding: 14px;
+  border-radius: 2px;
+  display: none;
+}
+.qcm-panel.visible { display: block; }
+.qcm-question {
+  font-size: 0.85em;
+  color: var(--bright);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.qcm-category {
+  font-size: 0.65em;
+  letter-spacing: 2px;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.qcm-choices {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.qcm-btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 8px 10px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.78em;
+  text-align: left;
+  transition: all 0.15s;
+  border-radius: 1px;
+}
+.qcm-btn:hover { border-color: var(--gold-dim); color: var(--bright); }
+.qcm-btn.correct { border-color: var(--green); color: var(--green); background: rgba(39,174,96,0.1); }
+.qcm-btn.wrong { border-color: var(--red); color: var(--red); background: rgba(192,57,43,0.1); }
+.qcm-timer {
+  font-size: 0.7em;
+  color: var(--dim);
+  margin-top: 8px;
+  letter-spacing: 1px;
+}
+
+/* ── DICE ─────────────────────────────────────── */
+.dice-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin: 6px 0;
+}
+.die {
+  width: 40px; height: 40px;
+  border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4em;
+  border-radius: 4px;
+  transition: all 0.2s;
+  background: #0a0a0a;
+}
+.die.rolling { animation: spin 0.3s linear infinite; border-color: var(--gold); }
+@keyframes spin { 0% { transform: rotate(0); } 100% { transform: rotate(360deg); } }
+.die.result { border-color: var(--cyan); }
+
+/* ── CONTROLS ─────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.btn {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 7px 14px;
+  cursor: pointer;
+  font-family: 'Courier New', monospace;
+  font-size: 0.75em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.15s;
+  border-radius: 1px;
+}
+.btn:hover { border-color: var(--gold-dim); color: var(--gold); }
+.btn.primary { border-color: var(--gold); color: var(--gold); }
+.btn.primary:hover { background: var(--gold); color: #000; }
+.btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ── LOG PANEL ───────────────────────────────── */
+.log-stream {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.log-entry {
+  font-size: 0.72em;
+  color: var(--dim);
+  line-height: 1.4;
+  border-bottom: 1px solid #1a1a1a;
+  padding-bottom: 3px;
+}
+.log-entry.event { color: var(--text); }
+.log-entry.duel-event { color: var(--gold); }
+.log-entry.territory-event { color: var(--cyan); }
+.log-entry.prison-event { color: var(--red); }
+.log-entry.meta { color: #444; font-style: italic; }
+
+/* ── LEDGER (contradiction tracker) ─────────── */
+.ledger-entry {
+  font-size: 0.7em;
+  border-left: 2px solid var(--border);
+  padding-left: 8px;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+.ledger-entry.contradiction { border-left-color: var(--red); }
+.ledger-entry.alignment { border-left-color: var(--green); }
+.ledger-entry.moment { border-left-color: var(--gold); }
+.ledger-entry .le-label {
+  font-size: 0.85em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.ledger-entry .le-text { color: var(--text); margin-top: 2px; }
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb { background: #222; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ── VICTORY ─────────────────────────────────── */
+.victory-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 99;
+  align-items: center;
+  justify-content: center;
+}
+.victory-overlay.show { display: flex; }
+.victory-box {
+  border: 1px solid var(--gold);
+  padding: 30px 40px;
+  text-align: center;
+  max-width: 400px;
+}
+.victory-box h2 { color: var(--gold); font-size: 1.4em; letter-spacing: 4px; margin-bottom: 12px; }
+.victory-box p { color: var(--text); font-size: 0.85em; line-height: 1.8; }
+.victory-box .insight { color: var(--cyan); margin-top: 12px; font-size: 0.78em; font-style: italic; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CONQUEST</h1>
+  <div class="tagline">Le Plateau en Mouvement — Le savoir mène au pouvoir</div>
+</header>
+
+<div class="main">
+
+  <!-- LEFT: JOUEURS ─────────────────────────── -->
+  <div class="panel" id="playerPanel">
+    <div class="panel-title">Joueurs</div>
+    <div id="playerList"></div>
+  </div>
+
+  <!-- CENTRE: PLATEAU ──────────────────────── -->
+  <div class="plateau-panel">
+
+    <div class="turn-banner">
+      <div>
+        <div class="turn-label">TOUR</div>
+        <div class="turn-num" id="turnNum">1</div>
+      </div>
+      <div style="text-align:center">
+        <div id="activePlayerName" style="color:var(--gold);font-size:0.9em;font-weight:bold"></div>
+        <div id="phaseLabel" style="color:var(--dim);font-size:0.7em;letter-spacing:2px;margin-top:2px">EN ATTENTE</div>
+      </div>
+      <div style="text-align:right">
+        <div class="epoch-label" id="epochLabel">GROUNDING</div>
+        <div style="color:var(--dim);font-size:0.65em;margin-top:2px" id="epochDesc">Époque 1/6</div>
+      </div>
+    </div>
+
+    <!-- Dice -->
+    <div style="text-align:center">
+      <div class="dice-row" id="diceRow">
+        <div class="die" id="die1">·</div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls" id="controlsRow">
+      <button class="btn primary" id="btnRoll" onclick="rollDice()">Lancer le dé</button>
+      <button class="btn" id="btnNext" onclick="nextTurn()" disabled>Tour suivant</button>
+      <button class="btn" id="btnAuto" onclick="toggleAuto()">Auto</button>
+      <button class="btn" onclick="newGame()" style="color:var(--dim)">Nouvelle partie</button>
+    </div>
+
+    <!-- QCM -->
+    <div class="qcm-panel" id="qcmPanel">
+      <div class="qcm-category" id="qcmCategory"></div>
+      <div class="qcm-question" id="qcmQuestion"></div>
+      <div class="qcm-choices" id="qcmChoices"></div>
+      <div class="qcm-timer" id="qcmTimer"></div>
+    </div>
+
+    <!-- Plateau grid -->
+    <div class="plateau-grid-wrapper">
+      <div class="plateau-grid" id="plateauGrid"></div>
+    </div>
+
+    <!-- Duel Arena -->
+    <div class="duel-arena" id="duelArena">
+      <div class="duel-log-entry info">Le Plateau attend. Lance le dé pour commencer.</div>
+    </div>
+
+  </div>
+
+  <!-- RIGHT: LOG + LEDGER ──────────────────── -->
+  <div class="panel" id="rightPanel">
+    <div class="panel-title">Registre des Révélations</div>
+    <div id="ledgerStream"></div>
+    <div class="panel-title" style="margin-top:16px">Journal</div>
+    <div class="log-stream" id="logStream"></div>
+  </div>
+
+</div>
+
+<!-- Victory -->
+<div class="victory-overlay" id="victoryOverlay">
+  <div class="victory-box">
+    <h2>VICTOIRE</h2>
+    <div id="victoryText"></div>
+    <div class="insight" id="victoryInsight"></div>
+    <button class="btn primary" style="margin-top:16px" onclick="newGame()">Nouvelle partie</button>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════════════
+// DONNÉES
+// ═══════════════════════════════════════════════════════════════
+
+const ARCHETYPES = [
+  {
+    name: "MILITAIRE", glyph: "⚔", color: "#c0392b",
+    bonus: "Duel force +1",
+    handicap: "Prison 3 tours si capturé",
+    duel_bonus: { dice: 1, qcm: 0 },
+    prison_turns: 3,
+    insightOnWin: "La force sans sagesse est aveugle. Tu as gagné par la lame — combien de temps tiendra-t-elle?",
+    insightOnLoss: "La prison révèle ce que la victoire cache: qui es-tu quand tu ne peux plus agir?",
+  },
+  {
+    name: "PRINCE", glyph: "♛", color: "#2980b9",
+    bonus: "Immunisé prison",
+    handicap: "QCM -1 choix retiré",
+    duel_bonus: { dice: 0, qcm: -1 },
+    prison_turns: 0,
+    insightOnWin: "Naître dans la fortune n'est pas la mériter. Tu l'as prise — est-ce toujours tien?",
+    insightOnLoss: "L'immunité te protège du risque. Elle te prive aussi de la transformation.",
+  },
+  {
+    name: "SAVANT", glyph: "📚", color: "#27ae60",
+    bonus: "QCM +5sec",
+    handicap: "Duel dés -1",
+    duel_bonus: { dice: -1, qcm: 1 },
+    prison_turns: 1,
+    insightOnWin: "La connaissance t'a mené ici. Ce que tu sais définit ce que tu peux conquérir.",
+    insightOnLoss: "Savoir n'est pas suffire. La vérité que tu portais — l'as-tu vraiment appliquée?",
+  },
+  {
+    name: "DIPLOMATE", glyph: "🤝", color: "#8e44ad",
+    bonus: "Négocie: paye 80% du prix territoire",
+    handicap: "Ne peut attaquer qu'un tour sur deux",
+    duel_bonus: { dice: 0, qcm: 0 },
+    prison_turns: 1,
+    insightOnWin: "Tu as bâti des ponts là où d'autres creusaient des fossés. C'est rare.",
+    insightOnLoss: "La diplomatie a ses limites. Quand les autres refusent de parler, que fais-tu?",
+  },
+  {
+    name: "PRINCESSE", glyph: "👑", color: "#c9a84c",
+    bonus: "Reçoit zols quand un autre joueur gagne",
+    handicap: "Ne peut pas acheter en dernier territoire",
+    duel_bonus: { dice: 0, qcm: 0 },
+    prison_turns: 1,
+    insightOnWin: "Tu as prospéré dans l'écosystème de l'autre. Est-ce victoire ou dépendance?",
+    insightOnLoss: "La richesse des autres ne suffit pas. À quel moment décides-tu d'agir seule?",
+  },
+  {
+    name: "MILLIONNAIRE", glyph: "💰", color: "#e67e22",
+    bonus: "Commence avec 30 000 zols supplémentaires",
+    handicap: "Duel: dés -2 (fortune amollit)",
+    duel_bonus: { dice: -2, qcm: 0 },
+    prison_turns: 1,
+    insightOnWin: "La fortune offre un départ. Ce que tu en fais révèle ta vraie valeur.",
+    insightOnLoss: "L'argent a ses limites. Ce que l'argent ne peut pas acheter — tu l'as appris?",
+  },
+];
+
+const TERRITOIRES = [
+  { name: "Versailles", price: 60000, glyph: "🏰", id: 0 },
+  { name: "Corse",      price: 40000, glyph: "🏝", id: 1 },
+  { name: "Alpes",      price: 35000, glyph: "⛰", id: 2 },
+  { name: "Bretagne",   price: 30000, glyph: "🌊", id: 3 },
+  { name: "Bordeaux",   price: 25000, glyph: "🍷", id: 4 },
+  { name: "Camargue",   price: 20000, glyph: "🦩", id: 5 },
+];
+
+const CATEGORIES = ["Science", "Histoire", "Littérature"];
+
+const QUESTIONS_DB = [
+  // Science
+  { cat: "Science", q: "Quel élément a le numéro atomique 79?", choices: ["Argent", "Or", "Platine", "Cuivre"], correct: 1 },
+  { cat: "Science", q: "Quelle planète est la plus proche du Soleil?", choices: ["Venus", "Mars", "Mercure", "Terre"], correct: 2 },
+  { cat: "Science", q: "À quelle vitesse la lumière voyage-t-elle (km/s)?", choices: ["200 000", "299 792", "350 000", "150 000"], correct: 1 },
+  { cat: "Science", q: "Combien de chromosomes l'être humain possède-t-il?", choices: ["23", "46", "48", "44"], correct: 1 },
+  { cat: "Science", q: "Qui a découvert la pénicilline?", choices: ["Pasteur", "Curie", "Fleming", "Koch"], correct: 2 },
+  { cat: "Science", q: "Quelle est la formule chimique de l'eau?", choices: ["HO", "H2O", "H3O", "OH2"], correct: 1 },
+  // Histoire
+  { cat: "Histoire", q: "En quelle année la Révolution française a-t-elle commencé?", choices: ["1776", "1789", "1792", "1804"], correct: 1 },
+  { cat: "Histoire", q: "Qui était le premier Président de la Ve République française?", choices: ["Pompidou", "De Gaulle", "Mitterrand", "Chirac"], correct: 1 },
+  { cat: "Histoire", q: "Quelle bataille Napoléon a-t-il perdue en 1815?", choices: ["Austerlitz", "Iéna", "Waterloo", "Borodino"], correct: 2 },
+  { cat: "Histoire", q: "En quelle année le mur de Berlin est-il tombé?", choices: ["1987", "1990", "1989", "1991"], correct: 2 },
+  { cat: "Histoire", q: "Quelle civilisation a construit le Colisée?", choices: ["Grecque", "Romaine", "Égyptienne", "Byzantine"], correct: 1 },
+  { cat: "Histoire", q: "Qui a signé la Déclaration d'Indépendance américaine en premier?", choices: ["Jefferson", "Adams", "Hancock", "Franklin"], correct: 2 },
+  // Littérature
+  { cat: "Littérature", q: "Qui a écrit 'Les Misérables'?", choices: ["Balzac", "Zola", "Victor Hugo", "Flaubert"], correct: 2 },
+  { cat: "Littérature", q: "Dans quel roman trouve-t-on le personnage de Raskolnikov?", choices: ["Crime et Châtiment", "L'Idiot", "Les Frères Karamazov", "Anna Karénine"], correct: 0 },
+  { cat: "Littérature", q: "Quelle pièce de Shakespeare met en scène Othello?", choices: ["Hamlet", "Othello", "Macbeth", "La Tempête"], correct: 1 },
+  { cat: "Littérature", q: "Qui a écrit 'À la recherche du temps perdu'?", choices: ["Camus", "Proust", "Sartre", "Gide"], correct: 1 },
+  { cat: "Littérature", q: "Dans quel pays se déroule 'Don Quichotte'?", choices: ["Portugal", "France", "Espagne", "Italie"], correct: 2 },
+  { cat: "Littérature", q: "Quel auteur a créé Sherlock Holmes?", choices: ["Christie", "Poe", "Conan Doyle", "Leblanc"], correct: 2 },
+];
+
+const DUEL_OUTCOMES = {
+  ecolo: ["pluie", "rivière", "océan"],
+  insightsByType: {
+    pluie:   "La pluie tombe sur le juste et l'injuste également.",
+    rivière: "Le courant ne demande pas la permission.",
+    océan:   "L'océan avale tout — victoire et défaite.",
+  }
+};
+
+const EPOCHS = [
+  { name: "GROUNDING",    desc: "Les fondations se posent" },
+  { name: "SEEING",       desc: "Les patterns émergent" },
+  { name: "STRUGGLE",     desc: "La pression monte" },
+  { name: "ORDER",        desc: "L'ordre s'impose" },
+  { name: "BONDING",      desc: "Les alliances se révèlent" },
+  { name: "SHEDDING",     desc: "Ce qui n'est plus nécessaire tombe" },
+];
+
+const ZOLS_TARGET    = 250000;
+const ZOLS_PER_CORRECT = 2000;
+const ZOLS_PER_WRONG   = -500;
+const ZOLS_DUEL_WIN    = 5000;
+
+// ═══════════════════════════════════════════════════════════════
+// ÉTAT DU JEU
+// ═══════════════════════════════════════════════════════════════
+
+let G = null;
+let autoTimer = null;
+let qcmTimer = null;
+let qcmAnswered = false;
+
+function initGame(numPlayers) {
+  const archetypes = shuffle([...ARCHETYPES.keys()]).slice(0, numPlayers);
+  G = {
+    turn: 1,
+    players: archetypes.map((ai, i) => ({
+      id: i,
+      archetypeIdx: ai,
+      archetype: ARCHETYPES[ai],
+      zols: ai === 5 ? 50000 : 20000,  // Millionnaire starts extra
+      territories: [],
+      prisonTurns: 0,
+      totalCorrect: 0,
+      totalWrong: 0,
+      duelsWon: 0,
+      duelsLost: 0,
+      contradictions: [],   // "said X, did Y"
+      moments: [],          // key revelation moments
+    })),
+    territories: TERRITOIRES.map(t => ({ ...t, ownerId: null })),
+    currentPlayer: 0,
+    phase: "WAITING",  // WAITING | ROLLING | CATEGORY | QCM | DUEL | BUYING | RESULT
+    lastDice: null,
+    lastCategory: null,
+    lastQuestion: null,
+    qcmResult: null,
+    log: [],
+    ledger: [],
+    epochIdx: 0,
+    winner: null,
+    turnsSinceEpochChange: 0,
+    usedQuestions: new Set(),
+  };
+  log("Le Plateau s'éveille. Chaque tour révèle une vérité.", "meta");
+  render();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// MÉCANIQUE DU JEU
+// ═══════════════════════════════════════════════════════════════
+
+function rollDice() {
+  if (!G || G.phase !== "WAITING" || G.winner) return;
+
+  const p = currentPlayer();
+  if (p.prisonTurns > 0) {
+    p.prisonTurns--;
+    addArenaLine(`${p.archetype.glyph} ${p.archetype.name} est en prison. (${p.prisonTurns} tours restants)`, "loss");
+    log(`${p.archetype.name} reste en prison. ${p.prisonTurns}t restants.`, "prison-event");
+    G.phase = "WAITING";
+    advancePlayer();
+    render();
+    return;
+  }
+
+  G.phase = "ROLLING";
+  setBtn("btnRoll", false);
+  addArenaLine(`${p.archetype.glyph} ${p.archetype.name} lance le dé...`, "info");
+
+  // Animate dice
+  const die = document.getElementById("die1");
+  die.classList.add("rolling");
+  let rolls = 0;
+  const rollInterval = setInterval(() => {
+    die.textContent = ["⚀","⚁","⚂","⚃","⚄","⚅"][Math.floor(Math.random()*6)];
+    rolls++;
+    if (rolls > 8) {
+      clearInterval(rollInterval);
+      die.classList.remove("rolling");
+      die.classList.add("result");
+      const result = 1 + Math.floor(Math.random() * 6);
+      die.textContent = ["⚀","⚁","⚂","⚃","⚄","⚅"][result-1];
+      G.lastDice = result;
+      onDiceResult(result);
+    }
+  }, 80);
+}
+
+function onDiceResult(dice) {
+  const p = currentPlayer();
+
+  // Category by dice modulo 3
+  const catIdx = (dice - 1) % 3;
+  G.lastCategory = CATEGORIES[catIdx];
+
+  addArenaLine(`Dé: ${dice} → Catégorie: ${G.lastCategory.toUpperCase()}`, "highlight");
+  log(`${p.archetype.name} tire ${dice} → ${G.lastCategory}`, "event");
+
+  G.phase = "QCM";
+  setTimeout(() => showQCM(), 600);
+}
+
+function showQCM() {
+  const cat = G.lastCategory;
+  const p = currentPlayer();
+
+  // Pick unused question from category
+  const pool = QUESTIONS_DB.filter(q => q.cat === cat && !G.usedQuestions.has(q.q));
+  let q;
+  if (pool.length === 0) {
+    // Reset if all used
+    G.usedQuestions.clear();
+    q = QUESTIONS_DB.filter(q2 => q2.cat === cat)[Math.floor(Math.random() * QUESTIONS_DB.filter(q2 => q2.cat === cat).length)];
+  } else {
+    q = pool[Math.floor(Math.random() * pool.length)];
+  }
+  G.usedQuestions.add(q.q);
+  G.lastQuestion = q;
+  qcmAnswered = false;
+
+  // Apply PRINCE handicap: remove one wrong choice
+  let choices = [...q.choices];
+  let correctIdx = q.correct;
+  if (p.archetype.name === "PRINCE") {
+    // Remove one wrong answer
+    const wrongIdxs = choices.map((_,i) => i).filter(i => i !== q.correct);
+    if (wrongIdxs.length > 1) {
+      const toRemove = wrongIdxs[Math.floor(Math.random() * wrongIdxs.length)];
+      choices.splice(toRemove, 1);
+      correctIdx = choices.indexOf(q.choices[q.correct]);
+    }
+  }
+
+  document.getElementById("qcmCategory").textContent = cat.toUpperCase();
+  document.getElementById("qcmQuestion").textContent = q.q;
+  const choicesEl = document.getElementById("qcmChoices");
+  choicesEl.innerHTML = "";
+  choices.forEach((c, i) => {
+    const btn = document.createElement("button");
+    btn.className = "qcm-btn";
+    btn.textContent = `${String.fromCharCode(65+i)}) ${c}`;
+    btn.onclick = () => answerQCM(i, correctIdx, q.correct, choices);
+    choicesEl.appendChild(btn);
+  });
+
+  // Timer (SAVANT gets +5s)
+  const timeLimit = p.archetype.name === "SAVANT" ? 25 : 20;
+  let timeLeft = timeLimit;
+  document.getElementById("qcmTimer").textContent = `⏱ ${timeLeft}s`;
+  if (qcmTimer) clearInterval(qcmTimer);
+  qcmTimer = setInterval(() => {
+    timeLeft--;
+    document.getElementById("qcmTimer").textContent = `⏱ ${timeLeft}s`;
+    if (timeLeft <= 0) {
+      clearInterval(qcmTimer);
+      if (!qcmAnswered) {
+        answerQCM(-1, correctIdx, q.correct, choices);
+      }
+    }
+  }, 1000);
+
+  document.getElementById("qcmPanel").classList.add("visible");
+}
+
+function answerQCM(chosen, localCorrect, originalCorrect, choices) {
+  if (qcmAnswered) return;
+  qcmAnswered = true;
+  if (qcmTimer) clearInterval(qcmTimer);
+
+  const p = currentPlayer();
+  const correct = chosen === localCorrect;
+  const btns = document.querySelectorAll(".qcm-btn");
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (i === localCorrect) b.classList.add("correct");
+    else if (i === chosen && !correct) b.classList.add("wrong");
+  });
+
+  const correctAnswer = choices[localCorrect];
+
+  if (correct) {
+    p.zols += ZOLS_PER_CORRECT;
+    p.totalCorrect++;
+    addArenaLine(`✓ Correct! +${ZOLS_PER_CORRECT.toLocaleString()} zols`, "win");
+    log(`${p.archetype.name} répond correctement → +${ZOLS_PER_CORRECT.toLocaleString()}z`, "event");
+
+    // Check for contradiction: Militaire who scores high on science
+    if (p.archetype.name === "MILITAIRE" && G.lastCategory === "Science" && p.totalCorrect > p.duelsWon) {
+      addLedgerEntry(p.id, "contradiction",
+        `${p.archetype.name} excelle en ${G.lastCategory} mais se définit par la force. Qui est-il vraiment?`);
+    }
+  } else {
+    p.zols = Math.max(0, p.zols + ZOLS_PER_WRONG);
+    p.totalWrong++;
+    addArenaLine(`✗ Faux. Réponse: ${correctAnswer}. ${ZOLS_PER_WRONG.toLocaleString()} zols`, "loss");
+    log(`${p.archetype.name} se trompe → ${ZOLS_PER_WRONG.toLocaleString()}z (rép: ${correctAnswer})`, "event");
+
+    // Savant contradiction
+    if (p.archetype.name === "SAVANT" && p.totalWrong > 2) {
+      addLedgerEntry(p.id, "contradiction",
+        `Le SAVANT s'est trompé ${p.totalWrong}× — la connaissance affichée diffère-t-elle de la connaissance réelle?`);
+    }
+  }
+
+  document.getElementById("qcmTimer").textContent = "";
+  setTimeout(() => {
+    document.getElementById("qcmPanel").classList.remove("visible");
+    G.qcmResult = correct;
+    onQCMDone();
+  }, 1200);
+}
+
+function onQCMDone() {
+  const p = currentPlayer();
+
+  // Check if player can buy territory
+  const affordable = G.territories.filter(t =>
+    t.ownerId === null &&
+    p.zols >= (p.archetype.name === "DIPLOMATE" ? t.price * 0.8 : t.price)
+  );
+
+  if (affordable.length > 0 && p.zols >= ZOLS_TARGET * 0.5) {
+    // Propose cheapest affordable territory
+    const tgt = affordable.sort((a,b) => a.price - b.price)[0];
+    const cost = p.archetype.name === "DIPLOMATE" ? Math.floor(tgt.price * 0.8) : tgt.price;
+
+    // Check if another player owns it (duel)
+    const contested = G.territories.find(t => t.ownerId !== null && t.ownerId !== p.id && affordable.includes(t));
+    if (contested) {
+      startDuel(p.id, contested.ownerId, contested.id);
+      return;
+    }
+
+    // Buy directly
+    addArenaLine(`${p.archetype.glyph} Peut acheter: ${tgt.name} (${cost.toLocaleString()}z)`, "gold");
+    setTimeout(() => buyTerritory(p.id, tgt.id), 800);
+    return;
+  }
+
+  G.phase = "WAITING";
+  setBtn("btnNext", true);
+  render();
+  checkVictory();
+}
+
+function buyTerritory(playerId, terrId) {
+  const p = G.players[playerId];
+  const t = G.territories[terrId];
+  const cost = p.archetype.name === "DIPLOMATE" ? Math.floor(t.price * 0.8) : t.price;
+
+  if (p.archetype.name === "PRINCESSE" && terrId === G.territories.length - 1) {
+    addArenaLine(`PRINCESSE ne peut pas acheter le dernier territoire.`, "loss");
+    G.phase = "WAITING";
+    setBtn("btnNext", true);
+    render();
+    return;
+  }
+
+  if (p.zols < cost) {
+    G.phase = "WAITING";
+    setBtn("btnNext", true);
+    render();
+    return;
+  }
+
+  p.zols -= cost;
+  t.ownerId = playerId;
+  p.territories.push(terrId);
+
+  addArenaLine(`${p.archetype.glyph} Acquiert ${t.glyph} ${t.name}! (-${cost.toLocaleString()}z)`, "gold");
+  log(`${p.archetype.name} acquiert ${t.name} pour ${cost.toLocaleString()}z`, "territory-event");
+
+  // Princesse: distribute % to others
+  if (p.archetype.name !== "PRINCESSE") {
+    G.players.forEach(other => {
+      if (other.id !== playerId && G.players[other.id]?.archetype?.name === "PRINCESSE") {
+        const bonus = Math.floor(cost * 0.1);
+        other.zols += bonus;
+        addLedgerEntry(other.id, "moment",
+          `PRINCESSE reçoit ${bonus.toLocaleString()}z de l'achat de ${p.archetype.name}. Profit sans risque.`);
+      }
+    });
+  }
+
+  addLedgerEntry(playerId, "moment",
+    `Tour ${G.turn}: ${p.archetype.name} acquiert ${t.name}. Territories: ${p.territories.length}/6`);
+
+  G.phase = "WAITING";
+  setBtn("btnNext", true);
+  render();
+  checkVictory();
+}
+
+// ═══════════════════════════════════════════════════════════════
+// DUEL
+// ═══════════════════════════════════════════════════════════════
+
+function startDuel(attackerId, defenderId, terrId) {
+  const attacker = G.players[attackerId];
+  const defender = G.players[defenderId];
+  const t = G.territories[terrId];
+
+  G.phase = "DUEL";
+  addArenaLine(`⚔ DUEL: ${attacker.archetype.glyph}${attacker.archetype.name} vs ${defender.archetype.glyph}${defender.archetype.name}`, "gold");
+  addArenaLine(`Territoire contesté: ${t.glyph} ${t.name}`, "highlight");
+  log(`DUEL: ${attacker.archetype.name} attaque ${defender.archetype.name} pour ${t.name}`, "duel-event");
+
+  // 2/3 manches
+  let atkScore = 0, defScore = 0;
+  const results = [];
+
+  // Manche 1: Connaissance (QCM — avantage Savant)
+  const qAtk = pickRandomQuestion();
+  const qDef = pickRandomQuestion();
+
+  // Simulate defender's answer (AI)
+  const defCorrect = Math.random() > 0.45;
+  const atkAdvantage = (attacker.archetype.duel_bonus.qcm > 0) ? 0.75 : 0.55;
+  const atkCorrect = Math.random() < atkAdvantage;
+
+  if (atkCorrect && !defCorrect) { atkScore++; results.push("ATK_WIN"); }
+  else if (!atkCorrect && defCorrect) { defScore++; results.push("DEF_WIN"); }
+  else { results.push("DRAW"); }
+
+  // Manche 2: Écologique (hasard pur)
+  const eco1 = DUEL_OUTCOMES.ecolo[Math.floor(Math.random()*3)];
+  const eco2 = DUEL_OUTCOMES.ecolo[Math.floor(Math.random()*3)];
+  if (eco1 === "océan" || eco2 === "pluie") { atkScore++; results.push("ATK_WIN_ECO"); }
+  else { defScore++; results.push("DEF_WIN_ECO"); }
+
+  // Manche 3: Dés (if needed, or if 1-1)
+  let duelWinner;
+  if (atkScore >= 2) {
+    duelWinner = attacker;
+  } else if (defScore >= 2) {
+    duelWinner = defender;
+  } else {
+    // Manche 3: Dés
+    const atkRoll = Math.floor(Math.random()*6) + 1 + attacker.archetype.duel_bonus.dice;
+    const defRoll = Math.floor(Math.random()*6) + 1 + defender.archetype.duel_bonus.dice;
+    addArenaLine(`Manche 3 — Dés: ${attacker.archetype.name}[${atkRoll}] vs ${defender.archetype.name}[${defRoll}]`, "highlight");
+    duelWinner = atkRoll >= defRoll ? attacker : defender;
+  }
+
+  setTimeout(() => {
+    addArenaLine(`Manche 1 (Connaissance): ${atkCorrect ? "✓" : "✗"}${attacker.archetype.name} | ${defCorrect ? "✓" : "✗"}${defender.archetype.name}`, "highlight");
+    addArenaLine(`Manche 2 (Écologique): ${eco1} vs ${eco2}`, "highlight");
+
+    if (duelWinner.id === attacker.id) {
+      attacker.duelsWon++;
+      defender.duelsLost++;
+      attacker.zols += ZOLS_DUEL_WIN;
+      addArenaLine(`VICTOIRE: ${duelWinner.archetype.glyph}${duelWinner.archetype.name} conquiert ${t.name}!`, "win");
+      log(`${attacker.archetype.name} gagne le duel, conquiert ${t.name}`, "duel-event");
+
+      // Transfer territory
+      if (t.ownerId !== null) {
+        G.players[t.ownerId].territories = G.players[t.ownerId].territories.filter(id => id !== terrId);
+      }
+      t.ownerId = attacker.id;
+      attacker.territories.push(terrId);
+
+      // Prison for loser if Militaire
+      if (defender.archetype.name === "MILITAIRE") {
+        defender.prisonTurns = defender.archetype.prison_turns;
+        addArenaLine(`${defender.archetype.glyph} ${defender.archetype.name} → PRISON (${defender.prisonTurns} tours)`, "loss");
+        log(`${defender.archetype.name} emprisonné ${defender.prisonTurns} tours`, "prison-event");
+        addLedgerEntry(defender.id, "contradiction",
+          defender.archetype.insightOnLoss);
+      }
+      addLedgerEntry(attacker.id, "moment", attacker.archetype.insightOnWin);
+
+      // But 2/3 = hasard: flag this
+      const chanceManches = results.filter(r => r.includes("ECO")).length;
+      if (chanceManches >= 1) {
+        addLedgerEntry(attacker.id, "contradiction",
+          `Note: ${chanceManches}/3 manche(s) du duel étaient du hasard pur. La victoire était-elle méritée?`);
+      }
+
+    } else {
+      defender.duelsWon++;
+      attacker.duelsLost++;
+      addArenaLine(`DÉFAITE: ${duelWinner.archetype.glyph}${duelWinner.archetype.name} défend ${t.name}`, "loss");
+      log(`${defender.archetype.name} défend ${t.name}`, "duel-event");
+      addLedgerEntry(defender.id, "moment", defender.archetype.insightOnWin);
+
+      // Prison for attacker if Militaire
+      if (attacker.archetype.name === "MILITAIRE") {
+        attacker.prisonTurns = attacker.archetype.prison_turns;
+        addArenaLine(`${attacker.archetype.glyph} MILITAIRE → PRISON (${attacker.prisonTurns} tours)`, "loss");
+        addLedgerEntry(attacker.id, "contradiction", attacker.archetype.insightOnLoss);
+      }
+    }
+
+    G.phase = "WAITING";
+    setBtn("btnNext", true);
+    render();
+    checkVictory();
+  }, 800);
+}
+
+function pickRandomQuestion() {
+  return QUESTIONS_DB[Math.floor(Math.random() * QUESTIONS_DB.length)];
+}
+
+// ═══════════════════════════════════════════════════════════════
+// VICTOIRE
+// ═══════════════════════════════════════════════════════════════
+
+function checkVictory() {
+  for (const p of G.players) {
+    if (p.territories.length >= 6) {
+      G.winner = p;
+      showVictory(p);
+      return;
+    }
+    if (p.zols >= ZOLS_TARGET && p.territories.length >= 3) {
+      G.winner = p;
+      showVictory(p);
+      return;
+    }
+  }
+}
+
+function showVictory(p) {
+  const correct = p.totalCorrect;
+  const wrong = p.totalWrong;
+  const duels = p.duelsWon;
+  const acc = correct + wrong > 0 ? Math.round(100 * correct / (correct+wrong)) : 0;
+
+  document.getElementById("victoryText").innerHTML = `
+    <p><strong style="color:var(--gold)">${p.archetype.glyph} ${p.archetype.name}</strong> remporte la partie</p>
+    <p style="margin-top:10px">Territoires: ${p.territories.length}/6</p>
+    <p>Zols: ${p.zols.toLocaleString()}</p>
+    <p>Précision QCM: ${acc}% (${correct}/${correct+wrong})</p>
+    <p>Duels: ${duels} victoires</p>
+  `;
+  document.getElementById("victoryInsight").textContent = p.archetype.insightOnWin;
+
+  // Log the ledger summary
+  addLedgerEntry(p.id, "moment",
+    `VICTOIRE: Tour ${G.turn}. Précision: ${acc}%. La connaissance ${acc>60?"a mené":"n'a pas suffi à"} la conquête.`);
+
+  document.getElementById("victoryOverlay").classList.add("show");
+}
+
+// ═══════════════════════════════════════════════════════════════
+// NAVIGATION TOURS
+// ═══════════════════════════════════════════════════════════════
+
+function nextTurn() {
+  if (!G || G.winner) return;
+  advancePlayer();
+  G.turn++;
+  G.turnsSinceEpochChange++;
+
+  // Epoch changes every 6 turns
+  if (G.turnsSinceEpochChange >= 6) {
+    G.epochIdx = (G.epochIdx + 1) % EPOCHS.length;
+    G.turnsSinceEpochChange = 0;
+    const ep = EPOCHS[G.epochIdx];
+    addArenaLine(`★ NOUVELLE ÉPOQUE: ${ep.name} — ${ep.desc}`, "gold");
+    log(`Époque: ${ep.name}`, "event");
+    addLedgerEntry(-1, "moment", `Époque ${G.epochIdx+1}: ${ep.name}. ${ep.desc}.`);
+  }
+
+  G.phase = "WAITING";
+  setBtn("btnRoll", true);
+  setBtn("btnNext", false);
+  render();
+}
+
+function advancePlayer() {
+  G.currentPlayer = (G.currentPlayer + 1) % G.players.length;
+}
+
+function toggleAuto() {
+  if (autoTimer) {
+    clearInterval(autoTimer);
+    autoTimer = null;
+    document.getElementById("btnAuto").textContent = "Auto";
+  } else {
+    document.getElementById("btnAuto").textContent = "Pause";
+    autoTimer = setInterval(() => {
+      if (!G || G.winner) { clearInterval(autoTimer); autoTimer = null; return; }
+      if (G.phase === "WAITING") {
+        if (!document.getElementById("btnRoll").disabled) rollDice();
+        else if (!document.getElementById("btnNext").disabled) nextTurn();
+      }
+    }, 1200);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════════════════
+
+function render() {
+  renderPlayers();
+  renderPlateau();
+  renderTurnInfo();
+}
+
+function renderPlayers() {
+  const el = document.getElementById("playerList");
+  el.innerHTML = "";
+  G.players.forEach((p, i) => {
+    const a = p.archetype;
+    const pct = Math.min(100, Math.round(100 * p.zols / ZOLS_TARGET));
+    const terrDots = TERRITOIRES.map(t => {
+      const owned = p.territories.includes(t.id);
+      return `<div class="t-dot${owned?' owned':''}"></div>`;
+    }).join("");
+
+    const isActive = i === G.currentPlayer;
+    const inPrison = p.prisonTurns > 0;
+
+    el.innerHTML += `
+      <div class="player-card${isActive?' active':''}${inPrison?' in-prison':''}">
+        <div class="player-name">
+          <span style="color:${a.color}">${a.glyph}</span>
+          ${a.name}
+          ${inPrison ? `<span class="prison-badge">PRISON ${p.prisonTurns}t</span>` : ""}
+        </div>
+        <div class="player-archetype">${a.bonus}</div>
+        <div class="player-zols">${p.zols.toLocaleString()} zols</div>
+        <div class="player-bar"><div class="player-bar-fill" style="width:${pct}%;background:${a.color}"></div></div>
+        <div class="territory-dots">${terrDots}</div>
+        <div style="font-size:0.65em;color:var(--dim);margin-top:4px">
+          QCM: ${p.totalCorrect}✓ ${p.totalWrong}✗ · Duels: ${p.duelsWon}W/${p.duelsLost}L
+        </div>
+      </div>
+    `;
+  });
+}
+
+function renderPlateau() {
+  const grid = document.getElementById("plateauGrid");
+  grid.innerHTML = "";
+  G.territories.forEach(t => {
+    const owner = t.ownerId !== null ? G.players[t.ownerId] : null;
+    const ownedClass = owner ? `owned-${owner.id}` : "";
+    grid.innerHTML += `
+      <div class="territoire ${ownedClass}">
+        <div class="t-name">${t.name}</div>
+        <div class="t-owner-glyph">${owner ? owner.archetype.glyph : t.glyph}</div>
+        <div class="t-price">${t.price.toLocaleString()}z</div>
+        ${owner ? `<div class="t-flag">${owner.archetype.name[0]}</div>` : ""}
+      </div>
+    `;
+  });
+}
+
+function renderTurnInfo() {
+  document.getElementById("turnNum").textContent = G.turn;
+  const p = currentPlayer();
+  document.getElementById("activePlayerName").textContent = `${p.archetype.glyph} ${p.archetype.name}`;
+  document.getElementById("phaseLabel").textContent = G.phase;
+  const ep = EPOCHS[G.epochIdx];
+  document.getElementById("epochLabel").textContent = ep.name;
+  document.getElementById("epochDesc").textContent = `Époque ${G.epochIdx+1}/6 — Tour ${G.turn}`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// LOG & LEDGER
+// ═══════════════════════════════════════════════════════════════
+
+function log(text, type = "") {
+  G.log.unshift({ text, type });
+  if (G.log.length > 80) G.log.pop();
+  const el = document.getElementById("logStream");
+  el.innerHTML = G.log.slice(0,30).map(e =>
+    `<div class="log-entry ${e.type}">${e.text}</div>`
+  ).join("");
+}
+
+function addArenaLine(text, cssClass = "") {
+  const arena = document.getElementById("duelArena");
+  arena.classList.add("active");
+  const line = document.createElement("div");
+  line.className = `duel-log-entry ${cssClass}`;
+  line.textContent = text;
+  arena.appendChild(line);
+  // Keep last 8 lines
+  while (arena.children.length > 8) arena.removeChild(arena.firstChild);
+  arena.scrollTop = arena.scrollHeight;
+}
+
+function addLedgerEntry(playerId, type, text) {
+  const entry = { playerId, type, text, turn: G?.turn || 0 };
+  G.ledger.unshift(entry);
+  if (G.ledger.length > 30) G.ledger.pop();
+
+  const el = document.getElementById("ledgerStream");
+  const player = playerId >= 0 ? G.players[playerId] : null;
+  const label = player ? `${player.archetype.glyph} ${player.archetype.name} · T${entry.turn}` : `Plateau · T${entry.turn}`;
+
+  el.innerHTML = G.ledger.slice(0, 12).map(e => {
+    const pl = e.playerId >= 0 ? G.players[e.playerId] : null;
+    const lbl = pl ? `${pl.archetype.glyph} ${pl.archetype.name} · T${e.turn}` : `★ Plateau · T${e.turn}`;
+    return `
+      <div class="ledger-entry ${e.type}">
+        <div class="le-label">${lbl}</div>
+        <div class="le-text">${e.text}</div>
+      </div>
+    `;
+  }).join("");
+}
+
+// ═══════════════════════════════════════════════════════════════
+// UTILS
+// ═══════════════════════════════════════════════════════════════
+
+function currentPlayer() {
+  return G.players[G.currentPlayer];
+}
+
+function setBtn(id, enabled) {
+  const el = document.getElementById(id);
+  if (el) el.disabled = !enabled;
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i+1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function newGame() {
+  if (autoTimer) { clearInterval(autoTimer); autoTimer = null; document.getElementById("btnAuto").textContent = "Auto"; }
+  if (qcmTimer) { clearInterval(qcmTimer); qcmTimer = null; }
+  document.getElementById("victoryOverlay").classList.remove("show");
+  document.getElementById("qcmPanel").classList.remove("visible");
+  document.getElementById("duelArena").innerHTML = "";
+  document.getElementById("duelArena").classList.remove("active");
+  document.getElementById("die1").textContent = "·";
+  document.getElementById("die1").className = "die";
+  document.getElementById("ledgerStream").innerHTML = "";
+  document.getElementById("logStream").innerHTML = "";
+  setBtn("btnRoll", true);
+  setBtn("btnNext", false);
+  // 4 players by default (can be extended)
+  initGame(4);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════
+newGame();
+</script>
+</body>
+</html>

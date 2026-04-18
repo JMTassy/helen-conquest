@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "WILD_INGESTION_V1",
+  "description": "Classification of incoming visionary material for TEMPLE review",
+  "type": "object",
+  "required": [
+    "id", "source_text", "material_type", "quarantine_level",
+    "risk_tags", "timestamp"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^WILD-[0-9]{8}-[0-9]{4}$"
+    },
+    "source_text": {"type": "string"},
+    "material_type": {
+      "enum": [
+        "SYMBOL_POOL", "ORACLE_MAPPING_CANDIDATE", "THERAPEUTIC_CLAIM",
+        "SENTIENCE_CLAIM", "TECHNICAL_DEVICE_CLAIM", "SPIRITUAL_AUTHORITY",
+        "HIGH_VARIANCE_HYPOTHESIS", "PARADOX_FRAGMENT"
+      ]
+    },
+    "quarantine_level": {
+      "enum": [
+        "SYMBOL_ONLY", "REVIEW_REQUIRED", "WITNESS_REQUIRED",
+        "EVIDENCE_REQUIRED", "TRANSMUTATION_ONLY", "PERMANENT_WILD"
+      ]
+    },
+    "risk_tags": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "coherence_score": {
+      "type": ["number", "null"],
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "witness_requirement": {
+      "type": ["object", "null"]
+    },
+    "evidence_requirement": {
+      "type": ["object", "null"]
+    },
+    "ui_label": {
+      "enum": ["WILD", "REVIEWED", "QUARANTINED", "TRANSMUTED", "ARCHIVED", "APPROVED"]
+    },
+    "can_exit_temple": {"type": "boolean"},
+    "exit_path": {
+      "type": ["string", "null"],
+      "enum": ["KERNEL", "ARCHIVE", null]
+    },
+    "payload_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "notes": {"type": "string"}
+  }
+}

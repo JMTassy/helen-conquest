@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/cross_receipt_v1.schema.json",
+  "title": "CROSS_RECEIPT_V1",
+  "description": "Cross-town federation receipt. Emitted by source Town, consumed by target Town as E_adm candidate evidence after allowlist validation (CR-ALLOWLIST gate).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "rid", "source_town_id", "target_town_id", "ledger_tip_hash", "bundle_hash", "status"],
+  "properties": {
+
+    "type": {
+      "type": "string",
+      "const": "CROSS_RECEIPT_V1",
+      "description": "Schema discriminator. Always 'CROSS_RECEIPT_V1'."
+    },
+
+    "rid": {
+      "type": "string",
+      "pattern": "^CR-[0-9a-zA-Z]{1,64}$",
+      "description": "Receipt ID. Must start with 'CR-' to distinguish cross-town receipts.",
+      "examples": ["CR-ab1234ef", "CR-fedtownA01"]
+    },
+
+    "source_town_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Identifier of the Town emitting this receipt."
+    },
+
+    "target_town_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "description": "Identifier of the Town that will consume this receipt. Must differ from source_town_id (CR-SELF invariant)."
+    },
+
+    "ledger_tip_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "64-char lowercase SHA256 hex of the source Town's ledger tip (last cum_hash at emission time)."
+    },
+
+    "bundle_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "64-char lowercase SHA256 hex of the bundle artifact being attested."
+    },
+
+    "bundle_ref": {
+      "oneOf": [
+        { "type": "null" },
+        { "$ref": "#/$defs/CrossReceiptBundleRef" }
+      ],
+      "description": "Optional structured metadata for the bundle. Informational only — bundle_hash is the canonical anchor."
+    },
+
+    "allowlist_hash": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "64-char SHA256 hex of the allowlist used at emission time. Tamper-evident: if allowlist changes, this hash breaks."
+        }
+      ]
+    },
+
+    "status": {
+      "type": "string",
+      "enum": ["PENDING", "ACCEPTED", "REJECTED"],
+      "description": "PENDING: emitted, not yet processed. ACCEPTED: passed allowlist gate. REJECTED: failed gate."
+    },
+
+    "notes": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "maxLength": 2048 }
+      ],
+      "description": "Optional notes or rejection reason."
+    }
+  },
+
+  "$defs": {
+    "CrossReceiptBundleRef": {
+      "type": "object",
+      "description": "Informational pointer to the specific verdict or evaluation artifact covered by this receipt.",
+      "additionalProperties": false,
+      "properties": {
+        "verdict_id": {
+          "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^V-[0-9a-f]{8}$" }]
+        },
+        "verdict_hash_hex": {
+          "oneOf": [{ "type": "null" }, { "type": "string", "pattern": "^[0-9a-f]{64}$" }]
+        },
+        "artifact_type": {
+          "oneOf": [
+            { "type": "null" },
+            { "type": "string", "enum": ["FED_EVAL_V1", "EPOCH_MARK_V1", "REDUCED_CONCLUSION_V1", "BUNDLE_V1"] }
+          ]
+        },
+        "notes": {
+          "oneOf": [{ "type": "null" }, { "type": "string", "maxLength": 512 }]
+        }
+      }
+    }
+  },
+
+  "examples": [
+    {
+      "type": "CROSS_RECEIPT_V1",
+      "rid": "CR-ab1234ef",
+      "source_town_id": "TOWN_A",
+      "target_town_id": "TOWN_B",
+      "ledger_tip_hash": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2",
+      "bundle_hash":     "b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3",
+      "bundle_ref": {
+        "verdict_id": "V-a1b2c3d4",
+        "verdict_hash_hex": null,
+        "artifact_type": "FED_EVAL_V1",
+        "notes": null
+      },
+      "allowlist_hash": null,
+      "status": "PENDING",
+      "notes": null
+    }
+  ]
+}

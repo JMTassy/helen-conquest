@@ -1,0 +1,70 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "helen_os_mvp/memory/memory_schema_v1.json",
+    "title": "HELEN MemoryKernel NDJSON Schema v1",
+    "type": "object",
+    "required": [
+        "schema_version",
+        "event_id",
+        "t",
+        "type"
+    ],
+    "properties": {
+        "schema_version": {
+            "const": "MEMORY_V1"
+        },
+        "event_id": {
+            "type": "string"
+        },
+        "t": {
+            "type": "string"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "memory_observation",
+                "memory_conflict_detected",
+                "memory_confirmation_request",
+                "memory_confirmation_response",
+                "memory_resolution",
+                "memory_snapshot"
+            ]
+        },
+        "actor": {
+            "type": "string",
+            "enum": [
+                "system",
+                "assistant",
+                "user"
+            ]
+        },
+        "key": {
+            "type": "string"
+        },
+        "value": {},
+        "status": {
+            "type": "string",
+            "enum": [
+                "OBSERVED",
+                "CONFIRMED",
+                "DISPUTED",
+                "RETRACTED"
+            ]
+        },
+        "source": {
+            "type": "object"
+        },
+        "conflict": {
+            "type": "object"
+        },
+        "request": {
+            "type": "object"
+        },
+        "response": {
+            "type": "object"
+        },
+        "resolution": {
+            "type": "object"
+        }
+    }
+}

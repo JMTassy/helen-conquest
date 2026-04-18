@@ -1,0 +1,185 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║           OpenClaw ↔ Oracle Town Kernel Automation Quickstart                  ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+WHAT YOU HAVE
+─────────────
+
+Your kernel is production-ready with full OpenClaw integration:
+
+  ✓ Kernel Daemon        (oracle_town/kernel/kernel_daemon.py)
+    └─ Unix socket-based safety gates (Gate A, B, C)
+    └─ Mayor receipt engine
+    └─ Immutable ledger
+
+  ✓ Kernel Client        (oracle_town/kernel/kernel_client.py)
+    └─ Simple Python library for agents
+    └─ Request/decision pattern
+    └─ Fail-closed on timeout
+
+  ✓ Receipt Verification (oracle_town/kernel/receipt_check.py)
+    └─ K15: "No receipt = no execution"
+    └─ Mandatory approval before action
+
+  ✓ Monitoring          (oracle_town/kernel/monitor_claims.py)
+    └─ Watches kernel state
+    └─ Logs all decisions
+
+═══════════════════════════════════════════════════════════════════════════════
+
+THREE WAYS TO AUTOMATE
+──────────────────────
+
+┌─ OPTION 1: Skill Wrapper (Simplest) ─────────────────────────────────────┐
+│                                                                             │
+│  Your OpenClaw skills request kernel approval before executing.            │
+│                                                                             │
+│  • Effort:   LOW (1 wrapper class)                                         │
+│  • Safety:   VERY HIGH (K15 enforced)                                      │
+│  • Use case: Individual skill approval                                     │
+│                                                                             │
+│  Example:                                                                  │
+│    fetch = FetchSkill()                                                   │
+│    content = fetch.fetch("https://example.com")  # Kernel approves first  │
+│                                                                             │
+│  📄 See: OPENCLAW_KERNEL_AUTOMATION_IMPLEMENTATION.md (OPTION 1)          │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 2: Monitoring Daemon (Background) ───────────────────────────────┐
+│                                                                             │
+│  Background daemon that periodically checks kernel health.                │
+│                                                                             │
+│  • Effort:   MEDIUM (daemon loop)                                          │
+│  • Safety:   VERY HIGH (immutable ledger)                                  │
+│  • Use case: Continuous health monitoring                                  │
+│                                                                             │
+│  What it does:                                                             │
+│    1. Observe kernel state (every 60s)                                    │
+│    2. Submit observation as claim                                         │
+│    3. Kernel logs decision to ledger                                      │
+│    4. Monitor checks ledger growth                                        │
+│                                                                             │
+│  📄 See: OPENCLAW_KERNEL_AUTOMATION_IMPLEMENTATION.md (OPTION 2)          │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+┌─ OPTION 3: Full Integration (Advanced) ──────────────────────────────────┐
+│                                                                             │
+│  Every OpenClaw action goes through kernel gates.                         │
+│                                                                             │
+│  • Effort:   HIGH (full integration)                                       │
+│  • Safety:   VERY HIGH (all actions gated)                                 │
+│  • Use case: Complete kernel-controlled automation                         │
+│                                                                             │
+│  Architecture:                                                             │
+│    OpenClaw ──[request]──> Kernel ──[decision]──> OpenClaw               │
+│               (fetch, shell, memory)                                      │
+│                                                                             │
+│  📄 See: OPENCLAW_KERNEL_AUTOMATION_IMPLEMENTATION.md (OPTION 3)          │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════════
+
+QUICK START (OPTION 1 — RECOMMENDED)
+────────────────────────────────────
+
+1. Start Kernel Daemon
+   ─────────────────────
+   $ python3 oracle_town/kernel/kernel_daemon.py &
+   
+   (Should print: "Kernel daemon listening on ~/.openclaw/oracle_town.sock")
+
+2. Create Skill Wrapper
+   ────────────────────
+   Copy this to your project:
+   
+     from oracle_town.kernel.kernel_client import KernelClient
+     
+     class ApprovedSkill:
+         def __init__(self):
+             self.kernel = KernelClient()
+         
+         def execute(self, action, target, evidence):
+             decision = self.kernel._send_request({
+                 "action_type": action,
+                 "target": target,
+                 "evidence": evidence,
+                 "source": "OPENCLAW"
+             })
+             
+             if decision["decision"] != "ACCEPT":
+                 raise RuntimeError(f"Kernel denied: {decision['reason']}")
+             
+             return True
+
+3. Use in Your Code
+   ────────────────
+   skill = ApprovedSkill()
+   
+   # Request approval before any risky action
+   skill.execute("fetch", "https://example.com", {...})
+
+4. Watch the Ledger
+   ────────────────
+   $ tail -f kernel/ledger.json
+   
+   You'll see entries like:
+   {
+     "id": "claim_001",
+     "action_type": "fetch",
+     "status": "ACCEPT",
+     "timestamp": "2026-02-16T18:00:00Z"
+   }
+
+═══════════════════════════════════════════════════════════════════════════════
+
+KEY SAFETY GUARANTEES
+─────────────────────
+
+✅ K15: No Receipt = No Execution
+   • If kernel doesn't approve, execution is denied
+   • Fail-closed (if kernel unreachable, deny by default)
+
+✅ Immutable Audit Trail
+   • Every decision logged to kernel/ledger.json
+   • Cannot be modified retroactively
+   • Full history of all actions
+
+✅ Authority Separation
+   • OpenClaw proposes actions
+   • Kernel decides what's allowed
+   • Ledger records the decision
+   • Three separate systems = three checks
+
+✅ Determinism
+   • Same input always produces same decision
+   • Reproducible, auditable behavior
+   • K5 verified in kernel
+
+═══════════════════════════════════════════════════════════════════════════════
+
+NEXT STEPS
+──────────
+
+1. Read the full guides:
+   • OPENCLAW_AUTOMATION_GUIDE.md (overview + scenarios)
+   • OPENCLAW_KERNEL_AUTOMATION_IMPLEMENTATION.md (complete code samples)
+
+2. Pick your option:
+   • Option 1 (simplest) → Start here
+   • Option 2 (monitoring) → Add after Option 1
+   • Option 3 (full integration) → Advanced use
+
+3. Test with kernel daemon running:
+   $ python3 oracle_town/kernel/kernel_daemon.py &
+   $ python3 openclaw_skills_with_kernel.py  # if you create it
+
+4. Monitor the ledger:
+   $ tail -f kernel/ledger.json
+
+═══════════════════════════════════════════════════════════════════════════════
+
+YOUR KERNEL IS READY. START WITH OPTION 1.
+

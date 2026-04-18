@@ -1,0 +1,28 @@
+{
+  "artifacts": [
+    {
+      "id": "I-001",
+      "type": "image",
+      "title": "Founder Canonical v1",
+      "description": "Prompt: JM in full plate armor, helmet closed, sword vertical on stone. Mediterranean citadel backdrop. 1978 cinematic realism. Natural sunlight. Muted palette: granite, steel, olive. Canonical v1\nConstraints: No glow, No fantasy, Real materials only",
+      "timestamp": "2026-02-12T18:10:24.645910",
+      "status": "created"
+    },
+    {
+      "id": "A-002",
+      "type": "audio",
+      "title": "Citadel Theme \u2014 Ceremonial",
+      "description": "BPM: 80\nDuration: 240s\nInstruments: bells, strings, drums, horn\nMotif: formal procession\nArc: processional build, apex, dignified exit",
+      "timestamp": "2026-02-12T18:10:26.695795",
+      "status": "created"
+    },
+    {
+      "id": "D-003",
+      "type": "doctrine",
+      "title": "Doctrine Statement",
+      "description": "Intent: SEMPER FIDELIS: Always Faithful. The castle exists. It does not explain itself.\nStrictness: 2\nRules applied: Remove redundancy, Remove hype language, Remove vagueness\n\nOriginal length: 0 chars",
+      "timestamp": "2026-02-12T18:10:29.136898",
+      "status": "created"
+    }
+  ]
+}

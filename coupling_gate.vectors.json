@@ -1,0 +1,366 @@
+[
+  {
+    "name": "T01 hash mismatch (run) fails",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": false
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "B",
+      "theta_hash": "T1"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_FAIL",
+      "reasons": ["HASH_MISMATCH_RUN"]
+    }
+  },
+  {
+    "name": "T02 hash mismatch (theta/config) fails",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": false
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T2"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_FAIL",
+      "reasons": ["HASH_MISMATCH_KERNEL_OR_CONFIG"]
+    }
+  },
+  {
+    "name": "T03 publish non-actionable without capability OK",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": false
+    },
+    "poc": {
+      "verdict": "NONE",
+      "run_hash": "A",
+      "theta_hash": "T1"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_OK",
+      "reasons": ["NON_ACTIONABLE"]
+    }
+  },
+  {
+    "name": "T04 publish actionable without capability holds",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true
+    },
+    "poc": {
+      "verdict": "NONE",
+      "run_hash": "A",
+      "theta_hash": "T1"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["NO_CAPABILITY"]
+    }
+  },
+  {
+    "name": "T05 publish actionable with non-graduated POC holds",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true
+    },
+    "poc": {
+      "verdict": "REWORK",
+      "run_hash": "A",
+      "theta_hash": "T1"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["POC_NOT_GRADUATED"]
+    }
+  },
+  {
+    "name": "T06 publish actionable with graduated POC but missing receipt holds",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["MISSING_SUPPORT_RECEIPT"]
+    }
+  },
+  {
+    "name": "T07 publish actionable with graduated POC and invalid receipt holds",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": false,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["INVALID_SUPPORT_RECEIPT"]
+    }
+  },
+  {
+    "name": "T08 publish actionable with graduated POC and valid receipt OK",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_OK",
+      "reasons": ["CAPABILITY_SUPPORTS_FORECAST"]
+    }
+  },
+  {
+    "name": "T09 POC graduated but linked forecast rejected holds",
+    "oracle": {
+      "verdict": "REJECT",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["FORECAST_REJECTED"]
+    }
+  },
+  {
+    "name": "T10 oracle HOLD propagates hold",
+    "oracle": {
+      "verdict": "HOLD",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": false
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1"
+    },
+    "support_receipt": null,
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["ORACLE_HOLD"]
+    }
+  },
+  {
+    "name": "T11 multiple POCs, only one has valid support",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "pocs": [
+      {
+        "verdict": "GRADUATED",
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "capability_hash": "HC1"
+      },
+      {
+        "verdict": "GRADUATED",
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "capability_hash": "HC2"
+      }
+    ],
+    "support_receipts": [
+      {
+        "valid": false,
+        "binds": {
+          "run_hash": "A",
+          "theta_hash": "T1",
+          "proposal_hash": "HP",
+          "capability_hash": "HC1"
+        }
+      },
+      {
+        "valid": true,
+        "binds": {
+          "run_hash": "A",
+          "theta_hash": "T1",
+          "proposal_hash": "HP",
+          "capability_hash": "HC2"
+        }
+      }
+    ],
+    "expected": {
+      "gate": "COUPLED_OK",
+      "reasons": ["CAPABILITY_SUPPORTS_FORECAST"]
+    }
+  },
+  {
+    "name": "T12 support receipt binds wrong hashes => invalid",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP_WRONG",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["INVALID_SUPPORT_RECEIPT"]
+    }
+  },
+  {
+    "name": "T13 publish with missing proposal_hash on actionable (implicit empty)",
+    "oracle": {
+      "verdict": "PUBLISH",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true
+    },
+    "poc": {
+      "verdict": "GRADUATED",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_OK",
+      "reasons": ["CAPABILITY_SUPPORTS_FORECAST"]
+    }
+  },
+  {
+    "name": "T14 oracle HOLD with any POC state => HOLD (HOLD dominates)",
+    "oracle": {
+      "verdict": "HOLD",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "actionable": true,
+      "proposal_hash": "HP"
+    },
+    "poc": {
+      "verdict": "REWORK",
+      "run_hash": "A",
+      "theta_hash": "T1",
+      "capability_hash": "HC"
+    },
+    "support_receipt": {
+      "valid": true,
+      "binds": {
+        "run_hash": "A",
+        "theta_hash": "T1",
+        "proposal_hash": "HP",
+        "capability_hash": "HC"
+      }
+    },
+    "expected": {
+      "gate": "COUPLED_HOLD",
+      "reasons": ["ORACLE_HOLD"]
+    }
+  }
+]

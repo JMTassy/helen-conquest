@@ -1,0 +1,19 @@
+{
+  "receipt_schema": "RECEIPT_V1",
+  "servitor_id": "DIGEST_SERVITOR",
+  "run_date": "2026-02-22",
+  "outputs": {
+    "digest_hash": "4525006c6f39894b790a44e03ee53eeeac790632415d4930f3e099fefd4476e5",
+    "items": 3
+  },
+  "validation": {
+    "continuity": "PASS"
+  },
+  "metrics_snapshot": {
+    "synergy_index": 0,
+    "metacognition_index": 0,
+    "continuity_status": "N/A"
+  },
+  "canonical_hash": "4e8fa52751805c8ffaa34d365ff1673fdaab9429e2d81889b37ac8a559ee029b",
+  "prev_receipt_hash": null
+}

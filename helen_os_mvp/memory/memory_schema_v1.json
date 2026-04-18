@@ -1,0 +1,114 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "helen_os_mvp/memory/memory_schema_v1.json",
+  "title": "HELEN MemoryKernel NDJSON Schema v1",
+  "type": "object",
+  "required": ["schema_version", "event_id", "t", "type"],
+  "properties": {
+    "schema_version": { "const": "MEMORY_V1" },
+    "event_id": { "type": "string", "minLength": 8, "maxLength": 128 },
+    "t": { "type": "string", "description": "ISO-8601 UTC timestamp" },
+    "type": {
+      "type": "string",
+      "enum": [
+        "memory_observation",
+        "memory_conflict_detected",
+        "memory_confirmation_request",
+        "memory_confirmation_response",
+        "memory_resolution",
+        "memory_snapshot"
+      ]
+    },
+    "actor": { "type": "string", "enum": ["system", "assistant", "user"] },
+    "key": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "value": {
+      "type": ["string", "number", "integer", "boolean", "object", "array", "null"]
+    },
+    "status": {
+      "type": "string",
+      "enum": ["OBSERVED", "CONFIRMED", "DISPUTED", "RETRACTED"]
+    },
+    "source": {
+      "type": "object",
+      "properties": {
+        "turn_id": { "type": ["string", "integer", "null"] },
+        "message_id": { "type": ["string", "null"] },
+        "span": { "type": ["string", "null"] }
+      },
+      "additionalProperties": false
+    },
+    "conflict": {
+      "type": "object",
+      "properties": {
+        "predicate": {
+          "type": "string",
+          "enum": ["string_diff", "bool_flip", "enum_diff", "number_diff", "json_diff"]
+        },
+        "prior_event_id": { "type": "string" },
+        "prior_value": {},
+        "new_event_id": { "type": "string" },
+        "new_value": {}
+      },
+      "required": ["predicate", "prior_event_id", "prior_value", "new_event_id", "new_value"],
+      "additionalProperties": false
+    },
+    "request": {
+      "type": "object",
+      "properties": {
+        "request_id": { "type": "string" },
+        "question": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["confirm_new", "confirm_old", "keep_both"] },
+          "minItems": 1
+        }
+      },
+      "required": ["request_id", "question", "options"],
+      "additionalProperties": false
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "request_id": { "type": "string" },
+        "choice": { "type": "string", "enum": ["confirm_new", "confirm_old", "keep_both"] }
+      },
+      "required": ["request_id", "choice"],
+      "additionalProperties": false
+    },
+    "resolution": {
+      "type": "object",
+      "properties": {
+        "request_id": { "type": "string" },
+        "kept": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1
+        },
+        "status_updates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["event_id", "status"],
+            "properties": {
+              "event_id": { "type": "string" },
+              "status": { "type": "string", "enum": ["OBSERVED", "CONFIRMED", "DISPUTED", "RETRACTED"] }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": ["request_id", "kept", "status_updates"],
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "properties": {
+        "state_hash": { "type": "string" },
+        "kv": { "type": "object" }
+      },
+      "required": ["state_hash", "kv"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

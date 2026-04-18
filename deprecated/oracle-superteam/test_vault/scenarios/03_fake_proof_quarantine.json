@@ -1,0 +1,39 @@
+{
+  "scenario_id": "S-03",
+  "description": "Claim of 'provably secure' with only heuristic evidence triggers HC-SEC-002 (medium severity) → quarantine.",
+  "claim": {
+    "id": "claim-003",
+    "assertion": "Our encryption is provably secure with formal proof.",
+    "tier": "Tier I",
+    "domain": ["security", "cryptography"],
+    "owner_team": "Security Sector"
+  },
+  "evidence": [
+    {
+      "id": "ev-003a",
+      "type": "security_audit",
+      "tags": ["provably_secure_claim", "formal_proof_claim"]
+    },
+    {
+      "id": "ev-003b",
+      "type": "implementation",
+      "tags": ["heuristic_only", "no_formal_proof"]
+    }
+  ],
+  "votes": [
+    {"team": "Security Sector", "vote": "CONDITIONAL", "rationale": "Need actual formal proof, not just claim."},
+    {"team": "Engineering Wing", "vote": "APPROVE", "rationale": "Implementation looks solid."},
+    {"team": "Data Validation Office", "vote": "QUARANTINE", "rationale": "Contradiction in evidence tags."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

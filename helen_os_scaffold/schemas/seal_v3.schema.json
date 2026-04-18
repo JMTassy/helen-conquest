@@ -1,0 +1,72 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Seal v3 (Extended with Merkle Root)",
+  "description": "Cryptographic seal binding town identity, ledger state, and Merkle root. Extends seal_v2 with ledger_merkle_root and ledger_size for federation light verification.",
+  "type": "object",
+  "required": [
+    "type",
+    "town_id",
+    "final_cum_hash",
+    "final_trace_hash",
+    "env_hash",
+    "kernel_hash",
+    "timestamp",
+    "sig"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "seal_v3",
+      "description": "Seal type with Merkle root binding"
+    },
+    "town_id": {
+      "type": "string",
+      "description": "Identifier of town being sealed (e.g., 'Town_A')",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "final_cum_hash": {
+      "type": "string",
+      "description": "Final cumulative hash of ledger (domain-separated HELEN_CUM_V1::)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "final_trace_hash": {
+      "type": "string",
+      "description": "SHA256 of complete run_trace.ndjson",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "env_hash": {
+      "type": "string",
+      "description": "Deterministic environment hash (python_version + impl + sorted pip freeze)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "kernel_hash": {
+      "type": "string",
+      "description": "SHA256 of kernel source code (governance_vm.py + kernel modules)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ledger_merkle_root": {
+      "type": "string",
+      "description": "NEW (v3): Merkle root over canonical ledger events. Enables light verification.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ledger_size": {
+      "type": "integer",
+      "description": "NEW (v3): Number of ledger events included in Merkle tree (must be power of 2)",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "timestamp": {
+      "type": "string",
+      "description": "ISO 8601 UTC timestamp when seal was created",
+      "format": "date-time"
+    },
+    "sig": {
+      "type": "string",
+      "description": "Ed25519 signature over (final_cum_hash || final_trace_hash || env_hash || kernel_hash || ledger_merkle_root || ledger_size || timestamp). Binds all identities to town.",
+      "minLength": 128,
+      "maxLength": 256
+    }
+  },
+  "additionalProperties": false
+}

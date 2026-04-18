@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ CONQUEST: HexaCycle Terrarium</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #0f3460;
+            padding-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #e94560;
+            text-shadow: 0 0 10px rgba(233, 69, 96, 0.5);
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            font-size: 0.9em;
+            color: #888;
+            letter-spacing: 2px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: #0f3460;
+            color: #e94560;
+            border: 2px solid #e94560;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            font-family: 'Courier New', monospace;
+        }
+
+        button:hover {
+            background: #e94560;
+            color: #0f3460;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233, 69, 96, 0.4);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .seed-input {
+            padding: 10px;
+            background: #0f3460;
+            border: 2px solid #0f3460;
+            color: #e94560;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            width: 120px;
+        }
+
+        .seed-input::placeholder {
+            color: #666;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 1024px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            background: rgba(15, 52, 96, 0.8);
+            border: 2px solid #0f3460;
+            border-radius: 4px;
+            padding: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .panel h2 {
+            color: #e94560;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            border-bottom: 1px solid #0f3460;
+            padding-bottom: 10px;
+        }
+
+        .grid-wrapper {
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
+        }
+
+        .conquest-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 60px);
+            gap: 4px;
+            background: #0a1929;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .tile {
+            width: 60px;
+            height: 60px;
+            border: 1px solid #333;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .tile:hover {
+            transform: scale(1.05);
+            border-color: #e94560;
+            box-shadow: 0 0 8px rgba(233, 69, 96, 0.3);
+        }
+
+        .tile.empty {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+            color: #555;
+        }
+
+        .tile.agent-0 {
+            background: linear-gradient(135deg, #e94560 0%, #c63449 100%);
+            color: white;
+        }
+
+        .tile.agent-1 {
+            background: linear-gradient(135deg, #4ec9b0 0%, #2a9d7d 100%);
+            color: white;
+        }
+
+        .tile.agent-2 {
+            background: linear-gradient(135deg, #f0d991 0%, #d4b765 100%);
+            color: #1a1a2e;
+        }
+
+        .tile.agent-3 {
+            background: linear-gradient(135deg, #9b7edb 0%, #7b5fb5 100%);
+            color: white;
+        }
+
+        .tile.agent-4 {
+            background: linear-gradient(135deg, #ff8c42 0%, #d66f2a 100%);
+            color: white;
+        }
+
+        .tile.fortress::after {
+            content: '⬢';
+            position: absolute;
+            font-size: 1.5em;
+            opacity: 0.7;
+        }
+
+        .stats-container {
+            display: grid;
+            gap: 10px;
+        }
+
+        .agent-stat {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid;
+            padding: 10px;
+            border-radius: 2px;
+            font-size: 0.85em;
+            line-height: 1.6;
+        }
+
+        .agent-stat.agent-0 { border-left-color: #e94560; }
+        .agent-stat.agent-1 { border-left-color: #4ec9b0; }
+        .agent-stat.agent-2 { border-left-color: #f0d991; }
+        .agent-stat.agent-3 { border-left-color: #9b7edb; }
+        .agent-stat.agent-4 { border-left-color: #ff8c42; }
+
+        .agent-name {
+            font-weight: bold;
+            color: #e0e0e0;
+            margin-bottom: 4px;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .stat-label {
+            color: #888;
+            flex: 1;
+        }
+
+        .stat-value {
+            color: #e0e0e0;
+            font-weight: bold;
+            min-width: 40px;
+            text-align: right;
+        }
+
+        .stat-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .stat-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #ff8c42);
+            transition: width 0.3s ease;
+        }
+
+        .turn-info {
+            background: rgba(233, 69, 96, 0.1);
+            border: 1px solid #e94560;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .turn-number {
+            font-size: 1.8em;
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .epoch-name {
+            color: #888;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .log-panel {
+            background: rgba(10, 25, 41, 0.9);
+            border: 1px solid #0f3460;
+            border-radius: 4px;
+            padding: 15px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            font-size: 0.85em;
+            color: #888;
+            margin-bottom: 6px;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(15, 52, 96, 0.5);
+        }
+
+        .log-entry:last-child {
+            border-bottom: none;
+        }
+
+        .log-entry.conflict {
+            color: #e94560;
+            font-weight: bold;
+        }
+
+        .log-entry.expansion {
+            color: #4ec9b0;
+        }
+
+        .log-entry.fortification {
+            color: #f0d991;
+        }
+
+        .victory-panel {
+            background: rgba(78, 201, 176, 0.1);
+            border: 2px solid #4ec9b0;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+
+        .victory-panel.show {
+            display: block;
+        }
+
+        .victory-title {
+            font-size: 1.5em;
+            color: #4ec9b0;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .victory-details {
+            font-size: 0.9em;
+            color: #e0e0e0;
+            line-height: 1.8;
+        }
+
+        .legend {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+            font-size: 0.85em;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 2px;
+            border: 1px solid #333;
+        }
+
+        .legend-color.empty {
+            background: linear-gradient(135deg, #1a3a52 0%, #0d1f2d 100%);
+        }
+
+        .legend-color.agent-0 { background: linear-gradient(135deg, #e94560 0%, #c63449 100%); }
+        .legend-color.agent-1 { background: linear-gradient(135deg, #4ec9b0 0%, #2a9d7d 100%); }
+        .legend-color.agent-2 { background: linear-gradient(135deg, #f0d991 0%, #d4b765 100%); }
+        .legend-color.agent-3 { background: linear-gradient(135deg, #9b7edb 0%, #7b5fb5 100%); }
+        .legend-color.agent-4 { background: linear-gradient(135deg, #ff8c42 0%, #d66f2a 100%); }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #555;
+            font-size: 0.85em;
+        }
+
+        .tooltip {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.9);
+            color: #e0e0e0;
+            padding: 8px 12px;
+            border-radius: 2px;
+            font-size: 0.8em;
+            pointer-events: none;
+            z-index: 1000;
+            white-space: nowrap;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #0f3460;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e94560;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ CONQUEST: HexaCycle Terrarium</h1>
+            <p class="subtitle">36 TURNS • 6 EPOCHS • 5 ARCHETYPES • K-GATE VERIFIED</p>
+        </header>
+
+        <div class="controls">
+            <input type="number" class="seed-input" id="seedInput" placeholder="Seed (blank=random)" min="0">
+            <button id="newGameBtn">🎲 New Game</button>
+            <button id="nextTurnBtn" disabled>▶ Next Turn</button>
+            <button id="autoPlayBtn">⚡ Auto Play</button>
+        </div>
+
+        <div class="main-grid">
+            <!-- LEFT PANEL: GRID & INFO -->
+            <div class="panel">
+                <h2>Territorial Control</h2>
+
+                <div class="turn-info">
+                    <div class="turn-number" id="turnNumber">Turn 0/36</div>
+                    <div class="epoch-name" id="epochName">GROUNDING</div>
+                </div>
+
+                <div class="grid-wrapper">
+                    <div class="conquest-grid" id="gameGrid"></div>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-color empty"></div>
+                        <span>Unclaimed</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agent-0"></div>
+                        <span>ALPHA</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agent-1"></div>
+                        <span>BETA</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agent-2"></div>
+                        <span>GAMMA</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agent-3"></div>
+                        <span>DELTA</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color agent-4"></div>
+                        <span>EPSILON</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT PANEL: STATS & LOG -->
+            <div class="panel">
+                <h2>Agent Statistics</h2>
+                <div class="stats-container" id="agentStats"></div>
+
+                <h2 style="margin-top: 20px;">Event Log</h2>
+                <div class="log-panel" id="logPanel"></div>
+
+                <div class="victory-panel" id="victoryPanel">
+                    <div class="victory-title">🏆 VICTORY!</div>
+                    <div class="victory-details" id="victoryDetails"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>CONQUEST v2.0 — HexaCycle Terrarium | K-Gate Verified ✅ | Deterministic Seeding | Oracle Town Framework</p>
+        </div>
+    </div>
+
+    <script>
+        // ========================================================================
+        // GAME STATE
+        // ========================================================================
+
+        const ARCHETYPES = {
+            0: { name: 'WARLORD', color: '#e94560', domain: 'WAR' },
+            1: { name: 'ARCHITECT', color: '#4ec9b0', domain: 'UNITY' },
+            2: { name: 'DIPLOMAT', color: '#f0d991', domain: 'TRADE' },
+            3: { name: 'SEER', color: '#9b7edb', domain: 'SCIENCE' },
+            4: { name: 'GUARDIAN', color: '#ff8c42', domain: 'DEFENSE' }
+        };
+
+        const EPOCHS = ['GROUNDING', 'SEEING', 'STRUGGLE', 'ORDER', 'BONDING', 'SHEDDING'];
+
+        class ConquestGame {
+            constructor(seed = null) {
+                this.seed = seed || Math.floor(Math.random() * 100000);
+                this.rng = new SeededRandom(this.seed);
+
+                this.grid = this.initGrid();
+                this.agents = this.initAgents();
+                this.turn = 0;
+                this.totalTurns = 36;
+                this.log = [];
+                this.gameOver = false;
+                this.winner = null;
+            }
+
+            initGrid() {
+                const grid = [];
+                for (let y = 0; y < 5; y++) {
+                    for (let x = 0; x < 5; x++) {
+                        grid.push({
+                            x, y,
+                            ownerId: null,
+                            fortress: false,
+                            defense: 0
+                        });
+                    }
+                }
+                return grid;
+            }
+
+            getTile(x, y) {
+                return this.grid.find(t => t.x === x && t.y === y);
+            }
+
+            initAgents() {
+                const startPositions = [[0, 0], [4, 0], [4, 4], [0, 4], [2, 2]];
+                const names = ['ALPHA', 'BETA', 'GAMMA', 'DELTA', 'EPSILON'];
+
+                const agents = [];
+                for (let i = 0; i < 5; i++) {
+                    agents.push({
+                        id: i,
+                        name: names[i],
+                        archetype: i,
+                        power: 5,
+                        stability: 5,
+                        tiles: []
+                    });
+
+                    const [x, y] = startPositions[i];
+                    const tile = this.getTile(x, y);
+                    tile.ownerId = i;
+                    tile.fortress = true;
+                    tile.defense = 2;
+                    agents[i].tiles.push([x, y]);
+                }
+
+                return agents;
+            }
+
+            currentEpoch() {
+                const epochIndex = (Math.floor(this.turn / 6)) % 6;
+                return EPOCHS[epochIndex];
+            }
+
+            epochBonus(agent) {
+                const epoch = this.currentEpoch();
+                let bonuses = { power: 0, stability: 0 };
+
+                const alignmentMap = {
+                    '0_STRUGGLE': { power: 2, stability: -1 },
+                    '1_ORDER': { power: 0, stability: 2 },
+                    '2_BONDING': { power: 1, stability: 1 },
+                    '3_SEEING': { power: 0, stability: 2 },
+                    '4_GROUNDING': { power: 1, stability: 2 }
+                };
+
+                const key = `${agent.archetype}_${epoch}`;
+                if (key in alignmentMap) {
+                    const aligned = alignmentMap[key];
+                    bonuses.power += aligned.power || 0;
+                    bonuses.stability += aligned.stability || 0;
+                }
+
+                return bonuses;
+            }
+
+            getAdjacentTiles(x, y) {
+                const adjacent = [];
+                const deltas = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+                for (const [dx, dy] of deltas) {
+                    const nx = x + dx, ny = y + dy;
+                    if (nx >= 0 && nx < 5 && ny >= 0 && ny < 5) {
+                        adjacent.push([nx, ny]);
+                    }
+                }
+                return adjacent;
+            }
+
+            getAgentAdjacentTiles(agent) {
+                const adjacent = new Set();
+                for (const [x, y] of agent.tiles) {
+                    for (const [nx, ny] of this.getAdjacentTiles(x, y)) {
+                        const tile = this.getTile(nx, ny);
+                        if (tile.ownerId === null) {
+                            adjacent.add(`${nx},${ny}`);
+                        }
+                    }
+                }
+                return Array.from(adjacent).map(s => s.split(',').map(Number));
+            }
+
+            chooseAction(agent) {
+                if (agent.tiles.length === 0) return null;
+
+                if ([0, 2].includes(agent.archetype)) {
+                    if (agent.power >= agent.stability) return 'expand';
+                }
+                if ([1, 4].includes(agent.archetype)) {
+                    if (agent.stability < agent.power) return 'fortify';
+                }
+
+                return this.getAgentAdjacentTiles(agent).length > 0 ? 'expand' : 'fortify';
+            }
+
+            expandAgent(agent) {
+                const available = this.getAgentAdjacentTiles(agent);
+                if (available.length === 0) return;
+
+                const [x, y] = available[Math.floor(this.rng.random() * available.length)];
+                const tile = this.getTile(x, y);
+
+                tile.ownerId = agent.id;
+                tile.fortress = true;
+                tile.defense = 1;
+                agent.tiles.push([x, y]);
+
+                this.log.push({ type: 'expansion', text: `${agent.name} expands to (${x},${y})` });
+            }
+
+            fortifyAgent(agent) {
+                if (agent.tiles.length === 0) return;
+
+                const [x, y] = agent.tiles[Math.floor(this.rng.random() * agent.tiles.length)];
+                const tile = this.getTile(x, y);
+
+                if (tile.defense < 3) {
+                    tile.defense += 1;
+                    agent.stability += 1;
+                    this.log.push({ type: 'fortification', text: `${agent.name} fortifies (${x},${y}) [def=${tile.defense}]` });
+                }
+            }
+
+            resolveConflict(attacker, defender, tile) {
+                const attackerPower = attacker.power + this.epochBonus(attacker).power;
+                const defenderStability = defender.stability + this.epochBonus(defender).stability + (tile.fortress ? tile.defense : 0);
+
+                const attackerRoll = attackerPower + Math.floor(this.rng.random() * 4);
+                const defenderRoll = defenderStability + Math.floor(this.rng.random() * 4);
+
+                return attackerRoll > defenderRoll;
+            }
+
+            simulateConflicts() {
+                const agentPositions = {};
+                for (const agent of this.agents) {
+                    for (const [x, y] of agent.tiles) {
+                        agentPositions[`${x},${y}`] = agent.id;
+                    }
+                }
+
+                const conflictsResolved = new Set();
+
+                for (const agent of this.agents) {
+                    if (agent.tiles.length === 0) continue;
+
+                    for (const [x, y] of agent.tiles) {
+                        for (const [nx, ny] of this.getAdjacentTiles(x, y)) {
+                            const key = `${nx},${ny}`;
+                            if (key in agentPositions) {
+                                const defenderId = agentPositions[key];
+                                if (defenderId !== agent.id) {
+                                    const conflictKey = [agent.id, defenderId].sort().join(',');
+                                    if (!conflictsResolved.has(conflictKey)) {
+                                        this.resolveAdjacencyConflict(agent, this.agents[defenderId], x, y, nx, ny);
+                                        conflictsResolved.add(conflictKey);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            resolveAdjacencyConflict(agentA, agentB, ax, ay, bx, by) {
+                if (this.rng.random() > 0.2) return;
+
+                let attacker, defender, tileX, tileY;
+                if (this.rng.random() < 0.5) {
+                    attacker = agentA;
+                    defender = agentB;
+                    tileX = bx;
+                    tileY = by;
+                } else {
+                    attacker = agentB;
+                    defender = agentA;
+                    tileX = ax;
+                    tileY = ay;
+                }
+
+                const tile = this.getTile(tileX, tileY);
+                if (tile.ownerId !== defender.id) return;
+
+                if (this.resolveConflict(attacker, defender, tile)) {
+                    tile.ownerId = attacker.id;
+                    tile.fortress = true;
+                    tile.defense = 1;
+                    attacker.tiles.push([tileX, tileY]);
+                    defender.tiles = defender.tiles.filter(t => !(t[0] === tileX && t[1] === tileY));
+
+                    this.log.push({
+                        type: 'conflict',
+                        text: `CONFLICT: ${attacker.name} seizes (${tileX},${tileY}) from ${defender.name}`
+                    });
+                } else {
+                    this.log.push({
+                        type: 'conflict',
+                        text: `CONFLICT: ${defender.name} repels ${attacker.name} at (${tileX},${tileY})`
+                    });
+                }
+            }
+
+            applyEpochEffects() {
+                for (const agent of this.agents) {
+                    const bonuses = this.epochBonus(agent);
+                    agent.power += bonuses.power;
+                    agent.stability += bonuses.stability;
+
+                    agent.power = Math.max(1, Math.min(10, agent.power));
+                    agent.stability = Math.max(1, Math.min(10, agent.stability));
+                }
+            }
+
+            checkVictory() {
+                for (const agent of this.agents) {
+                    if (agent.tiles.length >= 13) {
+                        return agent;
+                    }
+                }
+                return null;
+            }
+
+            runTurn() {
+                this.log = [];
+
+                this.applyEpochEffects();
+
+                for (const agent of this.agents) {
+                    if (agent.tiles.length === 0) continue;
+
+                    const action = this.chooseAction(agent);
+                    if (action === 'expand') {
+                        this.expandAgent(agent);
+                    } else if (action === 'fortify') {
+                        this.fortifyAgent(agent);
+                    }
+                }
+
+                this.simulateConflicts();
+
+                const victory = this.checkVictory();
+                if (victory) {
+                    this.gameOver = true;
+                    this.winner = victory;
+                }
+
+                this.turn++;
+            }
+        }
+
+        // ========================================================================
+        // SEEDED RANDOM
+        // ========================================================================
+
+        class SeededRandom {
+            constructor(seed) {
+                this.seed = seed;
+            }
+
+            random() {
+                this.seed = (this.seed * 9301 + 49297) % 233280;
+                return this.seed / 233280;
+            }
+        }
+
+        // ========================================================================
+        // UI CONTROLLER
+        // ========================================================================
+
+        class UIController {
+            constructor() {
+                this.game = null;
+                this.autoPlayInterval = null;
+                this.setupEventListeners();
+            }
+
+            setupEventListeners() {
+                document.getElementById('newGameBtn').addEventListener('click', () => this.newGame());
+                document.getElementById('nextTurnBtn').addEventListener('click', () => this.nextTurn());
+                document.getElementById('autoPlayBtn').addEventListener('click', () => this.toggleAutoPlay());
+            }
+
+            newGame() {
+                const seedInput = document.getElementById('seedInput').value;
+                const seed = seedInput ? parseInt(seedInput) : null;
+
+                this.game = new ConquestGame(seed);
+                document.getElementById('seedInput').value = this.game.seed;
+
+                this.stopAutoPlay();
+                this.render();
+                document.getElementById('nextTurnBtn').disabled = false;
+            }
+
+            nextTurn() {
+                if (!this.game || this.game.gameOver) return;
+
+                this.game.runTurn();
+                this.render();
+
+                if (this.game.gameOver) {
+                    this.showVictory();
+                    document.getElementById('nextTurnBtn').disabled = true;
+                }
+            }
+
+            toggleAutoPlay() {
+                if (this.autoPlayInterval) {
+                    this.stopAutoPlay();
+                } else {
+                    this.startAutoPlay();
+                }
+            }
+
+            startAutoPlay() {
+                if (!this.game) return;
+                document.getElementById('autoPlayBtn').textContent = '⏸ Pause';
+                this.autoPlayInterval = setInterval(() => {
+                    if (this.game.gameOver) {
+                        this.stopAutoPlay();
+                    } else {
+                        this.nextTurn();
+                    }
+                }, 300);
+            }
+
+            stopAutoPlay() {
+                if (this.autoPlayInterval) {
+                    clearInterval(this.autoPlayInterval);
+                    this.autoPlayInterval = null;
+                }
+                document.getElementById('autoPlayBtn').textContent = '⚡ Auto Play';
+            }
+
+            render() {
+                if (!this.game) return;
+
+                this.renderGrid();
+                this.renderStats();
+                this.renderLog();
+                this.renderTurnInfo();
+            }
+
+            renderGrid() {
+                const gridElement = document.getElementById('gameGrid');
+                gridElement.innerHTML = '';
+
+                for (let y = 0; y < 5; y++) {
+                    for (let x = 0; x < 5; x++) {
+                        const tile = this.game.getTile(x, y);
+                        const tileDiv = document.createElement('div');
+                        tileDiv.className = 'tile';
+
+                        if (tile.ownerId !== null) {
+                            tileDiv.classList.add(`agent-${tile.ownerId}`);
+                            if (tile.fortress) {
+                                tileDiv.classList.add('fortress');
+                            }
+                            tileDiv.textContent = ARCHETYPES[tile.ownerId].name[0];
+                        } else {
+                            tileDiv.classList.add('empty');
+                            tileDiv.textContent = '·';
+                        }
+
+                        gridElement.appendChild(tileDiv);
+                    }
+                }
+            }
+
+            renderStats() {
+                const statsElement = document.getElementById('agentStats');
+                statsElement.innerHTML = '';
+
+                for (const agent of this.game.agents) {
+                    const statDiv = document.createElement('div');
+                    statDiv.className = `agent-stat agent-${agent.id}`;
+
+                    const powerPercent = (agent.power / 10) * 100;
+                    const stabilityPercent = (agent.stability / 10) * 100;
+
+                    statDiv.innerHTML = `
+                        <div class="agent-name">${agent.name} — ${ARCHETYPES[agent.id].name}</div>
+                        <div class="stat-row">
+                            <span class="stat-label">Power</span>
+                            <span class="stat-value">${agent.power}/10</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill" style="width: ${powerPercent}%"></div></div>
+                        <div class="stat-row">
+                            <span class="stat-label">Stability</span>
+                            <span class="stat-value">${agent.stability}/10</span>
+                        </div>
+                        <div class="stat-bar"><div class="stat-bar-fill" style="width: ${stabilityPercent}%"></div></div>
+                        <div class="stat-row">
+                            <span class="stat-label">Territory</span>
+                            <span class="stat-value">${agent.tiles.length}/25</span>
+                        </div>
+                    `;
+
+                    statsElement.appendChild(statDiv);
+                }
+            }
+
+            renderLog() {
+                const logPanel = document.getElementById('logPanel');
+                logPanel.innerHTML = '';
+
+                const recentLog = this.game.log.slice(-20);
+                for (const entry of recentLog) {
+                    const logDiv = document.createElement('div');
+                    logDiv.className = `log-entry ${entry.type}`;
+                    logDiv.textContent = entry.text;
+                    logPanel.appendChild(logDiv);
+                }
+
+                logPanel.scrollTop = logPanel.scrollHeight;
+            }
+
+            renderTurnInfo() {
+                document.getElementById('turnNumber').textContent = `Turn ${this.game.turn}/${this.game.totalTurns}`;
+                document.getElementById('epochName').textContent = this.game.currentEpoch();
+            }
+
+            showVictory() {
+                const victoryPanel = document.getElementById('victoryPanel');
+                const victoryDetails = document.getElementById('victoryDetails');
+
+                victoryDetails.innerHTML = `
+                    <div>${this.game.winner.name} claims victory!</div>
+                    <div>Archetype: ${ARCHETYPES[this.game.winner.id].name}</div>
+                    <div>Territory: ${this.game.winner.tiles.length} tiles</div>
+                    <div style="margin-top: 10px; font-size: 0.9em;">
+                        Power: ${this.game.winner.power} | Stability: ${this.game.winner.stability}
+                    </div>
+                `;
+
+                victoryPanel.classList.add('show');
+            }
+        }
+
+        // ========================================================================
+        // INITIALIZATION
+        // ========================================================================
+
+        const ui = new UIController();
+    </script>
+</body>
+</html>

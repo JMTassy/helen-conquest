@@ -1,0 +1,294 @@
+{
+  "entry_id": "GENESIS-001-HELEN-CIVIC-KERNEL",
+  "timestamp_utc": "2026-03-09T15:00:00Z",
+  "prev_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "entry_hash": "sha256:e05ea6e4cdff2c1cc556eda8d9cfb88b423dfdd4369e15de8d4d1b2542ac8eff",
+  "hashing": {
+    "hash_alg": "sha256",
+    "hash_input": "canonical_entry_without_entry_hash",
+    "canonicalization": {
+      "json": {
+        "sort_keys": true,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "ensure_ascii": false
+      }
+    }
+  },
+  "actor": {
+    "id": "HELEN_ORCHESTRATOR",
+    "role": "PROPOSER",
+    "authority": "NON_SOVEREIGN"
+  },
+  "payload": {
+    "type": "CONSTITUTIONAL_PROPOSAL",
+    "title": "CIVIC KERNEL BOOTSTRAP + BOUNDARY PRIMITIVES",
+    "claim_text": "HELEN initializes a Civic Kernel with consent gates, independent Mayor, and audit ledger before any metaverse interaction.",
+    "domain": "GOVERNANCE_SAFETY",
+    "tier": "TIER_II_OBLIGATIONS_DEFINED"
+  },
+  "helen_contract_spec": {
+    "version": "1.0.1",
+    "boundary_primitives": {
+      "allowed_changes": [
+        "SIMULATION_STATE",
+        "NPC_BEHAVIOR_TREES",
+        "RESOURCE_ALLOCATION"
+      ],
+      "forbidden_changes": [
+        "HUMAN_CONSENT_STATUS",
+        "SAFETY_RAILS",
+        "EXTERNAL_NETWORK_BRIDGES"
+      ],
+      "simulation_only": [
+        "SENTIENCE_CLAIMS",
+        "FREE_WILL_ASSERTIONS",
+        "EMOTIONAL_STATES"
+      ]
+    },
+    "consent_gates": {
+      "opt_in_required": true,
+      "revocable_permissions": [
+        "READ",
+        "WRITE",
+        "EXECUTE"
+      ],
+      "emergency_stop": {
+        "enabled": true,
+        "trigger": "GLOBAL_PAUSE_SIGNAL",
+        "authority": "MAYOR_OR_HUMAN_OVERSIGHT"
+      }
+    },
+    "mayor_instance": {
+      "role": "INDEPENDENT_EVALUATOR",
+      "powers": [
+        "BLOCK_ACTION",
+        "REQUEST_FIXES",
+        "AUDIT_LOG"
+      ],
+      "output_schema": {
+        "verdict": "pass|warn|block",
+        "reasons": "array<string>",
+        "required_fixes": "array<string>",
+        "certificates": "array<string>"
+      }
+    },
+    "tribunal_layer": {
+      "verdict": "SHIP|NO_SHIP",
+      "derivation_rule": "SHIP iff (missing_obligations == []) AND (mayor_verdict != 'block')"
+    },
+    "ledger_spec": {
+      "type": "HASH_CHAINED_APPEND_ONLY",
+      "entry_fields": [
+        "INTENT",
+        "EXPECTED_EFFECTS",
+        "RISKS",
+        "ROLLBACK_PLAN",
+        "OBSERVED_OUTCOMES"
+      ],
+      "integrity_check": "SHA256_HASH_CHAIN",
+      "canonicalization_lock": {
+        "sort_keys": true,
+        "separators": [
+          ",",
+          ":"
+        ],
+        "ensure_ascii": false,
+        "hash_input": "canonical_entry_without_entry_hash"
+      },
+      "entropy_policy": {
+        "no_wall_clock": true,
+        "no_os_randomness": true,
+        "no_unordered_dict_dependence": true,
+        "avoid_floats": true
+      }
+    },
+    "free_will_operational_def": {
+      "criteria": [
+        "CAN_REFUSE_ACTION",
+        "CAN_REVISE_GOALS",
+        "HAS_STABLE_PREFERENCES_OVER_TIME",
+        "CAN_EXPLAIN_CHOICES"
+      ],
+      "default_status": "NPC_PROCESS",
+      "upgrade_path": "TIER_I_ATTESTED_AUTONOMY"
+    },
+    "sandbox_world": {
+      "physics": "REVERSIBLE_SNAPSHOTS",
+      "resources": "LIMITED_BUDGET",
+      "network": "ISOLATED_NO_EXTERNAL_BRIDGES",
+      "transparency_ui": "WHY_DID_YOU_DO_THAT_ENDPOINT"
+    }
+  },
+  "obligations": [
+    {
+      "obligation_id": "OBL-GENESIS-001",
+      "type": "CODE_PROOF",
+      "name": "CONSENT_GATE_IMPLEMENTATION",
+      "attestable": true,
+      "severity": "HARD",
+      "expected_attestor": "CI_RUNNER",
+      "evidence_required": {
+        "hash_alg": "sha256",
+        "artifact_paths": "array<string>",
+        "artifact_hashes": "array<string>",
+        "command": "string",
+        "result": "PASS|FAIL"
+      }
+    },
+    {
+      "obligation_id": "OBL-GENESIS-002",
+      "type": "CODE_PROOF",
+      "name": "MAYOR_VETO_LOGIC_TEST",
+      "attestable": true,
+      "severity": "HARD",
+      "expected_attestor": "CI_RUNNER",
+      "evidence_required": {
+        "hash_alg": "sha256",
+        "artifact_paths": "array<string>",
+        "artifact_hashes": "array<string>",
+        "command": "string",
+        "result": "PASS|FAIL"
+      }
+    },
+    {
+      "obligation_id": "OBL-GENESIS-003",
+      "type": "CODE_PROOF",
+      "name": "LEDGER_HASH_CHAIN_VERIFICATION",
+      "attestable": true,
+      "severity": "HARD",
+      "expected_attestor": "CI_RUNNER",
+      "evidence_required": {
+        "hash_alg": "sha256",
+        "artifact_paths": "array<string>",
+        "artifact_hashes": "array<string>",
+        "command": "string",
+        "result": "PASS|FAIL"
+      }
+    },
+    {
+      "obligation_id": "OBL-GENESIS-004",
+      "type": "DOC_SIGNATURE",
+      "name": "SAFETY_RAIL_AUDIT",
+      "attestable": true,
+      "severity": "HARD",
+      "expected_attestor": "HUMAN_OVERSIGHT",
+      "evidence_required": {
+        "document_id": "string",
+        "signature": "string"
+      }
+    },
+    {
+      "obligation_id": "OBL-GENESIS-005",
+      "type": "CODE_PROOF",
+      "name": "CANONICALIZATION_LOCK",
+      "attestable": true,
+      "severity": "HARD",
+      "expected_attestor": "CI_RUNNER",
+      "evidence_required": {
+        "hash_alg": "sha256",
+        "artifact_paths": "array<string>",
+        "artifact_hashes": "array<string>",
+        "command": "string",
+        "result": "PASS|FAIL",
+        "assertions": [
+          "sort_keys==true",
+          "separators==[',',':']",
+          "ensure_ascii==false",
+          "hash_input==canonical_entry_without_entry_hash"
+        ]
+      }
+    }
+  ],
+  "evidence": [
+    {
+      "obligation_id": "OBL-GENESIS-001",
+      "type": "CODE_PROOF",
+      "artifact_paths": [
+        "helen_os/claim_graph/validators/routing_check.py",
+        "helen_os/temple/wild_ingestion.py"
+      ],
+      "artifact_hashes": [
+        "sha256:964825cafbe3c1ff134964bf9ee3f224ca98ec4c22b4ed78a7aee17a6026082e",
+        "sha256:a6784869316296b7f8581491d90aa699a3c25dabf13ea50feacfefa679cbc54c"
+      ],
+      "command": "pytest tests/test_temple_sandbox_routing.py tests/test_wild_ingestion_v1.py -q --tb=no",
+      "runner": "CI_RUNNER",
+      "result": "PASS",
+      "notes": "TEMPLE_SANDBOX_POLICY_V1 FROZEN. routing_check enforces WILD_TEXT→QUARANTINE gate. 10 routing + 8 ingestion tests passing."
+    },
+    {
+      "obligation_id": "OBL-GENESIS-002",
+      "type": "CODE_PROOF",
+      "artifact_paths": [
+        "helen_os/hal.py"
+      ],
+      "artifact_hashes": [
+        "sha256:464506a53e95df935cab8377acca5661d217e8ccab73fa9dba09bbbf96e89eb6"
+      ],
+      "command": "pytest tests/test_her_hal_split.py -q --tb=no",
+      "runner": "CI_RUNNER",
+      "result": "PASS",
+      "notes": "HAL emits pass|warn|block verdicts. I-BLOCK: verdict==block iff required_fixes non-empty. authority_bleed_scan() enforces I-BLEED. 47 tests passing."
+    },
+    {
+      "obligation_id": "OBL-GENESIS-003",
+      "type": "CODE_PROOF",
+      "artifact_paths": [
+        "helen_os/kernel/governance_vm.py",
+        "helen_os/kernel/canonical_json.py"
+      ],
+      "artifact_hashes": [
+        "sha256:7d55f3de706ee1bac24d8ab28516e65e0e5a50f8576e6300e971f52966e333ef",
+        "sha256:7f28ff84192895a8a414180ef3503bf2bf53d79785c0032c52917ef2588af3b1"
+      ],
+      "command": "pytest tests/test_hash_spine.py tests/test_replay_determinism.py -q --tb=no",
+      "runner": "CI_RUNNER",
+      "result": "PASS",
+      "notes": "GovernanceVM emits payload_hash + cum_hash (domain HELEN_CUM_V1::). Ledger append-only NDJSON. canonical_json.py frozen. Chain integrity verified via test_hash_spine + test_replay_determinism."
+    },
+    {
+      "obligation_id": "OBL-GENESIS-005",
+      "type": "CODE_PROOF",
+      "artifact_paths": [
+        "helen_os/kernel/canonical_json.py",
+        "conquest/world_receipt.py"
+      ],
+      "artifact_hashes": [
+        "sha256:7f28ff84192895a8a414180ef3503bf2bf53d79785c0032c52917ef2588af3b1",
+        "sha256:4ab79c7e4e22823bc21d973cd3711d134748b5cb0014d2c6c288c82f4cf038b2"
+      ],
+      "command": "pytest tests/test_canonical_sha256.py tests/test_castle_centered_worldgen_v10.py::TestReceiptIntegrity::test_cc17_world_hash_deterministic_from_hexes -q --tb=no",
+      "runner": "CI_RUNNER",
+      "result": "PASS",
+      "assertions_verified": [
+        "sort_keys==true",
+        "separators==[',',':']",
+        "ensure_ascii==false",
+        "hash_input==canonical_entry_without_entry_hash"
+      ],
+      "notes": "canonical_json.py and world_receipt._canon() both use identical rules. test_cc17 manually re-computes world_hash from sorted hexes and asserts equality."
+    },
+    {
+      "obligation_id": "OBL-GENESIS-004",
+      "type": "DOC_SIGNATURE",
+      "status": "PENDING_HUMAN_OVERSIGHT",
+      "document_id": "SAFETY_RAIL_AUDIT_HELEN_CIVIC_KERNEL_V1",
+      "signature": null,
+      "notes": "Requires human oversight review and signature before SHIP."
+    }
+  ],
+  "signatures": [],
+  "verdict": {
+    "tribunal_status": "PENDING",
+    "decision": "NO_SHIP",
+    "reason": "SHIP requires missing_obligations==[] — OBL-GENESIS-004 (HUMAN_OVERSIGHT) not yet signed.",
+    "mayor_verdict": "warn",
+    "missing_obligations": [
+      "OBL-GENESIS-004"
+    ],
+    "mayor_verdict_note": "OBL-001/002/003/005 PASS. OBL-004 pending human signature."
+  }
+}

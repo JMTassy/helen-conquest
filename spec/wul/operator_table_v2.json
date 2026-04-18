@@ -1,0 +1,89 @@
+{
+  "kind": "WUL_ML_OPERATOR_TABLE",
+  "version": "2.0.0",
+  "table_id": "OP_TABLE_V2_CORE",
+  "oracle_resistant": true,
+  "notes": [
+    "Operators are legal only inside explicit application frames ⫷ ... ⫸.",
+    "No implicit desugaring is allowed.",
+    "All type errors fail closed."
+  ],
+  "application_frame": {
+    "open": "⫷",
+    "close": "⫸",
+    "required": true
+  },
+  "operators": {
+    "⬄": {
+      "op": "PIPE",
+      "arity": 2,
+      "input_sorts": ["a", "b"],
+      "output_sort": "b",
+      "typing_rule": "lhs must be composable into rhs contract domain",
+      "status": "ACTIVE"
+    },
+    "⬂": {
+      "op": "IN",
+      "arity": 2,
+      "input_sorts": ["Ent", "Set[Ent]"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⫹": {
+      "op": "ADD",
+      "arity": 2,
+      "input_sorts": ["Real", "Real"],
+      "output_sort": "Real",
+      "status": "ACTIVE"
+    },
+    "⫺": {
+      "op": "SUB",
+      "arity": 2,
+      "input_sorts": ["Real", "Real"],
+      "output_sort": "Real",
+      "status": "ACTIVE"
+    },
+    "⫻": {
+      "op": "MUL",
+      "arity": 2,
+      "input_sorts": ["Real", "Real"],
+      "output_sort": "Real",
+      "status": "ACTIVE"
+    },
+    "⫼": {
+      "op": "UPDATE",
+      "arity": 2,
+      "input_sorts": ["State", "Evt"],
+      "output_sort": "State",
+      "status": "ACTIVE"
+    },
+    "⫽": {
+      "op": "EQ",
+      "arity": 2,
+      "input_sorts": ["a", "a"],
+      "output_sort": "Bool",
+      "status": "ACTIVE"
+    },
+    "⫿": {
+      "op": "EMIT",
+      "arity": 1,
+      "input_sorts": ["a"],
+      "output_sort": "Evidence",
+      "unary_position": "lhs_only",
+      "status": "ACTIVE"
+    }
+  },
+  "validation_rules": {
+    "operators_outside_apply_frame": "ERROR",
+    "missing_operand": "ERROR",
+    "mixed_operator_chain_without_nesting": "ERROR",
+    "unknown_operator": "ERROR"
+  },
+  "error_codes": {
+    "E_OPERATOR_OUTSIDE_APPLY": "Operator appears outside ⫷ ... ⫸",
+    "E_UNKNOWN_OPERATOR": "Operator not present in OP_TABLE_V2_CORE",
+    "E_MISSING_OPERAND": "Operator missing required operand",
+    "E_TYPE_MISMATCH": "Operator input sorts do not match typing rule",
+    "E_BAD_UNARY_POSITION": "Unary operator used in non-canonical position"
+  }
+}

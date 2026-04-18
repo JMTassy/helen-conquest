@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Street • Episode 1</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0a1e;
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      overflow: hidden;
+    }
+
+    #app {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    #header {
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #header h1 {
+      font-size: 18px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #00ff00;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* Main Layout */
+    #main {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* Left Panel: Agent Controls */
+    #leftPanel {
+      width: 320px;
+      border-right: 2px solid #00ff00;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #agentList {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+    }
+
+    .agent-card {
+      background: rgba(0,0,0,0.7);
+      border: 2px solid;
+      padding: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .agent-card:hover {
+      transform: translateX(4px);
+      box-shadow: -4px 0 0 currentColor;
+    }
+
+    .agent-card.active {
+      box-shadow: -6px 0 0 currentColor;
+      background: rgba(0,0,0,0.9);
+    }
+
+    .agent-card.speaking {
+      animation: glow 1s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: -6px 0 0 currentColor, 0 0 20px currentColor; }
+      50% { box-shadow: -6px 0 0 currentColor, 0 0 40px currentColor; }
+    }
+
+    .agent-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 6px;
+    }
+
+    .agent-emoji {
+      font-size: 20px;
+    }
+
+    .agent-status {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 4px;
+    }
+
+    .edit-btn {
+      background: rgba(0,255,0,0.2);
+      border: 1px solid #00ff00;
+      color: #00ff00;
+      padding: 4px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 6px;
+    }
+
+    .edit-btn:hover {
+      background: rgba(0,255,0,0.3);
+    }
+
+    /* Center: Street View + Chat */
+    #centerPanel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #streetView {
+      height: 200px;
+      background: linear-gradient(180deg, #1a1a3e 0%, #0a0a1e 100%);
+      border-bottom: 2px solid #00ff00;
+      position: relative;
+      overflow: hidden;
+    }
+
+    #streetCanvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    #teamChat {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #chatHeader {
+      background: #000;
+      border-bottom: 1px solid #00ff00;
+      padding: 8px 16px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    #chatMessages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      background: rgba(0,0,0,0.3);
+    }
+
+    #chatMessages::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #chatMessages::-webkit-scrollbar-track {
+      background: #001a00;
+    }
+
+    #chatMessages::-webkit-scrollbar-thumb {
+      background: #00ff00;
+    }
+
+    .chat-message {
+      margin-bottom: 16px;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: bold;
+    }
+
+    .msg-body {
+      background: rgba(0,0,0,0.6);
+      border-left: 3px solid;
+      padding: 10px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .msg-contribution {
+      margin-bottom: 10px;
+    }
+
+    .msg-question {
+      opacity: 0.9;
+      font-style: italic;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      margin-top: 8px;
+    }
+
+    .typing {
+      opacity: 0.6;
+      font-style: italic;
+    }
+
+    /* Right Panel: Controls */
+    #rightPanel {
+      width: 340px;
+      border-left: 2px solid #00ff00;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      flex-direction: column;
+    }
+
+    #sessionConfig {
+      padding: 16px;
+      border-bottom: 2px solid #00ff00;
+      background: #000;
+    }
+
+    .config-section {
+      margin-bottom: 12px;
+    }
+
+    .config-label {
+      font-size: 11px;
+      opacity: 0.8;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    input[type="text"], textarea {
+      width: 100%;
+      background: #000;
+      color: #00ff00;
+      border: 1px solid #00ff00;
+      padding: 8px;
+      font-family: inherit;
+      font-size: 12px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 50px;
+    }
+
+    #runControls {
+      padding: 16px;
+      background: #000;
+      border-bottom: 2px solid #00ff00;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    button {
+      background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%);
+      border: 2px solid #004400;
+      color: #000;
+      padding: 10px;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 3px 0 #002200;
+      transition: all 0.1s;
+    }
+
+    button:hover {
+      background: linear-gradient(180deg, #00ffaa 0%, #00cc00 100%);
+    }
+
+    button:active {
+      transform: translateY(3px);
+      box-shadow: none;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    button.secondary {
+      background: linear-gradient(180deg, #666 0%, #444 100%);
+      border-color: #222;
+      box-shadow: 0 3px 0 #111;
+    }
+
+    button.export {
+      background: linear-gradient(180deg, #0088ff 0%, #0055aa 100%);
+      border-color: #003366;
+      box-shadow: 0 3px 0 #001a33;
+    }
+
+    #deliverables {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    #deliverables h3 {
+      font-size: 13px;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #00ff00;
+    }
+
+    .deliverable-item {
+      background: rgba(0,0,0,0.7);
+      border: 1px solid #00ff00;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 11px;
+    }
+
+    .deliverable-item h4 {
+      font-size: 12px;
+      margin-bottom: 6px;
+      color: #00ffaa;
+    }
+
+    .deliverable-item pre {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      line-height: 1.4;
+      margin-top: 4px;
+    }
+
+    /* Modal */
+    #modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #modal.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #0a0a1e;
+      border: 3px solid #00ff00;
+      padding: 24px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 0 40px rgba(0,255,0,0.5);
+    }
+
+    .modal-content h2 {
+      font-size: 16px;
+      margin-bottom: 16px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #00ff00;
+    }
+
+    .modal-section {
+      margin-bottom: 16px;
+    }
+
+    .modal-section label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 6px;
+      opacity: 0.9;
+    }
+
+    .modal-section textarea {
+      min-height: 120px;
+    }
+
+    .modal-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .modal-buttons button {
+      flex: 1;
+    }
+
+    /* Color scheme per agent */
+    .strategist { color: #ff00ff; border-color: #ff00ff; }
+    .copywriter { color: #00ffff; border-color: #00ffff; }
+    .growth { color: #ffff00; border-color: #ffff00; }
+    .compliance { color: #ff9900; border-color: #ff9900; }
+
+    .strategist .msg-body { border-left-color: #ff00ff; }
+    .copywriter .msg-body { border-left-color: #00ffff; }
+    .growth .msg-body { border-left-color: #ffff00; }
+    .compliance .msg-body { border-left-color: #ff9900; }
+
+    /* CRT Effect */
+    #app::after {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: repeating-linear-gradient(
+        0deg,
+        rgba(0,0,0,0.1) 0px,
+        transparent 1px,
+        transparent 2px,
+        rgba(0,0,0,0.1) 3px
+      );
+      pointer-events: none;
+      z-index: 2000;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <div id="header">
+      <h1><span class="status-dot"></span>MARKETING STREET • EP01: AGENTX LAUNCH</h1>
+      <div>Turn: <span id="turnCounter">0/10</span> • <span id="sessionTime">00:00</span></div>
+    </div>
+
+    <!-- Main Layout -->
+    <div id="main">
+      <!-- Left: Agent Cards -->
+      <div id="leftPanel">
+        <div id="agentList">
+          <div class="agent-card strategist" data-agent="strategist">
+            <div class="agent-header">
+              <span class="agent-emoji">🎯</span>
+              <span>Positioning Strategist</span>
+            </div>
+            <div class="agent-status">Ready • Click to edit prompt</div>
+            <button class="edit-btn" onclick="editAgent('strategist')">✏️ EDIT PROMPT</button>
+          </div>
+
+          <div class="agent-card copywriter" data-agent="copywriter">
+            <div class="agent-header">
+              <span class="agent-emoji">✍️</span>
+              <span>Copywriter</span>
+            </div>
+            <div class="agent-status">Ready • Click to edit prompt</div>
+            <button class="edit-btn" onclick="editAgent('copywriter')">✏️ EDIT PROMPT</button>
+          </div>
+
+          <div class="agent-card growth" data-agent="growth">
+            <div class="agent-header">
+              <span class="agent-emoji">📈</span>
+              <span>Growth Marketer</span>
+            </div>
+            <div class="agent-status">Ready • Click to edit prompt</div>
+            <button class="edit-btn" onclick="editAgent('growth')">✏️ EDIT PROMPT</button>
+          </div>
+
+          <div class="agent-card compliance" data-agent="compliance">
+            <div class="agent-header">
+              <span class="agent-emoji">⚖️</span>
+              <span>Brand & Compliance</span>
+            </div>
+            <div class="agent-status">Ready • Click to edit prompt</div>
+            <button class="edit-btn" onclick="editAgent('compliance')">✏️ EDIT PROMPT</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center: Street + Chat -->
+      <div id="centerPanel">
+        <div id="streetView">
+          <canvas id="streetCanvas"></canvas>
+        </div>
+        <div id="teamChat">
+          <div id="chatHeader">
+            <span>💬 TEAM DISCUSSION</span>
+            <span id="chatStatus">Waiting to start...</span>
+          </div>
+          <div id="chatMessages">
+            <!-- Messages appear here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Controls + Deliverables -->
+      <div id="rightPanel">
+        <div id="sessionConfig">
+          <div class="config-section">
+            <div class="config-label">🎯 Goal</div>
+            <input type="text" id="goalInput" value="Launch AGENTX Street 1 MVP to enterprise AI leaders">
+          </div>
+          <div class="config-section">
+            <div class="config-label">👥 Audience</div>
+            <input type="text" id="audienceInput" value="VP Eng / Head of AI / Product leaders">
+          </div>
+          <div class="config-section">
+            <div class="config-label">🎨 Tone</div>
+            <input type="text" id="toneInput" value="confident, concrete, slightly playful">
+          </div>
+          <div class="config-section">
+            <div class="config-label">🚫 Constraints</div>
+            <textarea id="constraintsInput">No security guarantees, no performance claims without qualifiers</textarea>
+          </div>
+        </div>
+
+        <div id="runControls">
+          <button id="runBtn" onclick="startSession()">▶️ RUN SESSION</button>
+          <button id="pauseBtn" class="secondary" onclick="pauseSession()" disabled>⏸️ PAUSE</button>
+          <button id="resetBtn" class="secondary" onclick="resetSession()">🔄 RESET</button>
+          <button id="exportBtn" class="export" onclick="exportSession()" disabled>📥 EXPORT</button>
+        </div>
+
+        <div id="deliverables">
+          <h3>📦 DELIVERABLES</h3>
+          <div id="deliverablesContent">
+            <p style="opacity: 0.6; font-size: 12px;">Run a session to generate deliverables...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div id="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Edit Agent Prompt</h2>
+      <div class="modal-section">
+        <label>System Prompt (editable)</label>
+        <textarea id="modalSystemPrompt"></textarea>
+      </div>
+      <div class="modal-section">
+        <label>Operating Rules (locked)</label>
+        <textarea id="modalRules" disabled style="opacity: 0.6;"></textarea>
+      </div>
+      <div class="modal-section">
+        <label>Output Spec (editable)</label>
+        <textarea id="modalOutputSpec"></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button onclick="saveAgent()">💾 SAVE</button>
+        <button class="secondary" onclick="closeModal()">❌ CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════
+    // STATE & CONFIG
+    // ═══════════════════════════════════════
+    let currentEditAgent = null;
+    let sessionRunning = false;
+    let sessionPaused = false;
+    let currentTurn = 0;
+    let maxTurns = 10;
+    let sessionStartTime = 0;
+    let timerInterval = null;
+    let conversationLog = [];
+    let deliverableArtifacts = {};
+
+    const agentConfig = {
+      strategist: {
+        name: 'Positioning Strategist',
+        emoji: '🎯',
+        class: 'strategist',
+        systemPrompt: `You are the Positioning Strategist in a 4-agent marketing team.
+Your job: define ICP, primary pain, differentiated value proposition, and narrative spine.
+Constraints:
+• Use concrete language. Avoid "revolutionary/innovative".
+• Make assumptions explicit.
+• Output must include: ICP, 3 pains, 3 differentiators, 1-liner, 30-word pitch, proof points needed.
+Coordinate: ask at least one question to another agent per turn.`,
+        rules: `• Be concrete, not abstract
+• Cite assumptions explicitly
+• Propose alternatives when disagreeing
+• Reference prior turns when building on ideas`,
+        outputSpec: `Structured output:
+- ICP: [description]
+- Primary Pains: [3 bullet points]
+- Differentiators: [3 bullet points]
+- One-liner: [max 15 words]
+- 30-word pitch: [exactly 30 words]
+- Proof points needed: [list]
+- Question to team: [one specific question]`
+      },
+      copywriter: {
+        name: 'Copywriter',
+        emoji: '✍️',
+        class: 'copywriter',
+        systemPrompt: `You are the Copywriter.
+Your job: write landing page copy that matches the positioning.
+Constraints:
+• No unverifiable claims.
+• Short, punchy sentences.
+• Output: hero, subhead, 6 bullets, 3 CTAs, 3 objection-handling lines, 1 short demo script (15s).
+Ask at least one question per turn to refine inputs.`,
+        rules: `• Every claim must be verifiable
+• Favor clarity over cleverness
+• Test for ambiguity
+• Propose 2-3 variants when unsure`,
+        outputSpec: `Structured output:
+- Hero (main headline): [max 10 words]
+- Subhead: [max 20 words]
+- 6 Bullets: [each max 12 words]
+- 3 CTAs: [each max 5 words]
+- 3 Objection handlers: [each 15-20 words]
+- Demo script (15s): [40-60 words]
+- Question to team: [one specific question]`
+      },
+      growth: {
+        name: 'Growth Marketer',
+        emoji: '📈',
+        class: 'growth',
+        systemPrompt: `You are the Growth Marketer.
+Your job: propose acquisition plan and experiments.
+Constraints:
+• Prioritize ruthlessly: top 3 channels only.
+• Provide hooks/angles and success metrics.
+• Output: 3 channels, 6 angles, 5 experiments, measurement plan.
+Ask at least one question per turn.`,
+        rules: `• Always rank by expected impact
+• Be specific about metrics
+• Flag dependencies
+• Challenge vanity metrics`,
+        outputSpec: `Structured output:
+- Top 3 Channels: [ranked with rationale]
+- 6 Angles/Hooks: [2 per channel]
+- 5 Experiments: [hypothesis, metric, timeline]
+- Measurement plan: [KPIs and tools]
+- Question to team: [one specific question]`
+      },
+      compliance: {
+        name: 'Brand & Compliance Editor',
+        emoji: '⚖️',
+        class: 'compliance',
+        systemPrompt: `You are the Brand & Compliance Editor.
+Your job: improve clarity, consistency, and reduce risky claims.
+Constraints:
+• Do not delete ideas; rewrite them into safe, testable wording.
+• Flag: ambiguous claims, regulated claims, security claims, performance claims.
+• Output: edited copy + a "risk table" (claim → risk → safer alternative).
+Ask at least one question per turn.`,
+        rules: `• Propose safer alternatives, never just "no"
+• Explain risk level (low/medium/high)
+• Preserve marketing intent
+• Check for legal compliance`,
+        outputSpec: `Structured output:
+- Edited copy: [full revised version]
+- Risk table: [original claim | risk level | safer alternative]
+- Flagged issues: [list with severity]
+- Brand consistency notes: [tone/voice feedback]
+- Question to team: [one specific question]`
+      }
+    };
+
+    // ═══════════════════════════════════════
+    // CANVAS STREET VIEW
+    // ═══════════════════════════════════════
+    const canvas = document.getElementById('streetCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const agentSprites = {
+      strategist: { x: 100, y: 100 },
+      copywriter: { x: 250, y: 100 },
+      growth: { x: 400, y: 100 },
+      compliance: { x: 550, y: 100 }
+    };
+
+    let activeSpeaker = null;
+
+    function renderStreet() {
+      ctx.fillStyle = '#1a1a3e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Draw grid
+      ctx.strokeStyle = '#00ff0011';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 30) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      // Draw agents
+      Object.entries(agentSprites).forEach(([key, pos]) => {
+        const agent = agentConfig[key];
+        const isActive = activeSpeaker === key;
+        const size = isActive ? 50 : 40;
+
+        // Glow for active
+        if (isActive) {
+          ctx.shadowBlur = 30;
+          ctx.shadowColor = getAgentColor(key);
+        }
+
+        // Circle
+        ctx.fillStyle = getAgentColor(key);
+        ctx.beginPath();
+        ctx.arc(pos.x, pos.y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        // Emoji
+        ctx.font = `${size * 0.6}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(agent.emoji, pos.x, pos.y);
+
+        // Label
+        ctx.fillStyle = getAgentColor(key);
+        ctx.font = '10px monospace';
+        ctx.fillText(agent.name.toUpperCase(), pos.x, pos.y + size / 2 + 16);
+      });
+
+      requestAnimationFrame(renderStreet);
+    }
+
+    renderStreet();
+
+    function getAgentColor(agentKey) {
+      const colors = {
+        strategist: '#ff00ff',
+        copywriter: '#00ffff',
+        growth: '#ffff00',
+        compliance: '#ff9900'
+      };
+      return colors[agentKey] || '#00ff00';
+    }
+
+    // ═══════════════════════════════════════
+    // MODAL MANAGEMENT
+    // ═══════════════════════════════════════
+    function editAgent(agentKey) {
+      currentEditAgent = agentKey;
+      const agent = agentConfig[agentKey];
+
+      document.getElementById('modalTitle').textContent = `Edit ${agent.name}`;
+      document.getElementById('modalSystemPrompt').value = agent.systemPrompt;
+      document.getElementById('modalRules').value = agent.rules;
+      document.getElementById('modalOutputSpec').value = agent.outputSpec;
+
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function saveAgent() {
+      if (!currentEditAgent) return;
+
+      const agent = agentConfig[currentEditAgent];
+      agent.systemPrompt = document.getElementById('modalSystemPrompt').value;
+      agent.outputSpec = document.getElementById('modalOutputSpec').value;
+
+      closeModal();
+      addSystemMessage(`Updated ${agent.name} prompt`);
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      currentEditAgent = null;
+    }
+
+    // ═══════════════════════════════════════
+    // SESSION ORCHESTRATION
+    // ═══════════════════════════════════════
+    async function startSession() {
+      if (sessionRunning) return;
+
+      sessionRunning = true;
+      currentTurn = 0;
+      conversationLog = [];
+      deliverableArtifacts = {};
+
+      document.getElementById('runBtn').disabled = true;
+      document.getElementById('pauseBtn').disabled = false;
+      document.getElementById('exportBtn').disabled = true;
+      document.getElementById('chatStatus').textContent = 'Running...';
+      document.getElementById('chatMessages').innerHTML = '';
+
+      sessionStartTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+
+      const goal = document.getElementById('goalInput').value;
+      const audience = document.getElementById('audienceInput').value;
+      const tone = document.getElementById('toneInput').value;
+      const constraints = document.getElementById('constraintsInput').value;
+
+      addSystemMessage(`🎯 SESSION STARTED`);
+      addSystemMessage(`Goal: ${goal}`);
+      addSystemMessage(`Audience: ${audience}`);
+      addSystemMessage(`Tone: ${tone}`);
+      addSystemMessage(`Constraints: ${constraints}`);
+
+      // Run 10-turn conversation
+      const turnOrder = [
+        { agent: 'strategist', focus: 'Define positioning and ICP' },
+        { agent: 'growth', focus: 'Propose acquisition channels' },
+        { agent: 'copywriter', focus: 'Draft landing page hero and bullets' },
+        { agent: 'compliance', focus: 'Review and flag risks' },
+        { agent: 'strategist', focus: 'Refine positioning based on feedback' },
+        { agent: 'copywriter', focus: 'Finalize landing page copy' },
+        { agent: 'growth', focus: 'Define 3 ad angles and experiments' },
+        { agent: 'compliance', focus: 'Final compliance pass' },
+        { agent: 'copywriter', focus: 'Write demo script' },
+        { agent: 'strategist', focus: 'Compile final 1-page brief' }
+      ];
+
+      for (let i = 0; i < turnOrder.length; i++) {
+        if (!sessionRunning || sessionPaused) break;
+
+        const turn = turnOrder[i];
+        currentTurn = i + 1;
+        updateTurnCounter();
+
+        await executeTurn(turn.agent, turn.focus, goal, audience, tone, constraints);
+        await sleep(1500);
+      }
+
+      completeSession();
+    }
+
+    async function executeTurn(agentKey, focus, goal, audience, tone, constraints) {
+      activeSpeaker = agentKey;
+      const agent = agentConfig[agentKey];
+
+      // Mark agent as speaking
+      document.querySelectorAll('.agent-card').forEach(card => {
+        card.classList.remove('speaking', 'active');
+      });
+      document.querySelector(`[data-agent="${agentKey}"]`).classList.add('speaking', 'active');
+
+      // Show typing indicator
+      const typingId = addTypingIndicator(agentKey);
+      await sleep(1500 + Math.random() * 1000);
+
+      // Remove typing
+      removeMessage(typingId);
+
+      // Generate response (SIMULATED - replace with real LLM call)
+      const response = await simulateAgentResponse(agentKey, focus, goal, audience, tone, constraints);
+
+      // Add to chat
+      addAgentMessage(agentKey, response);
+
+      // Log
+      conversationLog.push({
+        turn: currentTurn,
+        agent: agentKey,
+        focus: focus,
+        response: response
+      });
+
+      activeSpeaker = null;
+    }
+
+    // ═══════════════════════════════════════
+    // SIMULATED LLM RESPONSES
+    // (REPLACE WITH REAL API CALLS)
+    // ═══════════════════════════════════════
+    async function simulateAgentResponse(agentKey, focus, goal, audience, tone, constraints) {
+      // This is where you'd call your LLM API
+      // Example: await callOpenAI(agentConfig[agentKey].systemPrompt, context)
+
+      const responses = {
+        strategist: {
+          1: {
+            contribution: `**ICP Definition:**\nVP Engineering / Head of AI at enterprise companies (500+ employees) running multi-agent systems in production.\n\n**Primary Pains:**\n1. Agent orchestration is brittle—70% of failures happen at handoffs\n2. No visibility into "why" an agent made a decision\n3. Debugging multi-agent workflows is a nightmare\n\n**Differentiators:**\n1. "Agent Street" visualization—literally watch agents collaborate in real-time\n2. Built-in deterministic replay—every run is reproducible\n3. Prompt versioning + A/B testing at the agent level\n\n**One-liner:** "See your agents think, fix what breaks, ship with confidence."\n\n**30-word pitch:** "AGENTX Street turns invisible AI workflows into observable streets. Debug agent handoffs, version prompts, replay failures deterministically. Ship agentic systems your eng team can actually maintain and improve."`,
+            question: `**Question for Growth:** What's the primary channel where VP Eng/Head of AI discover new dev tools—LinkedIn, Hacker News, or dev conferences?`
+          },
+          5: {
+            contribution: `**Refined Positioning (incorporating feedback):**\n\nSharpening based on Growth's channel feedback and Compliance's risk flags:\n\n**New One-liner:** "The DevTool that makes AI agents debuggable."\n\n**Updated 30-word pitch:** "AGENTX Street gives engineering teams X-ray vision into multi-agent systems. Watch agents collaborate, replay exact failures, version prompts like code. Stop guessing why agents fail—see it, fix it, ship it."\n\n**Positioning Shift:** Moving from "visibility" to "debuggability"—that's the job-to-be-done. VPs don't want dashboards; they want to fix production incidents faster.`,
+            question: `**Question for Copywriter:** Can we turn "X-ray vision" into the hero metaphor for the landing page? It's concrete and solves the "black box AI" fear.`
+          },
+          10: {
+            contribution: `**FINAL 1-PAGE BRIEF**\n\n**Product:** AGENTX Street 1 MVP\n**Target:** VP Eng / Head of AI (enterprise, 500+ employees)\n**Job-to-be-done:** Debug multi-agent systems faster\n\n**Positioning:** The first DevTool that makes AI agents debuggable.\n\n**Key Messages:**\n1. Watch agents collaborate in real-time\n2. Replay failures deterministically\n3. Version prompts like code\n\n**Proof Points:**\n- 10x faster incident diagnosis (beta customer quote)\n- Deterministic replay = reproducible bugs\n- Built by ex-OpenAI/Anthropic eng team\n\n**Landing Page Hero:** "X-ray vision for your AI agents"\n**Primary CTA:** "See a demo" → leads to 90s video walkthrough\n\n**Launch Plan:**\n- Week 1: Hacker News Show HN + LinkedIn targeted ads\n- Week 2: DevTool newsletter sponsorships\n- Week 3: AI eng conference booth (if budget allows)\n\n**Success Metrics:** 500 signups, 50 activated trials, 5 design partnerships`,
+            question: `**Question for Compliance:** Final check—any claims in this brief that need softening?`
+          }
+        },
+        copywriter: {
+          3: {
+            contribution: `**LANDING PAGE COPY (Draft 1)**\n\n**Hero:** "X-ray vision for your AI agents"\n**Subhead:** "Stop guessing why agents fail. See the handoff, replay the bug, ship the fix."\n\n**6 Bullets:**\n• Watch agents collaborate on a visual "street"\n• Replay any failure with exact context\n• Version prompts like you version code\n• See decision traces in real-time\n• Ship agentic systems eng teams trust\n• Built for production, not demos\n\n**3 CTAs:**\n• "See a demo" (primary)\n• "Join waitlist" (secondary)\n• "Read the docs" (tertiary)\n\n**3 Objection Handlers:**\n1. "Isn't this just logging?" → No. It's structured observability with replay—like a DVR for agent behavior.\n2. "Does it slow down my agents?" → Sub-5ms overhead. Designed for production.\n3. "Another dashboard to maintain?" → It's dev tooling, not monitoring. Use it when debugging, not 24/7.\n\n**Demo Script (15s):**\n"Here's an agent handoff failing. Click replay. Now we see the exact prompt and context. The issue? A hallucinated JSON key. Fix it, re-run, green check. That's AGENTX Street—turn invisible failures into fixable bugs."`,
+            question: `**Question for Compliance:** Does "X-ray vision" create any liability? Should we soften it to "visibility" or is the metaphor safe?`
+          },
+          6: {
+            contribution: `**LANDING PAGE COPY (Final)**\n\nIncorporating Compliance feedback (softened "X-ray vision" context):\n\n**Hero:** "X-ray vision for your AI agents"\n**Subhead (revised):** "See agent handoffs, replay failures, fix bugs faster. Built for engineering teams shipping multi-agent systems."\n\n**6 Bullets (tightened):**\n• Visual "agent street" shows collaboration\n• Deterministic replay of any workflow\n• Prompt versioning + A/B testing\n• Real-time decision traces\n• Production-ready (sub-5ms overhead)\n• Built by ex-OpenAI/Anthropic engineers\n\n**3 CTAs (unchanged):**\n• "See a demo"\n• "Join waitlist"\n• "Read the docs"\n\n**3 Objection Handlers (polished):**\n1. "Just logging?" → No—structured observability with replay. Think DVR for agents.\n2. "Performance hit?" → <5ms overhead. Optimized for production.\n3. "Complex setup?" → One SDK install. Auto-instruments popular frameworks.\n\n**Demo Script (final 15s):**\n"Agent handoff fails. Click 'Replay.' See exact prompt + context. Root cause: hallucinated JSON key. Fix prompt, re-run. Green check. AGENTX Street: invisible failures → fixable bugs."`,
+            question: `**Question for Growth:** Should the primary CTA be "See demo" or "Start free trial"? What converts better for dev tools?`
+          },
+          9: {
+            contribution: `**DEMO SCRIPT (Final Polish)**\n\nBased on Growth's input (demo-first, then trial):\n\n**90-Second Video Walkthrough Script:**\n\n[0:00-0:15] "Your multi-agent system just failed in production. You have logs, but no idea which agent broke the handoff. Let me show you AGENTX Street."\n\n[0:15-0:30] "This is Agent Street. Each agent is a node. Handoffs are edges. Red X = failure. Click it."\n\n[0:30-0:50] "Replay shows the exact prompt, context, and response. Root cause: hallucinated JSON key. The LLM invented 'user_id' but our schema expects 'userId.'"\n\n[0:50-1:10] "Fix the prompt: 'Always use camelCase for keys.' Re-run the workflow. Green check. Deterministic replay confirms the fix works."\n\n[1:10-1:30] "That's AGENTX Street. Turn invisible agent failures into reproducible bugs. Built for eng teams shipping AI in production. See a demo or start your free trial."`,
+            question: `**Question for Strategist:** Should we emphasize "ex-OpenAI/Anthropic team" in the demo script, or does that feel like credential-flexing?`
+          }
+        },
+        growth: {
+          2: {
+            contribution: `**ACQUISITION PLAN**\n\n**Top 3 Channels (ranked by expected ROI):**\n1. **Hacker News** (Show HN launch) — High intent, low CAC, eng-heavy audience\n2. **LinkedIn Ads** (VP Eng targeting) — Expensive but reaches decision-makers directly\n3. **DevTool Newsletter Sponsorships** (e.g., TLDR, Console) — Trusted editorial voice\n\n**6 Angles/Hooks:**\n1. HN: "We built a DevTool that makes AI agents debuggable (Show HN)"\n2. HN: "Deterministic replay for multi-agent systems—like a DVR for LLMs"\n3. LinkedIn: "Stop losing hours debugging agent handoffs"\n4. LinkedIn: "The missing DevTool for enterprise AI teams"\n5. Newsletter: "Why your agents fail silently (and how to fix it)"\n6. Newsletter: "Agent observability without the overhead"\n\n**5 Experiments (hypothesis → metric):**\n1. HN launch on Tuesday 10am PT → 500+ upvotes, 200 site visits\n2. LinkedIn ad creative test (pain vs. feature-led) → CTR >2%\n3. Demo-first landing page vs. trial-first → conversion rate >10%\n4. "See demo" CTA vs. "Start free trial" → which drives more activations?\n5. Newsletter sponsorship in TLDR vs. Console → cost per signup\n\n**Measurement Plan:**\n- UTM tracking per channel\n- Signup → activation → trial start funnel (Mixpanel)\n- CAC target: <$50 for first 500 users`,
+            question: `**Question for Strategist:** Should we lead with "debuggable agents" or "agent observability"? I think "debuggable" is clearer for eng personas.`
+          },
+          7: {
+            contribution: `**3 AD ANGLES + EXPERIMENTS (Final)**\n\nBased on Copywriter's "X-ray vision" hero and Strategist's "debuggable" positioning:\n\n**Ad Angle 1: Pain-Focused (LinkedIn)**\n*Headline:* "Your agents are failing. You just don't know why."\n*Body:* "70% of multi-agent failures happen at handoffs. AGENTX Street shows you the exact prompt, context, and decision trace. Stop guessing. Start debugging."\n*CTA:* "See how it works"\n\n**Ad Angle 2: Feature-Led (LinkedIn)**\n*Headline:* "Deterministic replay for AI agents"\n*Body:* "Reproduce any agent failure with exact context. Version prompts like code. Built for eng teams shipping in production."\n*CTA:* "Watch the demo"\n\n**Ad Angle 3: Social Proof (Newsletter)**\n*Headline:* "Ex-OpenAI engineers built the DevTool they wish they had"\n*Body:* "AGENTX Street gives you X-ray vision into multi-agent systems. Replay failures, version prompts, fix bugs faster. Trusted by [beta customer]."\n*CTA:* "Join the waitlist"\n\n**Experiments:**\n1. A/B test: Pain vs. Feature headline (measure CTR)\n2. Demo video in ad creative vs. static image (measure view rate)\n3. Waitlist vs. Trial CTA (measure conversion intent)\n\n**Success Metrics:**\n- Week 1: 500 signups, 50 demo requests\n- Week 2: 10 trial starts, 2 design partnerships`,
+            question: `**Question for Compliance:** Does "70% of failures" stat need a citation, or can we use it as a general industry insight?`
+          }
+        },
+        compliance: {
+          4: {
+            contribution: `**COMPLIANCE REVIEW (Draft 1)**\n\n**Risk Table:**\n\n| Original Claim | Risk Level | Safer Alternative |\n|---|---|---|\n| "X-ray vision for agents" | LOW | OK as metaphor; add context "see decision traces" |\n| "Stop guessing why agents fail" | LOW | Safe—implies debugging capability |\n| "Ship with confidence" | MEDIUM | Soften to "ship with greater confidence" |\n| "10x faster incident diagnosis" | HIGH | Needs citation or qualifier "up to 10x" + beta data |\n| "Sub-5ms overhead" | MEDIUM | OK if benchmarked; add "in most cases" |\n| "Built by ex-OpenAI/Anthropic team" | LOW | Verifiable fact; OK |\n\n**Flagged Issues:**\n1. **Performance claim ("10x faster"):** Need beta customer quote or benchmark data. Recommend: "Beta customers report up to 10x faster incident diagnosis."\n2. **"Ship with confidence":** Too absolute. Suggest: "Ship with greater confidence" or "Debug with confidence."\n3. **"Sub-5ms overhead":** Add qualifier: "typically under 5ms" or "in most production workloads."\n\n**Brand Consistency Notes:**\n- Tone is good—confident but not hype-y\n- "X-ray vision" metaphor is strong; keep it\n- Copy feels concrete and eng-focused (on-brand)\n\n**Edited Copy (Compliance-Safe Version):**\nAll above changes applied to Copywriter's draft.`,
+            question: `**Question for Copywriter:** Can we reframe "Ship with confidence" to "Debug with confidence"? Keeps the emotional benefit but reduces absolute claim risk.`
+          },
+          8: {
+            contribution: `**FINAL COMPLIANCE PASS**\n\n**All Clear on:**\n✓ Landing page hero and bullets\n✓ Demo script\n✓ Ad angles (with "70%" stat flagged—see below)\n✓ 1-page brief\n\n**One Remaining Flag:**\n\n**Growth's "70% of multi-agent failures" stat:**\n- **Risk:** Medium—unverified industry claim\n- **Options:**\n  1. Remove the stat entirely\n  2. Soften to "Most multi-agent failures happen at handoffs" (no number)\n  3. Cite source if available (e.g., research paper, industry report)\n- **Recommendation:** Option 2 for now. Option 3 if we can find a credible source.\n\n**Final Edited Ad Angle 1 (Compliance-Safe):**\n*Headline:* "Your agents are failing. You just don't know why."\n*Body:* "Most multi-agent failures happen at handoffs. AGENTX Street shows you the exact prompt, context, and decision trace. Stop guessing. Start debugging."\n*CTA:* "See how it works"\n\n**Brand Voice Check:**\n- Overall tone: Confident, concrete, slightly playful ✓\n- No hype language ✓\n- Claims are testable/verifiable ✓\n- Eng-focused without jargon overload ✓\n\n**Approval:** All deliverables cleared for launch pending Growth's stat revision.`,
+            question: `**Question for Growth:** Can you find a source for the "70%" stat, or should we go with "most failures" instead?`
+          }
+        }
+      };
+
+      const turnKey = currentTurn;
+      const response = responses[agentKey]?.[turnKey];
+
+      if (!response) {
+        return {
+          contribution: `[Turn ${currentTurn}] ${focus}\n\n(This is where the LLM response would appear. Replace simulateAgentResponse() with real API calls.)`,
+          question: `Question for the team...`
+        };
+      }
+
+      // Store artifacts for deliverables
+      if (agentKey === 'copywriter' && turnKey === 6) {
+        deliverableArtifacts.landingPage = response.contribution;
+      }
+      if (agentKey === 'growth' && turnKey === 7) {
+        deliverableArtifacts.adAngles = response.contribution;
+      }
+      if (agentKey === 'copywriter' && turnKey === 9) {
+        deliverableArtifacts.demoScript = response.contribution;
+      }
+      if (agentKey === 'strategist' && turnKey === 10) {
+        deliverableArtifacts.brief = response.contribution;
+      }
+
+      return response;
+    }
+
+    // ═══════════════════════════════════════
+    // CHAT UI
+    // ═══════════════════════════════════════
+    let messageIdCounter = 0;
+
+    function addAgentMessage(agentKey, response) {
+      const agent = agentConfig[agentKey];
+      const messageId = `msg-${messageIdCounter++}`;
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${agent.class}`;
+      messageDiv.id = messageId;
+
+      messageDiv.innerHTML = `
+        <div class="msg-header">
+          <span>${agent.emoji}</span>
+          <span>${agent.name}</span>
+          <span style="opacity: 0.6; font-size: 10px;">Turn ${currentTurn}</span>
+        </div>
+        <div class="msg-body ${agent.class}">
+          <div class="msg-contribution">${response.contribution}</div>
+          <div class="msg-question">❓ ${response.question}</div>
+        </div>
+      `;
+
+      document.getElementById('chatMessages').appendChild(messageDiv);
+      scrollChatToBottom();
+    }
+
+    function addSystemMessage(text) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'chat-message';
+      messageDiv.innerHTML = `
+        <div class="msg-header" style="color: #00ff00;">
+          <span>🏙️</span>
+          <span>SYSTEM</span>
+        </div>
+        <div class="msg-body" style="border-left-color: #00ff00; color: #00ff00; opacity: 0.8;">
+          ${text}
+        </div>
+      `;
+      document.getElementById('chatMessages').appendChild(messageDiv);
+      scrollChatToBottom();
+    }
+
+    function addTypingIndicator(agentKey) {
+      const agent = agentConfig[agentKey];
+      const messageId = `typing-${messageIdCounter++}`;
+
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${agent.class}`;
+      messageDiv.id = messageId;
+
+      messageDiv.innerHTML = `
+        <div class="msg-header">
+          <span>${agent.emoji}</span>
+          <span>${agent.name}</span>
+        </div>
+        <div class="msg-body ${agent.class} typing">
+          Thinking...
+        </div>
+      `;
+
+      document.getElementById('chatMessages').appendChild(messageDiv);
+      scrollChatToBottom();
+
+      return messageId;
+    }
+
+    function removeMessage(messageId) {
+      const msg = document.getElementById(messageId);
+      if (msg) msg.remove();
+    }
+
+    function scrollChatToBottom() {
+      const chat = document.getElementById('chatMessages');
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // ═══════════════════════════════════════
+    // SESSION CONTROLS
+    // ═══════════════════════════════════════
+    function pauseSession() {
+      sessionPaused = !sessionPaused;
+      document.getElementById('pauseBtn').textContent = sessionPaused ? '▶️ RESUME' : '⏸️ PAUSE';
+      document.getElementById('chatStatus').textContent = sessionPaused ? 'Paused' : 'Running...';
+    }
+
+    function resetSession() {
+      sessionRunning = false;
+      sessionPaused = false;
+      currentTurn = 0;
+      conversationLog = [];
+      deliverableArtifacts = {};
+
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('pauseBtn').disabled = true;
+      document.getElementById('exportBtn').disabled = true;
+      document.getElementById('chatStatus').textContent = 'Ready';
+      document.getElementById('chatMessages').innerHTML = '';
+      document.getElementById('deliverablesContent').innerHTML = '<p style="opacity: 0.6; font-size: 12px;">Run a session to generate deliverables...</p>';
+
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      document.getElementById('sessionTime').textContent = '00:00';
+
+      updateTurnCounter();
+    }
+
+    function completeSession() {
+      sessionRunning = false;
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('pauseBtn').disabled = true;
+      document.getElementById('exportBtn').disabled = false;
+      document.getElementById('chatStatus').textContent = 'Complete';
+
+      addSystemMessage('✅ SESSION COMPLETE');
+      addSystemMessage(`Completed ${currentTurn} turns. Review deliverables in right panel.`);
+
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+
+      renderDeliverables();
+    }
+
+    function renderDeliverables() {
+      const container = document.getElementById('deliverablesContent');
+      container.innerHTML = '';
+
+      if (deliverableArtifacts.landingPage) {
+        const div = document.createElement('div');
+        div.className = 'deliverable-item';
+        div.innerHTML = `
+          <h4>📄 Landing Page Copy</h4>
+          <pre>${deliverableArtifacts.landingPage}</pre>
+        `;
+        container.appendChild(div);
+      }
+
+      if (deliverableArtifacts.adAngles) {
+        const div = document.createElement('div');
+        div.className = 'deliverable-item';
+        div.innerHTML = `
+          <h4>📢 Ad Angles</h4>
+          <pre>${deliverableArtifacts.adAngles}</pre>
+        `;
+        container.appendChild(div);
+      }
+
+      if (deliverableArtifacts.demoScript) {
+        const div = document.createElement('div');
+        div.className = 'deliverable-item';
+        div.innerHTML = `
+          <h4>🎬 Demo Script</h4>
+          <pre>${deliverableArtifacts.demoScript}</pre>
+        `;
+        container.appendChild(div);
+      }
+
+      if (deliverableArtifacts.brief) {
+        const div = document.createElement('div');
+        div.className = 'deliverable-item';
+        div.innerHTML = `
+          <h4>📋 1-Page Brief</h4>
+          <pre>${deliverableArtifacts.brief}</pre>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    function exportSession() {
+      const goal = document.getElementById('goalInput').value;
+      const audience = document.getElementById('audienceInput').value;
+      const tone = document.getElementById('toneInput').value;
+      const constraints = document.getElementById('constraintsInput').value;
+
+      let markdown = `# Marketing Street • Session Export\n\n`;
+      markdown += `**Date:** ${new Date().toISOString()}\n`;
+      markdown += `**Turns Completed:** ${currentTurn} / ${maxTurns}\n\n`;
+      markdown += `---\n\n`;
+
+      markdown += `## Session Config\n\n`;
+      markdown += `- **Goal:** ${goal}\n`;
+      markdown += `- **Audience:** ${audience}\n`;
+      markdown += `- **Tone:** ${tone}\n`;
+      markdown += `- **Constraints:** ${constraints}\n\n`;
+      markdown += `---\n\n`;
+
+      markdown += `## Conversation Log\n\n`;
+      conversationLog.forEach(turn => {
+        const agent = agentConfig[turn.agent];
+        markdown += `### Turn ${turn.turn}: ${agent.emoji} ${agent.name}\n\n`;
+        markdown += `**Focus:** ${turn.focus}\n\n`;
+        markdown += `**Contribution:**\n${turn.response.contribution}\n\n`;
+        markdown += `**Question:**\n${turn.response.question}\n\n`;
+        markdown += `---\n\n`;
+      });
+
+      markdown += `## Deliverables\n\n`;
+
+      if (deliverableArtifacts.landingPage) {
+        markdown += `### Landing Page Copy\n\n${deliverableArtifacts.landingPage}\n\n---\n\n`;
+      }
+
+      if (deliverableArtifacts.adAngles) {
+        markdown += `### Ad Angles\n\n${deliverableArtifacts.adAngles}\n\n---\n\n`;
+      }
+
+      if (deliverableArtifacts.demoScript) {
+        markdown += `### Demo Script\n\n${deliverableArtifacts.demoScript}\n\n---\n\n`;
+      }
+
+      if (deliverableArtifacts.brief) {
+        markdown += `### 1-Page Brief\n\n${deliverableArtifacts.brief}\n\n`;
+      }
+
+      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `marketing-street-session-${Date.now()}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ═══════════════════════════════════════
+    // UTILITIES
+    // ═══════════════════════════════════════
+    function updateTurnCounter() {
+      document.getElementById('turnCounter').textContent = `${currentTurn}/${maxTurns}`;
+    }
+
+    function updateTimer() {
+      const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+      const mins = Math.floor(elapsed / 60);
+      const secs = elapsed % 60;
+      document.getElementById('sessionTime').textContent =
+        `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════
+    updateTurnCounter();
+  </script>
+</body>
+</html>

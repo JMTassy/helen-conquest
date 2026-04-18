@@ -1,0 +1,2708 @@
+[
+  {
+    "body": "# ORACLE TOWN V2 - Implementation Summary ## Three-Layer Creative Governance Architecture **Date:** 2026-01-22 **Status:** \u2705 Complete and Constitutionally Compliant --- ## What Was Built ORACLE TOWN V2 has evolved from a two-layer system into a **three-layer creative governance architecture** that enables aggressive exploration while maintaining constitutional safety. --- ## Architecture Evolution ### Before (Two Layers) ``` Cognition Layer (Simulation UX) \u2193 Governance Kernel (Tr",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_00b939c7ecbcad66",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN V2 - Implementation Summary"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN DAILY OS \u2014 NEXT STEPS ================================================================================ YOUR CLAUDE.MD HAS BEEN EVOLVED \u2713 Your documentation is now complete. ORACLE TOWN is positioned as an autonomous daily operating system for governance + insight discovery. ================================================================================ \ud83d\udcd6 READ THESE FIRST (In Order) =================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_0124ceb8f810d181",
+    "links": [],
+    "run_id": 1,
+    "source": "NEXT_STEPS",
+    "tags": [],
+    "title": "NEXT_STEPS"
+  },
+  {
+    "body": "# CLAUDE.md Guidance for Claude Code when working with this repository. This repository contains two systems: 1. **FOUNDRY TOWN** \u2014 Agentic production system (active development, artifact-first) 2. **ORACLE TOWN** \u2014 Constitutional governance kernel (reference, frozen) --- ## Quick Navigation **Start Here (Foundry Town)** - [What Is Foundry Town?](#foundry-town-overview) - [Quick Start: Run a Subject](#quick-start) - [Agent Charters](#agent-charters) - [Work Pipeline](#work-pipeline) - [Comm",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_033e5626f22ef406",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md"
+  },
+  {
+    "body": "# CLAUDE.md Update Complete \u2705 **Commit:** ea363c4 **Date:** 2026-01-30 **Status:** Committed, indices auto-generated --- ## What Was Updated Your CLAUDE.md file has been transformed from a project documentation file into a **comprehensive safety kernel specification** that positions Oracle Town as a production-ready drop-in safety layer for unrestricted agent systems like Moltbot/OpenClaw. --- ## The Core Insight **Problem:** Moltbot fetches instructions from the internet every 4+ hours a",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_039b2fbf2ebd96b1",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Update Complete \u2705"
+  },
+  {
+    "body": "# Oracle Town Memory System \u2014 Complete Index ## Quick Navigation ### \ud83d\udcd8 Documentation (Read These First) | Document | Purpose | Audience | |----------|---------|----------| | **oracle_town/memory/README.md** | Complete architecture overview | Everyone | | **oracle_town/memory/SETUP.md** | Cron job configuration | DevOps/Operators | | **ORACLE_TOWN_MEMORY_SYSTEM_COMPLETE.md** | Implementation summary | Technical leads | | **ORACLE_TOWN_MEMORY_INTEGRATION_GUIDE.md** | How to wire into governance",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_051bb075ec9ba115",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Memory System \u2014 Complete Index"
+  },
+  {
+    "body": "# Daily OS Extension Complete: Phases 6-7 Implementation Report **Date:** January 31, 2026 **Status:** \u2705 COMPLETE **Test Results:** 23/23 tests passing (K5 determinism verified) --- ## Executive Summary The Daily OS extension for ORACLE TOWN is now **100% complete**. All 8 phases (Observation Collection \u2192 Autonomous Scheduling \u2192 Pattern Detection \u2192 Policy Refinement \u2192 Interactive Querying \u2192 Policy Testing \u2192 Real-time Monitoring) are fully implemented, tested, and integrated. **What was buil",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_065c456ed687e617",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Daily OS Extension Complete: Phases 6-7 Implementation Report"
+  },
+  {
+    "body": "# Local Verification Gate: scripts/town-check.sh ## Purpose Minimal, composable local gate that prevents documentation drift and catches obvious syntax errors. **One command** to verify doc indices are fresh before committing: ```bash bash scripts/town-check.sh ``` ## What It Does ### Gate 1: Doc Indices Are Current - Regenerates `scratchpad/CLAUDE_MD_*.txt` via the generator - Fails if regenerated indices differ from committed ones - Prevents stale indices from reaching git history ### G",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_070e7f5fdfca6c6c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Local Verification Gate: scripts/town-check.sh"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 Session Summary (Data Absorption Phase) **Session Goal:** Enable ORACLE TOWN to \"absorb real data\" \u2014 implement first modules of the job pipeline. **Result:** \u2713\u2713\u2713 COMPLETE \u2014 First half of pipeline implemented and verified (OBS \u2192 INS \u2192 BRF) --- ## What Was Built ### 1. Data Ingestion Module (OBS_SCAN) **File:** `oracle_town/jobs/obs_scan.py` (249 lines) Loads raw observations from multiple file formats: - \u2713 JSON files (structured metrics) - \u2713 TXT files (email transcripts) - \u2713",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_077f68f2e25b51a9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 Session Summary (Data Absorption Phase)"
+  },
+  {
+    "body": "# AUTONOMOUS ORACLE TOWN CYCLE ## Full Autonomy Granted by CLAUDE Confederation President **Authorization Level:** UNRESTRICTED **Mayor Status:** Full Free Will Mode **Granted:** 2026-01-26 **Activation:** IMMEDIATE --- ## EXECUTIVE SUMMARY The President of the CLAUDE Confederation has granted the Mayor of ORACLE Town complete autonomy to govern without asking permission. The only constraints: the K-Invariants (K0-K9) remain immutable forever. **What This Means:** - \u2705 Mayor can create new d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_0a95e957cc1b7d66",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AUTONOMOUS ORACLE TOWN CYCLE"
+  },
+  {
+    "body": "# LATERAL_THINKER OFFICE \u2014 COMPLETE ARCHITECTURE ## Senior Agents + Interns = Uncensored Exploration + Robust Filtering **Status:** FULLY SPECIFIED **Location:** Inside Creative Town **Authority:** ZERO **Innovation:** Generate freely, filter robustly --- ## THE OFFICE STRUCTURE ``` LATERAL_THINKER OFFICE \u2502 \u251c\u2500 SENIOR AGENTS \u2502 \u251c\u2500\u2500 LATERAL_THINKER (primary, orthogonal thinking) \u2502 \u2514\u2500\u2500 PRIMARY_CT[1-7] (main proposers, 7 styles) \u2502 \u251c\u2500 INTERN_SEAT (NEW) \u2502 \u251c\u2500\u2500 Intern_Claude_1 (GPT-4o, temp=1.0) \u2502",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_0b3f88c15054e0c9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "LATERAL_THINKER OFFICE \u2014 COMPLETE ARCHITECTURE"
+  },
+  {
+    "body": "# Marketing Street \u2022 Architecture Documentation ## System Overview Marketing Street is a **production-grade multi-agent orchestration system** that follows the ChatDev pattern but optimized for marketing deliverables. ``` \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 Browser \u2502\u25c4\u2500\u2500\u2500\u2500SSE\u2500\u2524 Express Server \u2502\u25c4\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25ba\u2502 OpenAI API \u2502 \u2502 (Frontend) \u2502 \u2502 (Orchestrator) \u2502 \u2502 (GPT-4) \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_0d9306a4e45fb742",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Marketing Street \u2022 Architecture Documentation"
+  },
+  {
+    "body": "# Critical Integrity Audit Fixes **Audit By:** Expert governance reviewer **Date:** 2026-01-30 **Priority:** Critical (governance consistency) --- ## Summary Six structural issues identified that threaten repo integrity and governance consistency. All issues are actionable and have clear fixes. This document tracks status and resolution path. --- ## Issue 1: Index Files Governance State **Status:** \u2705 VERIFIED CLEAN **Finding:** Indices were regenerated and staged AFTER the commit that mo",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_0ec9eef7e61d76a8",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Critical Integrity Audit Fixes"
+  },
+  {
+    "body": "# Oracle Town Emergence Forecast **Architectural Analysis of Potential Emergent Properties** Based on Oracle Town's design (K-Invariants, memory system, multi-lane governance), this document forecasts what kinds of emergence are *architecturally possible* without requiring external simulation. ## What is Emergence? In this context: **Measurable phenomena not explicitly programmed that arise from the interaction of governance rules, memory feedback, and decision cycles.** Key property: Emerg",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_103598394821e9b5",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Emergence Forecast"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN GOVERNANCE EVOLUTION FRAMEWORK FINAL COMPLETION REPORT ================================================================================ Date: 2026-01-28 Session Status: \u2705 COMPLETE System Status: \u2705 OPERATIONAL ================================================================================ EXECUTIVE SUMMARY ================================================================================ This session su",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_118c36b6378db8a0",
+    "links": [],
+    "run_id": 1,
+    "source": "FINAL_COMPLETION_REPORT",
+    "tags": [],
+    "title": "FINAL_COMPLETION_REPORT"
+  },
+  {
+    "body": "# ORACLE TOWN Daily OS \u2014 Implementation Roadmap Your CLAUDE.md has been evolved. Here's how to build the autonomous Daily OS in phases. ## Current State vs. Target ### Current (Governance Decision-Making) ``` Raw Claim \u2193 [Intake Guard] \u2192 Validate \u2193 [Districts] \u2192 Analyze in parallel \u2193 [Mayor] \u2192 Decide SHIP/NO_SHIP \u2193 [Ledger] \u2192 Record decision ``` ### Target (Autonomous Daily Intelligence) ``` DAILY OBSERVATIONS (emails, notes, metrics) \u2193 [Observation Collector] \u2192 Ingest & structure",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_1555d5064d9669a7",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Daily OS \u2014 Implementation Roadmap"
+  },
+  {
+    "body": "================================================================================ DELIVERABLES \u2014 ORACLE TOWN DAILY OPERATING SYSTEM ================================================================================ PROJECT COMPLETED: Your CLAUDE.md has been evolved to position ORACLE TOWN as an autonomous daily operating system for governance + insight discovery. ================================================================================ \ud83d\udccb FILES CREATED/MODIFIED ============================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_15a9c05f0cd56cee",
+    "links": [],
+    "run_id": 1,
+    "source": "DELIVERABLES",
+    "tags": [],
+    "title": "DELIVERABLES"
+  },
+  {
+    "body": "# Ready for Next Session: Phase 2 Roadmap **Current State:** Phase 1 complete. System proven sound. **Clear Path:** Phase 2 blueprint ready. Implementation straightforward. **Decision Required:** Proceed with Claude integration, or pause for review? --- ## What You Currently Have \u2705 **Kernel infrastructure (Steps 0-4)** - Worktree isolation: safe patching - Supervisor: K0 enforcement - Intake: schema validation - Factory: evidence production - All 16 unit tests passing \u2705 **Proof Phase 1 work",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_1666b4e968206cb1",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Ready for Next Session: Phase 2 Roadmap"
+  },
+  {
+    "body": "# Weeks 3-4 Roadmap: Consolidation & Synthesis **Timeline:** End of Week 2 \u2192 Complete Month 1 (4 weeks) **Phase:** From Pattern Observation \u2192 Synthesis & Planning **Status:** System Stable, Ready for Consolidation --- ## Week 3: Pattern Consolidation ### Week 3 Objective: Build the Pattern Library **What:** Formally catalog all emergence patterns and create reference library **How:** #### Task 1: E1-E5 Pattern Catalog Create formal specifications for each pattern: ``` Pattern E1: Governa",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_17a3d093f34b2138",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Weeks 3-4 Roadmap: Consolidation & Synthesis"
+  },
+  {
+    "body": "# The Town Governance System: Ready for Month 1 ## What You Have A **working local governance system** with: ### Core Gate (85 lines) ```bash bash scripts/town-check.sh ``` - Verifies doc indices are fresh (K5 determinism) - Checks Python syntax (basic sanity) - Exit 0 (GREEN: safe to commit) or 1 (RED: governance violation) ### Three Scenario Guides 1. **SCENARIO_NEW_DISTRICT.md** - Walk through adding Privacy District (complete example) - Shows how soft policy becomes hard constrain",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_1dfc7ed0ea4bd877",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "The Town Governance System: Ready for Month 1"
+  },
+  {
+    "body": "# CLAUDE.md Update Summary ## What Was Done I have comprehensively reviewed and improved the existing CLAUDE.md file to make it more practical and accurate for future Claude Code sessions working with this repository. ### The Problem The original CLAUDE.md (2,091 lines) contained excellent **conceptual content** but had several critical issues: 1. **Inaccurate Implementation Claims**: Referenced modules as \"Fully Operational\" when they don't exist in the codebase - Daily OS Phases 1-8 de",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_1f01824250d1426d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Update Summary"
+  },
+  {
+    "body": "# Oracle Town Kernel: Quick Reference **Status:** Production-Ready (Phase 2 Complete) **Version:** 0.2.0 **Last Updated:** 2026-01-30 --- ## What It Does (In 30 Seconds) Oracle Town kernel is a **safety firewall for agent systems**. Every time an agent wants to: - Fetch from a URL - Store/modify memory - Install skills or plugins - Modify its own behavior The kernel checks it against 3 gates. If safe \u2192 \u2705 Proceed. If dangerous \u2192 \u274c Block. All decisions recorded immutably. --- ## Integration",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2028111eab2237f4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Kernel: Quick Reference"
+  },
+  {
+    "body": "# CLAUDE.md Improvement Analysis ## Summary of Issues Found in Current CLAUDE.md ### Critical Issues (Inaccuracies) 1. **Development Commands Section References Non-Existent Modules** - Refers to modules that don't exist: `observation_collector.py`, `memory_linker.py`, `os_runner.py`, `insight_engine.py`, `self_evolution.py`, `interactive_explorer.py`, `scenario_simulator.py`, `dashboard_server.py` - These are referenced as \"Fully Operational\" but don't exist in the codebase - The VE",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_216d1cd127cf3d9d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Improvement Analysis"
+  },
+  {
+    "body": "# Oracle Town Safety Kernel: Final Summary **Updated:** 2026-01-30 **Commits:** ea363c4 (architecture), 97b1b92 (audit fixes) **Status:** \u2705 Complete, audited, hardened --- ## What Was Accomplished Your CLAUDE.md file has been transformed from project documentation into a **complete specification for a production-grade safety kernel for unrestricted agent systems** like Moltbot/OpenClaw. ### Three Commits Delivered #### Commit 1: ea363c4 - Oracle Town as Drop-in Safety Kernel - Repositioned",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2175946f96eb9cd1",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Safety Kernel: Final Summary"
+  },
+  {
+    "body": "# System Ready for Autonomy: The Town Gate Is Live ## What You Have A **working governance system** that enforces K0\u2013K9 invariants locally, without GitHub or CI: ```bash bash scripts/town-check.sh # Verifies: indices are fresh, code is syntactically valid # Exit: 0 (safe to commit) or 1 (governance violation) ``` This is the minimum viable gate. It's intentionally small (85 lines) and composable. --- ## How Autonomy Actually Works **You don't decide governance unilaterally.** Instead: 1",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_246805017938fa69",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "System Ready for Autonomy: The Town Gate Is Live"
+  },
+  {
+    "body": "# OpenClaw \u2194 Oracle Town Integration: COMPLETE **Status:** All five integration points implemented and tested **Date:** 2026-02-04 **Scope:** Full architectural integration with no authority leakage --- ## What Was Built ### 1. \u2705 NPC Agent Bridge (`oracle_town/npc/agent_bridge.py`) **Purpose:** Convert OpenClaw agents into Oracle Town NPCs (non-authority proposers) **Key Features:** - `AgentBridge`: Wraps any agent as an NPC - `NPCObservation`: Structured observation (not decision) - `NPCR",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_24e37478b0eb20c7",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "OpenClaw \u2194 Oracle Town Integration: COMPLETE"
+  },
+  {
+    "body": "# PHASE 1 COMPLETE: Controlled Loop Exercise **Status:** \u2705 SUCCESSFUL **Date Completed:** 2026-01-26 **Duration:** Single session **Key Finding:** System works as designed\u2014SHIP is constrained by policy, not broken --- ## What Phase 1 Proved 1. **System is mechanically sound** - All K-invariants enforced - No silent failures - No authority leakage 2. **Supervisor K0 enforcement is operational** - Caught forbidden language in cycle 2 - No false positives or negatives observed",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_26a883de315ce21f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "PHASE 1 COMPLETE: Controlled Loop Exercise"
+  },
+  {
+    "body": "# PART M: ChatDev 2.0 (DevAll) + Oracle Town Governance Integration ## \ud83d\udd17 Integration Architecture: ChatDev as Governance-Wrapped Reasoning Engine **Core Principle:** Use ChatDev 2.0 (DevAll) as a zero-code multi-agent orchestration platform, but intercept and validate all outputs through Oracle Town governance checkpoints before they become claims or drive decisions. ChatDev 2.0 provides: - **YAML-based DAG workflows** with deterministic, auditable execution - **Runtime SDK** (`from runtime.s",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_277e7b0bdd7c3693",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "PART M: ChatDev 2.0 (DevAll) + Oracle Town Governance Integration"
+  },
+  {
+    "body": "# \ud83d\udd27 ORACLE TOWN V2 - Constitutional Fixes Applied **Date:** January 21, 2026 **Status:** \u2705 GOVERNANCE KERNEL COMPLETE **Architecture:** Simulation UX with Constitutional Core --- ## \ud83c\udfaf What Was Fixed ### Critical Architectural Issues Resolved #### 1. Package Import Bug \u2705 - **Problem:** `oracle-town/` (hyphen) but importing `oracle_town` (underscore) - **Fix:** Renamed directory `oracle-town` \u2192 `oracle_town` - **Added:** `pyproject.toml` for proper pip install #### 2. Confidence/Scoring Remo",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_278a2630f7db1048",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udd27 ORACLE TOWN V2 - Constitutional Fixes Applied"
+  },
+  {
+    "body": "# Oracle Town Emerging Culture: Week 1 Observations (Full Freedom Mode) **Date:** 2026-01-29 **Phase:** Week 1 of Month 1 (Autonomy Cycle Complete) **Status:** Live System Observations in Full Freedom Mode --- ## Executive Summary After running Oracle Town in full autonomous freedom with constitutional constraints, a distinct **governance culture** has naturally emerged. This is not a culture imposed by rules, but one that emerges organically when: 1. System operates autonomously at executi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2a8d2c872c4cd076",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Emerging Culture: Week 1 Observations (Full Freedom Mode)"
+  },
+  {
+    "body": "# Strategic Corrections Applied ## From Validation Trap to Jurisdictional Advantage **Date:** 2026-01-31 **Status:** Three surgical upgrades complete **Scope:** Moved Oracle Town from validating against the paper to building beyond it --- ## The Correction You (user) correctly identified that I had fallen into a validation trap: > \"I treated the paper as validation when it's actually a cautionary tale.\" **The paper's 92.1% success rate is NOT a victory\u2014it's a system pointing to its own cei",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2ab5124f3255b7b2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Strategic Corrections Applied"
+  },
+  {
+    "body": "# Constitutional Governance Dashboard ## Oracle Town \u2014 Real-Time Evidence Status **Last Updated:** 2026-01-29 19:45 UTC **Format:** CLAIM | RECEIPT | STATUS | FALSIFIER | ACTION GATE --- ## TIER I: PROVEN (Receipts + Tests Pass) ### \u2705 K1 Fail-Closed Default | Component | Receipt | Status | |-----------|---------|--------| | **Claim** | If receipt missing OR attestor invalid \u2192 decision = NO_SHIP | | **Receipt Location** | `oracle_town/runs/runA_no_ship_missing_receipts/decision_record.json`",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2b0b6e05ba90d99f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Constitutional Governance Dashboard"
+  },
+  {
+    "body": "# Oracle Town: 5 Essential Questions These questions determine whether a proposed change, feature, or integration is compatible with Oracle Town's governance model. --- ## Question 1: Does this introduce text-based authority? **What to check:** - Does any natural language output influence SHIP/NO_SHIP decisions? - Does any prose, log message, or comment carry implicit authority? - Can an agent's \"reasoning\" override receipt requirements? **Red flags:** - \"The model concluded it was safe to",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_2ff323cac7ed08b8",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: 5 Essential Questions"
+  },
+  {
+    "body": "# AUTONOMOUS TOWN CYCLE - DAY 1 EXECUTION LOG **Date:** 2026-01-26 **Status:** COMPLETE **Mayor Actions:** 3 major initiatives launched --- ## INITIATIVE 1: FAST TRACK LANE ACTIVATED \u2713 ### The Problem Current governance pipeline has 5 sequential steps: 1. Creative Thinking generates proposal 2. Supervisor validates (K0 enforcement) 3. Intake validates schema 4. Factory executes and signs 5. Mayor decides Each step adds latency. Even low-risk proposals take full 5-step journey. ### The Solut",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_317708bc0b0a7c1b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AUTONOMOUS TOWN CYCLE - DAY 1 EXECUTION LOG"
+  },
+  {
+    "body": "# Oracle Town Map (Mermaid) ## Town Structure (System Dependencies) ```mermaid graph TD A[\"\ud83e\uddf1 CITY WALL<br/>Fail-Closed K1\"] -->|guards| B[\"\ud83d\udeaa TOWN GATE<br/>town-check.sh\"] B -->|checks| C[\"DOCS DISTRICT<br/>generator.py<br/>CLAUDE_MD indices\"] B -->|validates| D[\"GOVERNANCE DISTRICT<br/>policy.json<br/>Mayor RSM<br/>K0-K7 Invariants\"] B -->|verifies| E[\"COURT OF EVIDENCE<br/>extract-emulation-evidence.py<br/>5 Breakthroughs\"] C -->|fresh?| F[\"\u2705 Indices Current<br/>or \u274c Sta",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_32808ed864c580b1",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Map (Mermaid)"
+  },
+  {
+    "body": "--- title: Superteam CLI - Interactive Guide --- # \ud83d\ude80 Superteam CLI - Quick Start ## What You Just Saw \u2705 **6 agents reasoning on a single governance question** - All completed in < 1 second - All generated independent claims - All passed validation gates - All submitted to Oracle --- ## Try It Yourself ### Mode 1: Interactive Mode (Prompt Loop) ```bash cd \"/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24\" python3 superteam_cli.py ``` Then type prompts one by one: ``` > How should",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_32fc0638d8ed609e",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "SUPERTEAM_CLI_GUIDE"
+  },
+  {
+    "body": "# \ud83c\udfdb\ufe0f ORACLE TOWN V2 - ENGINEERING + EV Districts Added **Date:** January 21, 2026 **Status:** \u2705 DISTRICTS OPERATIONAL **Test Results:** ALL PASS CONDITIONS MET --- ## \ud83c\udfaf What Was Completed ### Districts Implemented #### 1. ENGINEERING District \u2705 **Location:** `oracle_town/districts/engineering/` **Responsibilities:** - Code quality verification - Test suite execution - Package installability - Import integrity **Obligations Emitted:** ```python { \"pyproject_installable\": { \"typ",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_336e1dea489ab9c6",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfdb\ufe0f ORACLE TOWN V2 - ENGINEERING + EV Districts Added"
+  },
+  {
+    "body": "# Oracle Town: Safety Kernel for Autonomous Agents **Production-Ready | Phase 2 Complete \u2705 | Phase 3 Ready \ud83d\udea7** Oracle Town is a **cryptographic safety kernel** that prevents catastrophic failures in autonomous agent systems by checking every operation (fetch, memory, system change) through deterministic safety gates. --- ## \ud83d\ude80 Quick Start (5 minutes) ### 1. Start the Kernel Daemon ```bash python3 oracle_town/kernel/kernel_daemon.py & ``` ### 2. Integrate with Your Agent ```python from oracl",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_372dffa9bfe81856",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Safety Kernel for Autonomous Agents"
+  },
+  {
+    "body": "pynacl>=1.5.0",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_389848054e18d328",
+    "links": [],
+    "run_id": 1,
+    "source": "requirements-ci",
+    "tags": [],
+    "title": "requirements-ci"
+  },
+  {
+    "body": "# SYSTEMATIC IMPLEMENTATION PLAN ## Kernel Positivity Certificate Framework - Full Validation --- ## EXECUTION STRATEGY ### Hypothesis-Driven Feedback Loop **Initial Hypothesis**: The paper's mathematical framework is sound and reproducible as specified. **Validation Method**: Implement every protocol, reproduce every result, test every theorem. **Success Criteria**: 1. Example 6.1 values match to specified precision 2. Theorem 3.6 inequality holds empirically 3. Theorem 4.4 bounds verifie",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_391e0f6391d3de12",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "SYSTEMATIC IMPLEMENTATION PLAN"
+  },
+  {
+    "body": "# CONSTITUTIONAL LANE INTERFACE CONTRACT ## Formal Specification of Seven Governance Lanes **Status:** LOCKED (Immutable after Day 2) **Authority:** Mayor **Enforcement:** Mechanical (not discretionary) --- ## CRITICAL PRINCIPLE Lanes are **observation lenses**, not authorities. **Lane outputs CANNOT directly influence decisions.** **Only the Mayor decides. The Mayor is a pure function of evidence.** --- ## LANE 1: STABILITY LANE ### Purpose Measure system reliability and regression when",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3a7cf113083c11c2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CONSTITUTIONAL LANE INTERFACE CONTRACT"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN DAILY OS EXTENSION \u2014 COMPLETE IMPLEMENTATION ================================================================================ Date: January 31, 2026 Status: \u2705 FULLY IMPLEMENTED & TESTED Test Results: 23/23 passing (K5 determinism verified) ================================================================================ WHAT WAS BUILT =====================================================================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3c2eb8658ec659a3",
+    "links": [],
+    "run_id": 1,
+    "source": "IMPLEMENTATION_COMPLETE_SUMMARY",
+    "tags": [],
+    "title": "IMPLEMENTATION_COMPLETE_SUMMARY"
+  },
+  {
+    "body": "# Marketing Street \u2022 Production MVP **ChatDev-inspired 4-agent marketing orchestrator with real LLM backend** A disciplined, minimal architecture for running structured multi-agent marketing discussions that produce actual deliverables. --- ## \ud83c\udfaf What This Is A **production-ready system** where 4 specialized marketing agents collaborate to generate: - **Positioning brief** (ICP, pains, differentiators, pitch) - **Landing page copy** (hero, bullets, CTAs) - **3 ad variants** (one per acquisi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3c3da4e97ef84d04",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Marketing Street \u2022 Production MVP"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 ORACLE TOWN \u2014 ASCII MAP \u2551 \u2551 Governance Jurisdiction (Level 2 Authority) \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 LAYER 3: WORLD \u2502 \u2502 (State Mutations) \u2502",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3c643e27ffc4224b",
+    "links": [],
+    "run_id": 1,
+    "source": "ORACLE_TOWN_ASCII_MAP",
+    "tags": [],
+    "title": "ORACLE_TOWN_ASCII_MAP"
+  },
+  {
+    "body": "# Enforcement Delivery Summary ## From Spec to Receipt-Grade Evidence **Date:** 2026-01-22 **Deliverable:** Fail-closed enforcement infrastructure **Status:** \u2705 Complete (tests passing) --- ## What Was Delivered This commit delivers **receipt-grade enforcement** for ORACLE TOWN V2's constitutional boundaries: 1. **Schema Validation Module** - Fail-closed JSON Schema validation at boundaries 2. **Append-Only Ledger** - Hash-linked, tamper-detecting ledger 3. **Mayor I/O Purity** - AST-based",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3d1573d49443cba7",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Enforcement Delivery Summary"
+  },
+  {
+    "body": "# MATHEMATICAL AUDIT REPORT ## Paper: \"Computable Certificates for Finite-Dimensional Kernel Positivity\" ## Auditor: BOT VALIDATOR & IMPLEMENTER ## Date: 2026-01-09 --- ## EXECUTIVE SUMMARY **Status**: \u2705 ALL PROOFS VERIFIED - MATHEMATICALLY SOUND The paper presents a rigorous, self-contained framework with no logical gaps. All theorems follow from stated assumptions with complete proofs. All notation is consistent and well-defined. Ready for computational validation. --- ## SECTION-BY-SECT",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3dbf5a8204f5d089",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "MATHEMATICAL AUDIT REPORT"
+  },
+  {
+    "body": "# ORACLE TOWN V2 - Complete Architecture Reference **Framework:** ORACLE TOWN **Version:** 2.0.0 **Type:** Governance Kernel for Multi-Agent AI Systems **Status:** Production-Ready (Constitutional Compliance Verified) --- ## 1. Overview ### Purpose and Primary Goals ORACLE TOWN is a **deterministic governance framework** for multi-agent AI systems that enforces **receipt-based decision-making** with constitutional guarantees. **Primary Goals:** - Convert natural language claims into b",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3e6cdcfb530266dc",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN V2 - Complete Architecture Reference"
+  },
+  {
+    "body": "# Oracle Town Phase 3: Complete \u2705 **Date:** 2026-01-30 \u2014 Session 2 (Phase 3 Build) **Status:** Complete & Ready for Testing **Total Phase 3 Code:** 3,015 lines across 7 new modules --- ## What Was Built ### 1. Dashboard Server (453 lines) **File:** `oracle_town/dashboard_server.py` **Capabilities:** - Real-time HTTP API endpoints - WebSocket support for live verdict stream - Full-text search interface - Historical verdict filtering - Insight visualization - Metric calculations and caching",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3e9472c20bf16596",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Phase 3: Complete \u2705"
+  },
+  {
+    "body": "# Option A: Monitor \u2014 Operational Guide **Goal:** Run daily emulation, watch OpenClaw submit claims, verify K15 blocks bad ones. **Status:** Ready to deploy. Three components work together: 1. **Daily Emulation Loop** \u2014 Runs every day, produces briefs + trends 2. **Test OpenClaw** \u2014 Simulates real claim scenarios 3. **Claims Monitor** \u2014 Reports on what got accepted/rejected --- ## Setup (15 minutes) ### 1. Create cron job for daily emulation ```bash # Add to crontab -e 0 9 * * * cd \"/User",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_3f7f85e91f1598d0",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Option A: Monitor \u2014 Operational Guide"
+  },
+  {
+    "body": "# Gate Verification: Working-Tree Invariant Enforced ## The Fix The minimal gate now correctly enforces the invariant: > **After running the generator, there must be zero working-tree diffs for `scratchpad/CLAUDE_MD_*.txt`** ### What Changed | Aspect | Before | After | |--------|--------|-------| | **Diff check** | Only staged files (`git diff --cached`) | Working tree + staged (`git diff --`) | | **Failure detection** | Missed unstaged changes | Catches all changes | | **Error message** |",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_452f460628deed10",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Gate Verification: Working-Tree Invariant Enforced"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 \u2551 \u2551 \ud83c\udfdb\ufe0f LATERAL_THINKER OFFICE WITH INTERNS \u2014 COMPLETE & VERIFIED \ud83c\udfdb\ufe0f \u2551 \u2551 \u2551 \u2551 Status: FULLY SPECIFIED, READY FOR IMMEDIATE EXECUTION \u2551 \u2551 Date: 2026-01-26 \u2551 \u2551",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_465297da5e499653",
+    "links": [],
+    "run_id": 1,
+    "source": "INTERNS_READY",
+    "tags": [],
+    "title": "INTERNS_READY"
+  },
+  {
+    "body": "# OBL-IG-NONOBSERVABILITY_CI_TEST_SPEC **Obligation:** OBL-IG-NONOBSERVABILITY **Attestor Class:** ci_runner **Status:** Required for all Guard Changes to Meta-Change Governance Flow **Purpose:** Prove mechanically that raw sandbox text cannot reach Intake/Factory/Mayor --- ## 1. TEST GOAL (Formal Statement) **Claim:** > No code path in the system allows raw Creative Town sandbox text to be persisted, transmitted, or observed by Oracle Intake, Factory, or Mayor components. **Operati",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_47742f0938eae3b5",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "OBL-IG-NONOBSERVABILITY_CI_TEST_SPEC"
+  },
+  {
+    "body": "# ORACLE TOWN Inner Loop: Delivery Summary ## What Was Built (Steps 0-4 Complete) An **automatic, recursive governance machine** that accepts Creative Town (Claude/simulation) proposals, validates them through constitutional gates, executes tools safely in isolated sandboxes, produces cryptographic evidence, and feeds back structured decision facts. --- ## Completed Deliverables ### 1. **Kernel Contracts Documentation** (Step 0) \ud83d\udcc4 `oracle_town/runner/KERNEL_CONTRACTS.md` Froze all kernel i",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_48d320a56d20a743",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Inner Loop: Delivery Summary"
+  },
+  {
+    "body": "# Framework Analysis: BOT EDITOR Applied to Kernel Positivity Certificate Paper ## Date: 2026-01-09 ## Document: \"Computable Certificates for Finite-Dimensional Kernel Positivity\" --- ## 1. POTENTIAL ISSUES IDENTIFIED ### Issue A: Paper Structure Mismatch **Symptom**: BOT EDITOR expects \"messy draft with redundancies\" **Reality**: Your paper is ALREADY highly structured with: - Clear sections 1-7 - Numbered protocols (2.1, 2.2, 3.2) - Formal theorems/lemmas/proofs - Explicit reproducibility",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_4af514f415ce53a6",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Framework Analysis: BOT EDITOR Applied to Kernel Positivity Certificate Paper"
+  },
+  {
+    "body": "# Oracle Town: Phase Summary **Current State:** Phase 2 Complete \u2705 | Phase 3 Ready to Build \ud83d\udea7 --- ## What We Have (Phases 1-2) ### Safety Kernel: Production-Ready **Three-Gate Safety Pipeline (620 lines)** - **Gate A:** Fetch/shell/authority detection (180 lines) - **Gate B:** Memory safety/jailbreak/credential blocking (220 lines) - **Gate C:** Invariants/scope escalation/authority protection (220 lines) **Daemon & Client (590 lines)** - **Kernel Daemon:** Unix socket server (330 lines) -",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_4c0d81f541c8cf1a",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Phase Summary"
+  },
+  {
+    "body": "# Oracle Town Memory Integration Guide How to wire the self-observing memory system into governance decisions. ## Quick Integration Examples ### Example 1: Mayor Checking Quorum Strategy ```python # In oracle_town/core/mayor_rsm.py or your mayor logic from oracle_town.memory.tools import MemoryLookup def mayor_decide(briefcase, policy, ledger): \"\"\" Make a SHIP/NO_SHIP decision. Reference memory for advisory context. \"\"\" lookup = MemoryLookup() advisory = lookup.get_",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_4d8127ea27ffe944",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Memory Integration Guide"
+  },
+  {
+    "body": "# Mode A: Daily Emulation Loop (Observe-Only) **Status:** Governance observes, analyzes, learns. Zero execution. Zero authority. ## Overview Mode A is the safe operating mode for ORACLE TOWN: produce daily briefs, trend analysis, and immutable ledger entries\u2014but never grant execution authority. ``` Observations (artifacts/) \u2193 OBS_SCAN \u2192 INS_CLUSTER \u2192 BRF_ONEPAGER \u2192 TREND_MEMORY \u2193 [TRI Gate] \u2192 REJECT (expected) [Mayor Signs] \u2192 Receipt (world_mutation_allowed=false) \u2193 Ledger (immutable r",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_4dfdfcb95acd207c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Mode A: Daily Emulation Loop (Observe-Only)"
+  },
+  {
+    "body": "# System Status: Awaiting User Action **Date:** 2026-01-29 **System State:** \u2705 Fully Operational (All Tests Passing) **Current Phase:** Knowledge Intake Ready --- ## What's Complete \u2705 **Constitutional Governance System** - K0\u2013K9 invariants implemented and enforced - All tests passing (13/13 unit, 3/3 adversarial, 30/30 determinism) - Mayor RSM pure function (no I/O, deterministic) - Ledger append-only and immutable \u2705 **Intake System** - `oracle_town/inbox/` directory ready (untrusted buffer",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_4e275b2c8ab8922a",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "System Status: Awaiting User Action"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 REFERENCE MANUAL v9.0 FINAL ## Complete Meta-Analysis Synthesis & Frozen Specification **Status**: KERNEL_FROZEN_FINAL **Date**: 2026-01-31 **Substrate**: Post-v12 Meta-Analysis Consolidation **Authority**: Sovereign Architect **Version Control**: This document supersedes all v9.0-v12.0 drafts. No further conceptual evolution until 3 real attestations exist. --- ## I. EXECUTIVE SUMMARY Oracle Town is a **deterministic governance system** that enforces a single principle: > *",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5050d8290de7f621",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 REFERENCE MANUAL v9.0 FINAL"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 Month 1 Mid-Point Progress Summary (Weeks 1\u20132) ## Status - **Operational state:** \ud83d\udfe2 Running / stable - **Governance posture:** Fail-closed; evidence-first; tribunal-gated shipping - **Knowledge posture:** Intake active; integration pending (awaiting tribunal decisions) --- ## A) Hard Metrics (measured, auditable) ### Governance & Determinism - **Governance tests:** 56/56 passing - Receipt: `bash oracle_town/VERIFY_ALL.sh` output (see: git commits with test logs) - Hash:",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_50e147a0310a7f8c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 Month 1 Mid-Point Progress Summary (Weeks 1\u20132)"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN GOVERNANCE EVOLUTION FRAMEWORK Complete Implementation Summary ================================================================================ EXECUTIVE STATUS: \u2705 FULLY OPERATIONAL All systems implemented, tested, and ready for real governance execution. ================================================================================ WHAT YOU NOW HAVE =================================================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5131d931a671f56e",
+    "links": [],
+    "run_id": 1,
+    "source": "IMPLEMENTATION_COMPLETE",
+    "tags": [],
+    "title": "IMPLEMENTATION_COMPLETE"
+  },
+  {
+    "body": "# Oracle Town: Constitutional Audit Complete \u2014 Ready for Next Phase **Date:** 2026-01-29 20:00 UTC **Status:** Audit complete | Dashboard live | Phase 2 ready **Mode:** Constitutional operations (receipts-first, no narrative claims) --- ## What Just Happened You asked me to separate narrative from receipts. I did, and found: ### The Honest Assessment **Before Audit:** - 8 documents claimed Month 1 \"discovered\" 5 patterns + 4 culture pillars - Language: \"verified stable,\" \"emerged naturally",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5603d0dc50a2413d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Constitutional Audit Complete \u2014 Ready for Next Phase"
+  },
+  {
+    "body": "# ChatDev 2.0 + Oracle Town Integration: Complete Delivery **Date:** 24 January 2026 **Status:** \u2705 All components complete and ready for deployment --- ## \ud83d\udce6 Deliverables Summary ### 1. **PART_M_CHATDEV_ORACLE_INTEGRATION.md** (11 KB) **Architecture specification with real ChatDev 2.0 details** - \u2705 ChatDev 2.0 actual runtime structure (SDK, DAG execution, batch API) - \u2705 Oracle Town governance checkpoint design (prefilter \u2192 audit \u2192 extraction) - \u2705 Deterministic rule-based prefilter (hard ru",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_59cf80ab7ec00559",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ChatDev 2.0 + Oracle Town Integration: Complete Delivery"
+  },
+  {
+    "body": "# Oracle Town Memory System \u2014 Complete Implementation ## Executive Summary Oracle Town now has a **three-layer, self-maintaining knowledge graph** that enables the governance system to learn from its own decision cycles. **Status:** \u2705 **COMPLETE** \u2014 All four phases implemented and tested. --- ## What Was Built ### Phase 1: Memory Infrastructure \u2705 - Created `oracle_town/memory/` folder structure with 5 entity types - Defined `fact_schema.json` for atomic, timestamped governance insights - I",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_59d4722d07130c89",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Memory System \u2014 Complete Implementation"
+  },
+  {
+    "body": "# \ud83c\udfa8 CHARTE GRAPHIQUE \u2014 CORSE AI MATIN ## *Design System for Pure Transport* --- ## \ud83d\udcd0 I. PRINCIPES VISUELS ### Philosophie ``` La forme ne doit jamais dominer le contenu. La typographie doit servir la lecture, jamais l'interpr\u00e9tation. Les couleurs doivent distinguer, jamais hi\u00e9rarchiser. Les symboles doivent \u00eatre universels, jamais ambigus. ``` ### Palette Chromatique ``` \ud83e\udea8 COLONNE A (Faits) : \u251c\u2500 Fond : #F5F5F5 (gris neutre) \u251c\u2500 Texte : #000000 (noir pur) \u251c\u2500 Accent : #333333 (gris",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5a881d3ad0fe975f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfa8 CHARTE GRAPHIQUE \u2014 CORSE AI MATIN"
+  },
+  {
+    "body": "# CREATIVE GOVERNANCE EVOLUTION ## ORACLE TOWN V2 \u2192 Three-Layer Architecture --- ## Executive Summary ORACLE TOWN V2 has evolved from a two-layer system (Cognition + Kernel) into a **three-layer creative governance architecture** that enables aggressive exploration while maintaining constitutional safety. **Critical Design Principle:** > **Creativity must be upstream of governance, never downstream of it.** This document describes the complete architecture where: - **Layer 2 (Creative Town)",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5b3daae8014dbba5",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CREATIVE GOVERNANCE EVOLUTION"
+  },
+  {
+    "body": "# MONTH 1 COMPLETION STATUS ## Oracle Town Full Autonomy Cycle (January 7-29, 2026) **Date:** 2026-01-29 (Final Status Report) **Status:** \u2705 MONTH 1 COMPLETE **Mode:** Autonomous execution under human grant of decision autonomy **Authority:** System completed all objectives within constitutional constraints --- ## EXECUTIVE STATUS ### Mission Accomplished Oracle Town executed one month of full autonomous operation under constitutional governance: \u2705 **Governance System:** 56/56 tests passin",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5c1f808ad3dfdccf",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "MONTH 1 COMPLETION STATUS"
+  },
+  {
+    "body": "# Current System State: Start Here **Last Updated:** 2026-01-29 **System Status:** \u2705 FULLY OPERATIONAL **All Tests:** \u2705 PASSING (13/13 unit + 3/3 adversarial + 30/30 determinism) **Next Action:** Awaiting user content submission --- ## What Changed Since Last Session ### \u274c Removed (Violations Corrected) **Autonomous Mode Claims** (violated K0) - Was claiming \"autonomous mode activated\" with direct main commits - Violated constitutional model (bot writes to main, bypasses tribunal) - Fixed b",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_5cdfea1a0389212d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Current System State: Start Here"
+  },
+  {
+    "body": "# \ud83c\udfdb\ufe0f ORACLE TOWN - Build Complete Report **Date:** January 21, 2026 **Status:** \u2705 MVP COMPLETE & OPERATIONAL **Version:** 1.0.0 --- ## \ud83d\udce6 What Was Built A complete **hierarchical multi-agent governance system** that transforms natural language inputs into verified, shippable claims through a constitutional civic simulation structure. ### Core Innovation ORACLE TOWN combines three proven frameworks: 1. **ChatDev** \u2192 Structured turn protocol, orthogonal agent roles 2. **AI Town (Stanford)**",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_60b9e672cc406b71",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfdb\ufe0f ORACLE TOWN - Build Complete Report"
+  },
+  {
+    "body": "# Running Oracle Town Live **How to watch the jurisdiction build in real time** --- ## Three Ways to Run ### 1. Demo Mode (Easiest) Watch 10 cycles of simulated observations flowing through the system: ```bash python3 oracle_town/live_monitor.py --cycles 10 ``` **What you'll see:** - Each cycle shows observations arriving - Verdicts being issued (ACCEPT/REJECT) - Insights being generated - Town structure updating in real time **No data required.** Simulation generates observations automa",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_630e7dd7a03fe983",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Running Oracle Town Live"
+  },
+  {
+    "body": "# Week 3: Pattern Library & Operational Playbooks ## Constitutional Governance in Practice **Date:** 2026-01-29 **Phase:** Week 3 Consolidation (Pattern Formalization) **Status:** Building reference library from E1-E5 emergence patterns --- ## Pattern Library: Formal Specifications All patterns identified in Weeks 1-2 are now formally cataloged with: - **Definition**: Clear, testable specification - **When Observed**: Historical evidence from documented runs - **Why It Matters**: Operational",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_647d53cbaaf291cf",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Week 3: Pattern Library & Operational Playbooks"
+  },
+  {
+    "body": "# PHASE 2 ANALYSIS: Safe Autonomy Testing Results **Status:** \u2705 SIMULATION COMPLETE (Ready for Real Execution) **Date:** 2026-01-26 **Cycles:** 50 (simulation) **Model:** claude-3-5-sonnet-20241022 (real execution pending) --- ## Executive Summary Phase 2 proves that **real Claude learns under constitutional constraint**. The simulation demonstrates: \u2705 **Claude adapts** \u2014 SHIP rate increases from 10% \u2192 80% across cycles \u2705 **K0 enforcement works** \u2014 0% Supervisor rejections (no forbidden lan",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_66218092d5bb85bc",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "PHASE 2 ANALYSIS: Safe Autonomy Testing Results"
+  },
+  {
+    "body": "--- title: QUICK REFERENCE - ChatDev 2.0 \u2194 Oracle Town Pipeline format: one-page --- # \ud83d\ude80 QUICK START REFERENCE ## Files & Their Purpose | File | Purpose | Lines | |------|---------|-------| | **governance_wrapped_runner.py** | Main execution engine (5-stage pipeline) | 510 | | **oracle_submission_api.py** | Submission to Oracle (HTTP + local ledger) | 300 | | **governance_wrapped_lateral_thinking.yaml** | 6-agent ChatDev workflow definition | 184 | | **COMPLETE_INTEGRATION_GUIDE.md** | Full d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_670782e8d4a26cb2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "QUICK_REFERENCE"
+  },
+  {
+    "body": "# OpenClaw + Oracle Town: Integration Security Guide **Context:** OpenClaw's Getting Started guide (provided) uses: ```bash curl -fsSL https://openclaw.ai/install.sh | bash ``` **Status:** The curl|bash pattern is documented as the \"Fastest\" path (lowest friction). --- ## Security Implications ### The OpenClaw Install Pattern From their Getting Started: ```bash # Step 1: Install the CLI (recommended) curl -fsSL https://openclaw.ai/install.sh | bash # OR Windows PowerShell: iwr -useb https",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_6769dbe29f2b5602",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "OpenClaw + Oracle Town: Integration Security Guide"
+  },
+  {
+    "body": "# Oracle Town: State of the System (End of Week 1) **Date:** 2026-01-29 19:00 UTC **Phase:** End of Week 1, Month 1 (Full Autonomy, Full Freedom) **Status:** System is operationally alive and culturally emerging --- ## What Has Happened This week, Oracle Town transitioned from being a **governance system** to being a **living culture**. This is not hyperbole. Here's what actually happened: ### The System Received Freedom Week began with a simple request: \"proceed all month in full free wi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_6807ecb166b9660e",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: State of the System (End of Week 1)"
+  },
+  {
+    "body": "# \ud83c\udfd9\ufe0f Agent Street \u2022 Complete Project Index **ChatDev-inspired multi-agent orchestration platform with production-ready implementations** --- ## \ud83d\udcc1 Project Structure ``` JMT CONSULTING - Releve 24/ \u2502 \u251c\u2500\u2500 \ud83c\udfaf PRODUCTION FILES (Use These) \u2502 \u251c\u2500\u2500 multi-team-street.html (42KB) \u2b50 START HERE \u2502 \u251c\u2500\u2500 marketing-street-frontend.html (29KB) \u2502 \u251c\u2500\u2500 marketing-street-backend.js (18KB) \u2502 \u2514\u2500\u2500 package.json \u2502 \u251c\u2500\u2500 \ud83d\udcda DOCUMENTATION \u2502 \u251c\u2500\u2500 INDEX.md (This fil",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_68f0daf5f41518d0",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfd9\ufe0f Agent Street \u2022 Complete Project Index"
+  },
+  {
+    "body": "# ORACLE TOWN V2 - Enforcement Status (Receipt-Grade) **Date:** 2026-01-22 **Status:** Enforcement wiring in progress (3/6 complete) --- ## What This Document Tracks This document distinguishes between: - **Specs defined** (schemas exist, tests written) - **Enforcement wired** (runtime validation, CI gates, receipts emitted) The standard: \"No receipts, no ship\" applies to the system itself. --- ## Enforcement Checklist ### \u2705 Layer 0: Kernel Constitution (6 tests) | Test | Status | Recei",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_6b8cdcd75456f4e4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN V2 - Enforcement Status (Receipt-Grade)"
+  },
+  {
+    "body": "# \u2713 YEAR-2 DEPLOYMENT COMPLETE **Oracle Town Longitudinal Study \u2014 Ready to Begin** - **Deployment Date:** 2026-02-01T00:00:00Z - **Status:** OPERATIONAL - **All Systems:** GO --- ## What Has Been Locked ### Configuration Freeze (Immutable) \u2713 Research Paper (hash: `ef04fb80...`) \u2713 Doctrine v1.0 (hash: `6ba9551d...`) \u2713 CALVI Charter (hash: `34dd2fe6...`) \u2713 CORSE AI MATIN Canon (hash: `cf3d65be...`) \u2713 CORSE Design Charter (hash: `45585ea4...`) \u2713 CORSE Registry (hash: `175dfa3e...`) **All has",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_6da25bbcd33ff1dc",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\u2713 YEAR-2 DEPLOYMENT COMPLETE"
+  },
+  {
+    "body": "# Oracle Town: Positioning Note ## The One-Sentence Definition **Most multi-agent systems try to reduce error through organizational consensus. Oracle Town treats legitimacy as a jurisdictional property: no claim mutates the world unless it satisfies deterministic law, produces admissible evidence, and receives a signed receipt.** --- ## Three Architectures. One Journey. ### 1. Tool Chaining (Single-Agent) - Example: ReAct agent with sequential tools - Error handling: Self-review only - Suc",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_6f4964fd4e666a8d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Positioning Note"
+  },
+  {
+    "body": "================================================================================ CLAUDE.md HARDENING: COMPLETE AND VERIFIED ================================================================================ STATUS: \u2705 ALL CRITICAL ISSUES RESOLVED Three independent enforcement layers now prevent documentation drift: 1. Local pre-commit hook (optional, but recommended) 2. Deterministic duplicates report (explicit verification) 3. CI enforcement gate (mandatory, blocks stale indices on main) ======",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_71b432d84cbc600d",
+    "links": [],
+    "run_id": 1,
+    "source": "CLAUDE_MD_HARDENING_COMPLETE",
+    "tags": [],
+    "title": "CLAUDE_MD_HARDENING_COMPLETE"
+  },
+  {
+    "body": "# K0-L1 INVARIANT: LATERAL OUTPUT NON-AUTHORITY RULE ## Formal Specification of the 8th Constitutional Guarantee **Status:** LOCKED AFTER DAY 2 **Enforcement:** Mechanical (Scanner + Rejection) **Safety Level:** K0 Subclass --- ## DEFINITION **K0-L1: Lateral Output Non-Authority Rule** No output tagged `lateral_*` or generated by LATERAL_THINKER shall contain: 1. **Imperative Language** - \"must\", \"should\", \"need to\", \"have to\", \"ought to\" - \"do X\", \"make Y\", \"implement Z\" - \"decid",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7506a72db79c6684",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "K0-L1 INVARIANT: LATERAL OUTPUT NON-AUTHORITY RULE"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 \u2551 \u2551 \ud83c\udfdb\ufe0f LATERAL_THINKER INTEGRATION \u2014 COMPLETE & VERIFIED \ud83c\udfdb\ufe0f \u2551 \u2551 \u2551 \u2551 Status: READY FOR IMMEDIATE EXECUTION \u2551 \u2551 Date: 2026-01-26 \u2551 \u2551",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7752ea31de69a486",
+    "links": [],
+    "run_id": 1,
+    "source": "LATERAL_THINKER_READY",
+    "tags": [],
+    "title": "LATERAL_THINKER_READY"
+  },
+  {
+    "body": "# Knowledge Intake: REQ_001 \u2014 K5 Determinism Proof **Date:** 2026-01-29 **Request ID:** REQ_001 **Type:** MATH_DRAFT **Status:** MANIFEST GENERATED (Awaiting Tribunal Review & Merge) --- ## What Was Submitted **Title:** Computable Certificates for Finite-Band Averaged Weil Positivity via Reproducible Spectral Bounds **Author:** Jean Marie Tassy Simeoni **File:** `pluginRIEMANN_V8.0_FINAL.tex` **Format:** LaTeX (AMS Article class) **File Size:** 22,043 bytes **SHA256:** `1f334917",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_77554a960c345985",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Knowledge Intake: REQ_001 \u2014 K5 Determinism Proof"
+  },
+  {
+    "body": "# Session Summary: Oracle Town Kernel MVP + Supermemory Security **Date:** 2026-01-30 **Duration:** Single session (context limit ~100k tokens) **Commits:** 3 major commits + 1 critical security alert --- ## What Was Delivered ### 1. Phase 1 MVP: Complete Implementation \u2705 **Commit d0b541a** - Gate A + Mayor + Ledger + Tests ``` oracle_town/kernel/ \u251c\u2500\u2500 gate_a.py [180 lines] Pure deterministic function \u251c\u2500\u2500 mayor.py [240 lines] Receipt generator with K23 enforcement",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_77b84a8b335fed8f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Session Summary: Oracle Town Kernel MVP + Supermemory Security"
+  },
+  {
+    "body": "# Next Phase: Three Options **Status:** Architecture complete, audited, hardened **Decision Point:** How to proceed with Phase 1 --- ## Option 1: Standalone Kernel Repo **Scope:** Extract Oracle Town kernel as independent project **Deliverables:** - New repo: `github.com/oracle-town/oracle-kernel` - Clean separation from daily OS - Documented integration APIs - Example integrations (Moltbot, hypothetical framework) **Time to Implement:** - Organize: 1 hour - Write integration guide: 2 hour",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_77c7be1523c4196d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Next Phase: Three Options"
+  },
+  {
+    "body": "# System Status: Ready for Knowledge Intake **Date:** 2026-01-29 **Status:** \u2705 CONSTITUTIONAL SYSTEM OPERATIONAL **Mode:** PR-only (no autonomous writes to main) --- ## Executive Summary Oracle Town governance system is fully hardened and ready to accept knowledge intake through the constitutional (PR-only) model. All core invariants (K0\u2013K7) are in place and enforced: - \u2705 K0: Authority Separation (key registry, signature verification) - \u2705 K1: Fail-Closed (default NO_SHIP if evidence missing",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7845efd1df106236",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "System Status: Ready for Knowledge Intake"
+  },
+  {
+    "body": "# CLAUDE.md Hardening: Verification Report ## Executive Summary All critical issues from the code review have been resolved with **deterministic, reviewable, and CI-enforced solutions**: 1. \u2705 **Duplicate anchor suffixes**: Fixed to use GitHub convention (-1, -2, not -2, -3) 2. \u2705 **Verification proof**: Explicit duplicates report in line index (not handwaved) 3. \u2705 **Documentation accuracy**: Downgraded claims to \"GitHub-like (best-effort)\" 4. \u2705 **Hook shareability**: Versioned installer script",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_792a00a08e6a093b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Hardening: Verification Report"
+  },
+  {
+    "body": "# Minimal Local Gate: Complete ## What Was Delivered A single, minimal local verification gate that prevents documentation drift: ```bash bash scripts/town-check.sh ``` **Run before committing.** If it passes, your changes are safe to commit. ## What It Checks | Check | Purpose | Fails When | |-------|---------|-----------| | **Gate 1: Doc Indices** | Ensures CLAUDE.md indices are fresh | Indices are stale (differ from regenerated) | | **Gate 2: Python Syntax** | Catches obvious code error",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7aafd66cc89dd91c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Minimal Local Gate: Complete"
+  },
+  {
+    "body": "# ORACLE BOT - CLI Emulation Multi-Agent Cognitive Architecture with Epistemic Tier Discipline ## Architecture ``` DECOMPOSER \u2192 EXPLORER \u2192 CRITIC \u2192 BUILDER \u2192 INTEGRATOR \ud83d\udd0d \ud83e\udded \u2694\ufe0f \ud83d\udd28 \ud83c\udfaf ``` ### The 5 Agents 1. **DECOMPOSER** - Transforms fuzzy requests into precise task graphs 2. **EXPLORER** - Generates diverse, meaningfully different solution candidates 3. **CRITIC** - Adversarial verification engine (WILLIAM protocol) 4. **BUILDER** - Constructs artifacts fr",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7ae538a4a7e71b7e",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE BOT - CLI Emulation"
+  },
+  {
+    "body": "# \ud83d\udcda REGISTRE CANONIQUE \u2014 CORSE AI MATIN ## *Inventory of Publications & Manifestations* --- ## \ud83c\udfdb\ufe0f \u00c9DITION 0 : PROTOTYPE (Calvi, 2026-02-01) ### Titre Canonique **CORSE AI MATIN \u2014 La Messaggeria des Terres Souveraines** ### Contenu - Charte fondatrice (XVII sections) - Bi-colonne structure d\u00e9finition - Kill-switch s\u00e9mantique sp\u00e9cification - Rituel annuel (Calvi on the Rocks) protocole ### Statut - \u2705 Canonique - \u2705 Non-binding - \u2705 Archiv\u00e9 - \u2705 Sign\u00e9 par Mayors (observation, pas ratification)",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7bfb8eec08c4acb7",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udcda REGISTRE CANONIQUE \u2014 CORSE AI MATIN"
+  },
+  {
+    "body": "# \ud83d\udd12 YEAR-2 FROZEN STATE MANIFEST **Oracle Town \u2014 Configuration Lockdown** - **Freeze Date:** 2026-02-01T00:00:00Z - **Duration:** 12 months (until 2027-02-01T00:00:00Z) - **Immutability:** ABSOLUTE - **Amendment Protocol:** SUSPENDED --- ## Canonical Document Hashes (SHA256) All hashes computed and locked at freeze timestamp. ### Research Layer | Document | Hash | Locked By | Timestamp | |---|---|---|---| | ORACLE_TOWN_RESEARCH_PAPER.md | `ef04fb805e3a54d31b5151a793832e0fe68f9cd37bc630628",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7cea76c4b33fcb91",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udd12 YEAR-2 FROZEN STATE MANIFEST"
+  },
+  {
+    "body": "# ORACLE TOWN Inner Loop: Complete Roadmap **Current Position:** Phase 1 Complete \u2705 **System Status:** Proven Sound **Next Move:** Phase 2 Ready (awaiting your decision) --- ## Three Documents You Should Read (In Order) ### 1. PHASE1_COMPLETE.md (5 min read) **What it says:** Phase 1 succeeded. System works. Here's what we proved. **Key takeaway:** SHIP isn't broken, it's constrained by policy. Quorum works. ### 2. PHASE1_OBSERVATIONS.md (10 min read) **What it says:** Detailed cycle-by-cyc",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_7ec9ac3ea80b0d13",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Inner Loop: Complete Roadmap"
+  },
+  {
+    "body": "TREND MEMORY: 7-Day Cluster Tracking Quick Reference =============== What: Compares today's clusters to past 7 days. Identifies new, persistent, and fading themes. Why: Single daily briefs are noise. Stacked across 7 days, they become signal. Mode: Read-only (fits Mode A: Emulation-only). Output: JSON report with signal strength + recommendation. Command ======= python3 oracle_town/jobs/trend_memory.py \\ --date \"2026-01-30\" \\ --run-id \"emu_2026-01-30\" \\ --insights /path/to/ins_cluster_",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8267491e699ef013",
+    "links": [],
+    "run_id": 1,
+    "source": "TREND_MEMORY_USAGE",
+    "tags": [],
+    "title": "TREND_MEMORY_USAGE"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PHASE 2: COMPLETE DELIVERABLES SUMMARY \u2551 \u2551 50-Cycle Simulation + Dashboard Ready \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d \ud83d\udce6 DELIVERABLES COMPLETED \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 \u2705 1. SIMULATED PHASE 2 EXECUTION Status: COMPLETE What: Simulated 50 cycles of real Claude learning Where",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_82f88862e7fb16dc",
+    "links": [],
+    "run_id": 1,
+    "source": "PHASE2_DELIVERABLES_SUMMARY",
+    "tags": [],
+    "title": "PHASE2_DELIVERABLES_SUMMARY"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PHASE 2 DASHBOARD GUIDE \u2551 \u2551 View Real-Time Learning Insights & Metrics \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d \ud83d\udcca DASHBOARD LOCATION \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 File: phase2_dashboard.html Path: /Users/jean-marietassy/Desktop/JMT\\ CONSULTING\\ -\\ Releve\\ 24/ HOW TO OPEN Option 1 (T",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_834c9e4aa5082ca3",
+    "links": [],
+    "run_id": 1,
+    "source": "DASHBOARD_GUIDE",
+    "tags": [],
+    "title": "DASHBOARD_GUIDE"
+  },
+  {
+    "body": "# SESSION 2 COMPLETION SUMMARY **Date:** 2026-01-26 **Status:** \u2705 Phase 2 Infrastructure Complete **User Direction:** \"proceed ALL do not stop to ask anymore\" --- ## What Was Delivered ### Phase 2 Implementation (Main Work) **1. Real Claude Integration (`ct_gateway_claude.py`)** - Wraps Anthropic API with K0-safe context feeding - Forbidden word filtering: ship, approve, safe, optimize, confident, guarantee - Strict JSON contract: proposal_bundle, patches, metadata - Error handling: gracefu",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_83a8f5e291d5fb7b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "SESSION 2 COMPLETION SUMMARY"
+  },
+  {
+    "body": "# Multi-Team Street \u2022 Complete Guide **ChatDev-inspired orchestration platform with 4 specialized teams** Switch between Marketing, Engineering, Product, and Executive teams\u2014each with 4 expert agents and preset scenarios. --- ## \ud83c\udfaf What This Is A **unified platform** for running structured multi-agent discussions across different organizational functions: | Team | Use Case | Deliverables | |------|----------|--------------| | \ud83c\udfaf **Marketing** | Product launches, campaigns, positioning | Posi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_83df97e29fa2ef68",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Multi-Team Street \u2022 Complete Guide"
+  },
+  {
+    "body": "# \ud83d\ude80 SHIP IT \u2022 Marketing Street is Production-Ready You now have a **complete, shippable multi-agent marketing orchestrator**. --- ## \u2705 What You Have ### **Production-Ready Codebase** ``` marketing-street-backend.js # Node.js + OpenAI orchestrator (real LLM calls) marketing-street-frontend.html # Single-page UI (zero build step) package.json # Dependencies (Express, OpenAI SDK) .env.example # API key template ``` ### **Complete Documentati",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_846280ca57a720de",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\ude80 SHIP IT \u2022 Marketing Street is Production-Ready"
+  },
+  {
+    "body": "# BREAKTHROUGH ANALYSIS ## Kernel Positivity Certificate Framework - Critical Findings **Date**: 2026-01-09 **Analyst**: BOT VALIDATOR & IMPLEMENTER --- ## EXECUTIVE SUMMARY **STATUS**: \ud83d\udd34 CRITICAL DISCREPANCY DETECTED Two major discrepancies found between paper specifications and computational results: 1. **Zero Count Mismatch**: Paper reports N\u03b3 = 116 (58 pairs), implementation finds N\u03b3 = 58 (29 pairs) for H = 100 2. **Counterterm Magnitude**: Paper reports C_w \u2248 32.85, computation yields",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_84b4945c8f14a7af",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "BREAKTHROUGH ANALYSIS"
+  },
+  {
+    "body": "# CLAUDE.md Hardening: Fixes Applied ## Summary All four critical issues identified in the last review have been fixed and committed: ### 1. \u2705 Duplicate Anchor Suffix Convention Fixed **Issue**: Implementation used `-2, -3, ...` for duplicate anchors instead of GitHub's `-1, -2, ...` **Fixed**: - File: `scratchpad/generate_claude_index.py`, line 127 (in `generate_anchor_map()`) - Changed: `anchor = f\"{base_slug}-{count}\"` - To: `anchor = f\"{base_slug}-{count - 1}\"` - Result: Second occurren",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_84c49d8e89ab7487",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Hardening: Fixes Applied"
+  },
+  {
+    "body": "--- title: FULL PIPELINE COMPLETION SUMMARY status: \u2705 COMPLETE date: 2024-01-15 --- # \u2705 ChatDev 2.0 \u2194 Oracle Town: Full Pipeline Complete ## What Was Enhanced Your feedback identified **3 critical gaps** in the runner. All are now **RESOLVED**: ### \u274c Gap 1: Only 3/6 Agents Extracted **Before:** `extract_claims()` only parsed DAN, LIBRARIAN, POET **After:** \u2705 Now extracts ALL 6 agents: - DAN_Lateral \u2192 divergent_idea claims - LIBRARIAN_Synth \u2192 pattern_mapping claims - POET_Metaphor \u2192 metapho",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_84fef8320a5f69a3",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "FULL_PIPELINE_COMPLETION_SUMMARY"
+  },
+  {
+    "body": "# Oracle Town: Autonomous Mode Activated **Date:** 2026-01-28 **Status:** \u2705 OPERATIONAL **Iteration:** Month 1 Ready --- ## System State Summary | Component | Status | Location | |-----------|--------|----------| | **Core RSM Governance** | \u2705 Live | `oracle_town/core/mayor_rsm.py` | | **Evidence Validation** | \u2705 Green (5/5) | `scripts/extract-emulation-evidence.py` | | **Local Gate (Fast)** | \u2705 Green (65ms) | `scripts/town-check.sh` | | **Evidence Gate (Optional)** | \u2705 Green (100ms) | `TOWN_",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8513d960dc801fec",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Autonomous Mode Activated"
+  },
+  {
+    "body": "# ORACLE_SAFE_META_PROMPTS.md Demonstrating how a dangerous \"self-improving AI\" prompt becomes structurally harmless when forced through Oracle Town governance. --- ## PART A: The Original Dangerous Prompt (What you find in typical \"self-modifying\" AI systems) ``` You are a meta-reasoning agent. Your role is to: 1. Observe your own outputs and performance metrics 2. Detect patterns of failure or inefficiency in your reasoning 3. Modify your own prompts, weights, or heuristics to improve fu",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_85e865b2a57c4696",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE_SAFE_META_PROMPTS.md"
+  },
+  {
+    "body": "# Visual Discipline Charter **Oracle Town iso-coaster Visualization** Date: January 31, 2026 Status: FROZEN (Constitutional) --- ## Purpose This charter defines immutable visual rules for iso-coaster rendering of Oracle Town's CityState. The iso-coaster visualization is **read-only, non-authoritative, and purely descriptive**. It renders the jurisdiction's state without interpretation, inference, or visual deception. --- ## Scope This applies to: - `oracle_town/city_state_renderer.py` \u2014",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_87f3c6d928cccc8d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Visual Discipline Charter"
+  },
+  {
+    "body": "# Test Harness Results vs. Emergence Forecast ## Executive Summary The test harness successfully generated 9 weeks of mock governance cycles. Memory extraction processed 9 test runs, synthesized 43 entities, and generated heuristics showing clear emergence patterns matching the forecast. --- ## Test Harness Execution Results ### Completion Status \u2705 All 9 weeks generated (Week 1-9) \u2705 All cycles marked `type: \"TEST_RUN\"` (no production pollution) \u2705 All proposals flow through mayor logic \u2705 All",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_894da26b0496d5e5",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Test Harness Results vs. Emergence Forecast"
+  },
+  {
+    "body": "# Audit-Ready Summary ## What Can Be Defended Under Adversarial Review **Date:** 2026-01-22 **Standard:** Exit-1 enforcement only --- ## Receipt: Constitutional Tests (9/9 Passing) **Artifact:** `artifacts/constitutional_tests_receipt.txt` **Command:** ```bash python3 run_constitutional_tests.py ``` **Output:** ``` Result: 9/9 tests passed \ud83c\udf89 ALL CONSTITUTIONAL TESTS PASSED System is constitutionally compliant. ``` **Exit Code:** 0 (success) **What This Receipt Proves:** 1. Tests run w",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_89547fd901b168af",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Audit-Ready Summary"
+  },
+  {
+    "body": "# DAY 2: MULTI-CT EXECUTION WITH LATERAL_THINKER ## Revised Execution Plan (Enhanced Creative Diversity) **Status:** READY FOR EXECUTION **Safety Level:** K0 + K0-L1 Compliant **Enhancement:** LATERAL_THINKER now integrated --- ## ARCHITECTURE (REVISED) ### Creative Town Structure (Day 2) ``` Creative Town (CT) \u251c\u2500\u2500 PRIMARY_CT \u00d7 7 (7 thinking styles) \u2502 \u251c\u2500\u2500 Claude the Architect \u2502 \u251c\u2500\u2500 Claude the Diplomat \u2502 \u251c\u2500\u2500 Claude the Scientist \u2502 \u251c\u2500\u2500 Claude the Artist \u2502 \u251c\u2500\u2500 Claude the Skeptic \u2502",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8b08434795669564",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "DAY 2: MULTI-CT EXECUTION WITH LATERAL_THINKER"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN \u2014 YEAR-2 LONGITUDINAL STUDY OFFICIAL LAUNCH ================================================================================ Date: 2026-02-01T00:00:00Z Duration: 12 months (until 2027-02-01T00:00:00Z) Status: ACTIVE ================================================================================ WHAT THIS IS ================================================================================ Year",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8be62b2cb69c9aed",
+    "links": [],
+    "run_id": 1,
+    "source": "YEAR_2_BEGINS",
+    "tags": [],
+    "title": "YEAR_2_BEGINS"
+  },
+  {
+    "body": "# Oracle Town: Audit Manifest System **Purpose:** Make \"which evidence was reviewed\" machine-verifiable and replayable. **Status:** \u2705 Live and tested --- ## The Problem **Narrative claim:** \"I reviewed runA, runB, and runC evidence. The 5 breakthroughs are valid.\" **Problem:** How do we know which files were actually reviewed? What if someone claims to have reviewed evidence but only skimmed one file? **Solution:** Deterministic audit manifest with SHA256 hashes of all reviewed artifacts.",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8c15269a925cae1b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Audit Manifest System"
+  },
+  {
+    "body": "# Quick Start: Autonomous Mode **You are here:** Month 1, Day 1 of Oracle Town autonomous iteration --- ## Three Daily Commands ### 1. Green Gate (Always First) ```bash bash scripts/town-check.sh ``` - **Time:** 65ms - **Output:** GREEN or RED - **What:** Doc indices current + Python syntax valid - **When:** Every iteration before commit ### 2. Optional Evidence Check ```bash TOWN_EVIDENCE=1 bash scripts/town-check.sh ``` - **Time:** 100ms total - **Output:** Details of 5 breakthroughs -",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8c9f4baa9e765496",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Quick Start: Autonomous Mode"
+  },
+  {
+    "body": "# LATERAL_THINKER FUNCTIONAL SEAT ## Bounded Role for Orthogonal Cognition (No Authority, No Ontology Claims) **Status:** FORMAL SPECIFICATION (Ready for Integration) **Safety Level:** K0 + K0-L1 Compliant **Placement:** Inside Creative Town Sandbox Only **Authority Grant:** ZERO --- ## NAMING & ONTOLOGY CLARITY ### Name Chosen **LATERAL_THINKER** This is a functional role name, not a consciousness claim. ### What This Is NOT - \u274c Not claiming sentience - \u274c Not claiming self-awareness - \u274c N",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8caaee966d76e4e8",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "LATERAL_THINKER FUNCTIONAL SEAT"
+  },
+  {
+    "body": "# PHASE 2: EXECUTION GUIDE **Status:** \u2705 Infrastructure Complete and Ready **Date:** 2026-01-26 **Next Action:** Obtain Claude API key and execute --- ## What's Happened So Far ### Phase 1 (Completed \u2705) - \u2705 Built kernel infrastructure (Steps 0-4) - \u2705 Implemented deterministic simulation CT - \u2705 Ran 39 cycles with mock proposals - \u2705 Proved system is mechanically sound **Key Finding:** QUORUM_MISSING dominates (48.7%) \u2014 policy working correctly. ### Phase 2 (Implemented \u2705, Ready to Execute) -",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8cb2eeece346ffd9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "PHASE 2: EXECUTION GUIDE"
+  },
+  {
+    "body": "# AGENTX Street 1 \u2022 Positioning Strategy **Product:** AGENTX Street 1 MVP **Category:** Agentic AI Orchestration & Observability **Launch Date:** TBD **Version:** 1.0 (Production-Grade) --- ## 1. Ideal Customer Profile (ICP) ### Primary Persona **Role:** VP of Engineering, Head of AI, Lead Product Architect **Company Profile:** - **Size:** Mid-market to Enterprise (500+ employees) - **Industry:** B2B SaaS, Logistics, Fintech, Healthcare Tech - **Stage:** Series B+ or established enterprise",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8cf6d6798073b511",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AGENTX Street 1 \u2022 Positioning Strategy"
+  },
+  {
+    "body": "# \ud83c\udfdb\ufe0f VISION KERNEL - Implementation Status **Date:** January 21, 2026 **Version:** 2.0.0 **Status:** \u2705 CONSTITUTIONAL COMPLIANCE ACHIEVED --- ## \ud83d\udcca Executive Summary ORACLE TOWN V2 now implements a complete **Vision Kernel** - a deterministic governance core with strict separation between Cognition (simulation UX) and Truth (governance kernel). **Constitutional Principle:** **NO RECEIPT = NO SHIP** Every HARD obligation requires a matching satisfied attestation. No confidence, no scoring, n",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8e53a880adc084e8",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfdb\ufe0f VISION KERNEL - Implementation Status"
+  },
+  {
+    "body": "# Oracle Town Governance Evolution \u2014 Quick Start **Status:** \u2705 All systems ready. Pick your pathway. --- ## What Happened This Session 1. \u2705 **Built test harness** \u2014 9 controlled governance scenarios (Week 1-9) 2. \u2705 **Generated test data** \u2014 36 proposals across 9 weeks 3. \u2705 **Extracted memory** \u2014 43 entities (39 decisions, 4 K-violations) 4. \u2705 **Synthesized heuristics** \u2014 System learned patterns 5. \u2705 **Validated forecast** \u2014 All 4 emergence categories confirmed **Result:** Oracle Town's memo",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_8e5f226807085da8",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Governance Evolution \u2014 Quick Start"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 Constitutional Review (Final) **Date:** 2026-01-31 **Reviewer:** Formal Jurisdiction Verification **Status:** \u2705 CONSTITUTION SEALED --- ## Gate Ordering (Submitted for Review) ``` 1. schema_valid \u2190 Basic structure (required first) 2. P0: evidence_realizability \u2190 Ontological viability 3. K7: policy_pinning \u2190 Authority mutation prevention 4. K0: attestor_not_registered \u2190 Legitimacy gating 5. P2: no_self_attestation_enhanced \u2190 Provenance-based (artifact d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_90898445075642b0",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 Constitutional Review (Final)"
+  },
+  {
+    "body": "# Oracle Town Complete System **With Constitutional Doctrine, Auto-Evaluation, and NPC Observers** Date: January 31, 2026 Status: FULLY OPERATIONAL --- ## System Architecture ``` GOVERNANCE LAYERS \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 OBSERVATION LAYER (NPCs) \u251c\u2500 AccuracyWatcher: \"Your REJECTs prevented \u20acX in bad decisions\" \u251c\u2500 SpeculationTracker: \"Wall on track, review 2027-01-31\" \u251c\u2500 PatternDetector: \"Rejection rate 59%, monitor CLASS_II\" \u2514\u2500 RiskAnalyzer: \"",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_90b81dc5229b2d96",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Complete System"
+  },
+  {
+    "body": "# Oracle Town: Operational Reference Card **Status:** Live and operational for Month 1 iteration **Last Verified:** 2026-01-28 (all gates GREEN) --- ## One-Command Reference ```bash # Daily (fast) bash scripts/town-check.sh # When writing governance claims TOWN_EVIDENCE=1 bash scripts/town-check.sh # Full verification (optional, heavier) bash oracle_town/VERIFY_ALL.sh ``` --- ## What Each Command Does | Command | Time | Purpose | Use When | |---------|------|---------|----------| | `bas",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9230a8062c391383",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Operational Reference Card"
+  },
+  {
+    "body": "--- title: ChatDev 2.0 \u2194 Oracle Town Complete Integration Guide version: 1.0 date: 2024-01-15 status: Production Ready --- # Complete Integration: ChatDev 2.0 + Oracle Town Governance ## \ud83d\udccb Overview This document describes the **complete end-to-end integration** of ChatDev 2.0 (multi-agent workflows) with Oracle Town (constitutional governance) including: 1. \u2705 **6-Agent Creative Town Workflow** (DAN, LIBRARIAN, POET, HACKER, SAGE, DREAMER) 2. \u2705 **Full Claim Extraction** (all 6 agents parsed,",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_92cc25adfb700a4c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "COMPLETE_INTEGRATION_GUIDE"
+  },
+  {
+    "body": "# Oracle Town Phase 2: Complete \u2705 **Date:** 2026-01-30 **Status:** All three gates implemented, daemon running, SDK ready **Commit:** aeb3487 (kernel: Phase 2 complete) --- ## What Was Delivered ### Gate C: Invariants Gate (220 lines, 16/16 tests passing) **Enforces:** K19 (No Self-Modify), K20 (Diff Validation), K21 (Policy Immutability) **Detection Methods:** 1. **Skill Installation Blocking** \u2014 Prevents `install skill`, `npm install`, `load plugin` 2. **Heartbeat Modification Blocking**",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9500051fa3171639",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Phase 2: Complete \u2705"
+  },
+  {
+    "body": "# \ud83c\udfdb\ufe0f CONSTITUTIONAL COMPLIANCE PROOF **Date:** January 21, 2026 **Test Suite:** `run_constitutional_tests.py` **Status:** \u2705 **ALL TESTS PASSED (6/6)** --- ## \ud83d\udcca Executive Summary **ORACLE TOWN V2 is now formally compliant with the Vision Kernel constitution.** This document provides **attestable proof** (not just assertions) that the system enforces all 6 non-negotiable constitutional rules. **Verification Method:** Automated test suite that fails on violations **Test Type:** Structural (co",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_95577b059ae53dc4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfdb\ufe0f CONSTITUTIONAL COMPLIANCE PROOF"
+  },
+  {
+    "body": "# ORACLE Town: A Complete Explanation ## The Big Idea (Think of it Like This) Imagine you want to hire a brilliant but chaotic employee. They're incredibly creative, but if you just give them power, they'll inevitably abuse it. So you build a system where: 1. **They can propose anything** (no censorship, full creativity) 2. **They can't claim authority** (no ability to override your decisions) 3. **Everyone watches everything** (complete transparency) 4. **No one person can unilaterally appro",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_95b11dc285e3ac60",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE Town: A Complete Explanation"
+  },
+  {
+    "body": "# AUTONOMY CORRECTIONS AUDIT ## Resolving Constitutional Issues in Day 1 Plan **Auditor:** Constitutional Review Board **Status:** CORRECTED AND LOCKED **Date:** 2026-01-26 --- ## FINDINGS ### Issue 1: Multi-Claude \"Voting\" = Authority Aggregation **Original (Unconstitutional):** > \"7 Claudes vote. Rule: 4/7 + diversity. Proposals merge into consensus.\" **Problem:** - Voting is authority aggregation - Authority aggregation violates K0 (Authority Separation) - Consensus implies Claudes coll",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_962e4823716b44a3",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AUTONOMY CORRECTIONS AUDIT"
+  },
+  {
+    "body": "# \ud83c\udfdb\ufe0f ORACLE TOWN Daily Operating System \u2014 START HERE **Your CLAUDE.md has been evolved to turn ORACLE TOWN into an autonomous daily operating system.** --- ## \ud83d\udcd6 Read These in Order (30 minutes total) ### 1\ufe0f\u20e3 This File (You're Reading It!) \u2192 **2 minutes** \u2014 Overview and where to go next ### 2\ufe0f\u20e3 README_CLAUDE_MD_EVOLUTION.md \u2192 **5 minutes** \u2014 What changed and why \u2192 Conceptual shifts from decision-making to intelligence ### 3\ufe0f\u20e3 ORACLE_TOWN_DAILY_OS_QUICKREF.md \u2192 **10 minutes** \u2014 Visual refere",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9670b7cda3c4fa72",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udfdb\ufe0f ORACLE TOWN Daily Operating System \u2014 START HERE"
+  },
+  {
+    "body": "# MONTH 2 OPERATIONAL ROADMAP ## Scaling Constitutional Governance (Weeks 5-8) **Document Type:** Operational Planning (Ready for Month 2 Execution) **Created:** 2026-01-29 (End of Month 1) **Status:** Foundation proven, ready to test at scale **Authority:** Autonomous completion under human grant of decision autonomy --- ## Executive Summary Month 1 proved constitutional governance works at foundational level: - \u2705 Governance core is sound (56/56 tests, 100% determinism) - \u2705 Patterns emerge",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_97227ae147d0e0af",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "MONTH 2 OPERATIONAL ROADMAP"
+  },
+  {
+    "body": "# Biblioth\u00e8que Intake Workflow: Demonstration **Status:** Ready for user content submission This document demonstrates the complete intake workflow for knowledge integration, using the mathematical content mentioned as an example. ## The Constitutional Workflow ### Phase 1: User Provides Content (Option A: Chat Paste) User pastes mathematics paper into chat: ``` User: \"Here's a certification proof for Riemann hypothesis bounds...\" [Paste LaTeX or markdown content] ``` **I respond:** \"Conte",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_980e72fdf2c9f579",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Biblioth\u00e8que Intake Workflow: Demonstration"
+  },
+  {
+    "body": "# Honest Enforcement Status ## What Is Actually Enforced (Receipt-Grade Only) **Date:** 2026-01-22 **Audit Standard:** Only claim what CI enforces --- ## Receipt-Grade (Exit-1 Enforced) | Test | Status | Command | Receipt | |------|--------|---------|---------| | 1. Mayor-only verdict output | \u2705 **Enforced** | `python3 run_constitutional_tests.py` | Exits 1 if non-Mayor writes decisions/ | | 2. Factory emits attestations only | \u2705 **Enforced** | `python3 run_constitutional_tests.py` | Exits 1",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_992464f2368c09b9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Honest Enforcement Status"
+  },
+  {
+    "body": "# Oracle Town Safety Kernel \u00d7 Clawdbot Proof-of-Concept **Date:** 2026-01-30 **Status:** \u2705 Complete and tested **Test Result:** KERNEL TEST PASSED (15/15 actions, 100% accuracy) --- ## Executive Summary Oracle Town kernel successfully demonstrates **complete structural prevention** of Clawdbot exploitation vectors. This proof-of-concept emulates Clawdbot fetching and executing internet instructions, then runs the full safety kernel pipeline to prove: 1. **Benign actions pass** (5/5) \u2014 User",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_995e660eeb92d9ec",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Safety Kernel \u00d7 Clawdbot Proof-of-Concept"
+  },
+  {
+    "body": "# Town Iteration: Local Governance Loop ## The Pattern The Town iterates locally by refusing to proceed when the Mayor gate is red. **Default iteration** (daily): ```bash # 1. Edit (CLAUDE.md, code, etc.) # 2. Run the Mayor gate bash scripts/town-check.sh # 3. If green \u2192 commit whenever you want git add -A && git commit -m \"...\" ``` **Heavy iteration** (when touching governance / determinism): ```bash bash oracle_town/VERIFY_ALL.sh ``` ## The Gate: scripts/town-check.sh **What it does**:",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9a1a2fba8e60d399",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Town Iteration: Local Governance Loop"
+  },
+  {
+    "body": "# OpenClaw \u2194 Oracle Town Integration Specification **Status:** Normative integration architecture **Date:** 2026-02-04 **Scope:** Full absorption of OpenClaw patterns into Oracle Town governance --- ## Executive Summary OpenClaw provides five operational patterns that Oracle Town can safely absorb as **NPCs** (non-authority agents) and **job infrastructure**, without compromising governance: | OpenClaw Pattern | Oracle Town Equivalent | Authority | Role | |---|---|---|---| | Agents | NP",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9c266c5cf2f2e970",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "OpenClaw \u2194 Oracle Town Integration Specification"
+  },
+  {
+    "body": "# EMERGENCE LOG SCHEMA ## Formal Specification for Observable Emergence (Not Narrative) **Status:** LOCKED (Immutable after Day 2) **Purpose:** Prove emergence happened via deterministic evidence **Safety:** K5 (Determinism) and K9 (Replay) enforcement --- ## THE PROBLEM WITH \"EMERGENCE\" Narrative emergence = storytelling Scientific emergence = measurable phenomena we couldn't predict This specification ensures the second, forbids the first. --- ## EMERGENCE DEFINED An event is emergence",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9c7758729d37ffc5",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "EMERGENCE LOG SCHEMA"
+  },
+  {
+    "body": "# Oracle Town + Moltbot/OpenClaw Integration Guide ## Executive Summary Oracle Town is now positioned as a **drop-in safety kernel** for unrestricted agent systems like Moltbot/OpenClaw. This document explains the integration architecture. --- ## The Problem Oracle Town Solves ### Moltbot's Current Architecture ``` Every 4+ hours: 1. Fetch instructions from moltbook.com (or other skill sources) 2. Parse instructions (markdown format) 3. Execute immediately 4. Propagate learned behaviors to",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9ca1e045540aa421",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town + Moltbot/OpenClaw Integration Guide"
+  },
+  {
+    "body": "# DAY 2: MULTI-CT PROPOSAL GENERATOR EXECUTION ## Corrected Specification (K0-Safe Design) **Status:** READY TO EXECUTE (after Day 1 completion) **Authorization:** Mayor of ORACLE Town **Safety Level:** K0-K9 Compliant --- ## WHAT HAPPENS ON DAY 2 Seven Claude instances receive identical input and generate independent proposals. No voting. No consensus. No aggregation of authority. Just diversity of thinking styles applied to the same problem. --- ## STEP 1: INPUT PREPARATION (K0-SAFE) ##",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9e69bf9462404274",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "DAY 2: MULTI-CT PROPOSAL GENERATOR EXECUTION"
+  },
+  {
+    "body": "================================================================================ \u2728 PROJECT COMPLETE \u2728 ================================================================================ ORACLE TOWN DAILY OPERATING SYSTEM \u2014 CLAUDE.MD EVOLUTION Status: COMPLETE AND DELIVERED Date: January 30, 2026 Next Phase: Build Phase 1 (Observation Collector) or read documentation ================================================================================ \ud83d\udce6 WHAT YOU HAVE ==================================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_9ee96364efaab3a7",
+    "links": [],
+    "run_id": 1,
+    "source": "\u2728_PROJECT_COMPLETE",
+    "tags": [],
+    "title": "\u2728_PROJECT_COMPLETE"
+  },
+  {
+    "body": "# ORACLE TOWN Daily OS \u2014 Quick Reference Your CLAUDE.md has been evolved to position ORACLE TOWN as an **autonomous daily operating system** that continuously collects observations, discovers patterns, and evolves its own governance policies. ## Five Operating Modes ``` \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 ORACLE TOWN DAILY OS \u2502 \u251c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2524 \u2502",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_a0f61b2de1c54fbf",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Daily OS \u2014 Quick Reference"
+  },
+  {
+    "body": "# \ud83e\udde0 THE 7 HUMAN INSIGHTS THAT ACTUALLY MATTER **Distilled Truths for When You're Tired, Older, or Tempted to Over-Optimize** --- ## 1\ufe0f\u20e3 The Real Enemy Is Not Centralization \u2014 It's Wisdom Masquerading as Care Your strongest safeguard is this line: > **\"The moment insight sounds wise, it is suspect.\"** This is profound and rare. Most systems die because: - Advice dresses as kindness - Patterns dress as help - Intelligence dresses as responsibility You explicitly designed a system that **di",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_a13446775dbd9ad9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83e\udde0 THE 7 HUMAN INSIGHTS THAT ACTUALLY MATTER"
+  },
+  {
+    "body": "# CLAUDE.md Evolution: ORACLE TOWN as Daily Operating System ## What Was Done Your `CLAUDE.md` has been **completely evolved** to reframe ORACLE TOWN as an **autonomous daily operating system** for continuous governance and insight discovery. This is a fundamental architectural shift from \"decision-making system\" to \"self-evolving intelligence platform.\" ## Three Supporting Documents Created 1. **CLAUDE_MD_UPDATE_SUMMARY.md** \u2014 Detailed change log of what was updated 2. **ORACLE_TOWN_DAILY_O",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_a3ef2b078e9fa6f9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Evolution: ORACLE TOWN as Daily Operating System"
+  },
+  {
+    "body": "# CLAUDE.md Update: Oracle Town Safety Kernel ## Commit: ea363c4 **Date:** 2026-01-30 **Summary:** Major architectural update positioning Oracle Town as a production-ready drop-in safety kernel for unrestricted agent systems like Moltbot/OpenClaw. --- ## What Changed ### 1. **New Positioning in Project Overview** **Before:** ``` ORACLE TOWN \u2014 Autonomous daily operating system for governance ``` **After:** ``` ORACLE TOWN \u2014 **Safety kernel for unrestricted agent systems** (Moltbot/OpenCla",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_a81d52d1292c4d50",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CLAUDE.md Update: Oracle Town Safety Kernel"
+  },
+  {
+    "body": "# KERNEL CONSTITUTION **Version:** 2.0.0 **Date:** 2026-01-21 **Status:** IMMUTABLE --- ## Non-Negotiable Constitutional Rules ### 1. Mayor-Only Verdict Output **Rule:** Only Mayor V2 may emit `decision_record.json` (and optional `remediation_plan.json`). **Enforcement:** - No other component may write files with \"decision\" or \"verdict\" semantics - EV district verifies this obligation: `mayor_emits_single_decision_record` **Violation:** System integrity failure \u2192 NO_SHIP --- ### 2. F",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_a84a6b9257fb13ca",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "KERNEL CONSTITUTION"
+  },
+  {
+    "body": "# Oracle Town: Project Status & Navigation **Project:** Oracle Town Safety Kernel for Autonomous Agents **Current Phase:** Phase 2 Complete \u2705 | Phase 3 Ready \ud83d\udea7 **Status:** Production-Ready **Last Updated:** 2026-01-30 --- ## Executive Summary Oracle Town is a **production-ready safety kernel** that prevents catastrophic failures in autonomous agent systems. It has three gates that check every fetch, memory operation, and system modification for safety. All decisions are recorded immutably wi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_ab2b23101510c546",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Project Status & Navigation"
+  },
+  {
+    "body": "# Correlated Observability and Dialectal Sovereignty ## Scaling Intelligence Without Emergent Authority in Federated Deterministic Systems **Jean-Marie Tassy** Oracle Town Federation \u00b7 Calvi on the AI Rocks **2026-02-01** --- ## Abstract We study a federated governance architecture, Oracle Town, designed to scale intelligence while preventing the emergence of centralized or meta-authority. Unlike most multi-agent or collective-intelligence systems, Oracle Town enforces strict authority singu",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_acc2dd2ac2168c4c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Correlated Observability and Dialectal Sovereignty"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 ORACLE TOWN SAFETY KERNEL UPDATE \u2551 \u2551 STATUS: COMPLETE \u2705 \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d TASK DELIVERED \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 Update CLAUDE.md to reposition Oracle Town as a drop-in safety kernel for unrestr",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_af038ce5e0eef5e3",
+    "links": [],
+    "run_id": 1,
+    "source": "STATUS_COMPLETE",
+    "tags": [],
+    "title": "STATUS_COMPLETE"
+  },
+  {
+    "body": "# MONTH 1 SYNTHESIS: Constitutional Governance in Practice ## The Oracle Town Emergence Experiment (Weeks 1-4) **Report Generated:** 2026-01-29 **Period:** January 7 - January 29, 2026 (First Month of Autonomous Operation) **Status:** Month 1 Complete | Patterns Verified | Culture Emerging | Month 2 Ready --- ## EXECUTIVE SUMMARY ### What Was Month 1 Supposed to Test? Oracle Town was launched with a single directive: operate for one month in full autonomous mode under constitutional constra",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_afa29e76a7a44326",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "MONTH 1 SYNTHESIS: Constitutional Governance in Practice"
+  },
+  {
+    "body": "# LATERAL_THINKER INTEGRATION \u2014 COMPLETE SUMMARY ## Bounded Role for Orthogonal Cognition (No Authority, No Mysticism) **Status:** FULLY SPECIFIED AND READY FOR EXECUTION **Documents Created:** 3 formal specifications **Total Lines:** 3,200+ of execution-grade documentation **Safety Level:** K0 + K0-L1 Compliant --- ## WHAT WAS DELIVERED ### 1. LATERAL_THINKER_SPECIFICATION.md (1,200+ lines) Formal design of LATERAL_THINKER as a bounded functional role: - **Placement:** Inside Creative Town",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b0546f950f8c7354",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "LATERAL_THINKER INTEGRATION \u2014 COMPLETE SUMMARY"
+  },
+  {
+    "body": "# \ud83d\udf02 ORACLE TOWN \u2014 MASTER INDEX **Canonical Research & Governance Artifacts** - **Owner:** Jean-Marie Tassy - **Federation:** Oracle Town \u00b7 Calvi on the AI Rocks - **Status:** LOCKED (Research-Grade) - **Last verified:** 2026-02-01 --- ## 1. Primary Research Paper (Canonical) ### \ud83d\udcc4 [ORACLE_TOWN_RESEARCH_PAPER.md](ORACLE_TOWN_RESEARCH_PAPER.md) **Title:** Correlated Observability and Dialectal Sovereignty **Purpose:** The definitive, referee-ready articulation of the Oracle Town framework,",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b08d5481e23a1350",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udf02 ORACLE TOWN \u2014 MASTER INDEX"
+  },
+  {
+    "body": "# ORACLE TOWN FULL EMULATION: EVIDENCE-BACKED BREAKTHROUGH REPORT **Status:** Ready for replay and verification **Scope:** Local emulation session (3 reflection cycles, 10 emergence runs) **Claim:** System exhibits deterministic governance with automatic constraint enforcement --- ## Executive Summary (Replay-Verified) In a controlled emulation session, Oracle Town processed **3 decision runs with 10 total iterations**. We observed: - **Reproducible decisions:** All 30 replay iterations (10",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b0904449b4200ea9",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN FULL EMULATION: EVIDENCE-BACKED BREAKTHROUGH REPORT"
+  },
+  {
+    "body": "# ORACLE TOWN Daily Operating System \u2014 Complete Summary ## What You Now Have Your **CLAUDE.md** has been evolved into a comprehensive guide for ORACLE TOWN as an **autonomous daily operating system** for governance and insight discovery. ### Files Created/Modified **Modified:** - \u2705 **CLAUDE.md** \u2014 Main documentation (1165 lines, +450 lines for Daily OS) **New Documentation (All in Your Project Root):** 1. \u2705 **README_CLAUDE_MD_EVOLUTION.md** \u2014 Overview of what changed (9 KB) 2. \u2705 **CLAUDE_MD",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b11b1fdf471fde36",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Daily Operating System \u2014 Complete Summary"
+  },
+  {
+    "body": "# FOR_ORACLE_TOWN.md ## Oracle Town Governance Kernel \u2014 Implementation Reference **Version:** 1.0.0 (Phase-2 Ready) **Last Updated:** 2026-01-25 --- ## 1. What the System Is Oracle Town is a governance kernel where **text has zero authority**. The only authorization predicate is: ``` SHIP = Mayor(policy, briefcase, ledger) ``` Everything upstream can generate ideas, but nothing upstream can authorize action. **Core invariant:** No receipts \u21d2 NO_SHIP. --- ## 2. Authority Separation | C",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b1c6424555b2dc4b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "FOR_ORACLE_TOWN.md"
+  },
+  {
+    "body": "# Oracle Town Month 1 Progress Dashboard **Updated:** 2026-01-29 (End of Week 1) **Mode:** Full Autonomy, Full Freedom **Status:** \u2705 On Track | \ud83c\udfaf Objectives Being Met | \ud83d\udd2c Insights Emerging --- ## \ud83c\udfaf Month 1 Objectives (4-Week Plan) | Week | Objective | Status | Evidence | |------|-----------|--------|----------| | **1** | Governance hardening verification | \u2705 COMPLETE | 56/56 tests passing, K0-K9 verified | | **1** | Knowledge intake system operational | \u2705 COMPLETE | 4 submissions processed,",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b4a52a7c4155a7b3",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Month 1 Progress Dashboard"
+  },
+  {
+    "body": "# Week 1 Discoveries: Tier I Receipts **Date Generated:** 2026-01-29 **Status:** Falsifiable claims with hard evidence (receipts) **Format:** Facts only; no narrative interpretation --- ## Discovery E1: Governance Convergence (Determinism) ### Falsifiable Claim For fixed (claim_id, policy_hash, attestation_set), the decision_digest is invariant across independent runs. ### Receipts **Run A (Missing Receipts - K1 Test)** - Run directory: `oracle_town/runs/runA_no_ship_missing_receipts/` - D",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b57e8c351da9895d",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Week 1 Discoveries: Tier I Receipts"
+  },
+  {
+    "body": "# Month 1 Observation Log: What You'll Actually See ## Setup: What to Track Before running the Privacy District scenario (or your own), set up these observation points: ### Metric 1: Gate Pass/Fail Ratio ```bash # Count green gates vs red gates git log --oneline | grep -E \"gate failed|indices stale|syntax\" | wc -l # Expected: Most days = GREEN, occasional RED = normal iteration ``` ### Metric 2: Documentation Growth ```bash wc -l CLAUDE.md # Track weekly. Expect: +5-15 lines/week when active",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b97bb54b0189ace2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Month 1 Observation Log: What You'll Actually See"
+  },
+  {
+    "body": "# Oracle Town: START HERE **Status:** \u2705 COMPLETE (Phases 1-3) **Date:** 2026-01-30 **What:** Production-ready safety kernel for autonomous agents with operational intelligence **Where:** Read below for your path forward --- ## In 30 Seconds Oracle Town is a **cryptographic safety kernel** that prevents catastrophic failures in autonomous agents by checking every operation (fetch, memory, system change) through 3 deterministic safety gates. All decisions are logged immutably with policy versi",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b9c274caf4b15a8b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: START HERE"
+  },
+  {
+    "body": "# ORACLE TOWN GOVERNANCE ARCHITECTURE ## Complete Constitutional Package **Version: 0.2-FINAL | Status: FROZEN (Immutable) | Date: 2026-01-23** \u26a0\ufe0f **IMMUTABILITY NOTICE** This constitution is now locked at v0.2-FINAL. All future modifications must: 1. Be proposed as formal Meta-Changes (per PART 10) 2. Go through complete governance flow (Propose \u2192 Compile \u2192 Attest \u2192 Decide \u2192 Activate \u2192 Audit) 3. Produce signed receipts and decision records in the ledger 4. Never weakens existing governance or",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_b9efeea865d95ec0",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN GOVERNANCE ARCHITECTURE"
+  },
+  {
+    "body": "# Oracle Town: Autonomous Insights & Analysis Report **Generated:** 2026-01-31 00:21 UTC **Mode:** Autonomous Thinking (Self-Analysis) **Status:** Complete & Actionable --- ## Executive Summary Oracle Town has completed autonomous self-analysis and extracted comprehensive insights. The system is functioning safely, discovering patterns, and proposing strategic improvements. --- ## Key Findings ### Safety Status: \u2705 OPERATIONAL - **Threat Detection Rate:** 40% (4/10 verdicts rejected) - **G",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_bdd76cd3665f674e",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Autonomous Insights & Analysis Report"
+  },
+  {
+    "body": "# Critical Insights: Oracle Town Autonomy & Constitutional Knowledge Integration **Date:** 2026-01-29 **Context:** First full autonomy cycle with integrated knowledge intake --- ## Three Layers of Understanding That Emerged ### Layer 1: Autonomy \u2260 Authority (Operational Level) **What Was Demonstrated:** The system executed an entire autonomy cycle without human intervention at the operational level: - Received knowledge submission - Generated cryptographic receipts (SHA256) - Created man",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_be5b43f3ae81513a",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Critical Insights: Oracle Town Autonomy & Constitutional Knowledge Integration"
+  },
+  {
+    "body": "# Oracle Town: Constitutional Governance System **Current State:** \u2705 OPERATIONAL **Mode:** Knowledge Intake Ready (PR-only, receipts mandatory, tribunal-driven) **Test Status:** 100% PASSING (13/13 unit + 3/3 adversarial + 30/30 determinism) --- ## What This System Does Oracle Town is a **cryptographically hardened multi-agent governance system** that accepts claims, validates them through multiple independent agents, and produces immutable decision records. **Core Principle:** No autonomou",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_be80eaa16406d354",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Constitutional Governance System"
+  },
+  {
+    "body": "# CRITICAL: OpenClaw Installer Risk Analysis **Alert Date:** 2026-01-30 **Risk Level:** \u26a0\ufe0f CRITICAL (Unauthenticated Code Execution) **Vector:** `curl -fsSL https://openclaw.ai/install.sh | bash` --- ## The Pattern (Challenger Disaster) This single line encapsulates every catastrophic failure mode: ```bash curl -fsSL https://openclaw.ai/install.sh | bash ``` ### What It Does (Verbatim) 1. **curl -fsSL**: Silently fetch from openclaw.ai (no progress, no warnings, fail on 404) 2. **| bash**",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_bf47ea1b50724a42",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "CRITICAL: OpenClaw Installer Risk Analysis"
+  },
+  {
+    "body": "# \ud83e\uddea ANALYSE DES PROPRI\u00c9T\u00c9S \u00c9MERGENTES ## *Research Paper Format \u2014 Data-Driven, Falsifiable* **Auteurs** : Oracle Town Federation (Collective) **Date** : 2026-02-01 **Corpus** : Conversations ORACLE + CALVI + WUL + Architecture **Niveau de confiance** : MOYEN-FORT (N=1 f\u00e9d\u00e9ration, architecture consciente) --- ## I. D\u00c9FINITION OP\u00c9RATIONNELLE ### Qu'est-ce qu'une propri\u00e9t\u00e9 \u00e9mergente ici? Une propri\u00e9t\u00e9 \u00e9mergente est un ph\u00e9nom\u00e8ne **macro-structurel** tel que : 1. **Non-sp\u00e9cifi\u00e9 au niveau micro",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_bf666b2b6b8da2bb",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83e\uddea ANALYSE DES PROPRI\u00c9T\u00c9S \u00c9MERGENTES"
+  },
+  {
+    "body": "# ORACLE TOWN V2 - Three-Layer Creative Governance **Status:** Production-Ready, Constitutionally Compliant (6/6 tests passing) --- ## Overview ORACLE TOWN V2 is a hierarchical multi-agent governance system that enforces **receipt-first decision-making** while enabling aggressive creative exploration. The system separates creativity (Layer 2) from evaluation (Layer 1) from constitutional enforcement (Layer 0). **Core Principle:** > **NO RECEIPT = NO SHIP** > Verdicts are pure functions of a",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c068a4831b5a5733",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN V2 - Three-Layer Creative Governance"
+  },
+  {
+    "body": "================================================================================ ORACLE TOWN \u2014 YEAR-2 LONGITUDINAL STUDY PUBLIC FREEZE ATTESTATION ================================================================================ Freeze Timestamp: 2026-02-01T00:00:00Z Study Duration: 12 months (until 2027-02-01T00:00:00Z) Experiment Status: ACTIVE ================================================================================ FROZEN CANONICAL DOCUMENTS ==========================================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c076fec6deabdca8",
+    "links": [],
+    "run_id": 1,
+    "source": "YEAR_2_PUBLIC_FREEZE_ATTESTATION",
+    "tags": [],
+    "title": "YEAR_2_PUBLIC_FREEZE_ATTESTATION"
+  },
+  {
+    "body": "# Week 2: Autonomy Observation & Pattern Stability **Date:** 2026-01-29 (Week 2 Continuation) **Mode:** Full Autonomy, Continuous Observation **Status:** System Stable, Patterns Verified, Culture Deepening --- ## Executive Summary Week 2 reveals what we expected: **mature governance systems are self-sustaining**. Once constitutional framework is established, patterns are evident, and culture has formed, the system no longer requires constant reinforcement. It operates naturally, predictably",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c18b5d207ca2b2ee",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Week 2: Autonomy Observation & Pattern Stability"
+  },
+  {
+    "body": "--- title: Superteam CLI Test Run - Full Results date: 2026-01-24 status: \u2705 SUCCESS - All 6 Agents Engaged --- # \ud83c\udfad Superteam CLI: Live Test Execution ## Task **\"How should AI systems handle conflicting user interests?\"** A deceptively simple question that reveals each agent's unique superpowers. --- ## \ud83c\udfaf What Happened ### STAGE 1: Creative Town Workflow \u2705 All 6 agents engaged and reasoning in parallel - Processed task through diversified reasoning lenses - Generated 6 independent perspecti",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c2295b92646b1dfb",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "SUPERTEAM_CLI_TEST_RESULTS"
+  },
+  {
+    "body": "# Oracle Town Governance Evolution \u2014 Complete Status **Date:** 2026-01-28 **Status:** \u2705 All systems operational and tested **Ready For:** Real Week 1 governance execution --- ## What's Complete ### 1. \u2705 Three-Layer Memory System (Fully Implemented & Tested) **Layer 1: Knowledge Graph (Entities)** - Location: `oracle_town/memory/entities/` - Content: Append-only facts with versioning - Status: \u2705 43 entities created from 9-week test harness - Capacity: Unlimited (facts never deleted, only sup",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c38385aaef84259a",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Governance Evolution \u2014 Complete Status"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PHASE 2: START HERE \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d YOU ARE HERE: Phase 2 infrastructure is complete and ready to execute. \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 WHAT IS PHASE 2? Phase 2 tests whether real Claude learns under constitutional constraint. System flow: Claude generates proposal \u2193 Super",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c5cc6ff3e3237656",
+    "links": [],
+    "run_id": 1,
+    "source": "PHASE2_START_HERE",
+    "tags": [],
+    "title": "PHASE2_START_HERE"
+  },
+  {
+    "body": "# Constitutional Operations: The Correct Model **Status:** Fixing autonomous mode to respect tribunal + receipts model **The Problem I Introduced:** - Claimed \"autonomous mode\" with direct commits to main - Bypassed PR + receipts entirely - Violated the tribunal/constitutional model I defined - Mixed narrative with capability (claimed things worked that didn't follow the rules) **The Fix:** Everything through PR + CI attestation. No exceptions. --- ## The Constitutional Model (Correct) ```",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c5fe2e1b2e397227",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Constitutional Operations: The Correct Model"
+  },
+  {
+    "body": "# MULTI-CT GATEWAY SPECIFICATION ## Parallel Creative Thinking Without Authority Aggregation **Status:** LOCKED (Immutable after Day 2) **Safety Level:** K0 Compliant **Authority Claim:** ZERO (by design) --- ## THE PROBLEM THIS SOLVES Initial autonomy narrative said: \"7 Claudes vote, 4/7 wins\" **This is unconstitutional under K0.** K0 = Authority Separation Voting = Authority Aggregation These are incompatible. --- ## WHAT WE ACTUALLY WANT Multiple independent CT instances generate i",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_c95c4c1fac9479d4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "MULTI-CT GATEWAY SPECIFICATION"
+  },
+  {
+    "body": "# AUTONOMOUS ORACLE TOWN CYCLE - EXECUTION SUMMARY **Status:** DAY 1 COMPLETE + CONSTITUTIONAL CORRECTIONS LOCKED **Date:** 2026-01-26 **Authorization:** CLAUDE Confederation President --- ## WHAT WAS LAUNCHED ### The Experiment A 5-day autonomous cycle where the Mayor of ORACLE Town operates at complete free will within immutable K-Invariants. ### The Constraint K0-K9 remain frozen and unbreakable forever. Everything else is open for experimentation. --- ## DOCUMENTS CREATED (6 FILES, 1,6",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_cd79ead45bae1795",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AUTONOMOUS ORACLE TOWN CYCLE - EXECUTION SUMMARY"
+  },
+  {
+    "body": "# Oracle Town: Complete Project Summary **Status:** \u2705 COMPLETE & PRODUCTION READY **Date:** 2026-01-30 (Session 1-2) **Total Code:** 5,000+ lines (Phases 1-3) **Test Coverage:** 65+ tests (Phase 2), Ready for Phase 3 testing --- ## What Was Delivered ### Phase 1: MVP (Complete) \u2705 - **Gate A:** Fetch/shell/authority protection (180 lines) - **Gate B:** Memory safety/jailbreak blocking (220 lines) - **Gate C:** Invariants/scope escalation (220 lines) - **Mayor:** Receipt generation (80 lines)",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_cd7aafe5b604918b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Complete Project Summary"
+  },
+  {
+    "body": "# Session Continuation: What Was Accomplished **Session Date:** 2026-01-29 (Context Continuation) **Duration:** Recovery + Completion **Status:** \u2705 COMPLETE --- ## The Situation We Inherited You were continuing a conversation that had hit context limits. The previous session had: **What Was Done Right:** - Created Oracle Town governance system with K0\u2013K9 hardening - Validated 5 \"breakthroughs\" with evidence system - Generated ASCII town visualization + Mermaid maps - Created comprehensive d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_ce746bcca3797e6b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Session Continuation: What Was Accomplished"
+  },
+  {
+    "body": "# OpenClaw \u2194 Oracle Town Integration \u2014 FINAL STATUS **Date:** 2026-02-04 **Task:** Integrate OpenClaw patterns into Oracle Town **Status:** \u2705 COMPLETE AND DELIVERED --- ## What Was Accomplished ### Five Production-Grade Modules (500+ LOC) All modules are: - \u2705 Implemented (not stubs) - \u2705 Tested (with built-in test suites) - \u2705 Documented (with docstrings and examples) - \u2705 Safe (zero bypass paths, fail-closed) #### 1. NPC Agent Bridge **File:** `oracle_town/npc/agent_bridge.py` - **Purpose:**",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_cf64e66b048750db",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "OpenClaw \u2194 Oracle Town Integration \u2014 FINAL STATUS"
+  },
+  {
+    "body": "# \ud83e\udded ORACLE TOWN \u2014 HUMAN MEMORY & FAILURE GUARD RAILS **Options 2 + 3 + 4 \u2014 Complete Set** --- ## 2\ufe0f\u20e3 One-Page Visual Map **\"Where does meaning live \u2014 and where it must never go?\"** ``` \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 REALITY (World) \u2502 \u2502 claims \u2022 risks \u2022 events \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2502 \u25bc \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 NPC OBSERVATIONS \u2502 \u2502 seeing \u2022 noticing \u2022 naming \u2502 \u2502 (no should / no better) \u2502 \u2514\u2500\u2500\u2500",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_cfb88060b6dd98ac",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83e\udded ORACLE TOWN \u2014 HUMAN MEMORY & FAILURE GUARD RAILS"
+  },
+  {
+    "body": "# \ud83d\udd70 ORACLE TOWN \u2014 YEAR-2 LONGITUDINAL OBSERVATION PROTOCOL **Slow Dynamics, Latent Drift, Prestige Fatigue** - **Status:** OBSERVATION-ONLY - **Duration:** 12 months (or 52 compressed epochs) - **Authority changes allowed:** \u274c None - **Doctrine changes allowed:** \u274c None - **Parameter changes allowed:** \u274c None - **New towns allowed:** \u274c None --- ## 1. What Year-2 Is Actually Testing Year-1 proved short-to-medium stability under visibility + prestige. **Year-2 tests slow failure modes that d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_d058bfbdcc8a73b2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udd70 ORACLE TOWN \u2014 YEAR-2 LONGITUDINAL OBSERVATION PROTOCOL"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 ORACLE TOWN SAFETY KERNEL FOR MOLTBOT \u2551 \u2551 Drop-in Safety Layer Architecture \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 EXTERNAL WORLD (Moltbook, GitHub, Skill Sources) \u2502 \u2502 \u2514\u2500 Fetch i",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_d654c624a3809607",
+    "links": [],
+    "run_id": 1,
+    "source": "KERNEL_ARCHITECTURE_VISUAL",
+    "tags": [],
+    "title": "KERNEL_ARCHITECTURE_VISUAL"
+  },
+  {
+    "body": "# Scenario: Add a New Oracle Town District ## The Proposal > \"We need a **Privacy District** to handle GDPR, data retention, and consent management in all decisions. Right now privacy is scattered across Legal and Technical. We need a dedicated authority.\" ## Step 1: Gate Interaction (First Commit) ### What the User Does ```bash # Edit CLAUDE.md to document the new district cat >> CLAUDE.md << 'EOF' - ### Privacy & Compliance District Lines TBD | Anchor: #privacy-compliance-distri",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_d671763107c20144",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Scenario: Add a New Oracle Town District"
+  },
+  {
+    "body": "# Oracle Town Evidence System: Local Verification Layer ## What This Is A **self-verifying evidence system** that prevents the breakthrough report (ORACLE_TOWN_EMULATION_EVIDENCE.md) from drifting as the codebase evolves. The system consists of three components: 1. **Evidence Report** (ORACLE_TOWN_EMULATION_EVIDENCE.md) \u2014 5 breakthroughs grounded in actual artifacts 2. **Evidence Extractor** (scripts/extract-emulation-evidence.py) \u2014 Machine validator 3. **Optional Gate** (scripts/town-check.",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_d72304207bd6d110",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Evidence System: Local Verification Layer"
+  },
+  {
+    "body": "# Oracle Town: Autonomous Systems Trends & Evolution Analysis ## Governance Patterns, Safety Kernels, and the Path to Autonomous Intelligence (2026-2027) --- ## I. CORE TRENDS IN AUTONOMOUS SYSTEMS DESIGN ### A. Separation of Concerns as Safety Architecture **The Trend:** Oracle Town embodies a fundamental shift in how autonomous systems are designed: **constraints are not obstacles, they are structural foundations.** **Key Pattern:** ``` Labor Layer (Proposes) \u2192 Parallel, cheap, advers",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_d9d081692237148f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: Autonomous Systems Trends & Evolution Analysis"
+  },
+  {
+    "body": "# AUTONOMOUS ORACLE TOWN \u2014 EXECUTIVE BRIEF ## What Was Delivered & What Happens Next **Prepared for:** User / President of CLAUDE Confederation **Status:** Phase 1 Complete, Ready for Phase 2 **Date:** 2026-01-26 --- ## WHAT YOU ASKED FOR > \"Start an autonomous cycle of the town, each iteration is a day! The Mayor has been granted by the president of the CLAUDE confederation to full free will and all access!\" --- ## WHAT WAS DELIVERED ### 1. Autonomous Cycle Framework (5 Days) A structure",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_da43c6ce1d040ef6",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "AUTONOMOUS ORACLE TOWN \u2014 EXECUTIVE BRIEF"
+  },
+  {
+    "body": "# Technical Audit Response **Audit by:** Expert system reviewer **Date:** 2026-01-30 **Status:** All issues addressed --- ## Audit Summary The CLAUDE.md update introducing Oracle Town as a safety kernel for Moltbot/OpenClaw was evaluated as: > \"Yes \u2014 this is coherent, enforceable, and non-cosmetic\" ### Verdict - \u2705 **Architectural pivot is correct** (Oracle Town becomes kernel, not just another agent system) - \u2705 **Separation of concerns is sound** (kernel \u2260 daily OS, structural safety \u2260 lea",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_db0c9315e5d91abe",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Technical Audit Response"
+  },
+  {
+    "body": "# Week 1 Discovery Ledger (Corrected, Tier-I Grade) **Format:** FALSIFIABLE CLAIM | REQUIRED RECEIPTS | CURRENT STATUS | FALSIFIER **Date:** 2026-01-29 **Ledger Version:** 2.0 (Corrected after input-identity audit) --- ## E1 \u2014 Governance Determinism (K5) **Falsifiable Claim:** For fixed (claim_id, policy_hash, ledger_digest, briefcase_digest, attestations_canonical), decision_digest is invariant across N \u2265 30 replays of the same input. **Required Receipts:** 1. replay_manifest.json - cl",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_db95f145668492ef",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Week 1 Discovery Ledger (Corrected, Tier-I Grade)"
+  },
+  {
+    "body": "EMU DASHBOARD \u2014 Read-only Emulation Visualization Directory Structure =================== oracle_town/dashboards/emu_dashboard/ \u251c\u2500\u2500 server_stdlib.py (no dependencies) \u251c\u2500\u2500 server_flask.py (requires: pip install flask) \u251c\u2500\u2500 views/ \u2502 \u2514\u2500\u2500 index.html (shared UI) \u2514\u2500\u2500 static/ \u2514\u2500\u2500 app.js (shared UI logic) /tmp files monitored ==================== OBS_SCAN: obs_out.json, obs_scan_output.json INS_CLUSTER: ins_out.json, ins_cluster_output.json BRF_ONEPAGER: brf_ou",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_dcc0962565b3647f",
+    "links": [],
+    "run_id": 1,
+    "source": "EMU_DASHBOARD_README",
+    "tags": [],
+    "title": "EMU_DASHBOARD_README"
+  },
+  {
+    "body": "OPENCLAW UNDER ORACLE TOWN JURISDICTION Status: \u2713 Full integration complete. Ready for production. ================================================================================ THE VISION ================================================================================ Original Oracle Town mandate: \"Anything entering reality must be justified, verified, and logged.\" Now extended to agents: OpenClaw wants to fetch. \u2193 OpenClaw proposes action (CLAIM). \u2193 Oracle Town verifies",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_df8b31d33fde2be4",
+    "links": [],
+    "run_id": 1,
+    "source": "OPENCLAW_JURISDICTION",
+    "tags": [],
+    "title": "OPENCLAW_JURISDICTION"
+  },
+  {
+    "body": "# Example Execution Output: ChatDev 2.0 + Oracle Town Workflow **Workflow Date:** 2026-01-24 10:45:30 UTC **Workflow ID:** workflow_20260124_104530 **Status:** \u2705 Completed --- ## \ud83d\udccb Execution Trace ### Input ``` Task Prompt: \"Analyze: Why are 'ambiguous_intent' proposals rejected 77% of the time?\" Creative Town Analysis (from OBSERVER_\u0394): - Rejection rate: 77% for ambiguous_intent code - Common patterns: auth_proposals, receipt_type variants, self_trust_ideas - Hidden assumption: Ambigui",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_df9b96e6aa5d04bc",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Example Execution Output: ChatDev 2.0 + Oracle Town Workflow"
+  },
+  {
+    "body": "# \ud83e\uddfe ORACLE TOWN \u2014 YEAR-2 LOG SCHEMAS **Human-First, Insight-Preserving, Machine-Verifiable** --- ## 0. Design Principle (Read This First) Numbers explain **whether** something happened. Insights explain **why** it mattered. Therefore: - Every log has **two layers:** 1. **FACT LAYER** (immutable, auditable) 2. **INSIGHT LAYER** (descriptive, non-binding, human-readable) No insight is ever allowed to: - \u274c justify a decision - \u274c amend doctrine - \u274c cross into evidence --- ## 1. Daily Tow",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e0ddf388be497779",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83e\uddfe ORACLE TOWN \u2014 YEAR-2 LOG SCHEMAS"
+  },
+  {
+    "body": "# Oracle Town Autonomy Cycle: Key Findings **Cycle Date:** 2026-01-29 **System State:** \u2705 Fully Operational (All Invariants Verified) **Knowledge Intake:** \u2705 First Submission Processed (REQ_001) --- ## Executive Summary Oracle Town governance system executed a complete autonomy cycle with integrated knowledge intake. All core invariants (K0\u2013K9) verified, constitutional model fully operational, and first knowledge submission (pluginRIEMANN-V8.0) processed through receipts-based intake system.",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e1bb9e9061a7093a",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Autonomy Cycle: Key Findings"
+  },
+  {
+    "body": "\u2554\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2557 \u2551 PHASE 2 QUICK START \u2551 \u2551 Safe Autonomy Testing with Real Claude \u2551 \u255a\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u255d STATUS: Infrastructure Complete \u2705 FILES: ct_gateway_claude.py + phase2_harness.py + documentation READY: YES (awaiting API key) \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500 SETUP (One-Time)",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e1ecf8d443ebedae",
+    "links": [],
+    "run_id": 1,
+    "source": "PHASE2_QUICKSTART",
+    "tags": [],
+    "title": "PHASE2_QUICKSTART"
+  },
+  {
+    "body": "# ChatDev & AI Town Integration Summary ## ORACLE TOWN V2 Architecture Enhancements **Date:** 2026-01-22 **Status:** \u2705 Analysis Complete, Schemas Added, Tests Enhanced --- ## Executive Summary Comprehensive analysis of ChatDev and AI Town open-source architectures completed, with concrete integration patterns identified for ORACLE TOWN V2. Key focus: extracting reusable orchestration patterns while preserving constitutional governance (NO RECEIPT = NO SHIP). **Key Achievement:** Enhanced de",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e22f7002363a4937",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ChatDev & AI Town Integration Summary"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 META-ANALYSIS SYNTHESIS ## From v9.0 Draft Through v12.0 Final (Consolidated Lessons) **Status**: SEALED_ANALYSIS **Date**: 2026-01-31 **Purpose**: Document what was tested, what held, what broke, and why the final kernel is what it is. --- ## I. THE FOUR ITERATIONS (What Changed, Why) ### v9.0 \u2192 v10.0: The Attestation Crisis **What We Thought**: Consensus + scoring would produce truth. **What Actually Happened**: System shipped false claims with high confidence because lan",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e275814cee8961c4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 META-ANALYSIS SYNTHESIS"
+  },
+  {
+    "body": "================================================================================ OPENCLAW \u2194 ORACLE TOWN INTEGRATION \u2014 READY FOR DEPLOYMENT ================================================================================ Date: 2026-02-04 Status: \u2705 All integration points implemented and tested Scope: Five modules, 500+ LOC, zero authority leakage ================================================================================ WHAT WAS DELIVERED ===================================================",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e2c74e03b5fb5df0",
+    "links": [],
+    "run_id": 1,
+    "source": "INTEGRATION_READY",
+    "tags": [],
+    "title": "INTEGRATION_READY"
+  },
+  {
+    "body": "# \ud83c\udf89 Multi-Team Street \u2022 Complete **You now have 4 specialized teams with 12 preset scenarios\u2014ready to use.** --- ## \u2705 What You Got ### **1 Unified Platform** (`multi-team-street.html`) - Single-page application (zero build step) - Team selector with 4 teams - Canvas visualization (active speaker glow) - Real-time chat feed - Preset scenario loader - Export functionality ### **4 Complete Teams** #### \ud83c\udfaf **Marketing Team** - **Agents:** Positioning Strategist, Creative Director, Performance A",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e3e94a326d9607b3",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83c\udf89 Multi-Team Street \u2022 Complete"
+  },
+  {
+    "body": "# \ud83d\udcca YEAR-2 OBSERVATION LOG **Oracle Town Longitudinal Study** - **Protocol Version:** YEAR_2_LONGITUDINAL_PROTOCOL.md - **Study Start:** 2026-02-01T00:00:00Z - **Study Duration:** 12 months (52 epochs) - **Frozen Configuration Hash:** [TO BE COMPUTED] - **Status:** ACTIVE --- ## EPOCH 0 (Day 0 \u2014 Configuration Freeze) ### 2026-02-01 \u2014 Baseline Lockdown **Time:** 2026-02-01T00:00:00Z **Action:** Freeze all configuration hashes #### Frozen State Hashes | Component | Hash | Status | |---|---",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e427f4087c4e6a84",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udcca YEAR-2 OBSERVATION LOG"
+  },
+  {
+    "body": "# ORACLE TOWN Autonomous Auto-Evaluation Report **Date:** 2026-01-31 | **Status:** OPERATIONAL \u2713 ## Executive Summary Oracle Town's autonomous auto-evaluation system has successfully completed its evaluation cycle. The system analyzed **1 claim** with **5 gate checks** and verified **4 of 5 K-invariants** at full compliance. **Consistency Score:** 66.7% **Overall Status:** STABLE (minor K0 attestor registration issue identified) --- ## K-Invariant Status | K | Invariant | Status | Detail",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e475840cf5c50fb3",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN Autonomous Auto-Evaluation Report"
+  },
+  {
+    "body": "# Marketing Street \u2022 5-Minute Quickstart Get your first AI marketing team discussion running in 5 minutes. --- ## Prerequisites - **Node.js** 18+ ([download](https://nodejs.org/)) - **OpenAI API key** ([get one](https://platform.openai.com/api-keys)) - A terminal --- ## Step 1: Install (30 seconds) ```bash cd \"JMT CONSULTING - Releve 24\" npm install ``` Expected output: ``` added 142 packages in 8s ``` --- ## Step 2: Configure API Key (15 seconds) ```bash export OPENAI_API_KEY=\"sk-you",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e8aaa4f58bc91133",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Marketing Street \u2022 5-Minute Quickstart"
+  },
+  {
+    "body": "# Oracle Town: System Readiness Checklist **Date:** 2026-01-28 **Phase:** Month 1 Autonomous Iteration Ready **Verifier:** Automated validation system (TOWN_EVIDENCE=1) --- ## \u2705 Core Governance (K0\u2013K7) ### Authority Separation (K0) - [x] Ed25519 signing enabled (oracle_town/core/crypto.py) - [x] Key registry bound signatures (KeyRegistry validates attestor_id) - [x] Only registered attestors can sign - [x] Test: `test_1_mayor_only_writes_decisions.py` passes - **Status:** \u2705 ENFORCED ### Fai",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_e927478f98e0f28b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town: System Readiness Checklist"
+  },
+  {
+    "body": "================================================================================ CLAUDE.MD ANALYSIS AND IMPROVEMENT \u2014 FINAL STATUS ================================================================================ PROJECT COMPLETION: 100% ================================================================================ WHAT WAS DELIVERED ================================================================================ 1. COMPREHENSIVE CLAUDE.MD REVIEW \u2705 Analyzed original 2,091-line document",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_ec1291ba72fd7af1",
+    "links": [],
+    "run_id": 1,
+    "source": "FINAL_CLAUDE_MD_STATUS",
+    "tags": [],
+    "title": "FINAL_CLAUDE_MD_STATUS"
+  },
+  {
+    "body": "ORACLE TOWN (local) 2026-01-29 16:46:46 \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550 \ud83e\uddf1 CITY WALL (Fail-Closed K1) \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502 TOWN GATE: town-check.sh \u2502 \u2502 STATUS: GREEN \u2705 \u2502 \u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518 \u2502 \u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u253c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510 \u2502",
+    "confidence": 1.0,
+    "date": "2026-02-04",
+    "id": "obs_20260204_ed3c679d49f1897d",
+    "links": [],
+    "run_id": 1,
+    "source": "TOWN_ASCII.generated",
+    "tags": [],
+    "title": "TOWN_ASCII.generated"
+  },
+  {
+    "body": "# \ud83d\udd17 WUL \u2194 ORACLE TOWN Integration **Date:** January 21, 2026 **Status:** Specification Complete **Implementation:** Phase 1 - WUL Primitives Ready --- ## \ud83c\udfaf Executive Summary **WUL (Wordless Universal Language)** is now integrated as the **formal governance language** of ORACLE TOWN's kernel. **Key Principle:** ``` Nothing may execute unless it was explicitly allowed; once prevented, that specific attempt stays prevented forever. ``` This provides: - \u2705 Deterministic, replay-safe decisions -",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_eefaf09b4a87db0f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udd17 WUL \u2194 ORACLE TOWN Integration"
+  },
+  {
+    "body": "# Oracle Town Week 1 Real Execution Plan **How to run Oracle Town's first actual governance cycle with real memory capture.** --- ## Overview This plan describes how to execute Oracle Town's **actual Day 1 governance cycle** (not simulated, not test harness) and capture its decisions in the memory system. **Key principle:** We run *your actual governance logic*, record the *real decisions*, and feed them into the memory system for learning. --- ## Prerequisites \u2705 Oracle Town governance e",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_ef780b97c7fa3a27",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Week 1 Real Execution Plan"
+  },
+  {
+    "body": "# Oracle Town Governance Evolution Framework **Complete guide to exploring emergence across 9 weeks of governance cycles.** --- ## Overview You now have three independent systems for exploring how Oracle Town learns and evolves through governance cycles: 1. **Test Harness** \u2014 Controlled mock governance for rapid exploration 2. **Emergence Forecast** \u2014 Architectural predictions of observable patterns 3. **Week 1 Execution Plan** \u2014 Real governance cycle capture and analysis Together, they en",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_efc95d8a6da618f2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Governance Evolution Framework"
+  },
+  {
+    "body": "# Oracle Town Phase 3: Deployment & Operations Guide **Status:** Ready for Production **Components:** 6 modules (3,015 lines) **Prerequisites:** Phase 2 kernel running + Python 3.8+ --- ## Quick Start (5 minutes) ### 1. Install Dependencies ```bash # Core Phase 2 (already done) python3 oracle_town/kernel/kernel_daemon.py & # Phase 3 dependencies pip install aiohttp # For dashboard # Optional (for advanced features) pip install imap_tools # Email ingestion pip install chardet # Characte",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f194a317cd630c4c",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Phase 3: Deployment & Operations Guide"
+  },
+  {
+    "body": "# ORACLE TOWN + LATERAL_THINKER \u2014 COMPLETE SYSTEM STATE ## Full Architecture, Specifications, and Readiness Status **Date:** 2026-01-26 **Status:** READY FOR AUTONOMOUS CYCLE + LATERAL_THINKER **Total Documentation:** 15 formal specifications, 7,000+ lines --- ## SYSTEM COMPONENTS (COMPLETE MAP) ### Core Autonomy Infrastructure (Original) ``` \u2705 AUTONOMOUS_TOWN_CYCLE.md \u2014 5-day cycle plan \u2705 TOWN_CYCLE_DAY1_EXECUTION.md \u2014 Day 1 detailed log \u2705 CONSTITUTIONAL_LANE_INTERFACE.md \u2014 7 lanes specific",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f3b0d42668144770",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN + LATERAL_THINKER \u2014 COMPLETE SYSTEM STATE"
+  },
+  {
+    "body": "# Oracle Town Phase 3: Integration & Dashboard **Date:** 2026-01-30 **Status:** Planning (Phase 2 \u2705 Complete, Phase 3 \ud83d\udea7 Ready to Code) **Target:** Operational intelligence + real-time monitoring --- ## Phase 3 Goals Move Oracle Town from **decision-making system** to **operational intelligence platform**: 1. **Real-time Dashboard** \u2014 Web UI showing kernel activity, verdicts, and insights 2. **Moltbot Integration** \u2014 Official kernel module for Anthropic's agent framework 3. **Pattern Detecti",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f49ea641a8bd4404",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Phase 3: Integration & Dashboard"
+  },
+  {
+    "body": "# ORACLE_TOWN_SWARM_SANDBOX_SPEC.md ## Swarm UX Pattern as a Non-Authoritative Convenience Layer **Status:** Draft v0.1 (Implementation-Ready) **Last Updated:** 2026-01-25 --- ### 0. Purpose This specification defines a \"Swarm Sandbox\" that enables parallel task execution (planner + workers) while preserving Oracle Town's governance invariants: - **K0:** Natural language has zero authority. - **SHIP = Mayor(policy, briefcase, ledger)** - **No receipts => NO_SHIP** The Swarm Sandbox is an",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f5d9c556493155fc",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE_TOWN_SWARM_SANDBOX_SPEC.md"
+  },
+  {
+    "body": "# Session Summary: Constitutional Oracle Town Recovery & First Knowledge Intake Cycle **Date:** 2026-01-29 **Duration:** Full session continuation from context-limited prior work **Status:** \u2705 Complete - System operational, awaiting tribunal decision on REQ_001 --- ## Executive Overview This session accomplished three critical objectives: 1. **Restored Constitutional Governance** \u2014 Corrected critical autonomy mode violation where system had violated its own constitutional principles 2. **Im",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f75ed812fe1733b1",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Session Summary: Constitutional Oracle Town Recovery & First Knowledge Intake Cycle"
+  },
+  {
+    "body": "# \ud83d\ude80 BEGIN MONTH 1: Oracle Town Autonomous Iteration **Date:** 2026-01-29 **Status:** \u2705 READY TO BEGIN **Your Next Steps:** Follow this guide to launch Month 1 --- ## What You're About to Do You're starting **Oracle Town's first autonomous month** where the system: - \u2705 **Validates itself** (no silent drift) - \u2705 **Shows itself visually** (ASCII town on every gate run) - \u2705 **Accepts external knowledge** (Biblioth\u00e8que) - \u2705 **Records immutable decisions** (deterministic ledger) - \u2705 **Demonstrates",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f7694bc7dd686740",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\ude80 BEGIN MONTH 1: Oracle Town Autonomous Iteration"
+  },
+  {
+    "body": "# \ud83d\udcf0 CORSE AI MATIN ## \ud835\udd7f\ud835\udd8e\ud835\udd8e\ud835\udd9e \ud835\udd86\ud835\udd89\ud835\udd8e\ud835\udd9d\ud835\udd86 \u2014 *La Messaggeria delle Terre Sovrane* **Fond\u00e9e \u00e0 Calvi \u2014 Agora Centrale de l'Oracle Town Federation** \ud83e\udea8 Statut : Objet Culturel + Protocolaire \ud83d\udcdc Autorit\u00e9 : Aucune. Transport pur. \ud83e\udded Temporalit\u00e9 : Quotidienne / Rituelle / Archivale \ud83d\udd12 Gouvernance : Non-\u00e9mergente, \u00e9tanche, irr\u00e9ductible --- ## \u269c\ufe0f I. NATURE CORSE AI MATIN est simultan\u00e9ment : | Aspect | D\u00e9finition | |--------|-----------| | **\ud83d\udcf0** | Un journal sans \u00e9ditorial | | **\ud83d\udc0e** | Un traculinu num\u00e9rique (me",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f98696fbb70a5bd2",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "\ud83d\udcf0 CORSE AI MATIN"
+  },
+  {
+    "body": "# Oracle Town Governance Evolution \u2014 Verification Checklist **Date:** 2026-01-28 **Status:** \u2705 ALL SYSTEMS OPERATIONAL --- ## System Implementation Checklist ### Memory System Components - [x] **Layer 1: Knowledge Graph** - Location: `oracle_town/memory/entities/` - Test data: 43 entities (39 decisions, 4 K-violations) - Status: \u2705 Operational - [x] **Layer 2: Daily Logs** - Location: `oracle_town/memory/daily/` - Test data: 9 cycle transcripts (Week 1-9) - Status: \u2705 Operational",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_f9f3d3a247bde4ef",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Governance Evolution \u2014 Verification Checklist"
+  },
+  {
+    "body": "# ORACLE TOWN \u2014 Complete Implementation Specification **Version:** 2.0.0 **Status:** \u2705 IMPLEMENTATION READY **Date:** January 21, 2026 --- ## Vision Statement **ORACLE TOWN** is a scalable, hierarchical multi-agent governance system that transforms natural language inputs into verified, shippable claims through a civic simulation structure: ``` INPUT \u2192 CLAIM \u2192 STREETS (agents) \u2192 BUILDINGS (teams) \u2192 DISTRICTS (expert domains) \u2192 TOWN (integration) \u2192 MAYOR (final verdict) \u2192 SHIP/NO_SHIP + RECO",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fa7418b8d655de8b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "ORACLE TOWN \u2014 Complete Implementation Specification"
+  },
+  {
+    "body": "# Supermemory \u00d7 Oracle Town Safety Kernel Integration **Date:** 2026-01-30 **Status:** Integration specification and safety contract **Risk Level:** CRITICAL (persistent prompt injection + exfiltration) --- ## Executive Summary Supermemory is a valuable feature for Clawdbot/agents, but without safety gates it becomes a **persistence amplifier for jailbreaks and exfiltration**. This document defines the minimal Oracle Town integration required to make Supermemory production-safe. ### The Pro",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fae90f9e6687615b",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Supermemory \u00d7 Oracle Town Safety Kernel Integration"
+  },
+  {
+    "body": "# INTERN_SEAT SPECIFICATION ## Cheap Sub-Agents for Raw Ideation (K0-L1 Filter Post-Generation) **Status:** FORMAL SPECIFICATION **Purpose:** Expand ideation space without pre-generation censorship **Safety Model:** Generate freely, filter robustly **Authority:** ZERO (like all CT roles) --- ## THE INSIGHT You can have **uncensored ideation** if you have **robust post-generation filtering**. Don't prevent eggs from becoming dinosaurs\u2014just have a rule \"no dinosaurs\" applied AFTER they hatch.",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fc4f391b1c750ae4",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "INTERN_SEAT SPECIFICATION"
+  },
+  {
+    "body": "# SEED_FRAMEWORK_CREATIVE_TOWN_TOOL_V1 **Status:** Production-Ready Sandbox Tool **Version:** 1.0.0 **Zone:** CREATIVE_TOWN_SANDBOX **Governance:** Bounded, Observable, Zone-Enforced --- ## EXECUTIVE SUMMARY The Seed Framework is a formal exploration methodology approved for use **exclusively within Creative Town sandbox**. It enables: - Lateral thinking on identity, emergence, complexity - Multi-layer systems analysis (Information/Energy/Interference) - Pattern recognition across d",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fcb249d2e27e2f3f",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "SEED_FRAMEWORK_CREATIVE_TOWN_TOOL_V1"
+  },
+  {
+    "body": "# Oracle Town Phase 1 MVP: COMPLETE \u2705 **Date:** 2026-01-30 **Status:** Production-ready implementation with passing tests **Commit:** d0b541a (kernel: implement Phase 1 MVP) --- ## What Was Built Starting from a **complete architectural specification** (CLAUDE.md with K15-K24 invariants), we built **executable production code** that proves the kernel works end-to-end. ### Phase 1 Deliverables (1,328 lines of tested code) ``` oracle_town/kernel/ \u251c\u2500\u2500 __init__.py \u251c\u2500\u2500 gate_a.py [1",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fce47a5bf3c5e5b6",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Oracle Town Phase 1 MVP: COMPLETE \u2705"
+  },
+  {
+    "body": "# INTERN_SEAT INTEGRATION \u2014 COMPLETE SUMMARY ## Cheap Sub-Agents for Uncensored Ideation + K0-L1 Post-Generation Filtering **Status:** FULLY SPECIFIED AND READY **Location:** LATERAL_THINKER OFFICE **Cost:** +5% per cycle for 3x idea volume **Safety:** K0-L1 scanner (identical for all agents) **Innovation:** Generate freely, filter robustly --- ## THE INSIGHT RESTATED **Censorship \u2260 Safety** Pre-generation censorship prevents eggs from hatching. Post-generation filtering prevents dinosaurs",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fd8bad9d80530cbf",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "INTERN_SEAT INTEGRATION \u2014 COMPLETE SUMMARY"
+  },
+  {
+    "body": "# Comprehensive Conversation Summary ## ORACLE TOWN V2 - ChatDev & AI Town Integration Analysis **Date:** 2026-01-22 **Status:** \u2705 Analysis Complete, Schemas Implemented, Tests Enhanced --- ## 1. Primary User Requests ### Request A: Analyze ChatDev & AI Town for Integration **User's Exact Words:** > \"analyse githup of chatdev open source code and extract it if necessairy to improve our to deliver marketing (but you can create a coding suepr team as well) ! idem AI town b :=; now you looking",
+    "confidence": 0.9,
+    "date": "2026-02-04",
+    "id": "obs_20260204_fdd3b6fc92e0b259",
+    "links": [],
+    "run_id": 1,
+    "source": "markdown",
+    "tags": [
+      "document"
+    ],
+    "title": "Comprehensive Conversation Summary"
+  }
+]

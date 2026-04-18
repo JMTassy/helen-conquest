@@ -1,0 +1,97 @@
+digraph ORACLE_TOWN {
+  rankdir=LR;
+  node [shape=box, style=rounded, fontname="Arial"];
+  edge [fontname="Arial"];
+
+  // Styling
+  graph [bgcolor=white, fontsize=12];
+
+  subgraph cluster_core {
+    label="Core Governance District";
+    style=filled;
+    color=lightgrey;
+    node [style=filled, color=white];
+
+    ClaimChamber [label="Claim Chamber\n(Entry Point)", shape=folder, color=lightblue];
+    ConsensusEngine [label="Consensus Engine\n(QI-INT v2)", shape=hexagon, color=gold];
+    ObligationVault [label="Obligation Vault\n(Brake System)", shape=cylinder, color=orange];
+    DecisionArchive [label="Decision Archive\n(RunManifest)", shape=cylinder, color=green];
+  }
+
+  subgraph cluster_agency {
+    label="Agency Row (Superteams)";
+    style=filled;
+    color=lavender;
+    node [style=filled, color=white];
+
+    StrategyHQ [label="Strategy HQ\nw=0.65", color=lightgreen];
+    EngineeringWing [label="Engineering Wing\nw=0.85", color=lightgreen];
+    LegalOffice [label="Legal Office\nw=1.00\n[KILL-SWITCH]", color=red, fontcolor=white];
+    SecuritySector [label="Security Sector\nw=1.00\n[KILL-SWITCH]", color=red, fontcolor=white];
+    UXImpact [label="UX/Impact Bureau\nw=0.70", color=lightgreen];
+    COO [label="COO HQ\nw=0.75", color=lightgreen];
+    DataValidation [label="Data Validation\nw=0.80", color=lightgreen];
+  }
+
+  subgraph cluster_meta {
+    label="Meta-Zone (Visualization & Tuning)";
+    style=filled;
+    color=lightyellow;
+    node [style=filled, color=white];
+
+    MetaAgentObservatory [label="Meta-Agent\nObservatory", shape=diamond, color=purple, fontcolor=white];
+    RetroControlRoom [label="Retro Control Room\n(Phase Viz)", shape=component, color=cyan];
+  }
+
+  // Streets (data flow)
+  ClaimChamber -> StrategyHQ [label="route"];
+  ClaimChamber -> EngineeringWing [label="route"];
+  ClaimChamber -> LegalOffice [label="route"];
+  ClaimChamber -> SecuritySector [label="route"];
+  ClaimChamber -> DataValidation [label="route"];
+  ClaimChamber -> UXImpact [label="route", style=dashed];
+  ClaimChamber -> COO [label="route", style=dashed];
+
+  // Voting signals to consensus
+  StrategyHQ -> ConsensusEngine [label="signals"];
+  EngineeringWing -> ConsensusEngine [label="signals"];
+  LegalOffice -> ConsensusEngine [label="signals/veto", color=red, penwidth=2];
+  SecuritySector -> ConsensusEngine [label="signals/veto", color=red, penwidth=2];
+  DataValidation -> ConsensusEngine [label="signals"];
+  UXImpact -> ConsensusEngine [label="signals", style=dashed];
+  COO -> ConsensusEngine [label="signals", style=dashed];
+
+  // Obligation flow
+  ConsensusEngine -> ObligationVault [label="open obligations", penwidth=2, color=orange];
+  ObligationVault -> ConsensusEngine [label="clearance check", penwidth=2, color=orange, style=dashed];
+
+  // Kill-switch override
+  LegalOffice -> ConsensusEngine [label="KILL", color=red, penwidth=3, style=bold];
+  SecuritySector -> ConsensusEngine [label="KILL", color=red, penwidth=3, style=bold];
+
+  // Archive and visualization
+  ConsensusEngine -> DecisionArchive [label="RunManifest", penwidth=2, color=green];
+  ConsensusEngine -> RetroControlRoom [label="amplitudes/S_c", style=dashed, color=blue];
+
+  // Meta-agent tuning (future extension)
+  MetaAgentObservatory -> ConsensusEngine [label="tuning suggestions", style=dotted, color=purple];
+  DecisionArchive -> MetaAgentObservatory [label="historical data", style=dotted, color=purple];
+
+  // Legend
+  subgraph cluster_legend {
+    label="Legend";
+    style=filled;
+    color=white;
+    node [shape=plaintext];
+
+    legend [label=<
+      <table border="0" cellborder="0" cellspacing="0">
+        <tr><td align="left"><font color="red">━━━</font> Kill-switch override</td></tr>
+        <tr><td align="left"><font color="orange">━━━</font> Obligation flow</td></tr>
+        <tr><td align="left"><font color="green">━━━</font> Archive output</td></tr>
+        <tr><td align="left"><font color="blue">- - -</font> Visualization</td></tr>
+        <tr><td align="left"><font color="purple">· · ·</font> Meta-tuning</td></tr>
+      </table>
+    >];
+  }
+}

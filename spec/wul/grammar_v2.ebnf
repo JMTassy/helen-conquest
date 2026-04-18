@@ -1,0 +1,102 @@
+(*
+  WUL-ML Grammar V2
+  version:         2.0.0
+  artifact_id:     GRAMMAR_V2
+  oracle_resistant: true
+  status:          FROZEN
+
+  Compile laws:
+  1. Any operator outside ⫷ ... ⫸ → FAIL (E_OPERATOR_OUTSIDE_APPLY)
+  2. Any unknown glyph not present in active tables → FAIL (E_UNKNOWN_GLYPH)
+  3. Any reserved quantifier/operator used in CORE mode → FAIL (E_RESERVED_GLYPH_IN_CORE)
+  4. No implicit repair.
+  5. No inferred brackets.
+  6. Same normalized source → same IR → same hash.
+*)
+
+message         ::= start clause (sep clause)* end ;
+
+start           ::= "◈" ;
+sep             ::= "◇" ;
+end             ::= "◎" ;
+
+clause          ::= binder_clause
+                  | apply_clause
+                  | expr ;
+
+binder_clause   ::= "⟠" head expr ;
+apply_clause    ::= "⟡" head expr ;
+
+head            ::= semantic_tag logic_op? quantifier? ;
+
+semantic_tag    ::= "⧉"
+                  | "⧊"
+                  | "⧋"
+                  | "⧌"
+                  | "⧍"
+                  | "⧎"
+                  | "⧏"
+                  | "⧐" ;
+
+logic_op        ::= "⨀"
+                  | "⨁"
+                  | "⨂"
+                  | "⨃"
+                  | "⨄"
+                  | "⨋"
+                  | "⨌"
+                  | "⨍" ;
+
+quantifier      ::= "⩀"
+                  | "⩃"
+                  | "⩂"
+                  | "⩈"
+                  | "⩉" ;
+
+expr            ::= const
+                  | group
+                  | app ;
+
+group           ::= "⟨" expr "⟩" ;
+
+app             ::= "⫷" app_body "⫸" ;
+
+app_body        ::= unary_app
+                  | binary_app ;
+
+unary_app       ::= expr unary_operator ;
+binary_app      ::= expr binary_operator expr ;
+
+unary_operator  ::= "⫿" ;
+
+binary_operator ::= "⬄"
+                  | "⬂"
+                  | "⫹"
+                  | "⫺"
+                  | "⫻"
+                  | "⫼"
+                  | "⫽" ;
+
+const           ::= "ⵁ"
+                  | "ⵂ"
+                  | "ⵃ"
+                  | "ⵄ"
+                  | "ⵅ"
+                  | "ⵆ"
+                  | "ⵇ"
+                  | "ⵈ"
+                  | "ⵉ"
+                  | "ⵊ"
+                  | "ⵋ"
+                  | "ⵌ"
+                  | "ⵍ"
+                  | "ⵎ" ;
+
+(*
+  Valid sample:
+  ◈⟠⧉⨀⩀⫷ⵁ⬄ⵆ⫸◇⟡⧋⨁⩃⫷ⵂ⬂ⵇ⫸◎
+
+  Invalid sample (⫹ and ⫺ appear outside application frame):
+  ◈⟠⧉⨀⩀⫷ⵁ⬄ⵆ⫸◇⟡⧋⨁⩃⫹ⵂ⬂ⵇ⫺◎
+  → E_OPERATOR_OUTSIDE_APPLY
+*)

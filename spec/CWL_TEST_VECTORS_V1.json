@@ -1,0 +1,208 @@
+{
+  "_comment": "CWL v1.0.1 Canonical Test Vectors — FROZEN Epoch3 Standard. All hashes are SHA256. All JSON is CANON_JSON_V1. Do not edit after freeze.",
+  "schema": "CWL_TEST_VECTORS_V1",
+  "cwl_version": "1.0.1",
+  "frozen_at": "2026-02-27",
+
+  "hash_constants": {
+    "algorithm": "SHA256",
+    "ledger_prefix_ascii": "HELEN_CUM_V1",
+    "ledger_prefix_hex": "48454c454e5f43554d5f5631",
+    "trace_prefix_ascii": "HELEN_TRACE_V1",
+    "trace_prefix_hex": "48454c454e5f54524143455f5631",
+    "merkle_leaf_prefix_ascii": "CWL_LEDGER_LEAF_V1",
+    "merkle_leaf_prefix_hex": "43574c5f4c45444745525f4c4541465f5631",
+    "merkle_node_prefix_ascii": "CWL_MERKLE_NODE_V1",
+    "merkle_node_prefix_hex": "43574c5f4d45524b4c455f4e4f44455f5631"
+  },
+
+  "canon_json_v1": {
+    "sort_keys": true,
+    "separators": [",", ":"],
+    "ensure_ascii": false,
+    "encoding": "utf-8",
+    "no_floats_in_sovereign": true,
+    "_note": "json.dumps(obj, sort_keys=True, separators=(',',':'), ensure_ascii=False).encode('utf-8')"
+  },
+
+  "ledger_formulas": {
+    "payload_hash": "SHA256(CANON_JSON_V1(payload))",
+    "cum_hash": "SHA256(PREFIX_LEDGER || prev_cum_hash_bytes || payload_hash_bytes)",
+    "genesis_prev_cum_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+
+  "trace_formulas": {
+    "payload_hash": "SHA256(CANON_JSON_V1(event_core))",
+    "cum_hash": "SHA256(PREFIX_TRACE || prev_trace_hash_bytes || payload_hash_bytes)",
+    "genesis_prev_trace_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "event_core_fields": ["authority", "event_type", "metadata", "payload", "run_id", "schema_version", "seq", "tick"],
+    "authority_value": false
+  },
+
+  "merkle_formulas": {
+    "leaf": "SHA256(PREFIX_LEAF || payload_hash_bytes)",
+    "node": "SHA256(PREFIX_NODE || left_bytes || right_bytes)",
+    "padding_rule": "duplicate_last",
+    "_note": "If a level has odd nodes, duplicate the last node before pairing"
+  },
+
+  "ledger_vector": {
+    "_description": "8-event sovereign ledger. All events are receipt_v1. Chain starts from ZERO_HASH.",
+    "events": [
+      {"issuer_town": "T_A", "payload": {"k": "v0"}, "rid": "RID-000", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v1"}, "rid": "RID-001", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v2"}, "rid": "RID-002", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v3"}, "rid": "RID-003", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v4"}, "rid": "RID-004", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v5"}, "rid": "RID-005", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v6"}, "rid": "RID-006", "type": "receipt_v1"},
+      {"issuer_town": "T_A", "payload": {"k": "v7"}, "rid": "RID-007", "type": "receipt_v1"}
+    ],
+    "expected_payload_hashes": [
+      "462473da14f4842e362262f6e8651e7d534f9644673307aa6bcb3aa9f9cab250",
+      "971b0bd38eaa4d3d832cfdd9c55b982518984f964daeeef2bece5e842455114b",
+      "d8e4f4c79f5f0c20230c7ccf1b247854e03c1c359c7d5bb0910e41d7616f2110",
+      "ff84ce88a9ebfb4003efffd0465548d1040f9bdafe6bc652ea4d8dc03de38a56",
+      "049c979c69d9967b96d12a25d350aa4819a2f42b1c4d45ca2283ef31b168742d",
+      "3af8b83828fb544cfb6f01e6efb80d8574c81a5487de544dda38b41c22676bb5",
+      "a4b3b52638d97b0adedbd56208a71197e7f0447371168bb5c07b2d660f2687cb",
+      "5aec54f67acd0d4e361934edc00bd52dc275a2f208f30477a05d7ca8e2a4b7a6"
+    ],
+    "expected_cum_hashes": [
+      "5121f5a24d2d96075bf6515b0407c435f55e47de4d795d1a43886a91a131d491",
+      "10b33738939646048e59a72c3664ec3b466c00ad22f00f953ded4e77bfedc4bd",
+      "506c4413279fd5527a826f35ad2f8d23277dd2c186fdedabd6d7e159cd21f433",
+      "42433e06ad0b291aec99eb60f4c2ac1830b03411df9db7d694c58dbce32ec957",
+      "ecb6051024aa540aa1cc79ec08dc7e51a83ed1e0e5702c28326ce3ff6d59a6df",
+      "49ac548d78bab602c777bc1080d84e426b4d8bb5acbda4432cc498b0110fde27",
+      "6208c8b498b5a96b0ccd629f62047223848157f5346645f6082ce2179135d9dc",
+      "99a02ba4fe035f1d3a0badf9eb22554f2c8fe352eb268395995a5cae886189dc"
+    ],
+    "ledger_tip": "99a02ba4fe035f1d3a0badf9eb22554f2c8fe352eb268395995a5cae886189dc",
+    "rid_set": ["RID-000", "RID-001", "RID-002", "RID-003", "RID-004", "RID-005", "RID-006", "RID-007"],
+    "_note": "anti-replay: RID-008 is admissible; any of the above is inadmissible"
+  },
+
+  "trace_vector": {
+    "_description": "3-event non-sovereign trace. event_core MUST include only these fields (sorted). authority=false always.",
+    "schema_version": "TRACE_EVENT_V1",
+    "events": [
+      {"authority": false, "event_type": "engine_start", "metadata": {}, "payload": {"step": 0}, "run_id": "RUN-TEST-0", "schema_version": "TRACE_EVENT_V1", "seq": 0, "tick": 0},
+      {"authority": false, "event_type": "engine_step",  "metadata": {}, "payload": {"step": 1}, "run_id": "RUN-TEST-0", "schema_version": "TRACE_EVENT_V1", "seq": 1, "tick": 1},
+      {"authority": false, "event_type": "engine_step",  "metadata": {}, "payload": {"step": 2}, "run_id": "RUN-TEST-0", "schema_version": "TRACE_EVENT_V1", "seq": 2, "tick": 2}
+    ],
+    "expected_payload_hashes": [
+      "50631642c5ceb3662dd791e645861bb065fda05734229c66659f9a92b1d2dcc4",
+      "a6637bbb87f2bb6e9dd0a99a9e3ad4a05547c67ae97557d638829d5765d80117",
+      "9ce9315660bfec473d4c4a149fd59a94fb5f5a48600ba8cb65a521563329335f"
+    ],
+    "expected_cum_hashes": [
+      "a208a5c5ffea7558fd6360f016145c39818e0de7d51acb78e87025370b71c47e",
+      "457412e0cf9745937e37abc9a461df53c9b595261a185d874285559a56b529be",
+      "2d5c00789c619003257c39c73101f83ff6596504d94f3ff17b2ea84934341f00"
+    ],
+    "trace_tip": "2d5c00789c619003257c39c73101f83ff6596504d94f3ff17b2ea84934341f00"
+  },
+
+  "merkle_vector": {
+    "_description": "8-leaf Merkle tree from ledger payload hashes. Leaves are domain-separated from payload_hash.",
+    "padding_rule": "duplicate_last",
+    "leaf_hashes": [
+      "35be12524f44b64a09f6fb01c8109d0d1f05e5b20f66012bc4254f393ecbdb3e",
+      "5e16308767a097d437bd66a0c0cfeb43d9cfa84284e426eea28973d66c6201c0",
+      "f61badb7d47db434bc5a5b78f67fb947b9cc156abef250b31ebdff66d75208e2",
+      "e3daf4b377ec01da2ab078c67e01c44fe8e09215e4c60f298ad2c814db4f980f",
+      "01d83fc2f5fed42c02d063a6fb8a0a6ea6e8ba71e279193f32c58238d662276b",
+      "a0d955d9ff54b9b6312fa86b09d4ab0fbc4dae9696221581345bed8520ba6fab",
+      "73838b5bd0bda506ad91be78d9af4687e4e88faa3035e5e323c2fb6f4812dec9",
+      "1def40e8410eaf44a982f8743936be38100bd4d1f3a0743a068573684df33387"
+    ],
+    "internal_nodes": {
+      "level_1": {
+        "_note": "Node(leaf_i, leaf_i+1) for i in 0,2,4,6",
+        "node_01": "6538e46325ca00381afda490c62ec91ca391ccf26bc87ba586e9f1405e7884ac",
+        "node_23": "ddf2bb1195a886ffaddc6171371bec57050d7a4048dc7a7cf78cf7165ab9f6f1",
+        "node_45": "17ba59b821a4cfe00106fcbb78af8e8c059da5d68e69779eff8d36a14c9f3bca",
+        "node_67": "2adbebc2588d115853497c367f8bf23e46aca4ba3fd4a0d0b9a6d895e5363d39"
+      },
+      "level_2": {
+        "node_0123": "c1c10b31b0bd564ff7be95bdf9f08df2156f73da76dde92214c7fbfdc8b83b05",
+        "node_4567": "8acefbb552951ed3a1f518df2d8fe86fa025078f7117de3fdf68b5d1c3621b8c"
+      }
+    },
+    "root": "3630168bc755229da02c423d741603e0b4a4f36146ef7953825f5742075f4068",
+    "inclusion_proofs": [
+      {
+        "_description": "Inclusion proof for leaf at index 0",
+        "index": 0,
+        "leaf_hex": "35be12524f44b64a09f6fb01c8109d0d1f05e5b20f66012bc4254f393ecbdb3e",
+        "siblings": [
+          {"side": "R", "hash_hex": "5e16308767a097d437bd66a0c0cfeb43d9cfa84284e426eea28973d66c6201c0"},
+          {"side": "R", "hash_hex": "ddf2bb1195a886ffaddc6171371bec57050d7a4048dc7a7cf78cf7165ab9f6f1"},
+          {"side": "R", "hash_hex": "8acefbb552951ed3a1f518df2d8fe86fa025078f7117de3fdf68b5d1c3621b8c"}
+        ],
+        "expected_root": "3630168bc755229da02c423d741603e0b4a4f36146ef7953825f5742075f4068"
+      },
+      {
+        "_description": "Inclusion proof for leaf at index 3",
+        "index": 3,
+        "leaf_hex": "e3daf4b377ec01da2ab078c67e01c44fe8e09215e4c60f298ad2c814db4f980f",
+        "siblings": [
+          {"side": "L", "hash_hex": "f61badb7d47db434bc5a5b78f67fb947b9cc156abef250b31ebdff66d75208e2"},
+          {"side": "L", "hash_hex": "6538e46325ca00381afda490c62ec91ca391ccf26bc87ba586e9f1405e7884ac"},
+          {"side": "R", "hash_hex": "8acefbb552951ed3a1f518df2d8fe86fa025078f7117de3fdf68b5d1c3621b8c"}
+        ],
+        "expected_root": "3630168bc755229da02c423d741603e0b4a4f36146ef7953825f5742075f4068"
+      },
+      {
+        "_description": "Inclusion proof for leaf at index 7",
+        "index": 7,
+        "leaf_hex": "1def40e8410eaf44a982f8743936be38100bd4d1f3a0743a068573684df33387",
+        "siblings": [
+          {"side": "L", "hash_hex": "73838b5bd0bda506ad91be78d9af4687e4e88faa3035e5e323c2fb6f4812dec9"},
+          {"side": "L", "hash_hex": "17ba59b821a4cfe00106fcbb78af8e8c059da5d68e69779eff8d36a14c9f3bca"},
+          {"side": "L", "hash_hex": "c1c10b31b0bd564ff7be95bdf9f08df2156f73da76dde92214c7fbfdc8b83b05"}
+        ],
+        "expected_root": "3630168bc755229da02c423d741603e0b4a4f36146ef7953825f5742075f4068"
+      }
+    ]
+  },
+
+  "seal_v2_fixture": {
+    "_description": "Seal over the 8-event ledger + 3-event trace. env_hash and kernel_hash are test fixtures (all-a, all-b bytes).",
+    "type": "seal_v2",
+    "final_cum_hash": "99a02ba4fe035f1d3a0badf9eb22554f2c8fe352eb268395995a5cae886189dc",
+    "final_trace_hash": "2d5c00789c619003257c39c73101f83ff6596504d94f3ff17b2ea84934341f00",
+    "env_hash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "kernel_hash": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "_note": "In production: env_hash = SHA256(CANON_JSON_V1(env_descriptor)), kernel_hash = SHA256(tarball_bytes(TCB_FILESET))"
+  },
+
+  "anti_replay_vector": {
+    "_description": "Derivable from the 8-event ledger. No external state required.",
+    "rid_set_derivable_from_ledger": ["RID-000", "RID-001", "RID-002", "RID-003", "RID-004", "RID-005", "RID-006", "RID-007"],
+    "admissible_test": {"rid": "RID-008", "expected": "ADMIT"},
+    "inadmissible_test": {"rid": "RID-003", "expected": "REJECT"}
+  },
+
+  "synthetic_ledger_reference": {
+    "_description": "Reference to the verified 5-event synthetic_ledger_v1_0_1.ndjson produced during Phase 1 hardening.",
+    "_file": "synthetic_ledger_v1_0_1.ndjson",
+    "event_count": 5,
+    "ledger_tip_before_seal": "0eb445ed9fc811c516ddcc3327950c8a964086ab9eb824f07ddda1204bf91b56",
+    "seal_cum_hash": "f52b71ec39eba4b1adf00dd6b29ae15df21734cf8eb10c6347b7085a7aa7d9b0",
+    "validated_by": "cwl_boot_validator.py",
+    "status": "BOOT_VALIDATED"
+  },
+
+  "genesis_ledger_reference": {
+    "_description": "Reference to the first sovereign ledger genesis_ledger_v1_0_1.ndjson produced during Phase 3.",
+    "_file": "genesis_ledger_v1_0_1.ndjson",
+    "event_count": 3,
+    "mayor_pk_fingerprint": "049481397e9e74a2722a4bcbebfb3f5518e68c78e5e3f6190de7189f3f57e72a",
+    "ledger_tip_before_seal": "1afb8ab4b44d9136391445709d56e3805ecd7286a71d504de6da552178e6b179",
+    "seal_cum_hash": "20081dbfc388512ea626d7ebd692b3dcb6cc3d24f843a018db42d91fa5c10e60",
+    "validated_by": "cwl_boot_validator.py",
+    "status": "BOOT_VALIDATED"
+  }
+}

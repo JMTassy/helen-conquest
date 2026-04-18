@@ -1,0 +1,26 @@
+{
+  "version": "HELEN_MEM_V0",
+  "epoch": "#4E",
+  "epoch_start_date": "2026-02-27",
+  "epoch_name": "EPOCH4 \u2014 CLAIM_GRAPH_V1 + Autonomy Loop (Path A)",
+  "facts": {
+    "authority_rule": "Authority is human-only; HELEN emits drafts only",
+    "seal_doctrine": "DRAFTS ARE NOT REALITY. SEALING IS HUMAN-ONLY.",
+    "project_origin": "JMT CONSULTING - Releve 24 (2026-02-21)",
+    "street1_shipped": true,
+    "street1_last_seed": 42,
+    "terminal_cli": "ready",
+    "helen_manifesto": "EPOCH 1 declaration \u2014 see HELEN_MANIFESTO_EPOCH_1.md",
+    "epoch_system_active": true,
+    "system_state": {
+      "value": "operational",
+      "source": "epoch4_launch",
+      "timestamp": "2026-02-27T21:57:46.508847+00:00"
+    },
+    "epoch4_status": {
+      "value": "Path A operational",
+      "source": "launch",
+      "timestamp": "2026-02-27T21:57:54.785067+00:00"
+    }
+  }
+}

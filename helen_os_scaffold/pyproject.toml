@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "helen-os"
+version = "0.1.0"
+dependencies = [
+    "click",
+    "pyyaml",
+    "pydantic",
+    "requests",
+    "openai",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "black",
+]
+openai = [
+    "openai",
+]
+
+[project.scripts]
+helen = "helen_os.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["helen_os*"]

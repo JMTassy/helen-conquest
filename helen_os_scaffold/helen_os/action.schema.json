@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HELEN Action Schema v1.0",
+  "description": "CWL-compliant action contract. Every action is logged to sovereign ledger.",
+  "type": "object",
+  "required": [
+    "action_id",
+    "action_type",
+    "timestamp",
+    "authority",
+    "payload",
+    "authorization_level"
+  ],
+  "properties": {
+    "action_id": {
+      "type": "string",
+      "pattern": "^action_[0-9]{4}$",
+      "description": "Unique action identifier (immutable)"
+    },
+    "action_type": {
+      "type": "string",
+      "enum": [
+        "memory_add_fact",
+        "memory_add_lesson",
+        "file_write",
+        "file_read",
+        "git_commit",
+        "git_branch",
+        "dialogue_record",
+        "decision_record",
+        "notification_send"
+      ],
+      "description": "What HELEN is doing"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp (UTC)"
+    },
+    "authority": {
+      "type": "boolean",
+      "const": false,
+      "description": "HELEN never has authority. Always false. Non-negotiable."
+    },
+    "payload": {
+      "type": "object",
+      "description": "Action-specific data (schema varies by action_type)"
+    },
+    "authorization_level": {
+      "type": "string",
+      "enum": [
+        "autonomous",
+        "gated",
+        "prohibited"
+      ],
+      "description": "Can HELEN do this without asking? (frozen per CWL rules)"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "approved",
+        "executing",
+        "executed",
+        "rejected",
+        "failed"
+      ],
+      "description": "Current state in action lifecycle"
+    },
+    "parent_dialogue_turn": {
+      "type": "integer",
+      "description": "Which dialogue turn triggered this action?"
+    },
+    "result_hash": {
+      "type": "string",
+      "description": "SHA256 of action result (for audit)"
+    },
+    "error": {
+      "type": "string",
+      "description": "If failed, what went wrong?"
+    },
+    "reversible": {
+      "type": "boolean",
+      "description": "Can user undo this action?"
+    },
+    "undo_instruction": {
+      "type": "string",
+      "description": "How to undo this action (if reversible)"
+    }
+  }
+}

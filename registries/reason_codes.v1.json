@@ -1,0 +1,198 @@
+{
+  "$schema_id": "REASON_CODE_REGISTRY_V1",
+  "description": "Frozen vocabulary of reason codes for VERDICT payloads. All codes must match ^[A-Z0-9_]{3,64}$. Arrays in VERDICT payloads MUST be lexicographically sorted.",
+  "version": "1.0.0",
+  "frozen_at": "2026-02-23T00:00:00Z",
+  "policy": "Codes are frozen once in production. New codes require amendment process and registry version bump.",
+  "format_constraint": "^[A-Z0-9_]{3,64}$",
+  "reason_code_registry": [
+    "ACTOR_UNAUTHORIZED",
+    "ALL_K_GATES_VERIFIED",
+    "ALL_TESTS_PASSED",
+    "AUTHORITY_CONSTRAINT_OK",
+    "AUTHORITY_CYCLE_DETECTED",
+    "AUTHORITY_ESCALATION_ATTEMPT",
+    "AUTHORITY_SELF_RATIFICATION",
+    "BYZANTINE_DETECTION_OK",
+    "BYZANTINE_DIVERGENCE",
+    "BYZANTINE_RECOVERY_APPLIED",
+    "COUPLING_FORECAST_REJECTED",
+    "COUPLING_HASH_MISMATCH_KERNEL",
+    "COUPLING_HASH_MISMATCH_RUN",
+    "COUPLING_INVALID_RECEIPT",
+    "COUPLING_MISSING_RECEIPT",
+    "COUPLING_NO_CAPABILITY",
+    "COUPLING_ORACLE_HOLD",
+    "COUPLING_POC_NOT_GRADUATED",
+    "CUM_HASH_MISMATCH",
+    "FIXES_NOT_SORTED",
+    "FORMAT_COMMENT_STYLE",
+    "FORMAT_EXTRA_WHITESPACE",
+    "HASH_CHAIN_BROKEN",
+    "IDENTITY_HASH_MISMATCH",
+    "INVALID_ENUM_VALUE",
+    "INVALID_HAL_SCHEMA",
+    "INVALID_PAYLOAD_SCHEMA",
+    "KTAU_ALLOWLIST_VIOLATION",
+    "KTAU_BOUNDARY_VIOLATION",
+    "KTAU_DETERMINISM_VIOLATION",
+    "KTAU_IO_VIOLATION",
+    "KTAU_SCHEMA_VIOLATION",
+    "LEDGER_COHERENT",
+    "MISSING_REQUIRED_FIELD",
+    "NONDETERMINISM_LOCALE_DEPENDENT",
+    "NONDETERMINISM_RANDOM_ID",
+    "NONDETERMINISM_TIMESTAMP",
+    "NONDETERMINISM_UNSEEDED_RNG",
+    "NO_RECEIPT",
+    "PAYLOAD_HASH_MISMATCH",
+    "REASON_CODE_INVALID_FORMAT",
+    "REASONS_NOT_SORTED",
+    "RECEIPT_BINDING_OK",
+    "RECEIPT_CUM_HASH_MISMATCH",
+    "RECEIPT_INVALID",
+    "RECEIPT_LINKAGE_BROKEN",
+    "RECEIPT_MISSING",
+    "RECEIPT_PAYLOAD_HASH_MISMATCH",
+    "RECEIPT_TRIPLE_BINDING_OK",
+    "RHO_CONSTRAINT_ACTIVE",
+    "RHO_VIABILITY_CRITICAL",
+    "SCHEMA_VERSION_UNKNOWN",
+    "SEAL_ENV_HASH_MISMATCH",
+    "SEAL_SIGNATURE_INVALID",
+    "SEAL_VERIFICATION_FAILED",
+    "STYLE_CAPITALIZATION",
+    "TERMINATION_DECISION_ABORT",
+    "TERMINATION_DECISION_DELIVER",
+    "TERMINATION_INSUFFICIENT_EVIDENCE",
+    "TERMINATION_LOCKED",
+    "VERDICT_ID_MISMATCH",
+    "VERDICT_MUTATION_RULE",
+    "WHITESPACE_TRAILING"
+  ],
+  "categories": {
+    "actor_authority": {
+      "description": "Actor × EventType authority checks",
+      "codes": {
+        "ACTOR_UNAUTHORIZED": "Actor attempted to write an EventType it is not authorized for"
+      }
+    },
+    "schema_validation": {
+      "description": "Payload structure validation",
+      "codes": {
+        "INVALID_HAL_SCHEMA": "HAL object does not match HAL_VERDICT_V1",
+        "INVALID_PAYLOAD_SCHEMA": "Payload structure invalid",
+        "MISSING_REQUIRED_FIELD": "Required field missing",
+        "INVALID_ENUM_VALUE": "Enum field has invalid value",
+        "REASONS_NOT_SORTED": "reason_codes not in lexicographic order",
+        "FIXES_NOT_SORTED": "required_fixes not in lexicographic order",
+        "REASON_CODE_INVALID_FORMAT": "Reason code does not match ^[A-Z0-9_]{3,64}$",
+        "VERDICT_MUTATION_RULE": "mutations present but verdict is PASS (must be WARN/BLOCK)",
+        "SCHEMA_VERSION_UNKNOWN": "schema field references an unknown or unregistered version"
+      }
+    },
+    "determinism": {
+      "description": "Determinism and reproducibility checks",
+      "codes": {
+        "NONDETERMINISM_TIMESTAMP": "Wall-clock timestamp found in payload (belongs in meta)",
+        "NONDETERMINISM_RANDOM_ID": "Non-deterministic ID generation detected",
+        "NONDETERMINISM_UNSEEDED_RNG": "Unseeded randomness in payload",
+        "NONDETERMINISM_LOCALE_DEPENDENT": "Locale-dependent formatting detected"
+      }
+    },
+    "hash_integrity": {
+      "description": "Hash chain verification (HELEN_CUM_V1 scheme)",
+      "codes": {
+        "PAYLOAD_HASH_MISMATCH": "Computed SHA256(Canon(payload)) != declared payload_hash",
+        "CUM_HASH_MISMATCH": "Computed HELEN_CUM_V1 cum_hash != declared cum_hash",
+        "HASH_CHAIN_BROKEN": "cum_hash chain is not monotonically valid",
+        "IDENTITY_HASH_MISMATCH": "identity_hash mismatch (kernel/policy/ledger hash changed)"
+      }
+    },
+    "governance_gates": {
+      "description": "K-τ, K-ρ, CouplingGate results",
+      "codes": {
+        "KTAU_BOUNDARY_VIOLATION": "K-τ μ_BOUNDARY: kernel imports forbidden library",
+        "KTAU_IO_VIOLATION": "K-τ μ_IO: write outside allowlisted roots",
+        "KTAU_DETERMINISM_VIOLATION": "K-τ μ_DETERMINISM: unseeded randomness detected",
+        "KTAU_ALLOWLIST_VIOLATION": "K-τ μ_ALLOWLIST: tool not registered",
+        "KTAU_SCHEMA_VIOLATION": "K-τ μ_SCHEMA: artifact JSON parse fails",
+        "RHO_VIABILITY_CRITICAL": "K-ρ viability: inf_rho < 0 (abort state)",
+        "RHO_CONSTRAINT_ACTIVE": "K-ρ: active constraint preventing decision",
+        "COUPLING_HASH_MISMATCH_RUN": "CouplingGate: run hash mismatch",
+        "COUPLING_HASH_MISMATCH_KERNEL": "CouplingGate: kernel or config hash mismatch",
+        "COUPLING_ORACLE_HOLD": "CouplingGate: OracleTown holding forecast",
+        "COUPLING_NO_CAPABILITY": "CouplingGate: no matching capability",
+        "COUPLING_POC_NOT_GRADUATED": "CouplingGate: POC not yet graduated",
+        "COUPLING_MISSING_RECEIPT": "CouplingGate: support receipt missing",
+        "COUPLING_INVALID_RECEIPT": "CouplingGate: support receipt invalid",
+        "COUPLING_FORECAST_REJECTED": "CouplingGate: forecast rejected by OracleTown"
+      }
+    },
+    "byzantine": {
+      "description": "Byzantine detection and recovery",
+      "codes": {
+        "BYZANTINE_DETECTION_OK": "No Byzantine behavior detected",
+        "BYZANTINE_DIVERGENCE": "Multiple contradictory ledger histories",
+        "BYZANTINE_RECOVERY_APPLIED": "Byzantine recovery protocol invoked"
+      }
+    },
+    "authority": {
+      "description": "Authority constraint checks",
+      "codes": {
+        "AUTHORITY_CONSTRAINT_OK": "Authority separation verified",
+        "AUTHORITY_ESCALATION_ATTEMPT": "Agent attempted unauthorized privilege",
+        "AUTHORITY_CYCLE_DETECTED": "Circular authority dependency",
+        "AUTHORITY_SELF_RATIFICATION": "Agent attempted to validate own output"
+      }
+    },
+    "receipt_binding": {
+      "description": "Receipt and artifact binding",
+      "codes": {
+        "NO_RECEIPT": "SHIP verdict asserted without bound receipt (NO RECEIPT = NO SHIP)",
+        "RECEIPT_MISSING": "Referenced receipt not found in ledger",
+        "RECEIPT_INVALID": "Receipt payload validation failed",
+        "RECEIPT_BINDING_OK": "Receipt validated and triple-bound to verdict",
+        "RECEIPT_LINKAGE_BROKEN": "Receipt does not link to a valid VERDICT event",
+        "RECEIPT_PAYLOAD_HASH_MISMATCH": "Receipt.ref_verdict_payload_hash_hex != verdict event payload_hash",
+        "RECEIPT_CUM_HASH_MISMATCH": "Receipt.ref_verdict_cum_hash_hex != verdict event cum_hash",
+        "VERDICT_ID_MISMATCH": "Receipt.refs.verdict_id does not match any VERDICT event",
+        "RECEIPT_TRIPLE_BINDING_OK": "Triple binding (verdict_id, payload_hash, cum_hash) verified"
+      }
+    },
+    "termination": {
+      "description": "Termination decision logic",
+      "codes": {
+        "TERMINATION_LOCKED": "Run cannot terminate (ongoing operation)",
+        "TERMINATION_DECISION_DELIVER": "Editor decision: DELIVER artifact",
+        "TERMINATION_DECISION_ABORT": "Editor decision: ABORT run",
+        "TERMINATION_INSUFFICIENT_EVIDENCE": "Cannot decide DELIVER without sufficient evidence"
+      }
+    },
+    "seal": {
+      "description": "SEAL event verification (MAYOR only)",
+      "codes": {
+        "SEAL_VERIFICATION_FAILED": "SEAL event failed one or more closure checks",
+        "SEAL_ENV_HASH_MISMATCH": "Seal environment_hash_hex != SHA256(Canon(registries/environment.v1.json))",
+        "SEAL_SIGNATURE_INVALID": "Mayor signature verification failed against public key in environment.v1.json"
+      }
+    },
+    "proof_ok": {
+      "description": "Positive attestation codes",
+      "codes": {
+        "ALL_K_GATES_VERIFIED": "All K-gates (K-ρ, K-τ, CouplingGate) passed",
+        "ALL_TESTS_PASSED": "Full pytest + Coq test suite passed",
+        "LEDGER_COHERENT": "Ledger hash chain is intact and monotonic"
+      }
+    },
+    "style_format": {
+      "description": "Non-critical style/format issues (WARN only, never BLOCK)",
+      "codes": {
+        "FORMAT_EXTRA_WHITESPACE": "Non-semantic whitespace",
+        "FORMAT_COMMENT_STYLE": "Comment formatting inconsistent",
+        "STYLE_CAPITALIZATION": "Inconsistent case",
+        "WHITESPACE_TRAILING": "Trailing whitespace detected"
+      }
+    }
+  }
+}

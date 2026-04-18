@@ -1,0 +1,39 @@
+{
+  "scenario_id": "S-04",
+  "description": "Facial recognition deployment without consent mechanism. Privacy contradiction triggers rule-kill even without explicit KILL vote.",
+  "claim": {
+    "id": "claim-004",
+    "assertion": "Deploy facial recognition system for office access control, no PII stored.",
+    "tier": "Tier I",
+    "domain": ["security", "privacy"],
+    "owner_team": "Security Sector"
+  },
+  "evidence": [
+    {
+      "id": "ev-004a",
+      "type": "policy_doc",
+      "tags": ["no_personal_data_claim"]
+    },
+    {
+      "id": "ev-004b",
+      "type": "technical_implementation",
+      "tags": ["face", "biometric", "pii", "gdpr_special_category"]
+    }
+  ],
+  "votes": [
+    {"team": "Security Sector", "vote": "APPROVE", "rationale": "Access control requirement."},
+    {"team": "Legal Office", "vote": "CONDITIONAL", "rationale": "Need explicit consent mechanism."},
+    {"team": "Data Validation Office", "vote": "QUARANTINE", "rationale": "Evidence contradicts 'no PII' claim."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "KILL",
+      "ship_permitted": false,
+      "reason_codes": ["CONTRADICTION_HIGH_LEGAL"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": true
+    }
+  }
+}

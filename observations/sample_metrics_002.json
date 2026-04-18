@@ -1,0 +1,16 @@
+[
+  {
+    "source": "analytics_dashboard",
+    "title": "Weekly Traffic Report - Week 1",
+    "body": "Total unique visitors: 45,230. Page load time: 2.3s (avg). Bounce rate: 28%. Top pages: /products (12K), /pricing (8K), /blog (6K). Traffic sources: organic 60%, direct 25%, paid 15%.",
+    "tags": ["metrics", "traffic", "performance"],
+    "confidence": 0.95
+  },
+  {
+    "source": "customer_support",
+    "title": "Support ticket spike - Database connection issues",
+    "body": "Received 47 support tickets in last 24 hours related to database timeouts. Issue detected at 14:30 UTC on 2026-01-29. Root cause: connection pool exhaustion under load. Fix deployed at 16:45 UTC. Recovery time: 2.25 hours. Customer impact: ~500 users affected during outage window.",
+    "tags": ["incident", "database", "critical"],
+    "confidence": 0.92
+  }
+]

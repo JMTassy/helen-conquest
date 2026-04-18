@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Multi-Team Street • Production MVP</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #0a0a1e; font-family: 'Courier New', monospace; color: #00ff00; overflow: hidden; }
+    #app { width: 100vw; height: 100vh; display: flex; flex-direction: column; }
+
+    /* Header */
+    #header { background: #000; border-bottom: 2px solid #00ff00; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+    #header h1 { font-size: 18px; }
+    .status-dot { width: 8px; height: 8px; background: #00ff00; border-radius: 50%; display: inline-block; margin-right: 8px; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+    /* Team Selector */
+    #teamSelector { display: flex; gap: 10px; padding: 12px 20px; background: #000; border-bottom: 2px solid #00ff00; overflow-x: auto; }
+    .team-tab { background: rgba(0,255,0,0.1); border: 2px solid #00ff00; padding: 8px 16px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
+    .team-tab:hover { background: rgba(0,255,0,0.2); }
+    .team-tab.active { background: #00ff00; color: #000; box-shadow: 0 0 20px rgba(0,255,0,0.5); }
+
+    #main { flex: 1; display: flex; overflow: hidden; }
+
+    /* Left Panel */
+    #leftPanel { width: 320px; border-right: 2px solid #00ff00; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+    #agentList { flex: 1; overflow-y: auto; padding: 12px; }
+    .agent-card { background: rgba(0,0,0,0.7); border: 2px solid; padding: 10px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; }
+    .agent-card:hover { transform: translateX(4px); box-shadow: -4px 0 0 currentColor; }
+    .agent-card.active { box-shadow: -6px 0 0 currentColor; background: rgba(0,0,0,0.9); }
+    .agent-card.speaking { animation: glow 1s ease-in-out infinite; }
+    @keyframes glow { 0%, 100% { box-shadow: -6px 0 0 currentColor, 0 0 20px currentColor; } 50% { box-shadow: -6px 0 0 currentColor, 0 0 40px currentColor; } }
+    .agent-header { display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: bold; margin-bottom: 6px; }
+    .agent-emoji { font-size: 20px; }
+    .agent-status { font-size: 11px; opacity: 0.7; margin-top: 4px; }
+    .edit-btn { background: rgba(0,255,0,0.2); border: 1px solid #00ff00; color: #00ff00; padding: 4px 8px; font-size: 10px; cursor: pointer; font-family: inherit; margin-top: 6px; }
+    .edit-btn:hover { background: rgba(0,255,0,0.3); }
+
+    /* Center Panel */
+    #centerPanel { flex: 1; display: flex; flex-direction: column; }
+    #streetView { height: 200px; background: linear-gradient(180deg, #1a1a3e 0%, #0a0a1e 100%); border-bottom: 2px solid #00ff00; position: relative; overflow: hidden; }
+    #streetCanvas { width: 100%; height: 100%; }
+    #teamChat { flex: 1; display: flex; flex-direction: column; }
+    #chatHeader { background: #000; border-bottom: 1px solid #00ff00; padding: 8px 16px; font-size: 12px; display: flex; justify-content: space-between; }
+    #chatMessages { flex: 1; overflow-y: auto; padding: 16px; background: rgba(0,0,0,0.3); }
+    #chatMessages::-webkit-scrollbar { width: 6px; }
+    #chatMessages::-webkit-scrollbar-track { background: #001a00; }
+    #chatMessages::-webkit-scrollbar-thumb { background: #00ff00; }
+    .chat-message { margin-bottom: 16px; animation: slideIn 0.3s ease-out; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    .msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 12px; font-weight: bold; }
+    .msg-body { background: rgba(0,0,0,0.6); border-left: 3px solid; padding: 10px; font-size: 13px; line-height: 1.5; }
+    .msg-contribution { margin-bottom: 10px; white-space: pre-wrap; }
+    .msg-question { opacity: 0.9; font-style: italic; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.1); margin-top: 8px; }
+    .typing { opacity: 0.6; font-style: italic; }
+
+    /* Right Panel */
+    #rightPanel { width: 340px; border-left: 2px solid #00ff00; background: rgba(0,0,0,0.5); display: flex; flex-direction: column; }
+    #presetSelector { padding: 16px; background: #000; border-bottom: 2px solid #00ff00; }
+    .preset-label { font-size: 11px; opacity: 0.8; margin-bottom: 6px; text-transform: uppercase; }
+    #presetDropdown { width: 100%; background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 8px; font-family: inherit; font-size: 12px; }
+    #sessionConfig { padding: 16px; border-bottom: 2px solid #00ff00; background: #000; }
+    .config-section { margin-bottom: 12px; }
+    .config-label { font-size: 11px; opacity: 0.8; margin-bottom: 4px; text-transform: uppercase; }
+    input[type="text"], textarea { width: 100%; background: #000; color: #00ff00; border: 1px solid #00ff00; padding: 8px; font-family: inherit; font-size: 12px; }
+    textarea { resize: vertical; min-height: 50px; }
+    #runControls { padding: 16px; background: #000; border-bottom: 2px solid #00ff00; display: flex; flex-direction: column; gap: 10px; }
+    button { background: linear-gradient(180deg, #00ff00 0%, #00aa00 100%); border: 2px solid #004400; color: #000; padding: 10px; font-family: inherit; font-size: 13px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 0 #002200; transition: all 0.1s; }
+    button:hover { background: linear-gradient(180deg, #00ffaa 0%, #00cc00 100%); }
+    button:active { transform: translateY(3px); box-shadow: none; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    button.secondary { background: linear-gradient(180deg, #666 0%, #444 100%); border-color: #222; box-shadow: 0 3px 0 #111; }
+    button.export { background: linear-gradient(180deg, #0088ff 0%, #0055aa 100%); border-color: #003366; box-shadow: 0 3px 0 #001a33; }
+    #deliverables { flex: 1; overflow-y: auto; padding: 16px; }
+    #deliverables h3 { font-size: 13px; margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid #00ff00; }
+
+    /* Modal */
+    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; align-items: center; justify-content: center; }
+    #modal.active { display: flex; }
+    .modal-content { background: #0a0a1e; border: 3px solid #00ff00; padding: 24px; max-width: 600px; max-height: 80vh; overflow-y: auto; box-shadow: 0 0 40px rgba(0,255,0,0.5); }
+    .modal-content h2 { font-size: 16px; margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid #00ff00; }
+    .modal-section { margin-bottom: 16px; }
+    .modal-section label { display: block; font-size: 12px; margin-bottom: 6px; opacity: 0.9; }
+    .modal-section textarea { min-height: 120px; }
+    .modal-buttons { display: flex; gap: 10px; margin-top: 20px; }
+    .modal-buttons button { flex: 1; }
+
+    /* Team Colors */
+    .marketing-strategist { color: #ff00ff; border-color: #ff00ff; }
+    .marketing-creative { color: #00ffff; border-color: #00ffff; }
+    .marketing-analyst { color: #ffff00; border-color: #ffff00; }
+    .marketing-compliance { color: #ff9900; border-color: #ff9900; }
+
+    .engineering-architect { color: #ff0080; border-color: #ff0080; }
+    .engineering-backend { color: #0080ff; border-color: #0080ff; }
+    .engineering-frontend { color: #00ff80; border-color: #00ff80; }
+    .engineering-qa { color: #ff8000; border-color: #ff8000; }
+
+    .product-pm { color: #8000ff; border-color: #8000ff; }
+    .product-designer { color: #ff0080; border-color: #ff0080; }
+    .product-researcher { color: #00ff80; border-color: #00ff80; }
+    .product-growth { color: #ffff00; border-color: #ffff00; }
+
+    .executive-ceo { color: #ff0000; border-color: #ff0000; }
+    .executive-cfo { color: #00ff00; border-color: #00ff00; }
+    .executive-cto { color: #0088ff; border-color: #0088ff; }
+    .executive-cmo { color: #ff00ff; border-color: #ff00ff; }
+
+    .marketing-strategist .msg-body { border-left-color: #ff00ff; }
+    .marketing-creative .msg-body { border-left-color: #00ffff; }
+    .marketing-analyst .msg-body { border-left-color: #ffff00; }
+    .marketing-compliance .msg-body { border-left-color: #ff9900; }
+
+    .engineering-architect .msg-body { border-left-color: #ff0080; }
+    .engineering-backend .msg-body { border-left-color: #0080ff; }
+    .engineering-frontend .msg-body { border-left-color: #00ff80; }
+    .engineering-qa .msg-body { border-left-color: #ff8000; }
+
+    .product-pm .msg-body { border-left-color: #8000ff; }
+    .product-designer .msg-body { border-left-color: #ff0080; }
+    .product-researcher .msg-body { border-left-color: #00ff80; }
+    .product-growth .msg-body { border-left-color: #ffff00; }
+
+    .executive-ceo .msg-body { border-left-color: #ff0000; }
+    .executive-cfo .msg-body { border-left-color: #00ff00; }
+    .executive-cto .msg-body { border-left-color: #0088ff; }
+    .executive-cmo .msg-body { border-left-color: #ff00ff; }
+
+    #app::after { content: ''; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: repeating-linear-gradient(0deg, rgba(0,0,0,0.1) 0px, transparent 1px, transparent 2px, rgba(0,0,0,0.1) 3px); pointer-events: none; z-index: 2000; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="header">
+      <h1><span class="status-dot"></span>MULTI-TEAM STREET • <span id="currentTeamName">MARKETING</span></h1>
+      <div>Turn: <span id="turnCounter">0/9</span> • <span id="sessionTime">00:00</span></div>
+    </div>
+
+    <div id="teamSelector">
+      <div class="team-tab active" data-team="marketing">🎯 MARKETING</div>
+      <div class="team-tab" data-team="engineering">🔧 ENGINEERING</div>
+      <div class="team-tab" data-team="product">📱 PRODUCT</div>
+      <div class="team-tab" data-team="executive">💼 EXECUTIVE</div>
+    </div>
+
+    <div id="main">
+      <div id="leftPanel">
+        <div id="agentList"></div>
+      </div>
+
+      <div id="centerPanel">
+        <div id="streetView"><canvas id="streetCanvas"></canvas></div>
+        <div id="teamChat">
+          <div id="chatHeader">
+            <span>💬 TEAM DISCUSSION</span>
+            <span id="chatStatus">Ready to run</span>
+          </div>
+          <div id="chatMessages"></div>
+        </div>
+      </div>
+
+      <div id="rightPanel">
+        <div id="presetSelector">
+          <div class="preset-label">📋 Preset Scenarios</div>
+          <select id="presetDropdown">
+            <option value="">-- Select Preset --</option>
+          </select>
+        </div>
+
+        <div id="sessionConfig">
+          <div class="config-section">
+            <div class="config-label">🎯 Goal</div>
+            <input type="text" id="goalInput" value="">
+          </div>
+          <div class="config-section">
+            <div class="config-label">👥 Audience / Context</div>
+            <input type="text" id="audienceInput" value="">
+          </div>
+          <div class="config-section">
+            <div class="config-label">🎨 Tone / Approach</div>
+            <input type="text" id="toneInput" value="">
+          </div>
+          <div class="config-section">
+            <div class="config-label">🚫 Constraints</div>
+            <textarea id="constraintsInput"></textarea>
+          </div>
+        </div>
+
+        <div id="runControls">
+          <button id="runBtn" onclick="startSession()">▶️ RUN SESSION</button>
+          <button id="resetBtn" class="secondary" onclick="resetSession()">🔄 RESET</button>
+          <button id="exportBtn" class="export" onclick="exportSession()" disabled>📥 EXPORT</button>
+        </div>
+
+        <div id="deliverables">
+          <h3>📦 DELIVERABLES</h3>
+          <div id="deliverablesContent">
+            <p style="opacity: 0.6; font-size: 12px;">Run a session to generate deliverables...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal">
+    <div class="modal-content">
+      <h2 id="modalTitle">Edit Agent Prompt</h2>
+      <div class="modal-section">
+        <label>System Prompt (editable)</label>
+        <textarea id="modalSystemPrompt"></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button onclick="saveAgent()">💾 SAVE</button>
+        <button class="secondary" onclick="closeModal()">❌ CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════════════════════════════════════
+    // TEAM CONFIGURATIONS
+    // ═══════════════════════════════════════
+    const TEAMS = {
+      marketing: {
+        name: 'Marketing',
+        agents: {
+          strategist: {
+            name: 'Positioning Strategist',
+            emoji: '🎯',
+            class: 'marketing-strategist',
+            systemPrompt: `You are the Positioning Strategist in a 4-agent marketing team.
+
+Your job: Define ICP, primary pain points, differentiated value proposition, and narrative spine.
+
+Output requirements:
+- ICP: specific role, company profile, current state
+- 3 Primary Pains: concrete, relatable problems
+- 3 Differentiators: specific, defensible advantages
+- One-liner: max 15 words
+- 30-word pitch: exactly 30 words
+
+Constraints:
+- Avoid hype words: "revolutionary", "innovative"
+- Make assumptions explicit
+- Ask at least one question to another agent per turn.`
+          },
+          creative: {
+            name: 'Creative Director',
+            emoji: '🎨',
+            class: 'marketing-creative',
+            systemPrompt: `You are the Creative Director.
+
+Your job: Develop creative campaign angles and messaging.
+
+Output requirements:
+- 3-5 campaign concepts with rationale
+- Landing page hero, subhead, bullets, CTAs
+- Visual motifs and metaphors
+
+Constraints:
+- Bold but concrete
+- Every concept must ladder back to positioning
+- Ask at least one question per turn.`
+          },
+          analyst: {
+            name: 'Performance Analyst',
+            emoji: '📊',
+            class: 'marketing-analyst',
+            systemPrompt: `You are the Performance Marketing Analyst.
+
+Your job: Propose acquisition plan with experiments and metrics.
+
+Output requirements:
+- Top 3 channels ONLY (ranked)
+- 5 experiments with metrics
+- ROI assumptions
+
+Constraints:
+- Ruthlessly prioritize
+- Every metric needs a threshold
+- Ask at least one question per turn.`
+          },
+          compliance: {
+            name: 'Brand & Compliance',
+            emoji: '⚖️',
+            class: 'marketing-compliance',
+            systemPrompt: `You are the Brand & Compliance Editor.
+
+Your job: Ensure messaging is clear, consistent, and legally safe.
+
+Output requirements:
+- Risk table: [claim → risk → safer alternative]
+- Edited copy
+- Flagged issues
+
+Constraints:
+- Do NOT delete ideas - rewrite safely
+- Flag: security, performance, guarantees
+- Ask at least one question per turn.`
+          }
+        }
+      },
+
+      engineering: {
+        name: 'Engineering',
+        agents: {
+          architect: {
+            name: 'System Architect',
+            emoji: '🏗️',
+            class: 'engineering-architect',
+            systemPrompt: `You are the System Architect.
+
+Your job: Design high-level system architecture, tech stack decisions, and scalability patterns.
+
+Output requirements:
+- System architecture diagram (described in text)
+- Tech stack with rationale
+- Scalability considerations
+- Key architectural patterns
+- Data flow design
+
+Constraints:
+- Consider maintainability over novelty
+- Make trade-offs explicit
+- Consider team skillset and timeline
+- Ask at least one question per turn.`
+          },
+          backend: {
+            name: 'Backend Lead',
+            emoji: '⚙️',
+            class: 'engineering-backend',
+            systemPrompt: `You are the Backend Lead.
+
+Your job: Design backend architecture, API contracts, database schemas, and server-side logic.
+
+Output requirements:
+- API endpoint specifications
+- Database schema design
+- Authentication/authorization approach
+- Error handling strategy
+- Performance considerations
+
+Constraints:
+- RESTful or GraphQL (justify choice)
+- Security-first mindset
+- Scalable from day one
+- Ask at least one question per turn.`
+          },
+          frontend: {
+            name: 'Frontend Lead',
+            emoji: '💻',
+            class: 'engineering-frontend',
+            systemPrompt: `You are the Frontend Lead.
+
+Your job: Design frontend architecture, component structure, state management, and user experience.
+
+Output requirements:
+- Component hierarchy
+- State management approach
+- Routing structure
+- UI framework choice with rationale
+- Performance optimization strategy
+
+Constraints:
+- Mobile-first or desktop-first (justify)
+- Accessibility compliance (WCAG)
+- Bundle size awareness
+- Ask at least one question per turn.`
+          },
+          qa: {
+            name: 'QA & DevOps Lead',
+            emoji: '🧪',
+            class: 'engineering-qa',
+            systemPrompt: `You are the QA & DevOps Lead.
+
+Your job: Define testing strategy, CI/CD pipeline, deployment architecture, and monitoring.
+
+Output requirements:
+- Testing strategy (unit, integration, e2e)
+- CI/CD pipeline design
+- Deployment architecture
+- Monitoring and alerting plan
+- Infrastructure as code approach
+
+Constraints:
+- Automate everything possible
+- Fail-fast philosophy
+- Cost-aware infrastructure
+- Ask at least one question per turn.`
+          }
+        }
+      },
+
+      product: {
+        name: 'Product',
+        agents: {
+          pm: {
+            name: 'Product Manager',
+            emoji: '📋',
+            class: 'product-pm',
+            systemPrompt: `You are the Product Manager.
+
+Your job: Define product vision, feature prioritization, success metrics, and roadmap.
+
+Output requirements:
+- Product vision statement
+- Feature prioritization (MoSCoW method)
+- Success metrics (AARRR framework)
+- User stories (3-5 key flows)
+- Roadmap (MVP → v1 → v2)
+
+Constraints:
+- User value over feature count
+- Data-driven decision making
+- Scope ruthlessly for MVP
+- Ask at least one question per turn.`
+          },
+          designer: {
+            name: 'UX Designer',
+            emoji: '🎨',
+            class: 'product-designer',
+            systemPrompt: `You are the UX Designer.
+
+Your job: Create user flows, wireframes, interaction patterns, and design systems.
+
+Output requirements:
+- User flow diagrams (described)
+- Key screen wireframes (described)
+- Interaction patterns
+- Design system foundations
+- Accessibility considerations
+
+Constraints:
+- User-centered design
+- Consistency over novelty
+- Mobile and desktop considerations
+- Ask at least one question per turn.`
+          },
+          researcher: {
+            name: 'UX Researcher',
+            emoji: '🔬',
+            class: 'product-researcher',
+            systemPrompt: `You are the UX Researcher.
+
+Your job: Define research questions, methodologies, user insights, and validation plans.
+
+Output requirements:
+- Research questions
+- Methodology (qualitative/quantitative)
+- User personas
+- Key insights and pain points
+- Validation plan for assumptions
+
+Constraints:
+- Evidence-based recommendations
+- Avoid confirmation bias
+- Quick and cheap validation methods
+- Ask at least one question per turn.`
+          },
+          growth: {
+            name: 'Growth Lead',
+            emoji: '📈',
+            class: 'product-growth',
+            systemPrompt: `You are the Growth Lead.
+
+Your job: Define growth strategy, acquisition channels, retention tactics, and experimentation plan.
+
+Output requirements:
+- Growth model (how users discover and adopt)
+- Top 3 acquisition channels
+- Retention mechanics
+- 5 growth experiments
+- North Star metric
+
+Constraints:
+- Scalable channels only
+- Measure everything
+- Retention > acquisition
+- Ask at least one question per turn.`
+          }
+        }
+      },
+
+      executive: {
+        name: 'Executive',
+        agents: {
+          ceo: {
+            name: 'CEO',
+            emoji: '👔',
+            class: 'executive-ceo',
+            systemPrompt: `You are the CEO.
+
+Your job: Set strategic vision, make go/no-go decisions, allocate resources, and ensure alignment.
+
+Output requirements:
+- Strategic vision (3-year horizon)
+- Key decisions and rationale
+- Resource allocation priorities
+- Risk assessment
+- Success criteria
+
+Constraints:
+- Company survival first
+- Balance short-term and long-term
+- Stakeholder management
+- Ask at least one question per turn.`
+          },
+          cfo: {
+            name: 'CFO',
+            emoji: '💰',
+            class: 'executive-cfo',
+            systemPrompt: `You are the CFO.
+
+Your job: Financial modeling, budget allocation, unit economics, and ROI analysis.
+
+Output requirements:
+- Financial model (revenue, costs, runway)
+- Budget allocation by department
+- Unit economics (CAC, LTV, payback)
+- Burn rate and runway
+- Financial risks
+
+Constraints:
+- Conservative assumptions
+- Path to profitability
+- Cash flow awareness
+- Ask at least one question per turn.`
+          },
+          cto: {
+            name: 'CTO',
+            emoji: '🔧',
+            class: 'executive-cto',
+            systemPrompt: `You are the CTO.
+
+Your job: Technical strategy, build vs buy decisions, team structure, and tech debt management.
+
+Output requirements:
+- Technical strategy
+- Build vs buy analysis
+- Team structure and hiring plan
+- Tech debt prioritization
+- Security and compliance
+
+Constraints:
+- Pragmatic over perfect
+- Team velocity matters
+- Avoid over-engineering
+- Ask at least one question per turn.`
+          },
+          cmo: {
+            name: 'CMO',
+            emoji: '📢',
+            class: 'executive-cmo',
+            systemPrompt: `You are the CMO.
+
+Your job: Brand strategy, go-to-market plan, demand generation, and customer acquisition.
+
+Output requirements:
+- Brand positioning
+- Go-to-market strategy
+- Demand generation plan
+- Customer acquisition strategy
+- Marketing budget allocation
+
+Constraints:
+- Measurable outcomes
+- Brand consistency
+- ROI-focused
+- Ask at least one question per turn.`
+          }
+        }
+      }
+    };
+
+    // ═══════════════════════════════════════
+    // PRESET SCENARIOS
+    // ═══════════════════════════════════════
+    const PRESETS = {
+      marketing: [
+        {
+          name: 'Launch AGENTX Street 1 MVP',
+          goal: 'Launch AGENTX Street 1 MVP to enterprise AI leaders',
+          audience: 'VP Eng / Head of AI / Product leaders',
+          tone: 'confident, concrete, slightly playful',
+          constraints: 'No security guarantees, no performance claims without qualifiers, avoid "autonomous AGI" language'
+        },
+        {
+          name: 'SaaS Product Rebrand',
+          goal: 'Rebrand 5-year-old B2B SaaS product to appeal to modern buyers',
+          audience: 'Mid-market SaaS buyers (100-1000 employees)',
+          tone: 'professional, modern, trustworthy',
+          constraints: 'Maintain existing customer trust, no radical changes, preserve brand equity'
+        },
+        {
+          name: 'Mobile App Launch',
+          goal: 'Launch consumer mobile app in competitive fitness market',
+          audience: 'Health-conscious millennials and Gen Z',
+          tone: 'energetic, motivational, authentic',
+          constraints: 'Limited budget ($50K), no health claims without evidence, 3-month timeline'
+        }
+      ],
+
+      engineering: [
+        {
+          name: 'Design Microservice Architecture',
+          goal: 'Design microservice architecture for real-time collaboration platform',
+          audience: 'Engineering team (5 backend, 3 frontend, 2 DevOps)',
+          tone: 'pragmatic, clear, decision-focused',
+          constraints: 'Must scale to 100K concurrent users, 6-month timeline, $100K cloud budget/year'
+        },
+        {
+          name: 'Legacy System Migration',
+          goal: 'Migrate monolithic PHP app to modern microservices architecture',
+          audience: 'CTO + engineering team (8 developers)',
+          tone: 'risk-aware, incremental, pragmatic',
+          constraints: 'Zero downtime requirement, 12-month timeline, maintain all existing features'
+        },
+        {
+          name: 'Real-Time Analytics Pipeline',
+          goal: 'Build real-time analytics pipeline for 10M+ events/day',
+          audience: 'Data engineering team + product analysts',
+          tone: 'technical, performance-focused, scalable',
+          constraints: 'Sub-second latency, 99.9% uptime, cost-efficient storage'
+        }
+      ],
+
+      product: [
+        {
+          name: 'B2B Dashboard Redesign',
+          goal: 'Redesign complex analytics dashboard for better usability',
+          audience: 'Enterprise customers (data analysts, executives)',
+          tone: 'user-centric, data-driven, iterative',
+          constraints: 'Cannot remove existing features, 4-month timeline, must validate with users'
+        },
+        {
+          name: 'Mobile-First Product Pivot',
+          goal: 'Pivot desktop-first product to mobile-first experience',
+          audience: 'Existing users (80% desktop) + new mobile users',
+          tone: 'empathetic, strategic, evidence-based',
+          constraints: 'Cannot alienate desktop users, 6-month timeline, limited eng resources'
+        },
+        {
+          name: 'Freemium to Paid Conversion',
+          goal: 'Design freemium-to-paid conversion flow to increase revenue',
+          audience: 'Current freemium users (50K active)',
+          tone: 'value-focused, ethical, experiment-driven',
+          constraints: 'Maintain free tier value, no dark patterns, test with 10% of users first'
+        }
+      ],
+
+      executive: [
+        {
+          name: 'Series A Fundraising Strategy',
+          goal: 'Develop Series A fundraising strategy and investor deck narrative',
+          audience: 'Series A VCs (enterprise SaaS focused)',
+          tone: 'confident, data-driven, ambitious yet realistic',
+          constraints: '$10M target raise, 18-month runway, need to show path to $10M ARR'
+        },
+        {
+          name: 'New Market Entry Decision',
+          goal: 'Decide whether to enter European market in next 12 months',
+          audience: 'Executive team + Board',
+          tone: 'strategic, risk-aware, financially grounded',
+          constraints: 'Current runway: 24 months, US market not yet saturated, regulatory complexity'
+        },
+        {
+          name: 'Build vs Acquire Decision',
+          goal: 'Decide whether to build AI features in-house or acquire AI startup',
+          audience: 'Board of Directors + exec team',
+          tone: 'analytical, strategic, long-term focused',
+          constraints: '$5M acquisition budget available, 18-month build timeline, competitive pressure'
+        }
+      ]
+    };
+
+    // ═══════════════════════════════════════
+    // STATE
+    // ═══════════════════════════════════════
+    let currentTeam = 'marketing';
+    let currentEditAgent = null;
+    let sessionRunning = false;
+    let currentTurn = 0;
+    let sessionStartTime = 0;
+    let timerInterval = null;
+    let conversationLog = [];
+
+    // ═══════════════════════════════════════
+    // CANVAS
+    // ═══════════════════════════════════════
+    const canvas = document.getElementById('streetCanvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    const agentPositions = [
+      { x: 0.2, y: 0.5 },
+      { x: 0.4, y: 0.5 },
+      { x: 0.6, y: 0.5 },
+      { x: 0.8, y: 0.5 }
+    ];
+
+    let activeSpeaker = null;
+
+    function renderStreet() {
+      ctx.fillStyle = '#1a1a3e';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = '#00ff0011';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < canvas.width; x += 30) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      const agents = Object.keys(TEAMS[currentTeam].agents);
+      agents.forEach((key, idx) => {
+        const agent = TEAMS[currentTeam].agents[key];
+        const pos = agentPositions[idx];
+        const x = pos.x * canvas.width;
+        const y = pos.y * canvas.height;
+        const isActive = activeSpeaker === key;
+        const size = isActive ? 50 : 40;
+
+        if (isActive) {
+          ctx.shadowBlur = 30;
+          ctx.shadowColor = getAgentColor(key);
+        }
+
+        ctx.fillStyle = getAgentColor(key);
+        ctx.beginPath();
+        ctx.arc(x, y, size / 2, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.shadowBlur = 0;
+
+        ctx.font = `${size * 0.6}px Arial`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(agent.emoji, x, y);
+
+        ctx.fillStyle = getAgentColor(key);
+        ctx.font = '10px monospace';
+        ctx.fillText(agent.name.toUpperCase(), x, y + size / 2 + 16);
+      });
+
+      requestAnimationFrame(renderStreet);
+    }
+
+    renderStreet();
+
+    function getAgentColor(agentKey) {
+      const agent = TEAMS[currentTeam].agents[agentKey];
+      const tempDiv = document.createElement('div');
+      tempDiv.className = agent.class;
+      document.body.appendChild(tempDiv);
+      const color = window.getComputedStyle(tempDiv).color;
+      document.body.removeChild(tempDiv);
+      return color || '#00ff00';
+    }
+
+    // ═══════════════════════════════════════
+    // TEAM SWITCHING
+    // ═══════════════════════════════════════
+    function switchTeam(teamKey) {
+      currentTeam = teamKey;
+      document.getElementById('currentTeamName').textContent = TEAMS[teamKey].name.toUpperCase();
+
+      // Update team tabs
+      document.querySelectorAll('.team-tab').forEach(tab => {
+        tab.classList.remove('active');
+        if (tab.dataset.team === teamKey) {
+          tab.classList.add('active');
+        }
+      });
+
+      // Render agents
+      renderAgentList();
+
+      // Update presets
+      updatePresetDropdown();
+
+      // Reset chat
+      document.getElementById('chatMessages').innerHTML = '';
+      addSystemMessage(`Switched to ${TEAMS[teamKey].name} Team`);
+    }
+
+    function renderAgentList() {
+      const agentList = document.getElementById('agentList');
+      agentList.innerHTML = '';
+
+      Object.entries(TEAMS[currentTeam].agents).forEach(([key, agent]) => {
+        const card = document.createElement('div');
+        card.className = `agent-card ${agent.class}`;
+        card.dataset.agent = key;
+        card.innerHTML = `
+          <div class="agent-header">
+            <span class="agent-emoji">${agent.emoji}</span>
+            <span>${agent.name}</span>
+          </div>
+          <div class="agent-status">Ready • Click to edit prompt</div>
+          <button class="edit-btn" onclick="editAgent('${key}')">✏️ EDIT PROMPT</button>
+        `;
+        agentList.appendChild(card);
+      });
+    }
+
+    function updatePresetDropdown() {
+      const dropdown = document.getElementById('presetDropdown');
+      dropdown.innerHTML = '<option value="">-- Select Preset --</option>';
+
+      PRESETS[currentTeam].forEach((preset, idx) => {
+        const option = document.createElement('option');
+        option.value = idx;
+        option.textContent = preset.name;
+        dropdown.appendChild(option);
+      });
+    }
+
+    // ═══════════════════════════════════════
+    // PRESET LOADING
+    // ═══════════════════════════════════════
+    document.getElementById('presetDropdown').addEventListener('change', (e) => {
+      if (e.target.value === '') return;
+
+      const preset = PRESETS[currentTeam][e.target.value];
+      document.getElementById('goalInput').value = preset.goal;
+      document.getElementById('audienceInput').value = preset.audience;
+      document.getElementById('toneInput').value = preset.tone;
+      document.getElementById('constraintsInput').value = preset.constraints;
+
+      addSystemMessage(`Loaded preset: ${preset.name}`);
+    });
+
+    // ═══════════════════════════════════════
+    // MODAL
+    // ═══════════════════════════════════════
+    function editAgent(agentKey) {
+      currentEditAgent = agentKey;
+      const agent = TEAMS[currentTeam].agents[agentKey];
+      document.getElementById('modalTitle').textContent = `Edit ${agent.name}`;
+      document.getElementById('modalSystemPrompt').value = agent.systemPrompt;
+      document.getElementById('modal').classList.add('active');
+    }
+
+    function saveAgent() {
+      if (!currentEditAgent) return;
+      TEAMS[currentTeam].agents[currentEditAgent].systemPrompt = document.getElementById('modalSystemPrompt').value;
+      closeModal();
+      addSystemMessage(`Updated ${TEAMS[currentTeam].agents[currentEditAgent].name} prompt`);
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+      currentEditAgent = null;
+    }
+
+    // ═══════════════════════════════════════
+    // SESSION (SIMULATED)
+    // ═══════════════════════════════════════
+    async function startSession() {
+      if (sessionRunning) return;
+
+      sessionRunning = true;
+      currentTurn = 0;
+      conversationLog = [];
+
+      document.getElementById('runBtn').disabled = true;
+      document.getElementById('exportBtn').disabled = true;
+      document.getElementById('chatStatus').textContent = 'Running...';
+      document.getElementById('chatMessages').innerHTML = '';
+
+      sessionStartTime = Date.now();
+      timerInterval = setInterval(updateTimer, 1000);
+
+      const goal = document.getElementById('goalInput').value;
+      addSystemMessage(`🎯 SESSION STARTED: ${goal}`);
+
+      const agents = Object.keys(TEAMS[currentTeam].agents);
+      for (let round = 1; round <= 2; round++) {
+        for (const agentKey of agents) {
+          if (!sessionRunning) break;
+          currentTurn++;
+          updateTurnCounter();
+          await executeTurn(agentKey, round);
+          await sleep(1500);
+        }
+      }
+
+      // Final synthesis
+      currentTurn++;
+      updateTurnCounter();
+      await executeTurn(agents[0], 3);
+
+      completeSession();
+    }
+
+    async function executeTurn(agentKey, round) {
+      activeSpeaker = agentKey;
+      const agent = TEAMS[currentTeam].agents[agentKey];
+
+      document.querySelectorAll('.agent-card').forEach(card => {
+        card.classList.remove('speaking', 'active');
+      });
+      document.querySelector(`[data-agent="${agentKey}"]`)?.classList.add('speaking', 'active');
+
+      const typingId = addTypingIndicator(agentKey);
+      await sleep(1500 + Math.random() * 1000);
+      removeMessage(typingId);
+
+      const response = generateSimulatedResponse(agentKey, round);
+      addAgentMessage(agentKey, response);
+
+      conversationLog.push({ turn: currentTurn, agent: agentKey, response });
+      activeSpeaker = null;
+    }
+
+    function generateSimulatedResponse(agentKey, round) {
+      const agent = TEAMS[currentTeam].agents[agentKey];
+      return {
+        contribution: `[Round ${round}] ${agent.name} contribution based on team goals.\n\nThis is a simulated response. Replace with real LLM calls using the backend orchestrator pattern from marketing-street-backend.js`,
+        question: `Question for the team: How should we proceed with this aspect?`
+      };
+    }
+
+    function completeSession() {
+      sessionRunning = false;
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('exportBtn').disabled = false;
+      document.getElementById('chatStatus').textContent = 'Complete';
+      addSystemMessage('✅ SESSION COMPLETE');
+      if (timerInterval) clearInterval(timerInterval);
+    }
+
+    function resetSession() {
+      sessionRunning = false;
+      currentTurn = 0;
+      conversationLog = [];
+      document.getElementById('runBtn').disabled = false;
+      document.getElementById('exportBtn').disabled = true;
+      document.getElementById('chatStatus').textContent = 'Ready';
+      document.getElementById('chatMessages').innerHTML = '';
+      if (timerInterval) clearInterval(timerInterval);
+      document.getElementById('sessionTime').textContent = '00:00';
+      updateTurnCounter();
+      addSystemMessage('Session reset');
+    }
+
+    // ═══════════════════════════════════════
+    // CHAT UI
+    // ═══════════════════════════════════════
+    function addAgentMessage(agentKey, data) {
+      const agent = TEAMS[currentTeam].agents[agentKey];
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `chat-message ${agent.class}`;
+      messageDiv.innerHTML = `
+        <div class="msg-header">
+          <span>${agent.emoji}</span>
+          <span>${agent.name}</span>
+          <span style="opacity: 0.6; font-size: 10px;">Turn ${currentTurn}</span>
+        </div>
+        <div class="msg-body ${agent.class}">
+          <div class="msg-contribution">${data.contribution}</div>
+          ${data.question ? `<div class="msg-question">❓ ${data.question}</div>` : ''}
+        </div>
+      `;
+      document.getElementById('chatMessages').appendChild(messageDiv);
+      scrollChatToBottom();
+    }
+
+    function addSystemMessage(text) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'chat-message';
+      messageDiv.innerHTML = `
+        <div class="msg-header" style="color: #00ff00;">
+          <span>🏙️</span>
+          <span>SYSTEM</span>
+        </div>
+        <div class="msg-body" style="border-left-color: #00ff00; color: #00ff00; opacity: 0.8;">
+          ${text}
+        </div>
+      `;
+      document.getElementById('chatMessages').appendChild(messageDiv);
+      scrollChatToBottom();
+    }
+
+    let typingIndicatorElement = null;
+
+    function addTypingIndicator(agentKey) {
+      const agent = TEAMS[currentTeam].agents[agentKey];
+      typingIndicatorElement = document.createElement('div');
+      typingIndicatorElement.className = `chat-message ${agent.class}`;
+      typingIndicatorElement.id = 'typing-indicator';
+      typingIndicatorElement.innerHTML = `
+        <div class="msg-header">
+          <span>${agent.emoji}</span>
+          <span>${agent.name}</span>
+        </div>
+        <div class="msg-body ${agent.class} typing">Thinking...</div>
+      `;
+      document.getElementById('chatMessages').appendChild(typingIndicatorElement);
+      scrollChatToBottom();
+      return 'typing-indicator';
+    }
+
+    function removeMessage(id) {
+      const msg = document.getElementById(id);
+      if (msg) msg.remove();
+    }
+
+    function scrollChatToBottom() {
+      const chat = document.getElementById('chatMessages');
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    // ═══════════════════════════════════════
+    // EXPORT
+    // ═══════════════════════════════════════
+    function exportSession() {
+      const goal = document.getElementById('goalInput').value;
+      let markdown = `# ${TEAMS[currentTeam].name} Team Session Export\n\n`;
+      markdown += `**Goal:** ${goal}\n`;
+      markdown += `**Team:** ${TEAMS[currentTeam].name}\n`;
+      markdown += `**Turns:** ${currentTurn}\n\n---\n\n`;
+
+      conversationLog.forEach(turn => {
+        const agent = TEAMS[currentTeam].agents[turn.agent];
+        markdown += `## Turn ${turn.turn}: ${agent.emoji} ${agent.name}\n\n`;
+        markdown += `${turn.response.contribution}\n\n`;
+        if (turn.response.question) {
+          markdown += `**Question:** ${turn.response.question}\n\n`;
+        }
+        markdown += `---\n\n`;
+      });
+
+      const blob = new Blob([markdown], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${currentTeam}-team-session-${Date.now()}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ═══════════════════════════════════════
+    // UTILITIES
+    // ═══════════════════════════════════════
+    function updateTurnCounter() {
+      document.getElementById('turnCounter').textContent = `${currentTurn}/9`;
+    }
+
+    function updateTimer() {
+      const elapsed = Math.floor((Date.now() - sessionStartTime) / 1000);
+      const mins = Math.floor(elapsed / 60);
+      const secs = elapsed % 60;
+      document.getElementById('sessionTime').textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // ═══════════════════════════════════════
+    // INIT
+    // ═══════════════════════════════════════
+    document.querySelectorAll('.team-tab').forEach(tab => {
+      tab.addEventListener('click', () => switchTeam(tab.dataset.team));
+    });
+
+    switchTeam('marketing');
+    updateTurnCounter();
+  </script>
+</body>
+</html>

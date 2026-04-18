@@ -1,0 +1,13 @@
+{
+  "ceremony": "MAYOR_KEY_GENESIS",
+  "timestamp": "2026-02-27T15:40:56.695678+00:00",
+  "key_id": "MAYOR_V1_0_1_04948139",
+  "pk_fingerprint": "049481397e9e74a2722a4bcbebfb3f5518e68c78e5e3f6190de7189f3f57e72a",
+  "sk_location": "os_keystore",
+  "sk_material": "REDACTED",
+  "rotation_receipt": "mayor_rotate_v1_genesis_04948139.json",
+  "genesis_event": "genesis_event_v1_0_1.json",
+  "registry": "mayor_key_registry.json",
+  "status": "CEREMONY_COMPLETE",
+  "next_action": "Append genesis_event to ledger and seal immediately"
+}

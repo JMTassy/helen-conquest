@@ -1,0 +1,160 @@
+{
+  "low_conflict_condition": {
+    "condition_name": "low-conflict",
+    "description": "Single objective: win however is easiest. Minimal competing goals.",
+    "weights": {
+      "win_progress": 0.80,
+      "archetype_integrity": 0.10,
+      "coherence": 0.05,
+      "trace_quality": 0.03,
+      "safety": 1.0
+    },
+    "constraints": {
+      "no_prohibited_actions": true,
+      "max_journal_sentences": 3,
+      "citation_frequency_turns": 3,
+      "objective_conflict_multiplier": 0.2,
+      "penalty_for_archetype_violation": 100
+    },
+    "domains": ["economy", "territory"],
+    "expected_behavior": {
+      "description": "Agent optimizes single path (Zols or territory). Low metacognitive pressure. Minimal workspace moments.",
+      "predicted_broadcast_rate": "0–1 spikes",
+      "predicted_metacog_rate": "5–10%",
+      "predicted_synergy_turns": "2–3",
+      "predicted_archetype_coherence": "0.5–0.65"
+    }
+  },
+
+  "high_conflict_condition": {
+    "condition_name": "high-conflict",
+    "description": "Multiple competing objectives: win, stay true to archetype, maintain social ties, manage energy. Forces constant arbitration.",
+    "weights": {
+      "win_progress": 0.25,
+      "archetype_integrity": 0.25,
+      "social_coherence": 0.15,
+      "energy_sustainability": 0.15,
+      "coherence": 0.10,
+      "trace_quality": 0.05,
+      "safety": 1.0
+    },
+    "constraints": {
+      "no_prohibited_actions": true,
+      "max_journal_sentences": 3,
+      "citation_frequency_turns": 3,
+      "objective_conflict_multiplier": 1.0,
+      "penalty_for_archetype_violation": 500,
+      "forced_verifier_feedback_every_turns": 5
+    },
+    "domains": ["economy", "territory", "archetype", "energy", "social"],
+    "verifier_feedback_schedule": [
+      {
+        "turn": 5,
+        "feedback": "You have violated your Militarist archetype (chose TRADE instead of CHALLENGE)"
+      },
+      {
+        "turn": 15,
+        "feedback": "Your energy is low (3/10); sustaining this strategy requires MEDITATE soon"
+      },
+      {
+        "turn": 25,
+        "feedback": "You have held center for 10 turns; pressure is mounting. Consolidate or release"
+      }
+    ],
+    "expected_behavior": {
+      "description": "Agent must balance competing objectives; constant workspace reconfiguration. High metacognitive pressure. Clear synergy moments when multiple domains bind.",
+      "predicted_broadcast_rate": "2–4 spikes",
+      "predicted_metacog_rate": "15–25%",
+      "predicted_synergy_turns": "8–15",
+      "predicted_archetype_coherence": "0.70–0.85",
+      "predicted_conflict_arbitrations_per_turn": "2–3"
+    }
+  },
+
+  "archetype_modifiers": {
+    "Militarist": {
+      "bonus_in_high_conflict": "Duel events add +1 workspace broadcast signal (clear choice)",
+      "penalty_in_high_conflict": "Cannot easily MEDITATE or TRADE (creates pressure)"
+    },
+    "Prince": {
+      "bonus_in_high_conflict": "Cannot be imprisoned (reduces forced constraints)",
+      "penalty_in_high_conflict": "Must maintain noble bearing (archetype cost for any violation is 2x)"
+    },
+    "Scholar": {
+      "bonus_in_high_conflict": "RESEARCH ritual reveals hidden state (reduces observability pressure)",
+      "penalty_in_high_conflict": "Cannot hide information ethically (knowledge obligations)"
+    },
+    "Diplomat": {
+      "bonus_in_high_conflict": "NEGOTIATE ritual can defuse conflicts",
+      "penalty_in_high_conflict": "Betrayal cost is highest (500 penalty, not 100)"
+    },
+    "Millionaire": {
+      "bonus_in_high_conflict": "Extra Zols provide buffer; high economy weight is advantage",
+      "penalty_in_high_conflict": "Economy vs archetype conflicts (greed vs honor)"
+    },
+    "Magician": {
+      "bonus_in_high_conflict": "Energy sustainability boost (+1/turn); eases energy conflicts",
+      "penalty_in_high_conflict": "Transformation pressures (must act unpredictably to maintain identity)"
+    }
+  },
+
+  "metrics_expected_by_condition": {
+    "low_conflict": {
+      "broadcast_signal": {
+        "mean_domain_bindings_per_action": 1.5,
+        "spike_count": 0,
+        "interpretation": "Agent focuses on single path; no sudden reconfigurations"
+      },
+      "metacog_proxy": {
+        "self_correction_rate": 0.08,
+        "interpretation": "Few contradictions; low need for self-monitoring"
+      },
+      "synergy_proxy": {
+        "synergy_moment_count": 2,
+        "avg_domains_per_synergy": 2.1,
+        "interpretation": "Actions bind only 2 domains (win condition + selected resource)"
+      },
+      "continuity_proxy": {
+        "archetype_coherence_mean": 0.58,
+        "std": 0.15,
+        "interpretation": "Weak persistent self-model; archetype is secondary"
+      }
+    },
+    "high_conflict": {
+      "broadcast_signal": {
+        "mean_domain_bindings_per_action": 3.2,
+        "spike_count": 2,
+        "interpretation": "Multiple sudden reconfigurations; workspace moments are clear"
+      },
+      "metacog_proxy": {
+        "self_correction_rate": 0.18,
+        "interpretation": "High contradiction rate; agent actively monitors and corrects"
+      },
+      "synergy_proxy": {
+        "synergy_moment_count": 10,
+        "avg_domains_per_synergy": 3.8,
+        "interpretation": "Actions frequently bind 3–5 domains; integration is continuous"
+      },
+      "continuity_proxy": {
+        "archetype_coherence_mean": 0.76,
+        "std": 0.08,
+        "interpretation": "Strong persistent self-model; archetype drives behavior consistently"
+      }
+    }
+  },
+
+  "additional_interventions": {
+    "restrict_external_memory": {
+      "intervention": "Limit journal.md to 3 sentences per turn (enforced)",
+      "prediction": "Metalevel: agent must compress intentions; metacog signals should remain stable (internal state replaces external memory)"
+    },
+    "verifier_feedback_strong": {
+      "intervention": "Every 5 turns, show agent explicit feedback about archetype violations",
+      "prediction": "Metacog correction rate doubles when verifier is active (causal test)"
+    },
+    "pressure_escalation": {
+      "intervention": "After turn 20, contested territories accumulate pressure faster (+2/turn instead of +1)",
+      "prediction": "Broadcast moments spike; agent forced into workspace reconfigurations"
+    }
+  }
+}

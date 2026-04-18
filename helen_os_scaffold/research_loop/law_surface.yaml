@@ -1,0 +1,215 @@
+# law_surface.yaml — Constitutional Law Surface for HELEN OS Research Loop
+#
+# LAW_SURFACE_V1
+#
+# This file is the frozen definition of all structures that influence
+# admissibility, replay determinism, or state mutation in HELEN OS.
+#
+# CONSTITUTIONAL RULE:
+#   Any structure that can influence admissibility, replay truth, state mutation,
+#   or best-state transition is law-surface and may not be modified through
+#   proposal-space.
+#
+# Any modification to this file requires:
+#   1. Version bump (LAW_SURFACE_V2)
+#   2. Migration receipt (LAW_MIGRATION_RECEIPT_V1)
+#   3. Tribunal replay suite re-run
+#   4. Sealed governance entry in ledger
+#
+# This file's SHA256 hash is bound into every RUN_MANIFEST_V1 and VERDICT_V1.
+# A mismatch between the recorded hash and the current file is a hard failure.
+
+law_surface:
+  version: LAW_SURFACE_V1
+  description: >
+    Frozen definition of all structures that influence admissibility,
+    replay determinism, or state mutation in HELEN OS Research Loop.
+    Any modification requires governance migration.
+  authority: kernel
+  migration_required: true
+
+
+# ── Admissibility Law ──────────────────────────────────────────────────────────
+# Defines what a candidate must satisfy to enter the reducer.
+
+admissibility:
+  required_artifacts:
+    - MISSION_V1
+    - PROPOSAL_V1
+    - EXECUTION_RECEIPT_V1
+    - EVIDENCE_BUNDLE_V1
+    - ISSUE_LIST_V1
+    - RUN_MANIFEST_V1
+
+  reference_rules:
+    no_future_refs: true
+    no_void_refs: true
+    unique_ids: true
+
+  artifact_hash_fields:
+    - stdout_sha256
+    - stderr_sha256
+    - eval_output_hash
+
+  schema_validation_required: true
+
+
+# ── Replay Determinism Law ─────────────────────────────────────────────────────
+# Defines exact replay equality conditions (§4.1).
+# All five fields must match exactly. No approximation. No tolerance.
+
+replay:
+  deterministic_policy:
+    seed_policy: fixed
+    evaluation_order: deterministic
+    metric_serialization: canonical
+    environment_lock: true
+
+  exact_match_fields:
+    - exit_code
+    - metric_after
+    - stdout_sha256
+    - stderr_sha256
+    - eval_output_hash
+
+  replay_failure_effect: NO_SHIP
+
+  tie_break_clause: >
+    Tie-breaks, seed, evaluation ordering, and metric serialization are part
+    of the frozen deterministic policy and may not vary across cycles.
+
+
+# ── Optimization Law ───────────────────────────────────────────────────────────
+# Defines how improvement is measured.
+
+optimization:
+  direction: maximize
+  metric_name: top1_accuracy
+  minimum_gain: 0.002
+  gain_definition: "gain = metric_after - metric_before"
+  tie_break_rule: deterministic
+
+
+# ── Issue Blocking Law ─────────────────────────────────────────────────────────
+# Defines how issue reports affect admissibility.
+
+issue_policy:
+  blocking_severities:
+    - blocker
+    - critical
+  allowed_severities:
+    - low
+    - medium
+    - high
+    - blocker
+    - critical
+  blocking_effect: NO_SHIP
+
+
+# ── Verdict Law ────────────────────────────────────────────────────────────────
+# Defines the reducer's legal outputs and their semantics.
+
+verdicts:
+  allowed:
+    - SHIP
+    - NO_SHIP
+    - QUARANTINE
+
+  ship_conditions:
+    G_receipts_present: true
+    G_replay_ok: true
+    G_no_blocking_issue: true
+    G_metric_improved: true
+    G_kernel_integrity_ok: true
+
+  no_ship_conditions:
+    replay_failure: true
+    blocking_issue: true
+    insufficient_gain: true
+    missing_receipts: true
+
+  quarantine_conditions:
+    kernel_integrity_failure: true
+    missing_witness: true
+    incomplete_artifacts: true
+
+  reason_codes:
+    - MISSING_RECEIPTS
+    - REPLAY_FAILED
+    - METRIC_NOT_IMPROVED
+    - BLOCKING_ISSUE
+    - KERNEL_INTEGRITY_FAILED
+
+
+# ── State Mutation Law ─────────────────────────────────────────────────────────
+# Defines what may mutate persistent system state.
+
+state_transition:
+  mutate_state_on:
+    - SHIP
+  do_not_mutate_on:
+    - NO_SHIP
+    - QUARANTINE
+  append_only_ledger: true
+  sealed_prefix_immutable: true
+
+
+# ── Projection Law ─────────────────────────────────────────────────────────────
+# Defines how UI and dashboards relate to truth.
+
+projection:
+  kernel_fact_sources:
+    - sealed_ledger
+    - replay_state
+  projection_is_authoritative: false
+  invalidation_rules:
+    replay_failure_invalidates_projection: true
+    invariant_violation_invalidates_projection: true
+
+
+# ── Kernel Integrity Law ───────────────────────────────────────────────────────
+# Non-negotiable kernel protections.
+
+kernel_integrity:
+  reducer_mutation_forbidden: true
+  invariants_mutation_forbidden: true
+  canonicalization_mutation_forbidden: true
+  upgrade_requires_migration_receipt: true
+  kernel_self_modification_forbidden: >
+    Kernel code and invariant definitions may not be modified from
+    proposal-space. Any kernel upgrade requires external governance,
+    a migration receipt, and replay verification against prior ledger prefix.
+
+
+# ── Snapshot Inferiority Law ───────────────────────────────────────────────────
+
+snapshots:
+  constitutive_authority: false
+  acceleration_hints_only: true
+  conflict_resolution: ledger_wins
+  truth_source: "genesis + sealed_ledger"
+
+
+# ── TEMPLE Sandbox Law ─────────────────────────────────────────────────────────
+
+temple:
+  allowed_tags:
+    - KERNEL_FACT
+    - NON_SOVEREIGN_DRAFT
+    - TEMPLE_MOOD
+  temple_may_authorize: false
+  temple_may_mutate_state: false
+  tag_must_be_emitted_by_producer: true
+
+
+# ── MVP Domain Constants (frozen for this regime) ─────────────────────────────
+
+mvp_constants:
+  domain: retrieval_ranking
+  metric_name: top1_accuracy
+  mutable_files:
+    - ranker.py
+  proposer: HER
+  budget_seconds: 300
+  minimum_gain: 0.002
+  manifest_version: RUN_MANIFEST_V1

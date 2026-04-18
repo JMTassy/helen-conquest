@@ -1,0 +1,96 @@
+{
+  "timestamp_started": "2026-04-03T22:58:28.040489Z",
+  "session_id": "shadow_prod_20260404",
+  "total_runs": 113,
+  "successful_runs": 113,
+  "crash_count": 0,
+  "nondeterminism_count": 0,
+  "violations_count": 0,
+  "route_distribution": {
+    "AGENT": 47,
+    "SKILL": 41,
+    "DEFER": 8,
+    "KERNEL": 7,
+    "TEMPLE": 10
+  },
+  "input_type_distribution": {
+    "USER_QUERY": 25,
+    "SLASH_COMMAND": 5,
+    "CLAIM_OBJECT": 15,
+    "CLAIM_BUNDLE": 10,
+    "CLAIM_EXTRACTION_REQUEST": 10,
+    "ARTIFACT_REQUEST": 8,
+    "AUDIT_REQUEST": 8,
+    "SOURCE_INGEST": 5,
+    "UNRESOLVED_POINTER": 8,
+    "PROMOTION_REQUEST": 5,
+    "PIPELINE_SUBSTITUTION_REQUEST": 2,
+    "TEMPLE_OBSERVATION": 10,
+    "MEMORY_REQUEST": 2
+  },
+  "top_reason_codes": [
+    {
+      "code": "routing_to_agent_transform",
+      "count": 47
+    },
+    {
+      "code": "single_transform_detected",
+      "count": 45
+    },
+    {
+      "code": "multi_step_workflow_detected",
+      "count": 41
+    },
+    {
+      "code": "routing_to_skill_workflow",
+      "count": 41
+    },
+    {
+      "code": "temple_exploration_mode",
+      "count": 10
+    },
+    {
+      "code": "routing_to_temple_exploration",
+      "count": 10
+    },
+    {
+      "code": "unresolved_pointers_present",
+      "count": 8
+    },
+    {
+      "code": "resolution_required_before_action",
+      "count": 8
+    },
+    {
+      "code": "routing_deferred_incomplete",
+      "count": 8
+    },
+    {
+      "code": "routing_to_kernel_sovereign",
+      "count": 7
+    },
+    {
+      "code": "promotion_requested",
+      "count": 5
+    },
+    {
+      "code": "pipeline_substitution_requested",
+      "count": 2
+    }
+  ],
+  "unresolved_pointer_count": 8,
+  "unresolved_pointer_rate_percent": 7.08,
+  "promotion_request_count": 5,
+  "promotion_request_rate_percent": 4.42,
+  "pipeline_substitution_count": 2,
+  "pipeline_substitution_rate_percent": 1.77,
+  "go_criteria": {
+    "min_runs_100": true,
+    "crash_rate_zero": true,
+    "nondeterminism_zero": true,
+    "violations_zero": true,
+    "route_distribution_reasonable": true
+  },
+  "go_decision": "GO_STEP_3",
+  "decision_reason": "\u2705 All acceptance criteria met"
+}

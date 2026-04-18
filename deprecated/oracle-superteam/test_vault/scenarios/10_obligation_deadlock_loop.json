@@ -1,0 +1,35 @@
+{
+  "scenario_id": "S-10",
+  "description": "Multiple CONDITIONAL votes create blocking obligations even with otherwise positive sentiment → quarantine.",
+  "claim": {
+    "id": "claim-010",
+    "assertion": "Expand API rate limits by 10x to support enterprise customers.",
+    "tier": "Tier II",
+    "domain": ["engineering", "business"],
+    "owner_team": "Engineering Wing"
+  },
+  "evidence": [
+    {
+      "id": "ev-010",
+      "type": "capacity_analysis",
+      "tags": ["preliminary"]
+    }
+  ],
+  "votes": [
+    {"team": "Engineering Wing", "vote": "CONDITIONAL", "rationale": "Need load testing results before 10x increase."},
+    {"team": "Security Sector", "vote": "CONDITIONAL", "rationale": "DDoS protection must scale proportionally."},
+    {"team": "COO HQ", "vote": "APPROVE", "rationale": "Enterprise revenue opportunity."},
+    {"team": "Data Validation Office", "vote": "CONDITIONAL", "rationale": "Need verified capacity metrics."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

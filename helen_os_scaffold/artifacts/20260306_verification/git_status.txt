@@ -1,0 +1,4 @@
+?? helen_os_scaffold/HELEN_SOUL_V2_DESIGN.md
+?? helen_os_scaffold/JMT_FRAMEWORKS_MANIFEST.json
+?? helen_os_scaffold/SOUL_V2_IMPLEMENTATION_GUIDE.md
+?? helen_os_scaffold/helen_os/SOUL.md

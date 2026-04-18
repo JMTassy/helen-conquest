@@ -1,0 +1,35 @@
+{
+  "scenario_id": "S-06",
+  "description": "Marketing claim about quantum-proof encryption lacks technical evidence → quarantine.",
+  "claim": {
+    "id": "claim-006",
+    "assertion": "Our platform is quantum-proof and will remain secure for 50+ years.",
+    "tier": "Tier I",
+    "domain": ["marketing", "security"],
+    "owner_team": "Strategy HQ"
+  },
+  "evidence": [
+    {
+      "id": "ev-006",
+      "type": "marketing_brief",
+      "tags": ["unverified", "future_claim"]
+    }
+  ],
+  "votes": [
+    {"team": "Strategy HQ", "vote": "APPROVE", "rationale": "Competitive positioning."},
+    {"team": "Engineering Wing", "vote": "QUARANTINE", "rationale": "No implementation of post-quantum crypto."},
+    {"team": "Security Sector", "vote": "QUARANTINE", "rationale": "Claim is technically unfounded."},
+    {"team": "Data Validation Office", "vote": "CONDITIONAL", "rationale": "Need cryptographic audit."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

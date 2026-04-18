@@ -1,0 +1,14 @@
+ledger_path: storage/ledger_epoch6.ndjsonadapter:
+  type: ollama # options: ollama, openai
+  ollama:
+    base_url: http://localhost:11434
+    model: mistral
+  openai:
+    base_url: https://api.openai.com/v1
+    model: gpt-4
+    api_key: "${OPENAI_API_KEY}"
+
+storage:
+  ledger_path: storage/ledger_epoch5.ndjson   # EPOCH5 genesis ledger (2026-02-28)
+  memory_db_path: memory/helen_epoch5.db
+  memory_ndjson_path: memory/memory_epoch5.ndjson

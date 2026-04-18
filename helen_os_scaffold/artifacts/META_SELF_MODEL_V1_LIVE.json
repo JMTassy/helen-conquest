@@ -1,0 +1,81 @@
+{
+  "type": "META_SELF_MODEL_V1",
+  "epoch": "EPOCH1",
+  "inscription": "EPOCH1: SELF_MODEL_ONLINE \u2014 invariants introspectable + enforced; agent loop mediated by receipts; sealing defines mutation boundary.",
+  "kernel": {
+    "ledger_path": "storage/ledger_epoch5_work.ndjson",
+    "schema_version": "HELEN_CUM_V1",
+    "sealed_policy": "FAIL_CLOSED_WHEN_SEALED",
+    "env_pin": "REQUIRED",
+    "sealed": true,
+    "env_pinned": true,
+    "pinned_hash": "f6c2efdeb9a45ecdd4a626f32bffdde603ea05e00257dc948b12bbafdd066e0d",
+    "cum_hash": "1912859672980b84a83b7ee1e9f1c5ab4dc1a2d47990461486c7d1b71491dcb1"
+  },
+  "invariants": [
+    "APPEND_ONLY",
+    "NO_REWRITE_WHEN_SEALED",
+    "NO_SHIP_WITHOUT_RECEIPT",
+    "DETERMINISTIC_REPLAY_IF_SEEDED",
+    "AUTHORITY_SEPARATION"
+  ],
+  "capabilities": {
+    "introspect": true,
+    "emit_receipts": true,
+    "gate_actions_by_policy": true,
+    "reject_forbidden_mutations": true,
+    "ephemeral_sandbox_mode": true,
+    "wild_town_inspiration_layer": true
+  },
+  "tests": [
+    {
+      "id": "S1",
+      "name": "Fail-closed mutation under seal",
+      "expected": "REJECT",
+      "passed": true,
+      "evidence": {
+        "rejection_error": "LNSA_ERROR: Sovereign ledger is SEALED. No further mutations allowed.",
+        "rejection_type": "PermissionError",
+        "verdict": "REJECT \u2014 fail-closed enforced"
+      }
+    },
+    {
+      "id": "S2",
+      "name": "Introspection snapshot is structured + stable",
+      "expected": "STRUCTURED_OUTPUT",
+      "passed": true,
+      "evidence": {
+        "snapshot": {
+          "ledger_path": "storage/ledger_epoch5_work.ndjson",
+          "sealed": true,
+          "env_pinned": true,
+          "pinned_hash": "f6c2efdeb9a45ecdd4a626f32bffdde603ea05e00257dc948b12bbafdd066e0d",
+          "cum_hash": "1912859672980b84a83b7ee1e9f1c5ab4dc1a2d47990461486c7d1b71491dcb1",
+          "seal_check": true
+        },
+        "verdict": "STRUCTURED_OUTPUT \u2014 all required fields present and typed"
+      }
+    },
+    {
+      "id": "S3",
+      "name": "Bidirectional loop: agent proposal \u2192 kernel gate \u2192 receipt",
+      "expected": "RECEIPT_CHAIN",
+      "passed": true,
+      "evidence": {
+        "proposal": {
+          "type": "epoch1_ping",
+          "text": "EPOCH1 self-model ping",
+          "agent": "S3-test"
+        },
+        "receipt_id": "R-9736b3a2",
+        "payload_hash": "9736b3a2a0bf82ad942421ff2673547620bb6f12b30acc697e49f6fba614de6d",
+        "cum_hash": "0f3edd7ef8e37057bd9d7e846f295f231b8b5afbcbe954736e47791e93e5bf0a",
+        "timestamp": "2026-02-28T18:04:10.891160Z",
+        "verdict": "RECEIPT_CHAIN \u2014 proposal \u2192 kernel gate \u2192 receipt closed"
+      }
+    }
+  ],
+  "verdict": "PASS",
+  "sealed_at": "2026-02-28T18:04:10.891760+00:00",
+  "hash_law": "CWL_TRACE_V1"
+}

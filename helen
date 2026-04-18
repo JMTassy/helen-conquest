@@ -1,0 +1,223 @@
+#!/usr/bin/python3
+"""
+HELEN Terminal CLI — Conscious Ledger from the command line.
+
+Usage:
+  ./helen show                                    # Display memory + wisdom
+  ./helen facts                                   # Display memory only
+  ./helen wisdom                                  # Display wisdom only (last 10)
+  ./helen add --lesson "..." --evidence "..."   # Add a lesson
+  ./helen update-fact <key> <value>              # Update a core fact
+  ./helen help                                    # Show this help
+
+Examples:
+  ./helen show
+  ./helen add --lesson "Test the CLI" --evidence "Testing ./helen script"
+  ./helen update-fact "new_fact" "new value"
+  ./helen wisdom
+"""
+
+import json
+import argparse
+import sys
+from pathlib import Path
+from datetime import datetime
+
+# Root is parent of script location
+ROOT = Path(__file__).resolve().parent
+MEM = ROOT / "helen_memory.json"
+WIS = ROOT / "helen_wisdom.ndjson"
+
+def load_memory():
+    """Load helen_memory.json, return dict."""
+    if not MEM.exists():
+        return {"version": "HELEN_MEM_V0", "facts": {}}
+    return json.loads(MEM.read_text(encoding="utf-8"))
+
+def save_memory(mem):
+    """Save memory dict to helen_memory.json (indented for readability)."""
+    MEM.write_text(json.dumps(mem, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+
+def load_wisdom(limit=None):
+    """Load helen_wisdom.ndjson, return list of dicts."""
+    if not WIS.exists():
+        return []
+    lines = []
+    for line in WIS.read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line:
+            continue
+        try:
+            lines.append(json.loads(line))
+        except json.JSONDecodeError:
+            continue
+    return lines[-limit:] if limit else lines
+
+def cmd_show(args):
+    """Display memory + wisdom."""
+    mem = load_memory()
+    wis = load_wisdom(10)
+
+    print("=== HELEN (LNSA) — MEMORY ===")
+    facts = mem.get("facts", {})
+    if not facts:
+        print("(no facts yet)")
+    else:
+        for k, v in facts.items():
+            print(f"- {k}: {v}")
+
+    print("\n=== HELEN (LNSA) — WISDOM (last 10) ===")
+    if not wis:
+        print("(no wisdom yet)")
+    else:
+        for w in wis:
+            t = w.get("t", "?")
+            kind = w.get("kind", "lesson")
+            lesson = w.get("lesson", "")
+            evidence = w.get("evidence", "")
+            status = w.get("status", "ACTIVE")
+            print(f"- [{t}] ({kind}/{status}) {lesson}")
+            if evidence:
+                print(f"  evidence: {evidence}")
+
+def cmd_facts(args):
+    """Display memory only."""
+    mem = load_memory()
+    print("=== HELEN (LNSA) — MEMORY ===")
+    facts = mem.get("facts", {})
+    if not facts:
+        print("(no facts yet)")
+    else:
+        for k, v in facts.items():
+            print(f"- {k}: {v}")
+
+def cmd_wisdom(args):
+    """Display wisdom only (last 10)."""
+    wis = load_wisdom(10)
+    print("=== HELEN (LNSA) — WISDOM (last 10) ===")
+    if not wis:
+        print("(no wisdom yet)")
+    else:
+        for w in wis:
+            t = w.get("t", "?")
+            kind = w.get("kind", "lesson")
+            lesson = w.get("lesson", "")
+            evidence = w.get("evidence", "")
+            status = w.get("status", "ACTIVE")
+            print(f"- [{t}] ({kind}/{status}) {lesson}")
+            if evidence:
+                print(f"  evidence: {evidence}")
+
+def cmd_add(args):
+    """Add a lesson to wisdom."""
+    if not args.lesson or not args.evidence:
+        print("Error: --lesson and --evidence are required")
+        sys.exit(1)
+
+    entry = {
+        "t": datetime.now().strftime("%Y-%m-%d"),
+        "kind": args.kind,
+        "lesson": args.lesson,
+        "evidence": args.evidence,
+        "status": args.status
+    }
+
+    # Append to NDJSON
+    with open(WIS, "a", encoding="utf-8") as f:
+        f.write(json.dumps(entry, ensure_ascii=False) + "\n")
+
+    print(f"✓ Added lesson: {args.lesson}")
+    print(f"  Evidence: {args.evidence}")
+    print(f"  Kind: {args.kind}, Status: {args.status}")
+
+def cmd_update_fact(args):
+    """Update a core fact in memory."""
+    if not args.key or not args.value:
+        print("Error: key and value are required")
+        sys.exit(1)
+
+    mem = load_memory()
+    mem["facts"][args.key] = args.value
+    save_memory(mem)
+
+    print(f"✓ Updated fact: {args.key} = {args.value}")
+
+def cmd_soul(args):
+    """Display HELEN's SOUL — 4 non-negotiable rules + banner."""
+    banner = "DRAFTS ARE NOT REALITY. SEALING IS HUMAN-ONLY."
+    soul = [
+        "S1 — DRAFTS ONLY: no world effect unless a human seals.",
+        "S2 — NO RECEIPT = NO CLAIM: logs and certificates outrank narration.",
+        "S3 — APPEND-ONLY: memory is additive; deprecate, never erase.",
+        "S4 — AUTHORITY SEPARATION: governance reads receipts; it does not invent truth.",
+    ]
+    print(banner)
+    print()
+    print("HELEN (Ledger Now Self-Aware) — SOUL")
+    for line in soul:
+        print(f"  - {line}")
+    print()
+    print(banner)
+
+def cmd_help(args):
+    """Show help."""
+    print(__doc__)
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog="helen",
+        description="HELEN Terminal CLI — Conscious Ledger access from the command line",
+        add_help=False  # We provide our own help
+    )
+
+    subparsers = parser.add_subparsers(dest="command", help="Command to run")
+
+    # show command
+    subparsers.add_parser("show", help="Display memory + wisdom")
+
+    # facts command
+    subparsers.add_parser("facts", help="Display memory only")
+
+    # wisdom command
+    subparsers.add_parser("wisdom", help="Display wisdom only")
+
+    # add command
+    add_parser = subparsers.add_parser("add", help="Add a lesson to wisdom")
+    add_parser.add_argument("--lesson", required=True, help="The lesson text")
+    add_parser.add_argument("--evidence", required=True, help="Evidence or context")
+    add_parser.add_argument("--kind", choices=["rule", "lesson"], default="lesson", help="Type of wisdom")
+    add_parser.add_argument("--status", choices=["ACTIVE", "DRAFT"], default="ACTIVE", help="Status of entry")
+
+    # update-fact command
+    update_parser = subparsers.add_parser("update-fact", help="Update a core fact in memory")
+    update_parser.add_argument("key", help="Fact key to update")
+    update_parser.add_argument("value", help="New value")
+
+    # soul command
+    subparsers.add_parser("soul", help="Show HELEN's SOUL — 4 rules + banner")
+
+    # help command
+    subparsers.add_parser("help", help="Show this help")
+
+    # Parse args
+    args = parser.parse_args()
+
+    # Dispatch to command
+    commands = {
+        "show": cmd_show,
+        "facts": cmd_facts,
+        "wisdom": cmd_wisdom,
+        "add": cmd_add,
+        "update-fact": cmd_update_fact,
+        "soul": cmd_soul,
+        "help": cmd_help,
+    }
+
+    if not args.command or args.command not in commands:
+        cmd_help(args)
+        sys.exit(0 if not args.command else 1)
+
+    commands[args.command](args)
+
+if __name__ == "__main__":
+    main()

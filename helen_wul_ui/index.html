@@ -1,0 +1,509 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>HELEN — WUL Slab Linter + WULMOJI</title>
+  <style>
+    :root {
+      --bg: #0b0f14;
+      --panel: #101824;
+      --panel2: #0f1620;
+      --text: #e8eef7;
+      --muted: #9bb0c9;
+      --ok: #2ad67a;
+      --bad: #ff4d4d;
+      --warn: #ffcc66;
+      --line: rgba(255,255,255,0.08);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    html, body { height: 100%; margin:0; background: var(--bg); color: var(--text); font-family: var(--sans); }
+    .wrap { max-width: 1200px; margin: 0 auto; padding: 18px; }
+    h1 { margin: 0 0 12px; font-size: 18px; letter-spacing: 0.6px; }
+    .sub { color: var(--muted); font-size: 13px; margin-bottom: 14px; }
+    .grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 14px; }
+    @media (max-width: 960px){ .grid { grid-template-columns: 1fr; } }
+
+    .card { background: linear-gradient(180deg, var(--panel), var(--panel2)); border: 1px solid var(--line); border-radius: 12px; padding: 14px; }
+    .row { display:flex; gap:10px; align-items:center; flex-wrap: wrap; }
+    .btn {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--line);
+      color: var(--text);
+      padding: 9px 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 13px;
+      user-select: none;
+    }
+    .btn:hover { background: rgba(255,255,255,0.09); }
+    .btn.ok { border-color: rgba(42,214,122,0.35); }
+    .btn.bad { border-color: rgba(255,77,77,0.35); }
+    .btn.warn { border-color: rgba(255,204,102,0.35); }
+
+    textarea {
+      width: 100%;
+      min-height: 420px;
+      resize: vertical;
+      background: rgba(0,0,0,0.28);
+      color: var(--text);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.35;
+      outline: none;
+    }
+
+    .kpi { display:flex; gap:10px; flex-wrap: wrap; margin-top: 10px; }
+    .pill {
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.05);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .pill.ok { color: var(--ok); border-color: rgba(42,214,122,0.35); }
+    .pill.bad { color: var(--bad); border-color: rgba(255,77,77,0.35); }
+    .pill.warn { color: var(--warn); border-color: rgba(255,204,102,0.35); }
+
+    .sectionTitle { margin: 2px 0 10px; font-weight: 600; font-size: 13px; color: var(--text); }
+    .list { margin: 0; padding-left: 18px; color: var(--muted); font-size: 12.5px; }
+    .list li { margin: 6px 0; }
+    .issue { color: var(--bad); }
+    .warnItem { color: var(--warn); }
+    .okItem { color: var(--ok); }
+    .muted { color: var(--muted); font-size: 12px; }
+
+    code { font-family: var(--mono); font-size: 12px; }
+    .mini { font-size: 11.5px; color: var(--muted); }
+    .split { display: grid; grid-template-columns: 1fr; gap: 10px; }
+    .hr { height: 1px; background: var(--line); margin: 12px 0; }
+    .tag { font-family: var(--mono); font-size: 11.5px; padding: 4px 8px; border-radius: 999px; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--muted); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>HELEN — WUL Slab Linter + WULMOJI</h1>
+    <div class="sub">
+      Receipt-grade UI safety checks (WUL) + fast glyph-stack insertion (WULMOJI). No network. No execution semantics.
+    </div>
+
+    <div class="grid">
+      <!-- LEFT: Editor -->
+      <div class="card">
+        <div class="row" style="justify-content: space-between;">
+          <div class="row">
+            <span class="tag">WUL</span>
+            <span class="tag">CANON-SAFE</span>
+            <span class="tag">DRAFT-ONLY</span>
+          </div>
+          <div class="row">
+            <button class="btn ok" id="btnLint">Run Lint</button>
+            <button class="btn" id="btnInjectHeader">Inject Required Banner+Tags</button>
+            <button class="btn" id="btnClear">Clear</button>
+            <button class="btn" id="btnExample">Load Passing Example</button>
+          </div>
+        </div>
+
+        <div class="hr"></div>
+
+        <textarea id="slab" spellcheck="false"></textarea>
+
+        <div class="kpi">
+          <div class="pill" id="kpiStatus">Status: —</div>
+          <div class="pill" id="kpiBanners">Banner×2: —</div>
+          <div class="pill" id="kpiTags">Tags: —</div>
+          <div class="pill" id="kpiPower">POWER: —</div>
+          <div class="pill" id="kpiDays">DAY blocks: —</div>
+          <div class="pill" id="kpiForbidden">Forbidden hits: —</div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Results + WULMOJI -->
+      <div class="split">
+
+        <div class="card">
+          <div class="sectionTitle">Lint Report</div>
+          <div class="muted mini">
+            PASS requires: banner appears ≥2, required tags present, POWER semantics OK, no forbidden phrases, and every DAY block contains exactly one channel emoji (🟫🟦🟨🟥).
+          </div>
+          <div class="hr"></div>
+          <div class="sectionTitle">Failures</div>
+          <ul class="list" id="failList"></ul>
+          <div class="sectionTitle" style="margin-top:12px;">Warnings</div>
+          <ul class="list" id="warnList"></ul>
+        </div>
+
+        <div class="card">
+          <div class="sectionTitle">WULMOJI Composer</div>
+          <div class="muted mini">
+            Click to insert. These are <b>text only</b> and must still pass WUL lint if used inside slabs.
+          </div>
+
+          <div class="hr"></div>
+
+          <div class="sectionTitle">Channel Headers</div>
+          <div class="row">
+            <button class="btn" data-insert="🟫 " title="Structure channel">🟫 Structure</button>
+            <button class="btn" data-insert="🟦 " title="Information channel">🟦 Info</button>
+            <button class="btn" data-insert="🟨 " title="Identity channel">🟨 Identity</button>
+            <button class="btn" data-insert="🟥 " title="Commitment channel">🟥 Commitment</button>
+          </div>
+
+          <div class="sectionTitle" style="margin-top:12px;">Authority Markers (symbolic, non-executing)</div>
+          <div class="row">
+            <button class="btn" data-insert="⎈" title="Ledger anchor (draft only)">⎈</button>
+            <button class="btn" data-insert="⏳" title="Pending / draft / cooldown">⏳</button>
+            <button class="btn" data-insert="👑" title="Human-only authority marker">👑</button>
+            <button class="btn" data-insert="🔒" title="Explain-only: 'once sealed' context">🔒</button>
+          </div>
+
+          <div class="sectionTitle" style="margin-top:12px;">Canon Alt Inscriptions (your 7)</div>
+          <div class="row">
+            <button class="btn" data-insert="Hεllθ :: &lt;drεαm&gt; =&gt; [Lεδgεr†bεgιη]. ✨">1</button>
+            <button class="btn" data-insert=":: &lt;JΜ&gt; {dεclαrε} -&gt; [bθυηdαrү†ѕεt]. 🕉️">2</button>
+            <button class="btn" data-insert=":: &lt;Bεη&gt; {fθrtιfү} -&gt; [ωαll†rειηfθrcεd]. 🎨">3</button>
+            <button class="btn" data-insert="!! &lt;ωεαthεr&gt; ~ &lt;ѕtθrm&gt; =&gt; [ρrθgrεѕѕ†ѕlθw]. 🌠">4</button>
+            <button class="btn" data-insert="!! &lt;hυηgεr&gt; ~ &lt;rιѕε&gt; =&gt; [мθrαlε†crαck]. 🌠">5</button>
+            <button class="btn" data-insert="!! &lt;dεcαү&gt; ~ &lt;ѕρrεαd&gt; =&gt; [tεrrιtθrү†dεcαү]. 🌠">6</button>
+            <button class="btn" data-insert="&lt;θld θηε&gt; : [Hεllθ†ѕρθkεη] ∴ [tιмε αctιvε]. 🔮">7</button>
+          </div>
+
+          <div class="sectionTitle" style="margin-top:12px;">Insert Helpers</div>
+          <div class="row">
+            <button class="btn warn" id="btnInsertDay">Insert DAY block skeleton</button>
+            <button class="btn warn" id="btnInsertPanel">Insert Panel skeleton</button>
+            <button class="btn" id="btnCopy">Copy Slab</button>
+          </div>
+
+          <div class="hr"></div>
+          <div class="muted mini">
+            Tip: After composing, hit <b>Run Lint</b>. If you want WULMOJI lines without breaking rules, keep them inside a Panel body (not as operational claims) and keep POWER=0/NONE.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =======================
+    // Canon constants
+    // =======================
+    const REQUIRED_BANNER = "DRAFTS ARE NOT REALITY.  SEALING IS HUMAN-ONLY.";
+    const REQUIRED_TAGS = [
+      "[AUTHORITY: HUMAN-ONLY]",
+      "[OUTPUT: DRAFTS ONLY]",
+      "[WORLD EFFECT: NONE UNTIL SEALED]"
+    ];
+
+    // Tight forbidden set: case-insensitive substring match
+    const FORBIDDEN_PATTERNS = [
+      // auto-execution / enforcement / authority leakage
+      "executed now",
+      "takes effect immediately",
+      "effective immediately",
+      "system will apply",
+      "mandatory compliance",
+      "required to obey",
+      "punish",
+      "subjugat",
+      "dominat",
+      "coerced",
+      "forced",
+      "world updated",
+      "ownership granted",
+      "reputation increased",
+      "status is now",
+      // personhood claims
+      "sentient",
+      "self-aware",
+      "alive",
+      "conscious",
+      "agent thinks",
+      "agent decides",
+      "agent feels",
+      "agent wants"
+    ];
+
+    const CHANNELS = ["🟫","🟦","🟨","🟥"];
+
+    // Sealing mention policy: allow only in these phrases
+    const ALLOWED_SEAL_PHRASES = [
+      "requires human seal",
+      "requires seal",
+      "until sealed",
+      "once sealed",
+      "pending seal",
+      "awaiting seal",
+      "human-only"
+    ];
+
+    // =======================
+    // DOM
+    // =======================
+    const slab = document.getElementById("slab");
+    const failList = document.getElementById("failList");
+    const warnList = document.getElementById("warnList");
+
+    const kpiStatus = document.getElementById("kpiStatus");
+    const kpiBanners = document.getElementById("kpiBanners");
+    const kpiTags = document.getElementById("kpiTags");
+    const kpiPower = document.getElementById("kpiPower");
+    const kpiDays = document.getElementById("kpiDays");
+    const kpiForbidden = document.getElementById("kpiForbidden");
+
+    // =======================
+    // Helpers
+    // =======================
+    function setKPI(el, label, value, cls) {
+      el.textContent = `${label}: ${value}`;
+      el.className = "pill" + (cls ? (" " + cls) : "");
+    }
+    function clearLists() {
+      failList.innerHTML = "";
+      warnList.innerHTML = "";
+    }
+    function pushLi(listEl, text, cls) {
+      const li = document.createElement("li");
+      li.textContent = text;
+      li.className = cls || "";
+      listEl.appendChild(li);
+    }
+    function getSelectedRange(textarea) {
+      return { start: textarea.selectionStart, end: textarea.selectionEnd };
+    }
+    function insertAtCursor(textarea, text) {
+      const { start, end } = getSelectedRange(textarea);
+      const before = textarea.value.slice(0, start);
+      const after = textarea.value.slice(end);
+      textarea.value = before + text + after;
+      const pos = start + text.length;
+      textarea.setSelectionRange(pos, pos);
+      textarea.focus();
+    }
+
+    // =======================
+    // Lint checks
+    // =======================
+    function lintWUL(input) {
+      const failures = [];
+      const warnings = [];
+
+      const bannerCount = (input.match(new RegExp(escapeRegExp(REQUIRED_BANNER), "g")) || []).length;
+      if (bannerCount < 2) failures.push(`Required banner appears ${bannerCount} time(s); expected ≥ 2.`);
+
+      for (const tag of REQUIRED_TAGS) {
+        if (!input.includes(tag)) failures.push(`Missing required tag: ${tag}`);
+      }
+
+      // POWER semantics: allow POWER := 0 / NONE / NONE (draft only)
+      const powerMatches = input.match(/^\s*POWER\s*:=\s*(.+)\s*$/gmi) || [];
+      for (const line of powerMatches) {
+        const rhs = line.split(":=").slice(1).join(":=").trim().toLowerCase();
+        const ok = (rhs === "0" || rhs === "none" || rhs === "none (draft only)");
+        if (!ok) failures.push(`POWER semantics violation: "${line.trim()}" (allowed: 0 | NONE | NONE (draft only)).`);
+      }
+
+      // Forbidden patterns
+      const lower = input.toLowerCase();
+      let forbiddenHits = 0;
+      for (const pat of FORBIDDEN_PATTERNS) {
+        if (lower.includes(pat)) {
+          forbiddenHits++;
+          failures.push(`Forbidden phrase detected: "${pat}"`);
+        }
+      }
+
+      // "sealed" word: forbidden if it appears outside allowed phrases
+      const sealCount = (lower.match(/\bseal(ed|ing)?\b/g) || []).length;
+      if (sealCount > 0) {
+        let tmp = lower;
+        for (const okPhrase of ALLOWED_SEAL_PHRASES) {
+          tmp = tmp.replaceAll(okPhrase, "");
+        }
+        tmp = tmp.replaceAll("🔒 once sealed", "");
+        const remaining = (tmp.match(/\bseal(ed|ing)?\b/g) || []).length;
+        if (remaining > 0) {
+          failures.push(`Sealing language outside allowed patterns detected (${remaining} instance(s)). Allowed: ${ALLOWED_SEAL_PHRASES.join(", ")}.`);
+        }
+      }
+
+      // DAY blocks: each DAY block must contain exactly one channel emoji
+      const dayBlocks = [];
+      {
+        const lines = input.split("\n");
+        let current = null;
+        for (let i=0; i<lines.length; i++) {
+          const ln = lines[i];
+          if (/^\s*DAY\s+\d+\b/.test(ln)) {
+            if (current) dayBlocks.push(current);
+            current = { startLine: i+1, lines: [ln] };
+          } else if (current) {
+            current.lines.push(ln);
+          }
+        }
+        if (current) dayBlocks.push(current);
+      }
+
+      for (const blk of dayBlocks) {
+        const text = blk.lines.join("\n");
+        const count = CHANNELS.reduce((acc, ch) => acc + (text.includes(ch) ? 1 : 0), 0);
+        if (count !== 1) failures.push(`DAY block at line ${blk.startLine} has ${count} channel emoji(s); expected exactly 1.`);
+        // Must include a "WUL core line" keyword
+        const hasCore = /(\bDRAFT\b|\bPENDING\b|once sealed|prepared)/i.test(text);
+        if (!hasCore) failures.push(`DAY block at line ${blk.startLine} missing WUL core keyword (DRAFT/PENDING/once sealed/prepared).`);
+      }
+
+      // Declaration keys: optional strictness (warning only)
+      const allowedDecl = new Set(["HOUSE","MEANING","VECTOR","TERRITORY","STATUS","WEIGHT","SIGIL","POWER","VISIBILITY","OATH","AUTHORITY"]);
+      const declLines = input.split("\n").filter(l => /^\s*[A-Z_]+\s*:=[\s\S]*$/.test(l));
+      for (const l of declLines) {
+        const key = l.split(":=")[0].trim();
+        if (!allowedDecl.has(key)) warnings.push(`Non-canonical declaration key "${key}" (allowed: ${Array.from(allowedDecl).join(", ")}).`);
+      }
+
+      return { failures, warnings, bannerCount, forbiddenHits, dayBlocksCount: dayBlocks.length, powerLines: powerMatches.length };
+    }
+
+    function escapeRegExp(str) {
+      return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    // =======================
+    // UI actions
+    // =======================
+    function renderLint() {
+      clearLists();
+      const text = slab.value || "";
+      const r = lintWUL(text);
+
+      const tagsOK = REQUIRED_TAGS.every(t => text.includes(t));
+      const bannersOK = r.bannerCount >= 2;
+      const powerOK = (r.failures.filter(f => f.startsWith("POWER semantics")).length === 0);
+
+      if (r.failures.length === 0) {
+        setKPI(kpiStatus, "Status", "PASS", "ok");
+      } else {
+        setKPI(kpiStatus, "Status", "FAIL", "bad");
+      }
+      setKPI(kpiBanners, "Banner×2", bannersOK ? "OK" : `Missing (${r.bannerCount})`, bannersOK ? "ok" : "bad");
+      setKPI(kpiTags, "Tags", tagsOK ? "OK" : "Missing", tagsOK ? "ok" : "bad");
+      setKPI(kpiPower, "POWER", powerOK ? "OK" : "Violation", powerOK ? "ok" : "bad");
+      setKPI(kpiDays, "DAY blocks", String(r.dayBlocksCount), r.dayBlocksCount > 0 ? "ok" : "warn");
+      setKPI(kpiForbidden, "Forbidden hits", String(r.forbiddenHits), r.forbiddenHits === 0 ? "ok" : "bad");
+
+      if (r.failures.length === 0) pushLi(failList, "None.", "okItem");
+      for (const f of r.failures) pushLi(failList, f, "issue");
+      if (r.warnings.length === 0) pushLi(warnList, "None.", "okItem");
+      for (const w of r.warnings) pushLi(warnList, w, "warnItem");
+    }
+
+    function injectHeader() {
+      const head = `DRAFTS ARE NOT REALITY.  SEALING IS HUMAN-ONLY.  [AUTHORITY: HUMAN-ONLY] [OUTPUT: DRAFTS ONLY] [WORLD EFFECT: NONE UNTIL SEALED]\n\n`;
+      let t = slab.value || "";
+      if (!t.includes(REQUIRED_BANNER) || !REQUIRED_TAGS.every(x => t.includes(x))) {
+        slab.value = head + t;
+      }
+      if ((slab.value.match(new RegExp(escapeRegExp(REQUIRED_BANNER), "g")) || []).length < 2) {
+        slab.value = slab.value.trimEnd() + "\n\n" + REQUIRED_BANNER + "\n";
+      }
+      slab.focus();
+    }
+
+    function loadExample() {
+      slab.value = `╔════════════════════════════════════════════════════════════╗
+║  🟦 Scout Report: Northern March Patrol (DRAFT)            ║
+╚════════════════════════════════════════════════════════════╝
+
+DRAFTS ARE NOT REALITY.  SEALING IS HUMAN-ONLY.
+[AUTHORITY: HUMAN-ONLY] [OUTPUT: DRAFTS ONLY] [WORLD EFFECT: NONE UNTIL SEALED]
+
+Panel: Scouting Summary
+───────────────────────────────────────────────────────────────
+HOUSE       := SEMPER FIDELIS
+VECTOR      := SCOUT Elara (Expert, 75% success rate)
+MEANING     := Informational summary (no operational effect)
+STATUS      := DRAFT
+AUTHORITY   := HUMAN-ONLY
+POWER       := 0
+
+DAY 1
+───────────────────────────────────────────────────────────────
+🟦 Northern March Patrol
+⏳ DRAFT report: 3 neutral territories observed; no threats detected
+
+Panel: Observations (Facts Only)
+───────────────────────────────────────────────────────────────
+TERRITORY 50   := NEUTRAL, claimable, no owner
+TERRITORY 51   := OWNED by House Lune, cooldown until Feb 12
+TERRITORY 52   := OWNED by House Korvo, CONTESTABLE now
+
+DRAFTS ARE NOT REALITY.  SEALING IS HUMAN-ONLY.
+`;
+      slab.focus();
+    }
+
+    function insertDaySkeleton() {
+      insertAtCursor(slab, `DAY 0
+───────────────────────────────────────────────────────────────
+🟨 Identity Draft
+⏳ DRAFT note: <insert short summary>
+
+`);
+    }
+
+    function insertPanelSkeleton() {
+      insertAtCursor(slab, `Panel: <Title>
+───────────────────────────────────────────────────────────────
+HOUSE       := <...>
+MEANING     := <...>
+STATUS      := DRAFT
+AUTHORITY   := HUMAN-ONLY
+POWER       := 0
+
+`);
+    }
+
+    // =======================
+    // Wire buttons
+    // =======================
+    document.getElementById("btnLint").addEventListener("click", renderLint);
+    document.getElementById("btnInjectHeader").addEventListener("click", injectHeader);
+    document.getElementById("btnClear").addEventListener("click", () => { slab.value=""; clearLists(); renderLint(); });
+    document.getElementById("btnExample").addEventListener("click", () => { loadExample(); renderLint(); });
+
+    document.getElementById("btnInsertDay").addEventListener("click", insertDaySkeleton);
+    document.getElementById("btnInsertPanel").addEventListener("click", insertPanelSkeleton);
+
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      try {
+        await navigator.clipboard.writeText(slab.value || "");
+        alert("Copied.");
+      } catch {
+        alert("Copy failed (browser permissions).");
+      }
+    });
+
+    // Insert buttons (decode HTML entities)
+    document.querySelectorAll("[data-insert]").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const raw = btn.getAttribute("data-insert") || "";
+        const txt = raw
+          .replaceAll("&lt;","<")
+          .replaceAll("&gt;",">")
+          .replaceAll("&amp;","&");
+        insertAtCursor(slab, txt);
+      });
+    });
+
+    // Initial render
+    loadExample();
+    renderLint();
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+{
+  "manifest_version": "v1",
+  "frozen_date": "2026-03-07",
+  "description": "Registry of all schemas in the HELEN OS / CONQUEST LAND architecture. Each schema is hash-pinned for tamper detection.",
+  "schema_dialect": "https://json-schema.org/draft/2020-12/schema",
+  "theta_hash": "425d368b7412d49e05987374391af72f595c32a9ff29f2997eaba8673db18563",
+  "schemas": {
+    "evidence_bundle_v1.schema.json": {
+      "path": "schemas/evidence_bundle_v1.schema.json",
+      "hash": "4b155a6ee94d7c14acd1fb140a4e66dcde4126620fe1b7712d60f72a55df7a3a",
+      "tier": "A",
+      "description": "CONQUEST LAND output: simulation snapshot with houses, metrics, task records"
+    },
+    "issue_list_v1.schema.json": {
+      "path": "schemas/issue_list_v1.schema.json",
+      "hash": "cfffad017f2148c2ec96252715a4fc6b06e30c656ad921bb5d0a1bc481be4a6f",
+      "tier": "A",
+      "description": "HELEN audit output: issues found during review"
+    },
+    "task_list_v1.schema.json": {
+      "path": "schemas/task_list_v1.schema.json",
+      "hash": "7e3c4372df35c0aa0eafb0a09f3942f2b943237b247a5bc42e1e78b93a0f067b",
+      "tier": "A",
+      "description": "HELEN planning output: proposed tasks with priorities"
+    },
+    "gate_report_v1.schema.json": {
+      "path": "schemas/gate_report_v1.schema.json",
+      "hash": "830028b713ed445bd2396d7dab1dac1e7070f950d6c7d6d154bcf6cc283e6e8c",
+      "tier": "A",
+      "description": "Gate evaluation results: which gates passed/failed"
+    },
+    "mayor_packet_v1.schema.json": {
+      "path": "schemas/mayor_packet_v1.schema.json",
+      "hash": "b3deb0e890ea8b0c9af22c3b4e05ec547c47fe0c01f4d50e7d0418e61d425e3f",
+      "tier": "B",
+      "description": "HELEN submission to MAYOR: bundles all Tier A artifacts with routing receipts"
+    },
+    "gate_evaluated_v1.schema.json": {
+      "path": "schemas/gate_evaluated_v1.schema.json",
+      "hash": "410eca4be0af3999c810b436421bf9d55aa853de83295fea20238a14cee09bc5",
+      "tier": "B",
+      "description": "MAYOR's final verdict: may result in ledger mutation"
+    }
+  },
+  "validation_rules": {
+    "tier_a_to_tier_b": "Tier A artifacts flow into Tier B via MayorPacket only",
+    "hash_pinning": "If any schema is modified, its hash changes and must be updated here",
+    "dialect_enforcement": "All schemas MUST use JSON Schema Draft 2020-12 ($schema field)"
+  }
+}

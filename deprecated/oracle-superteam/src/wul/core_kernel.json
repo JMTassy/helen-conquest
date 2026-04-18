@@ -1,0 +1,26 @@
+{
+  "kind": "WUL_CORE_MIN_KERNEL_V0",
+  "version": "v0.1.0",
+  "max_depth": 64,
+  "max_nodes": 512,
+  "governance": {
+    "max_depth": 64,
+    "max_nodes": 512,
+    "max_branching": 8,
+    "no_free_text": true,
+    "mandatory_relations": ["R15"]
+  },
+  "primitives": {
+    "A00_ATOM": { "name": "ATOM", "arity": 0, "role": "leaf" },
+    "R15": { "name": "RETURN_OBJECTIVE", "arity": 1, "role": "governance" },
+    "D01": { "name": "CLAIM", "arity": 1, "role": "discourse" },
+    "D02": { "name": "EVIDENCE_FOR", "arity": 1, "role": "discourse" },
+    "D03": { "name": "EVIDENCE_AGAINST", "arity": 1, "role": "discourse" },
+    "L02": { "name": "AND", "arity": 2, "role": "logic" },
+    "L03": { "name": "OR", "arity": 2, "role": "logic" },
+    "E03": { "name": "OBJECTIVE", "arity": 0, "role": "entity" },
+    "E01": { "name": "PROPOSITION", "arity": 0, "role": "entity" },
+    "E02": { "name": "ARTIFACT", "arity": 0, "role": "entity" }
+  },
+  "leaf_ref_pattern": "^[A-Z][A-Z0-9_]{0,63}$"
+}

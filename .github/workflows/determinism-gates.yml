@@ -1,0 +1,111 @@
+name: Determinism Gates
+
+on:
+  push:
+    paths:
+      - 'marketing_street.cjs'
+      - 'scripts/marketing_street_*.sh'
+      - 'coupling_gate.ts'
+      - 'conformance_runner.ts'
+      - 'coupling_gate.vectors.json'
+      - '.github/workflows/determinism-gates.yml'
+  pull_request:
+    paths:
+      - 'marketing_street.cjs'
+      - 'scripts/marketing_street_*.sh'
+      - 'coupling_gate.ts'
+      - 'conformance_runner.ts'
+      - 'coupling_gate.vectors.json'
+
+jobs:
+  determinism:
+    runs-on: ubuntu-latest
+    name: Determinism Verification
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install TypeScript & tsx
+        run: npm install -D typescript tsx
+
+      - name: Preflight Nondeterminism Check
+        run: bash scripts/preflight_nondeterminism_check.sh
+        continue-on-error: false
+
+      - name: Determinism Verification Gate
+        run: bash scripts/verify_marketing_street_determinism.sh
+        continue-on-error: false
+
+      - name: CouplingGate Conformance Tests
+        run: npx tsx conformance_runner.ts coupling_gate.vectors.json
+        continue-on-error: false
+
+  proof-bundle:
+    runs-on: ubuntu-latest
+    name: Generate Proof Bundle
+    needs: determinism
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Generate Proof Bundle
+        run: |
+          DATE=$(date +%Y-%m-%d)
+          COMMIT=$(git rev-parse HEAD)
+
+          echo "# Proof Bundle: $DATE" > "PROOF_BUNDLE_$DATE.md"
+          echo "" >> "PROOF_BUNDLE_$DATE.md"
+          echo "**Git Commit**: \`$COMMIT\`" >> "PROOF_BUNDLE_$DATE.md"
+          echo "" >> "PROOF_BUNDLE_$DATE.md"
+          echo "## File SHAs" >> "PROOF_BUNDLE_$DATE.md"
+          echo "" >> "PROOF_BUNDLE_$DATE.md"
+          sha256sum CLAUDE.md ARCHITECTURE_V2.md marketing_street.cjs coupling_gate.ts conformance_runner.ts coupling_gate.vectors.json | awk '{print "| " $2 " | `" $1 "` |"}' | sort >> "PROOF_BUNDLE_$DATE.md"
+          echo "" >> "PROOF_BUNDLE_$DATE.md"
+          echo "## Determinism Proof (Seed 111)" >> "PROOF_BUNDLE_$DATE.md"
+          echo "" >> "PROOF_BUNDLE_$DATE.md"
+          SEED_111=$(node marketing_street.cjs 111 | sha256sum | awk '{print $1}')
+          echo "SHA256: \`$SEED_111\`" >> "PROOF_BUNDLE_$DATE.md"
+
+      - name: Commit Proof Bundle
+        run: |
+          git config user.name "CI Bot"
+          git config user.email "ci@example.com"
+          DATE=$(date +%Y-%m-%d)
+          git add "PROOF_BUNDLE_$DATE.md"
+          git commit -m "ci: generate proof bundle for $DATE" || true
+          git push
+
+  regression-alert:
+    runs-on: ubuntu-latest
+    name: Regression Detection Alert
+    needs: determinism
+    if: failure()
+
+    steps:
+      - name: Report Determinism Failure
+        run: |
+          echo "❌ DETERMINISM VERIFICATION FAILED"
+          echo ""
+          echo "This merge cannot proceed. Determinism gates detected nondeterminism."
+          echo ""
+          echo "Common causes:"
+          echo "  - Date.now() or new Date() in output path"
+          echo "  - Math.random() without seed"
+          echo "  - Object key iteration without sorting"
+          echo "  - Locale-dependent formatting"
+          echo ""
+          echo "See DETERMINISM_CONTRACT.md for details."
+          exit 1

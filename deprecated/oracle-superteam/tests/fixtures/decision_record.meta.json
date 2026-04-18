@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Decision Record Metadata (Non-Hashed)",
+  "description": "Non-deterministic metadata companion to decision_record.json. This file contains timestamps and audit information that should NOT be included in receipt hashing.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision_record_hash", "timestamp", "audit_trail"],
+  "properties": {
+    "decision_record_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 of canonicalized decision_record.json (the receipt-hashed payload)"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp when Mayor decision was finalized. NOT included in receipt hash."
+    },
+    "audit_trail": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "run_id": {
+          "type": "string",
+          "description": "Unique identifier for this Mayor execution run"
+        },
+        "execution_duration_ms": {
+          "type": "number",
+          "minimum": 0,
+          "description": "How long Mayor decision took to compute (milliseconds)"
+        },
+        "node_hostname": {
+          "type": "string",
+          "description": "Hostname of machine that executed Mayor"
+        },
+        "git_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$",
+          "description": "Git commit SHA of code that produced this decision"
+        }
+      }
+    }
+  }
+}

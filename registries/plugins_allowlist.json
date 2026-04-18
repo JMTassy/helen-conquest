@@ -1,0 +1,98 @@
+{
+  "$schema_id": "PLUGINS_ALLOWLIST_V1",
+  "description": "Registry of allowed plugins (tools). Only receipt-bound outputs are admissible. NO RECEIPT = NO CLAIM.",
+  "version": "1.0.0",
+  "frozen_at": "2026-02-23T00:00:00Z",
+  "policy": "Each plugin must emit a plugin_receipt.schema.json-conformant receipt. Plugins not listed here cannot write to the ledger.",
+  "tier_0_core_plugins": {
+    "description": "Core integrity plugins. Always active. Cannot be disabled.",
+    "plugins": {
+      "hash_chain_validator": {
+        "plugin_id": "HASH_CHAIN_VALIDATOR_V1",
+        "description": "Validates HELEN_CUM_V1 cum_hash chain integrity across entire ledger",
+        "script": "tools/validate_hash_chain.py",
+        "version": "1.0.0",
+        "tier": 0,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_ledger"],
+        "receipt_required": true
+      },
+      "verdict_payload_validator": {
+        "plugin_id": "VERDICT_PAYLOAD_VALIDATOR_V1",
+        "description": "Validates VERDICT events against VERDICT_PAYLOAD_V1 schema",
+        "script": "tools/validate_verdict_payload.py",
+        "version": "1.0.0",
+        "tier": 0,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_ledger"],
+        "receipt_required": true
+      },
+      "receipt_linkage_validator": {
+        "plugin_id": "RECEIPT_LINKAGE_VALIDATOR_V2",
+        "description": "Validates RECEIPT triple-binding (verdict_id + payload_hash + cum_hash). Enforces NO RECEIPT = NO SHIP.",
+        "script": "tools/validate_receipt_linkage.py",
+        "version": "2.1.0",
+        "tier": 0,
+        "allowed_writers": ["MAYOR"],
+        "capabilities": ["read_ledger"],
+        "receipt_required": true
+      },
+      "seal_validator": {
+        "plugin_id": "SEAL_VALIDATOR_V1",
+        "description": "Validates SEAL event: environment_hash, ledger closure, mayor signature",
+        "script": "tools/validate_seal_v1.py",
+        "version": "1.0.0",
+        "tier": 0,
+        "allowed_writers": ["MAYOR"],
+        "capabilities": ["read_ledger", "read_registry"],
+        "receipt_required": true
+      },
+      "turn_schema_validator": {
+        "plugin_id": "TURN_SCHEMA_VALIDATOR_V1",
+        "description": "Validates HAL_VERDICT_V1 turn events (legacy gate, payload/meta split)",
+        "script": "tools/validate_turn_schema.py",
+        "version": "1.0.0",
+        "tier": 0,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_ledger"],
+        "receipt_required": false,
+        "note": "Legacy validator. Use validate_verdict_payload.py for new VERDICT events."
+      },
+      "meta_invariance_checker": {
+        "plugin_id": "META_INVARIANCE_CHECKER_V1",
+        "description": "Checks no floats in payload, arrays sorted, no timestamps in payload",
+        "script": "tools/test_meta_invariance.py",
+        "version": "1.0.0",
+        "tier": 0,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_ledger"],
+        "receipt_required": false
+      }
+    }
+  },
+  "tier_1_governance_plugins": {
+    "description": "K-gate governance plugins. Run after core integrity.",
+    "plugins": {
+      "k_rho_linter": {
+        "plugin_id": "K_RHO_LINTER_V1",
+        "description": "K-ρ viability gate: checks inf_rho > 0 constraint",
+        "script": "scripts/helen_rho_lint.py",
+        "version": "1.0.0",
+        "tier": 1,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_artifacts"],
+        "receipt_required": true
+      },
+      "k_tau_linter": {
+        "plugin_id": "K_TAU_LINTER_V1",
+        "description": "K-τ structural coherence: checks 5 invariants (boundary, IO, determinism, allowlist, schema)",
+        "script": "scripts/helen_k_tau_lint.py",
+        "version": "1.0.0",
+        "tier": 1,
+        "allowed_writers": ["HELEN", "MAYOR"],
+        "capabilities": ["read_artifacts", "read_working_tree"],
+        "receipt_required": true
+      }
+    }
+  }
+}

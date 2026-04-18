@@ -1,0 +1,36 @@
+{
+  "towns": [
+    {
+      "id": "PORTO",
+      "dialect": "prestige",
+      "SHIP_threshold": 65,
+      "override_cost": 2,
+      "evidence_decay_rate": 0.92,
+      "npc_count": 8,
+      "observation_publish_rate": 2
+    },
+    {
+      "id": "CORTE",
+      "dialect": "traditional",
+      "SHIP_threshold": 78,
+      "override_cost": 4,
+      "evidence_decay_rate": 0.85,
+      "npc_count": 6,
+      "observation_publish_rate": 1
+    },
+    {
+      "id": "AJACCIO",
+      "dialect": "experimental",
+      "SHIP_threshold": 55,
+      "override_cost": 1,
+      "evidence_decay_rate": 0.98,
+      "npc_count": 7,
+      "observation_publish_rate": 3
+    }
+  ],
+  "doctrine_hash": "oracle_town_v1.0_sha256:abc123",
+  "invariants": {
+    "k_gates": ["K0", "K1", "K2", "K5", "K7"],
+    "hard_read_as_noise": true
+  }
+}

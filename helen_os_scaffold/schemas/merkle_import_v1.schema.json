@@ -1,0 +1,119 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Merkle Import Receipt v1",
+  "description": "Cross-town receipt carrying authenticated Merkle inclusion proof from issuer town's ledger. Proves remote event inclusion without downloading full ledger.",
+  "type": "object",
+  "required": [
+    "type",
+    "rid",
+    "issuer_town",
+    "issuer_seal_hash",
+    "ledger_size",
+    "ledger_merkle_root",
+    "claim",
+    "proof",
+    "sig"
+  ],
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "merkle_import_v1",
+      "description": "Receipt type identifier"
+    },
+    "rid": {
+      "type": "string",
+      "description": "Unique receipt ID (UUID hex or deterministic hash). Used for anti-replay.",
+      "minLength": 12,
+      "maxLength": 256
+    },
+    "issuer_town": {
+      "type": "string",
+      "description": "Town ID claiming the ledger root (e.g., 'Town_A')",
+      "minLength": 1,
+      "maxLength": 256
+    },
+    "issuer_seal_hash": {
+      "type": "string",
+      "description": "SHA256 hash of the seal_v3 receipt that anchors this Merkle root. Receiver must validate this seal exists and binds the root.",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "ledger_size": {
+      "type": "integer",
+      "description": "Number of leaves in Merkle tree (must be power of 2)",
+      "minimum": 1,
+      "maximum": 1048576
+    },
+    "ledger_merkle_root": {
+      "type": "string",
+      "description": "Root hash of Merkle tree over issuer's ledger events (SHA256 hex)",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "claim": {
+      "type": "object",
+      "description": "The claim being proven (event inclusion, tip verification, etc.)",
+      "required": ["kind"],
+      "oneOf": [
+        {
+          "title": "Event Inclusion Claim",
+          "type": "object",
+          "required": ["kind", "seq", "event_canon_sha256"],
+          "properties": {
+            "kind": {
+              "const": "event_inclusion",
+              "description": "Claim: 'Event at sequence seq exists and matches this canonical hash'"
+            },
+            "seq": {
+              "type": "integer",
+              "description": "Sequence number in ledger (0-indexed)",
+              "minimum": 0
+            },
+            "event_canon_sha256": {
+              "type": "string",
+              "description": "SHA256 of canonical event JSON (receiver can recompute leaf hash from this)",
+              "pattern": "^[a-f0-9]{64}$"
+            },
+            "event_canonical_bytes": {
+              "type": "string",
+              "description": "Optional: full canonical JSON of event (base64-encoded). If provided, receiver can verify event_canon_sha256 by recomputing.",
+              "contentEncoding": "base64"
+            }
+          }
+        }
+      ]
+    },
+    "proof": {
+      "type": "object",
+      "description": "Merkle inclusion proof (path of sibling hashes)",
+      "required": ["leaf", "path", "index"],
+      "properties": {
+        "leaf": {
+          "type": "string",
+          "description": "Leaf hash for the claimed event (domain-separated: H('CWL_LEDGER_LEAF_V1' || canonical_event_bytes))",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "path": {
+          "type": "array",
+          "description": "List of sibling hashes from leaf to root (in tree traversal order)",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$"
+          },
+          "minItems": 0,
+          "maxItems": 20
+        },
+        "index": {
+          "type": "integer",
+          "description": "Position of leaf in tree (0-indexed). Must match tree structure.",
+          "minimum": 0
+        }
+      }
+    },
+    "sig": {
+      "type": "string",
+      "description": "Ed25519 signature by issuer_town over entire merkle_import_v1 receipt (minus sig field itself). Binds claim to issuer.",
+      "minLength": 128,
+      "maxLength": 256
+    }
+  },
+  "additionalProperties": false
+}

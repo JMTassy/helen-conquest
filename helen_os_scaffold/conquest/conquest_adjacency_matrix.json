@@ -1,0 +1,36 @@
+{
+  "spec": "CONQUEST_ADJACENCY_MATRIX_V0_1",
+  "terrain_adjacency": {
+    "VOID":     [],
+    "SEA":      ["SEA", "COAST"],
+    "COAST":    ["SEA", "COAST", "PLAIN", "MARSH"],
+    "RIVER":    ["RIVER", "BRIDGE", "LAKE", "COAST"],
+    "LAKE":     ["RIVER", "PLAIN", "FOREST", "HILL"],
+    "PLAIN":    ["PLAIN", "FOREST", "HILL", "COAST", "MARSH", "ROAD"],
+    "FOREST":   ["FOREST", "PLAIN", "HILL", "MARSH"],
+    "HILL":     ["HILL", "PLAIN", "FOREST", "MOUNTAIN", "ROAD"],
+    "MOUNTAIN": ["MOUNTAIN", "HILL"],
+    "MARSH":    ["MARSH", "COAST", "PLAIN", "FOREST", "RIVER"],
+    "DESERT":   ["DESERT", "HILL", "PLAIN"],
+    "ROAD":     ["ROAD", "PLAIN", "HILL", "COAST", "BRIDGE"],
+    "BRIDGE":   ["ROAD", "RIVER"]
+  },
+  "special_constraints": [
+    {
+      "rule_id": "RIVER_CONTINUITY_V1",
+      "description": "A RIVER tile must connect to at least one adjacent RIVER, LAKE, or COAST unless it is a source tile."
+    },
+    {
+      "rule_id": "BRIDGE_OVER_RIVER_V1",
+      "description": "A BRIDGE tile must be adjacent to at least one RIVER tile and one ROAD tile."
+    },
+    {
+      "rule_id": "SEA_NO_INLAND_POCKET_V1",
+      "description": "SEA may not appear fully enclosed by non-water terrain after final solve."
+    },
+    {
+      "rule_id": "MOUNTAIN_CLUSTER_V1",
+      "description": "MOUNTAIN tiles should prefer adjacency to HILL or MOUNTAIN only."
+    }
+  ]
+}

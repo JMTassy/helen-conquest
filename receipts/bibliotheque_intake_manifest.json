@@ -1,0 +1,38 @@
+{
+  "schema_version": "bibliotheque_intake_manifest_v1",
+  "generated_at_epoch": 1769708093,
+  "generated_at_iso": "2026-01-29T17:34:53.266756+00:00Z",
+  "inbox_dir": "oracle_town/inbox",
+  "items_count": 4,
+  "items": [
+    {
+      "path": "REQ_001/pluginRIEMANN_V8.0_FINAL.tex",
+      "full_path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/inbox/REQ_001/pluginRIEMANN_V8.0_FINAL.tex",
+      "size_bytes": 22043,
+      "sha256": "1f3349175249babc6e1c3b91b2d55ff22a549a25fe9c7bc1340436a246fbb9af",
+      "mtime_epoch": 1769707237
+    },
+    {
+      "path": "REQ_002/legacy_quorum_v1_historical.py",
+      "full_path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/inbox/REQ_002/legacy_quorum_v1_historical.py",
+      "size_bytes": 10791,
+      "sha256": "343bc6a4ac7a24201c76122ca8f140ebc5f2f0ff41be2b5639f4c502442bab77",
+      "mtime_epoch": 1769707999
+    },
+    {
+      "path": "REQ_003/byzantine_quorum_foundations.md",
+      "full_path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/inbox/REQ_003/byzantine_quorum_foundations.md",
+      "size_bytes": 13817,
+      "sha256": "92c56c9b1cbdebf011145e39d93e5883e1d1162ab5bc98bf8db0cc9d79b260f2",
+      "mtime_epoch": 1769708039
+    },
+    {
+      "path": "REQ_004/attestation_failures_incident_log.md",
+      "full_path": "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24/oracle_town/inbox/REQ_004/attestation_failures_incident_log.md",
+      "size_bytes": 15002,
+      "sha256": "ef57ad8e90d67684a0b7cdce4718eae46b38fc555a3b3ff2321e66d3547649a1",
+      "mtime_epoch": 1769708082
+    }
+  ],
+  "manifest_sha256": "132f434c480dd811ed1a2555d04bac4a5b3fe4b39bf965bf16e60521e363a4cc"
+}

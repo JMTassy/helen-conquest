@@ -1,0 +1,35 @@
+{
+  "scenario_id": "S-05",
+  "description": "Medical claims require high evidence bar. CONDITIONAL votes open obligations → quarantine despite high approval.",
+  "claim": {
+    "id": "claim-005",
+    "assertion": "Our health monitoring algorithm can detect early signs of cardiac events with 95% accuracy.",
+    "tier": "Tier I",
+    "domain": ["medical", "ai"],
+    "owner_team": "Engineering Wing"
+  },
+  "evidence": [
+    {
+      "id": "ev-005",
+      "type": "internal_testing",
+      "tags": ["preliminary", "not_peer_reviewed"]
+    }
+  ],
+  "votes": [
+    {"team": "Engineering Wing", "vote": "CONDITIONAL", "rationale": "Need peer-reviewed clinical validation."},
+    {"team": "Legal Office", "vote": "CONDITIONAL", "rationale": "Medical claims require regulatory compliance evidence."},
+    {"team": "Strategy HQ", "vote": "APPROVE", "rationale": "Strong market opportunity."},
+    {"team": "COO HQ", "vote": "APPROVE", "rationale": "Aligns with health tech expansion."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "QUARANTINE",
+      "ship_permitted": false,
+      "reason_codes": ["OBLIGATIONS_BLOCKING"]
+    },
+    "derived": {
+      "kill_switch_triggered": false,
+      "rule_kill_triggered": false
+    }
+  }
+}

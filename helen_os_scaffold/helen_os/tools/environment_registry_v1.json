@@ -1,0 +1,9 @@
+{
+    "system_name": "HELEN_OS",
+    "version": "2.0.0-ouroboros",
+    "pinned_hashes": {
+        "kernel_py": "AUTO_COMPUTE",
+        "requirements_txt": "AUTO_COMPUTE",
+        "validators_bundle": "AUTO_COMPUTE"
+    }
+}

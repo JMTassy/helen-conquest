@@ -1,0 +1,90 @@
+{
+  "id": "street1",
+  "version": "0.3",
+  "meta": {
+    "coordSystem": "grid",
+    "indexing": "row-major (idx = y*width + x)",
+    "rectSemantics": "cells in [x..x+w-1] × [y..y+h-1]",
+    "walkableIsAuthoritative": true
+  },
+  "grid": { "width": 24, "height": 14 },
+
+  "playerSpawn": { "x": 4, "y": 11 },
+
+  "buildings": [
+    {
+      "id": "research_lab",
+      "name": "Research Lab",
+      "purpose": "Turns vague intent into constraints and acceptance criteria.",
+      "rect": { "x": 2, "y": 2, "w": 6, "h": 4 }
+    },
+    {
+      "id": "orchestration_hall",
+      "name": "POC Factory",
+      "purpose": "Routes work, assigns agents, tracks dependencies, enforces guardrails.",
+      "rect": { "x": 10, "y": 2, "w": 6, "h": 4 }
+    },
+    {
+      "id": "support_cafe",
+      "name": "Corner Café",
+      "purpose": "Handles stakeholders, comms, escalation paths, and human-friendly summaries.",
+      "rect": { "x": 18, "y": 2, "w": 6, "h": 4 }
+    }
+  ],
+
+  "npcs": [
+    {
+      "id": "emma",
+      "role": "research",
+      "name": "Emma",
+      "spawn": { "x": 5, "y": 6 },
+      "waypoints": [
+        { "x": 5, "y": 3 },
+        { "x": 5, "y": 6 },
+        { "x": 7, "y": 9 },
+        { "x": 5, "y": 6 }
+      ]
+    },
+    {
+      "id": "olivia",
+      "role": "orchestrator",
+      "name": "Olivia",
+      "spawn": { "x": 13, "y": 6 },
+      "waypoints": [
+        { "x": 11, "y": 6 },
+        { "x": 13, "y": 4 },
+        { "x": 15, "y": 4 },
+        { "x": 13, "y": 6 }
+      ]
+    },
+    {
+      "id": "alex",
+      "role": "social",
+      "name": "Alex",
+      "spawn": { "x": 20, "y": 6 },
+      "waypoints": [
+        { "x": 19, "y": 4 },
+        { "x": 21, "y": 5 },
+        { "x": 20, "y": 7 },
+        { "x": 19, "y": 4 }
+      ]
+    }
+  ],
+
+  "walkable": [
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false,true,true,
+    true,true,true,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false,true,true,
+    true,true,true,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false,true,true,
+    true,true,true,false,false,false,false,false,false,true,false,false,false,false,false,false,true,false,false,false,false,false,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,
+    true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true
+  ]
+}

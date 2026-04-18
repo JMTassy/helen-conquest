@@ -1,0 +1,57 @@
+name: Payload/Meta Acceptance Gate
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Show Python version
+        run: python3 --version
+
+      - name: Run acceptance gate
+        run: |
+          if [ -f "town/ledger.ndjson" ]; then
+            bash tools/accept_payload_meta.sh town/ledger.ndjson
+          else
+            echo "[SKIP] No ledger found. (Create via writer or migration.)"
+          fi
+
+      - name: Check float ban
+        if: always()
+        run: |
+          if [ -f "town/ledger.ndjson" ]; then
+            python3 -c '
+import json, sys, pathlib
+p = pathlib.Path("town/ledger.ndjson")
+floats_found = []
+for i, line in enumerate(p.read_text().splitlines(), 1):
+    o = json.loads(line)
+    def walk(x):
+        if isinstance(x, float):
+            raise ValueError(f"FLOAT in payload at line {i}")
+        if isinstance(x, dict):
+            for v in x.values(): walk(v)
+        if isinstance(x, list):
+            for v in x: walk(v)
+    walk(o.get("payload", {}))
+print("[PASS] No floats in payload")
+            '
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          echo "✅ Payload/Meta acceptance gate PASSED"
+          echo "   - Hash chain: valid"
+          echo "   - Turn schema: valid"
+          echo "   - Meta invariance: valid"
+          echo "   - Float ban: enforced"

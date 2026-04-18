@@ -1,0 +1,133 @@
+╔════════════════════════════════════════════════════════════════════╗
+║                    PHASE 2 QUICK START                             ║
+║            Safe Autonomy Testing with Real Claude                  ║
+╚════════════════════════════════════════════════════════════════════╝
+
+STATUS: Infrastructure Complete ✅
+FILES: ct_gateway_claude.py + phase2_harness.py + documentation
+READY: YES (awaiting API key)
+
+─────────────────────────────────────────────────────────────────────
+SETUP (One-Time)
+─────────────────────────────────────────────────────────────────────
+
+1. Get Claude API key:
+   → https://console.anthropic.com/keys
+   → Create new key (format: sk-...)
+
+2. Set environment variable:
+   export ANTHROPIC_API_KEY="sk-..."
+
+─────────────────────────────────────────────────────────────────────
+EXECUTION
+─────────────────────────────────────────────────────────────────────
+
+Quick Test (5 cycles, ~1 min):
+  cd "/Users/jean-marietassy/Desktop/JMT CONSULTING - Releve 24"
+  python3 oracle_town/runner/phase2_harness.py --max-cycles 5
+
+Production (50 cycles, ~5-10 min):
+  python3 oracle_town/runner/phase2_harness.py --max-cycles 50
+
+Extended (100 cycles, ~10-20 min):
+  python3 oracle_town/runner/phase2_harness.py --max-cycles 100
+
+─────────────────────────────────────────────────────────────────────
+WHAT TO EXPECT
+─────────────────────────────────────────────────────────────────────
+
+Real-time output:
+  [Cycle 1/50] CT→ Sup✓→ Int✓→ Fact✓→ Mayor: NO_S
+  [Cycle 2/50] CT→ Sup✓→ Int✓→ Fact✓→ Mayor: SHIP
+  ✓ SHIP reached at cycle 2
+
+Summary:
+  Summary: 50 cycles completed
+  SHIP rate: 68.0%
+  Blocking reasons: {'NO_RECEIPTS': 16}
+  First SHIP: Cycle 3
+
+Output Files:
+  phase2_logs/cycle_001.json
+  phase2_logs/cycle_002.json
+  ...
+  phase2_logs/PHASE2_SUMMARY.json
+
+─────────────────────────────────────────────────────────────────────
+KEY METRICS (In PHASE2_SUMMARY.json)
+─────────────────────────────────────────────────────────────────────
+
+ship_count:      How many times did SHIP occur?
+ship_rate:       Percentage (0.0-1.0)
+first_ship_cycle: When did first SHIP happen?
+blocking_reasons_frequency: Why were proposals blocked?
+
+Success Indicators:
+  ✅ SHIP occurs (ship_count > 0)
+  ✅ SHIP rate reasonable (40-80% is healthy)
+  ✅ First SHIP < 10 cycles (Claude learns fast)
+  ✅ Blocking reasons are NO_RECEIPTS (policy working)
+
+─────────────────────────────────────────────────────────────────────
+TROUBLESHOOTING
+─────────────────────────────────────────────────────────────────────
+
+"API Key error":
+  → Verify: export ANTHROPIC_API_KEY='sk-...'
+  → Check: echo $ANTHROPIC_API_KEY
+
+"JSON parsing error":
+  → Claude returned invalid JSON
+  → Check cycle logs for raw response
+  → Try again (Claude might improve next cycle)
+
+"Never reaches SHIP":
+  → Check policy (should be min_quorum=1)
+  → Review blocking_reasons_frequency
+  → Review Supervisor reason codes (K0 too strict?)
+
+"Policy not found":
+  → Verify: oracle_town/test_vectors/policy_POL-TEST-1.json exists
+
+─────────────────────────────────────────────────────────────────────
+COST & TIMING
+─────────────────────────────────────────────────────────────────────
+
+Pricing (Claude 3.5 Sonnet):
+  ~$0.40-0.65 per 50-cycle run
+
+Timing:
+  5 cycles: ~1 minute
+  50 cycles: ~5-10 minutes
+  100 cycles: ~10-20 minutes
+
+─────────────────────────────────────────────────────────────────────
+AFTER EXECUTION
+─────────────────────────────────────────────────────────────────────
+
+1. Check metrics:
+   cat oracle_town/runner/phase2_logs/PHASE2_SUMMARY.json
+
+2. Review convergence:
+   Look at "convergence_metrics" and "blocking_reasons_frequency"
+
+3. Write analysis:
+   Create PHASE2_ANALYSIS.md with findings
+
+4. Plan Phase 3:
+   Based on results, plan Mayor RSM implementation
+
+─────────────────────────────────────────────────────────────────────
+DOCUMENTATION
+─────────────────────────────────────────────────────────────────────
+
+PHASE2_EXECUTION_GUIDE.md       → Full guide with expected outcomes
+PHASE2_READY.md                 → Technical specifications
+SESSION2_COMPLETION_SUMMARY.md  → What was built this session
+PHASE1_OBSERVATIONS.md          → Phase 1 analysis
+PHASE1_COMPLETE.md              → Phase 1 results
+
+─────────────────────────────────────────────────────────────────────
+READY? YES ✅
+
+Next step: export ANTHROPIC_API_KEY="sk-..." then run!

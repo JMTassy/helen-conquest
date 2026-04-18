@@ -1,0 +1,182 @@
+TREND MEMORY: 7-Day Cluster Tracking
+
+Quick Reference
+===============
+
+What: Compares today's clusters to past 7 days. Identifies new, persistent, and fading themes.
+Why: Single daily briefs are noise. Stacked across 7 days, they become signal.
+Mode: Read-only (fits Mode A: Emulation-only).
+Output: JSON report with signal strength + recommendation.
+
+Command
+=======
+
+python3 oracle_town/jobs/trend_memory.py \
+  --date "2026-01-30" \
+  --run-id "emu_2026-01-30" \
+  --insights /path/to/ins_cluster_output.json \
+  --ledger oracle_town/ledger/ \
+  --output /tmp/trend_report.json \
+  --verbose
+
+Arguments
+=========
+
+--date       : YYYY-MM-DD (required)
+--run-id     : Run identifier (required)
+--insights   : Path to today's insights from INS_CLUSTER (required)
+--ledger     : Path to ledger root (default: oracle_town/ledger/)
+--output     : Output file path (default: /tmp/trend_report.json)
+--verbose    : Print debug info to stderr
+
+Output Structure
+================
+
+{
+  "report_id": "trend_2026-01-30",
+  "date": "2026-01-30",
+  "run_id": "emu_2026-01-30",
+  "timestamp": "2026-01-30T23:34:26.393083Z",
+  
+  "analysis": {
+    "new_clusters": ["API Performance"],           // First appearance today
+    "persistent_clusters": {
+      "Marketing Campaigns": 5,                    // Seen 5 of last 7 days
+      "Infrastructure Health": 3
+    },
+    "fading_clusters": [                           // Was seen, now absent 2+ days
+      {
+        "cluster": "Customer Sentiment",
+        "last_seen_days_ago": 3
+      }
+    ],
+    "anomaly_alerts": []                           // Recurring anomalies
+  },
+  
+  "summary": {
+    "signal_strength": 75,                         // 0-100: % persistent vs new
+    "stability": "high",                           // "high" | "medium" | "low"
+    "recommendation": "CONTINUE_MONITORING",       // Actionable suggestion
+    "metrics": {
+      "new": 1,
+      "persistent": 3,
+      "fading": 1
+    }
+  },
+  
+  "hash": "26159af5217ff493..."                    // SHA-256 (K5 determinism)
+}
+
+Interpretation
+==============
+
+Signal Strength (0-100):
+  - 100% = All clusters persistent (very stable)
+  - 75%  = Most clusters persistent, some new
+  - 50%  = Balanced mix
+  - <50% = New clusters dominating (high volatility)
+
+Stability:
+  - "high"   : 3+ persistent clusters
+  - "medium" : Balanced new/persistent
+  - "low"    : New clusters > persistent
+
+Recommendations:
+  - CONTINUE_MONITORING : Normal state, no action needed
+  - INVESTIGATE         : New cluster + fading cluster OR high volatility
+  - ALERT               : Signal strength < 50% OR multiple anomaly recurrence
+
+How It Works
+============
+
+1. Loads historical briefs from ledger/briefs/brief_YYYY-MM-DD.json
+2. Looks back 7 days from today
+3. Extracts cluster names from each brief
+4. Counts appearances per cluster
+5. Classifies:
+   - NEW: First appearance today
+   - PERSISTENT: Seen N days (N >= 1)
+   - FADING: Was seen 2+ days ago, not today
+6. Computes signal_strength = (persistent_count / total_clusters) * 100
+7. Determines stability level and recommendation
+8. Hashes report (K5 determinism verification)
+
+Determinism (K5)
+================
+
+Same inputs + same policy → identical hash every time.
+
+Verify:
+  python3 oracle_town/jobs/trend_memory.py ... > /tmp/tr1.json
+  python3 oracle_town/jobs/trend_memory.py ... > /tmp/tr2.json
+  diff /tmp/tr1.json /tmp/tr2.json  # Should be identical
+
+If hashes differ: Bug in trend_memory.py (fix before production).
+
+Integration with Daily Loop
+============================
+
+daily_emulation_loop.sh calls trend_memory automatically:
+
+  [4/5] TREND_MEMORY: Compare to 7-day history...
+  python3 oracle_town/jobs/trend_memory.py \
+    --date "$RUN_DATE" \
+    --run-id "$RUN_ID" \
+    --insights /tmp/ins_out.json \
+    --ledger oracle_town/ledger/ \
+    --output /tmp/trend_report.json
+
+Result stored at /tmp/trend_report.json (available in same run).
+Included in Mode A claim as evidence.
+
+Operational Value
+=================
+
+Daily Brief Alone:
+  - 6 clusters today
+  - Q: Is that normal?
+  - A: No idea.
+
+Daily Brief + 7-Day Trend:
+  - 6 clusters today (3 persistent, 2 new, 1 fading)
+  - Signal strength: 75%
+  - Q: Is that normal?
+  - A: Yes. Marketing (5d), Infrastructure (3d), Security (2d) are steady.
+       New: API Performance (investigate).
+       Fading: Customer Sentiment (was 3d ago, now gone—possible resolved issue).
+
+Trend memory answers: "Is this normal or anomalous?"
+
+Cron Example
+============
+
+# Daily at 9 AM
+0 9 * * * cd "JMT CONSULTING - Releve 24" && bash oracle_town/daily_emulation_loop.sh
+
+All trend reports stored in oracle_town/ledger/briefs/
+Each brief linked to corresponding trend_report.json
+
+Historical Analysis
+====================
+
+Find trends over months:
+
+  for brief in oracle_town/ledger/briefs/brief_*.json; do
+    date=$(basename $brief | sed 's/brief_\(.*\)\.json/\1/')
+    echo "$date: $(python3 -c 'import json; print(json.load(open("'"$brief"'")))["clusters"]" | wc -l) clusters"
+  done
+
+Or parse JSON:
+
+  python3 << 'PY'
+  import json
+  from pathlib import Path
+  
+  for brief_file in sorted(Path("oracle_town/ledger/briefs/").glob("brief_*.json")):
+      data = json.load(open(brief_file))
+      print(f"{brief_file.stem}: {len(data['clusters'])} clusters")
+  PY
+
+---
+
+Mode A Status: ✓ Emulation-only, fully deterministic, ready for daily runs.

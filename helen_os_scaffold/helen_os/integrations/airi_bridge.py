@@ -1,0 +1,251 @@
+"""
+helen/integrations/airi_bridge.py
+
+AIRI ↔ HELEN Bridge (Firewall-Grade)
+
+Responsibilities:
+1. Connect to AIRI WebSocket runtime
+2. Relay user input → HELEN cognitive OS
+3. Sanitize HELEN output (no authority tokens)
+4. Map cognition → AIRI avatar payload (text + emotion)
+
+SECURITY CONSTRAINTS:
+- No kernel import (cognitive layer only)
+- No ledger access
+- Token sanitization mandatory
+- Fail-closed on malformed input
+- Non-sovereign integration only
+"""
+
+import asyncio
+import json
+import logging
+from typing import Dict, Any, Optional
+
+import websockets
+from websockets.client import WebSocketClientProtocol
+
+from helen.router import route_input  # Cognitive router (non-sovereign)
+from helen.utils.redaction import sanitize_output_for_airi, emotion_map
+
+
+logger = logging.getLogger(__name__)
+
+
+class AIRIBridge:
+    """
+    Hardened bridge between AIRI avatar runtime and HELEN cognitive OS.
+
+    Assumes AIRI WebSocket contract:
+    Input:  {"type": "input", "text": "..."}
+    Output: {"type": "output", "text": "...", "emotion": "..."}
+    """
+
+    def __init__(
+        self,
+        airi_uri: str = "ws://localhost:6121/ws",
+        reconnect_attempts: int = 5,
+        reconnect_delay: float = 2.0,
+    ):
+        """
+        Initialize bridge.
+
+        Args:
+            airi_uri: WebSocket URI for AIRI runtime
+            reconnect_attempts: Number of reconnection attempts
+            reconnect_delay: Delay (seconds) between reconnection attempts
+        """
+        self.airi_uri = airi_uri
+        self.reconnect_attempts = reconnect_attempts
+        self.reconnect_delay = reconnect_delay
+        self.ws: Optional[WebSocketClientProtocol] = None
+        self.running = False
+
+    async def connect(self) -> bool:
+        """
+        Establish WebSocket connection to AIRI runtime.
+
+        Returns:
+            True if connected, False if all attempts exhausted
+        """
+        for attempt in range(self.reconnect_attempts):
+            try:
+                logger.info(f"Connecting to AIRI at {self.airi_uri} (attempt {attempt + 1}/{self.reconnect_attempts})")
+                self.ws = await websockets.connect(self.airi_uri)
+                logger.info("✅ AIRI bridge connected (firewall-grade, non-sovereign)")
+                return True
+            except Exception as e:
+                logger.warning(f"Connection attempt {attempt + 1} failed: {e}")
+                if attempt < self.reconnect_attempts - 1:
+                    await asyncio.sleep(self.reconnect_delay)
+
+        logger.error(f"Failed to connect after {self.reconnect_attempts} attempts")
+        return False
+
+    async def _handle_input(self, message: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Process incoming AIRI message.
+
+        Args:
+            message: AIRI input message (assumed {"type": "input", "text": "..."})
+
+        Returns:
+            AIRI output payload ({"type": "output", "text": "...", "emotion": "..."})
+        """
+        try:
+            # Validate message structure
+            if not isinstance(message, dict):
+                logger.error(f"Malformed input: not a dict (got {type(message).__name__})")
+                return self._error_response("Malformed input (not JSON object).")
+
+            if message.get("type") != "input":
+                logger.warning(f"Unexpected message type: {message.get('type')}")
+                return self._error_response("Expected message type='input'.")
+
+            user_text = message.get("text", "").strip()
+            if not user_text:
+                logger.warning("Empty user input")
+                return self._error_response("Empty input. Please provide text.")
+
+            # Log input to HELEN memory
+            logger.debug(f"[AIRI→HELEN] User: {user_text[:100]}")
+
+            # Route to HELEN cognitive OS (non-sovereign)
+            # route_input() must not touch kernel or ledger
+            helen_response = route_input(user_text)
+
+            if not isinstance(helen_response, str):
+                helen_response = str(helen_response)
+
+            # Sanitize for AIRI (firewall)
+            safe_text, redactions = sanitize_output_for_airi(helen_response)
+
+            if redactions:
+                logger.debug(f"Redactions applied: {redactions}")
+
+            # Map to emotion state
+            emotion = emotion_map(safe_text)
+
+            # Build AIRI output
+            response_payload = {
+                "type": "output",
+                "text": safe_text,
+                "emotion": emotion,
+            }
+
+            logger.debug(f"[HELEN→AIRI] Response ({emotion}): {safe_text[:100]}")
+
+            return response_payload
+
+        except json.JSONDecodeError as e:
+            logger.error(f"JSON decode error: {e}")
+            return self._error_response("Malformed JSON input.")
+        except Exception as e:
+            logger.error(f"Unexpected error processing input: {e}", exc_info=True)
+            return self._error_response("Bridge error.")
+
+    def _error_response(self, error_text: str) -> Dict[str, Any]:
+        """
+        Generate fail-closed error response.
+
+        Args:
+            error_text: Error message
+
+        Returns:
+            AIRI error payload
+        """
+        return {
+            "type": "output",
+            "text": error_text,
+            "emotion": "concerned",
+        }
+
+    async def run(self) -> None:
+        """
+        Main bridge loop.
+        Receives AIRI messages, processes through HELEN, sends response.
+        """
+        if not await self.connect():
+            logger.critical("Failed to establish AIRI connection. Exiting.")
+            return
+
+        self.running = True
+
+        try:
+            while self.running:
+                try:
+                    # Receive message from AIRI
+                    raw = await self.ws.recv()
+                    logger.debug(f"[RECV] {raw[:200]}")
+
+                    # Parse JSON
+                    try:
+                        message = json.loads(raw)
+                    except json.JSONDecodeError:
+                        logger.error(f"Invalid JSON received: {raw[:100]}")
+                        await self.ws.send(json.dumps(self._error_response("Invalid JSON.")))
+                        continue
+
+                    # Process message
+                    response_payload = await self._handle_input(message)
+
+                    # Send response to AIRI
+                    response_json = json.dumps(response_payload, ensure_ascii=False)
+                    await self.ws.send(response_json)
+                    logger.debug(f"[SEND] {response_json[:200]}")
+
+                except websockets.exceptions.ConnectionClosed:
+                    logger.warning("AIRI connection closed. Reconnecting...")
+                    if await self.connect():
+                        logger.info("Reconnected.")
+                    else:
+                        logger.error("Reconnection failed. Exiting.")
+                        self.running = False
+
+                except asyncio.CancelledError:
+                    logger.info("Bridge interrupted by user.")
+                    self.running = False
+                    break
+
+        finally:
+            if self.ws:
+                await self.ws.close()
+            logger.info("AIRI bridge closed.")
+
+    async def stop(self) -> None:
+        """Graceful shutdown."""
+        self.running = False
+        if self.ws:
+            await self.ws.close()
+
+
+async def main(
+    airi_uri: str = "ws://localhost:6121/ws",
+    log_level: str = "INFO",
+):
+    """
+    CLI entry point for bridge.
+
+    Args:
+        airi_uri: AIRI WebSocket endpoint
+        log_level: Logging level (DEBUG, INFO, WARNING, ERROR)
+    """
+    logging.basicConfig(
+        level=getattr(logging, log_level.upper()),
+        format="%(asctime)s [%(levelname)s] %(message)s",
+    )
+
+    bridge = AIRIBridge(airi_uri=airi_uri)
+
+    try:
+        await bridge.run()
+    except KeyboardInterrupt:
+        logger.info("Keyboard interrupt received.")
+        await bridge.stop()
+
+
+if __name__ == "__main__":
+    import sys
+
+    airi_uri = sys.argv[1] if len(sys.argv) > 1 else "ws://localhost:6121/ws"
+    asyncio.run(main(airi_uri=airi_uri, log_level="INFO"))

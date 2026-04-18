@@ -1,0 +1,28 @@
+{
+  "$schema_id": "ENVIRONMENT_V1",
+  "description": "Frozen environment pinning. SHA256(Canon(this file)) = environment_hash_hex used in SEAL events. Any change invalidates prior SEAL proofs.",
+  "version": "1.0.0",
+  "frozen_at": "2026-02-23T00:00:00Z",
+  "versions": {
+    "python": "3.9",
+    "ocaml": "4.14",
+    "coq": "8.18",
+    "node": "18.x"
+  },
+  "hash_algorithm": "sha256",
+  "hash_scheme": "HELEN_CUM_V1",
+  "hash_scheme_spec": "cum_hash = SHA256('HELEN_CUM_V1' || bytes(prev_cum_hash_hex) || bytes(payload_hash_hex))",
+  "genesis_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "canon_json_spec": "json.dumps(sort_keys=True, separators=(',', ':'), ensure_ascii=False).encode('utf-8')",
+  "payload_hash_spec": "SHA256(CANON_JSON_V1(payload))",
+  "generator_version": "HELEN_OS_V1",
+  "actor_registry": "registries/actors.v1.json",
+  "reason_code_registry": "registries/reason_codes.v1.json",
+  "plugins_allowlist": "registries/plugins_allowlist.json",
+  "mayor_key": {
+    "key_id": "MAYOR_KEY_V1",
+    "algorithm": "ed25519",
+    "public_key_b64": "PLACEHOLDER_MAYOR_PUBLIC_KEY_BASE64_REPLACE_BEFORE_PRODUCTION",
+    "note": "Replace public_key_b64 with real Ed25519 public key before first SEAL. Changing this field changes environment_hash_hex and invalidates prior SEALs."
+  }
+}

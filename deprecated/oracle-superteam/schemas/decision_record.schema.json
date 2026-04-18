@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/decision_record.schema.json",
+  "title": "Decision Record Schema",
+  "description": "Mayor decision output with typed reason codes for blocking conditions. This is the receipt-hashed payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["decision", "blocking", "receipt_gap", "kill_switches_pass", "metadata"],
+  "properties": {
+    "decision": {
+      "type": "string",
+      "enum": ["SHIP", "NO_SHIP"],
+      "description": "Final sovereign decision output from Mayor"
+    },
+    "kill_switches_pass": {
+      "type": "boolean",
+      "description": "Whether all kill switches passed (from policies evaluation)"
+    },
+    "receipt_gap": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of unsatisfied HARD obligations from receipt_root_payload"
+    },
+    "blocking": {
+      "type": "array",
+      "description": "Array of typed reason code objects explaining why decision is NO_SHIP. Schema enforces: NO_SHIP => minItems:1, SHIP => maxItems:0",
+      "items": {
+        "$ref": "#/$defs/BlockingReason"
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mayor_version", "tribunal_bundle_hash", "policies_hash", "receipt_root_hash"],
+      "description": "Receipt-hashed metadata binding Mayor decision to inputs",
+      "properties": {
+        "mayor_version": {
+          "type": "string",
+          "pattern": "^v[0-9]+(\\.[0-9]+)*$",
+          "description": "Semantic version of Mayor decision function (e.g. 'v0.1')"
+        },
+        "tribunal_bundle_hash": {
+          "$ref": "#/$defs/Sha256Hex",
+          "description": "SHA-256 of canonicalized tribunal_bundle.json"
+        },
+        "policies_hash": {
+          "$ref": "#/$defs/Sha256Hex",
+          "description": "SHA-256 of canonicalized policies_eval.json"
+        },
+        "receipt_root_hash": {
+          "$ref": "#/$defs/Sha256Hex",
+          "description": "SHA-256 of canonicalized receipt_root_payload.json"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "decision": { "const": "NO_SHIP" }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "blocking": { "minItems": 1 }
+        },
+        "required": ["blocking"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "decision": { "const": "SHIP" }
+        },
+        "required": ["decision"]
+      },
+      "then": {
+        "properties": {
+          "blocking": { "maxItems": 0 },
+          "receipt_gap": { "const": 0 },
+          "kill_switches_pass": { "const": true }
+        },
+        "required": ["blocking", "receipt_gap", "kill_switches_pass"]
+      }
+    }
+  ],
+  "$defs": {
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash as 64 lowercase hex characters"
+    },
+    "RelPath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^[A-Za-z0-9_\\-./]+$",
+      "not": {
+        "anyOf": [
+          { "pattern": "^/" },
+          { "pattern": "\\.\\.\/" },
+          { "pattern": "/\\.\\.\/" },
+          { "pattern": "\\\\" }
+        ]
+      },
+      "description": "Relative path with no parent traversal or absolute paths"
+    },
+    "BlockingReason": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code"],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[A-Z0-9_]{3,64}$",
+          "description": "Machine-readable reason code from REASON_CODES.md canonical list. Must be in reason_codes.json allowlist."
+        },
+        "detail": {
+          "type": "string",
+          "description": "Human-readable explanation of the specific failure"
+        },
+        "evidence_paths": {
+          "type": "array",
+          "description": "Relative paths to evidence files supporting this blocking reason",
+          "items": {
+            "$ref": "#/$defs/RelPath"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

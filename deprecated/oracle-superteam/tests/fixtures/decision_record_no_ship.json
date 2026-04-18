@@ -1,0 +1,21 @@
+{
+  "decision": "NO_SHIP",
+  "kill_switches_pass": true,
+  "receipt_gap": 3,
+  "blocking": [
+    {
+      "code": "RECEIPT_GAP_NONZERO",
+      "detail": "3 HARD obligations remain unsatisfied: security_audit, performance_benchmark, determinism_cross_runtime",
+      "evidence_paths": [
+        "tribunal_bundle.json",
+        "receipt_root_payload.json"
+      ]
+    }
+  ],
+  "metadata": {
+    "mayor_version": "v0.1",
+    "tribunal_bundle_hash": "a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2",
+    "policies_hash": "b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+    "receipt_root_hash": "c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4"
+  }
+}

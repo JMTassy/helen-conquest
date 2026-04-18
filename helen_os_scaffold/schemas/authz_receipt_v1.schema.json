@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/authz_receipt_v1.schema.json",
+  "title": "AUTHZ_RECEIPT_V1",
+  "description": "Receipt-gate for ReducedConclusion.helen_proposal_used=True. Must bind to exact (verdict_id, verdict_hash_hex). Implements CANYON_AUTHORIZED semantics.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["type", "rid", "refs", "authorizes", "reason_codes"],
+  "properties": {
+
+    "type": {
+      "type": "string",
+      "const": "AUTHZ_RECEIPT_V1",
+      "description": "Schema discriminator. Always 'AUTHZ_RECEIPT_V1'."
+    },
+
+    "rid": {
+      "type": "string",
+      "pattern": "^R-[0-9a-zA-Z]{1,64}$",
+      "description": "Receipt ID. Must start with 'R-'.",
+      "examples": ["R-ab1234cd", "R-authz01"]
+    },
+
+    "refs": {
+      "$ref": "#/$defs/AuthzReceiptRef"
+    },
+
+    "authorizes": {
+      "$ref": "#/$defs/AuthzTarget"
+    },
+
+    "reason_codes": {
+      "type": "array",
+      "description": "Must include 'CANYON_AUTHORIZED'.",
+      "contains": { "const": "CANYON_AUTHORIZED" },
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 128
+      }
+    }
+  },
+
+  "$defs": {
+
+    "AuthzReceiptRef": {
+      "type": "object",
+      "description": "Binding reference tying AUTHZ_RECEIPT_V1 to an exact ReducedConclusion.",
+      "additionalProperties": false,
+      "required": ["verdict_id", "verdict_hash_hex"],
+      "properties": {
+        "verdict_id": {
+          "type": "string",
+          "pattern": "^V-[0-9a-f]{8}$",
+          "description": "V-{verdict_hash_hex[:8]} — short prefix of the canonical verdict hash.",
+          "examples": ["V-a1b2c3d4"]
+        },
+        "verdict_hash_hex": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$",
+          "description": "64-char lowercase SHA256 hex of the canonical verdict payload."
+        }
+      }
+    },
+
+    "AuthzTarget": {
+      "type": "object",
+      "description": "What this receipt authorizes. Structurally locked: field + value are const.",
+      "additionalProperties": false,
+      "required": ["field", "value"],
+      "properties": {
+        "field": {
+          "type": "string",
+          "const": "ReducedConclusion.helen_proposal_used",
+          "description": "Only one field can be authorized by this receipt type."
+        },
+        "value": {
+          "type": "boolean",
+          "const": true,
+          "description": "This receipt only authorizes setting helen_proposal_used=True."
+        }
+      }
+    }
+  },
+
+  "examples": [
+    {
+      "type": "AUTHZ_RECEIPT_V1",
+      "rid": "R-ab1234cd",
+      "refs": {
+        "verdict_id": "V-a1b2c3d4",
+        "verdict_hash_hex": "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"
+      },
+      "authorizes": {
+        "field": "ReducedConclusion.helen_proposal_used",
+        "value": true
+      },
+      "reason_codes": ["CANYON_AUTHORIZED"]
+    }
+  ]
+}

@@ -1,0 +1,408 @@
+{
+  "skin_id": "GOTHIC_LEDGER_SKIN_v1",
+  "version": "1.0.0",
+  "status": "APPROVED",
+  "date": "2026-03-04",
+
+  "invariants": {
+    "canonical_ledger_unchanged": true,
+    "no_semantic_generation": true,
+    "all_art_is_deterministic_function_of_tokens": true,
+    "no_global_ranking": true,
+    "no_social_metrics": true
+  },
+
+  "typography": {
+    "title_fonts": [
+      "UnifrakturCook",
+      "UnifrakturMaguntia",
+      "Pirata One",
+      "Old English Text MT",
+      "blackletter"
+    ],
+    "body_fonts": [
+      "IBM Plex Mono",
+      "JetBrains Mono",
+      "SF Mono",
+      "Menlo",
+      "Consolas",
+      "monospace"
+    ],
+    "proof_font": "monospace",
+    "title_use_unicode_fraktur_only": true,
+    "never_apply_fraktur_to_ledger_tokens": true,
+    "note": "Fraktur (𝔘𝔫𝔦𝔣𝔯𝔞𝔨𝔱𝔲𝔠𝔠𝔬𝔬𝔨, etc.) for WhatsApp titles and headings only. Ledger tokens always rendered in source font."
+  },
+
+  "palette": {
+    "parchment": "#E7DCC8",
+    "ink": "#1B1B1B",
+    "wax_red": "#7A1E1E",
+    "arcane_purple": "#3D2B56",
+    "gold_foil": "#B99A3C",
+    "verdigris": "#2E6F6B",
+    "danger_red": "#A11414",
+    "seal_black": "#101010"
+  },
+
+  "textures": {
+    "parchment_grain": {
+      "enabled": true,
+      "intensity": 0.15,
+      "note": "Very subtle texture overlay; does not obscure text"
+    },
+    "ink_bleed_headings_only": {
+      "enabled": true,
+      "intensity": 0.25,
+      "applies_to": ["titles", "section_dividers"],
+      "note": "Soft feathering on blackletter headings only; never on proof IDs"
+    },
+    "stamps_enabled_for": ["⚫", "🔒📜", "🔴", "⚠️📜"],
+    "stamp_note": "Wax seal overlay, veto diagonal, sealed grayscale wash, hazard band"
+  },
+
+  "mapping": {
+    "state": {
+      "🔵": {
+        "name": "LAW",
+        "semantic": "Stability / Clarity / Return",
+        "frame": {
+          "weight": 1,
+          "ornament": "minimal",
+          "border_color": "#2E4C9B"
+        },
+        "bar_color": "#2E4C9B",
+        "overlay_stamp": null,
+        "background_tint": "#E7DCC8"
+      },
+      "🟢": {
+        "name": "BUILD",
+        "semantic": "Growth / Fortification / Construction",
+        "frame": {
+          "weight": 2,
+          "ornament": "rivets",
+          "border_color": "#1F7A3A"
+        },
+        "bar_color": "#1F7A3A",
+        "overlay_stamp": null,
+        "background_tint": "#E7DCC8",
+        "corner_accents": "rivets_4x"
+      },
+      "🟣": {
+        "name": "ARCANE",
+        "semantic": "Initiation / Secret / Knowledge",
+        "frame": {
+          "weight": 2,
+          "ornament": "filigree",
+          "border_color": "#3D2B56"
+        },
+        "bar_color": "#3D2B56",
+        "overlay_stamp": "rune_watermark",
+        "background_tint": "#E7DCC8",
+        "corner_accents": "filigree_corners"
+      },
+      "⚫": {
+        "name": "SEAL",
+        "semantic": "Sealing / Irreversibility / Death of State",
+        "frame": {
+          "weight": 3,
+          "ornament": "wax",
+          "border_color": "#101010"
+        },
+        "bar_color": "#101010",
+        "overlay_stamp": "wax_seal_center",
+        "background_tint": "#D3D3D3",
+        "corner_accents": "wax_drips_4x",
+        "overlay_intensity": 0.8
+      },
+      "🔴": {
+        "name": "SANCTION",
+        "semantic": "Veto / Conflict / Prohibition",
+        "frame": {
+          "weight": 3,
+          "ornament": "hard",
+          "border_color": "#A11414"
+        },
+        "bar_color": "#A11414",
+        "overlay_stamp": "veto_diagonal_band",
+        "background_tint": "#E7DCC8",
+        "overlay_intensity": 0.6
+      }
+    },
+
+    "faction": {
+      "⟂◯⟂": {
+        "name": "MASON",
+        "semantic": "Architecture / Measurement / Governance",
+        "crest_asset": "crest_mason_compass.svg",
+        "crest_color": "#1B1B1B",
+        "crest_width_px": 48,
+        "placement": "left_of_state"
+      },
+      "🌹": {
+        "name": "ROSE",
+        "semantic": "Alchemy / Initiation / Knowledge",
+        "crest_asset": "crest_rose_heraldic.svg",
+        "crest_color": "#7A1E1E",
+        "crest_width_px": 48,
+        "placement": "left_of_state"
+      },
+      "🌀": {
+        "name": "SPIRAL",
+        "semantic": "Chaos / Volatility / Entropy",
+        "crest_asset": "crest_spiral_fracture.svg",
+        "crest_color": "#2E6F6B",
+        "crest_width_px": 48,
+        "placement": "left_of_state",
+        "animation_optional": "gentle_rotation"
+      },
+      "✝️": {
+        "name": "CROSSBLADE",
+        "semantic": "Order / Veto / Interdiction",
+        "crest_asset": "crest_crossblade_interdict.svg",
+        "crest_color": "#101010",
+        "crest_width_px": 48,
+        "placement": "left_of_state"
+      }
+    },
+
+    "act": {
+      "📜": {
+        "name": "INSCRIBE",
+        "semantic": "Decree / Logging / Written action",
+        "stamp_asset": "stamp_signature_flourish.svg",
+        "stamp_color": "#1B1B1B",
+        "stamp_width_px": 32,
+        "placement": "below_proof"
+      },
+      "🛡️": {
+        "name": "HARDEN",
+        "semantic": "Defense / Fortification / Hardening",
+        "stamp_asset": "stamp_shield.svg",
+        "stamp_color": "#1B1B1B",
+        "stamp_width_px": 32,
+        "placement": "below_proof"
+      },
+      "🔒📜": {
+        "name": "SEAL_DOC",
+        "semantic": "Locked / Sealed document / Irreversible",
+        "stamp_asset": "stamp_lock_wax.svg",
+        "stamp_color": "#7A1E1E",
+        "stamp_width_px": 40,
+        "placement": "below_proof",
+        "overlay": "wax_seal_accent"
+      },
+      "⚠️📜": {
+        "name": "ALERT_DOC",
+        "semantic": "Warning / Alert / Hazard",
+        "stamp_asset": "stamp_hazard_band.svg",
+        "stamp_color": "#A11414",
+        "stamp_width_px": 40,
+        "placement": "below_proof",
+        "overlay": "hazard_stripe_pattern"
+      }
+    },
+
+    "pair": {
+      "render": {
+        "container": "cartouche_shield_plate.svg",
+        "container_color": "#E7DCC8",
+        "container_border": "#1B1B1B",
+        "show_tlad_notch_if_alchemy_pair": true,
+        "tlad_notch_style": "ladder_rung_accent",
+        "alchemy_glyphs": ["🜃", "🜄", "🜁", "🜂", "🜍"],
+        "note": "If Pair contains two alchemy glyphs in valid adjacency (TLAD), show tiny ladder rung visual to indicate ascent"
+      }
+    },
+
+    "proof": {
+      "container": "capsule_dark.svg",
+      "container_color": "#101010",
+      "text_color": "#E7DCC8",
+      "show_qr_in_pdf_only": true,
+      "qr_payload": "proof_id_only",
+      "qr_size_px": 96,
+      "qr_placement_pdf": "right_of_proof_line",
+      "monospace_enforced": true,
+      "font_size_relative": 0.85,
+      "note": "Proof ID rendered in dark capsule. QR code only appears in PDF/companion exports, never in WhatsApp"
+    },
+
+    "ribbon": {
+      "render": {
+        "mode": "pin_right",
+        "glow_intensity": 0.35,
+        "ribbon_width_px": 24,
+        "glow_radius_px": 8,
+        "placement": "right_edge_of_card",
+        "note": "Ribbon rendered as small pin/badge on right edge with subtle glow. 2 glyphs rendered stacked"
+      }
+    }
+  },
+
+  "whatsapp_wrapping": {
+    "title_line_templates": [
+      "🕯️ 𝔅𝔲𝔩𝔩𝔢𝔱𝔦𝔫 — {cycle_name} 🕯️",
+      "⛧ 𝔇𝔞𝔶 𝔙𝔬𝔦𝔡 — {cycle_name} ⛧"
+    ],
+    "section_dividers": [
+      "——— ⛧ ———",
+      "═══ 𖤐 ═══"
+    ],
+    "rule": "Never style ledger lines themselves. Title + separators use Fraktur/symbols only for decoration.",
+    "example_bulletin": "🕯️ 𝔅𝔲𝔩𝔩𝔢𝔱𝔦𝔫 — Cycle 15 🕯️\n(7 ledger lines below, unmodified)\n——— ⛧ ———",
+    "note": "Bulletin is a message wrapper only. Ledger lines pass through unchanged."
+  },
+
+  "deterministic_sigils": {
+    "enabled": true,
+    "source": "proof_id",
+    "method": "sha256_mod_bucket",
+    "buckets": 16,
+    "asset_prefix": "sigil_variant_",
+    "algorithm": "sha256(proof_id) mod 16 → sigil_variant_{0..15}.svg",
+    "rule": "Each unique proof_id maps to exactly one sigil variant. No randomness. Deterministic.",
+    "note": "Decorative sigil glyphs add visual variety without changing meaning. Computed from hash of proof ID."
+  },
+
+  "asset_list": {
+    "note": "All assets should be SVG (scalable) or high-DPI PNG. Colors pulled from palette dict.",
+    "cartouches": [
+      "cartouche_shield_plate.svg"
+    ],
+    "stamps": [
+      "stamp_signature_flourish.svg",
+      "stamp_shield.svg",
+      "stamp_lock_wax.svg",
+      "stamp_hazard_band.svg"
+    ],
+    "overlays": [
+      "overlay_sealed.png",
+      "overlay_veto_diagonal.png",
+      "overlay_rune_watermark.png",
+      "overlay_wax_drips.png",
+      "overlay_hazard_stripe.png"
+    ],
+    "crests": [
+      "crest_mason_compass.svg",
+      "crest_rose_heraldic.svg",
+      "crest_spiral_fracture.svg",
+      "crest_crossblade_interdict.svg"
+    ],
+    "sigil_variants": [
+      "sigil_variant_0.svg",
+      "sigil_variant_1.svg",
+      "sigil_variant_2.svg",
+      "sigil_variant_3.svg",
+      "sigil_variant_4.svg",
+      "sigil_variant_5.svg",
+      "sigil_variant_6.svg",
+      "sigil_variant_7.svg",
+      "sigil_variant_8.svg",
+      "sigil_variant_9.svg",
+      "sigil_variant_10.svg",
+      "sigil_variant_11.svg",
+      "sigil_variant_12.svg",
+      "sigil_variant_13.svg",
+      "sigil_variant_14.svg",
+      "sigil_variant_15.svg"
+    ],
+    "patterns": [
+      "pattern_parchment_grain.png"
+    ]
+  },
+
+  "output_targets": {
+    "whatsapp": {
+      "format": "plain_text_with_unicode",
+      "styling": "title_line + separator_lines only",
+      "ledger_styling": "none",
+      "note": "WhatsApp cannot enforce fonts. Use Unicode Fraktur in title only for atmospheric effect."
+    },
+    "companion_ui": {
+      "format": "html/css or native_ui",
+      "styling": "full_typographic_stack",
+      "interactive": {
+        "tap_card": "show_proof_artifact_details",
+        "long_press": "copy_canonical_line",
+        "filter_by": ["state", "faction", "act"]
+      },
+      "note": "Companion app has full control over fonts, layout, colors. Apply entire GOTHIC_LEDGER_SKIN_v1 here."
+    },
+    "pdf_export": {
+      "format": "PDF with embedded fonts",
+      "styling": "full_typographic_stack_with_real_fonts",
+      "special_additions": [
+        "QR codes (right of each line)",
+        "Wax seal overlays (for ⚫)",
+        "Watermarks (parchment grain)"
+      ],
+      "note": "PDF is where real fonts (Blackletter, Monospace) render. QR codes can be embedded here."
+    }
+  },
+
+  "implementation_contract": {
+    "inputs": [
+      "state (required): 🔵|🟢|🟣|⚫|🔴",
+      "faction (required): ⟂◯⟂|🌹|🌀|✝️",
+      "pair (required): exactly 2 graphemes",
+      "act (required): 📜|🛡️|🔒📜|⚠️📜",
+      "proof_id (required): alphanumeric string",
+      "ribbon (optional): 2 glyphs or empty",
+      "index (optional): (N) for display"
+    ],
+    "outputs": [
+      "canonical_line (exact source, unchanged)",
+      "render_card (visual representation for UI)",
+      "pdf_layout (PDF tile with all overlays)",
+      "whatsapp_wrapper (title + separators only)"
+    ],
+    "non_negotiable": [
+      "Zero token modification",
+      "All decorative elements computed deterministically from proof_id",
+      "No global ranking, no social metrics, no 'best of'",
+      "Ledger tokens never styled with Fraktur or decorative fonts",
+      "Proof IDs always monospace",
+      "QR codes only in PDF, never in WhatsApp"
+    ]
+  },
+
+  "example_rendering": {
+    "canonical_ledger_line": "🟢 ✝️ 🜃🏰 🛡️ 🔗#T015 ✨🜍",
+    "parsed": {
+      "index": null,
+      "state": "🟢",
+      "faction": "✝️",
+      "pair": "🜃🏰",
+      "act": "🛡️",
+      "proof": "🔗#T015",
+      "ribbon": "✨🜍"
+    },
+    "render_card_ui": {
+      "state_frame": "🟢 BUILD (weight: 2 rivets, #1F7A3A border)",
+      "crest_left": "crest_crossblade_interdict.svg (#101010)",
+      "pair_plate": "cartouche containing 🜃🏰 (with ladder rung; earth→water alchemy)",
+      "act_stamp": "stamp_shield.svg below proof",
+      "proof_capsule": "🔗#T015 in dark capsule (#101010 bg, monospace)",
+      "ribbon_pin": "✨🜍 glow_pin on right edge",
+      "sigil_variant": "sha256('T015') mod 16 → sigil_variant_7.svg (decorative only)"
+    },
+    "whatsapp_output": "🟢 ✝️ 🜃🏰 🛡️ 🔗#T015 ✨🜍\n(no styling; title/separator above only)",
+    "pdf_output": "Full rendered card with fonts, overlays, QR code, wax texture, grain pattern"
+  },
+
+  "validation_checklist": {
+    "ledger_integrity": "✅ Canonical line never modified",
+    "determinism": "✅ All visuals computed from tokens, never random",
+    "separation_of_concerns": "✅ Ledger austere; art in skin layer",
+    "accessibility": "✅ Monospace proof IDs, high contrast, no decorative-only text",
+    "anti_social": "✅ No ranking, filtering by metadata only, no 'best of'",
+    "whatsapp_safe": "✅ Ledger lines pass through; title/separator decoration only"
+  },
+
+  "notes": {
+    "design_philosophy": "The ledger is bytecode. The skin is a shader. Never confuse the two.",
+    "future_extensions": "Deterministic cycle banners (day + bulletin_number → banner_variant) can add 'game feel' without implying meaning.",
+    "asset_creation": "All SVG assets should be simple, monochromatic, scalable. Reference colors from palette dict."
+  }
+}

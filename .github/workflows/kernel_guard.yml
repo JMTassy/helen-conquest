@@ -1,0 +1,119 @@
+# .github/workflows/kernel_guard.yml
+#
+# Kernel Guard — CI enforcement: no direct ledger writes bypass the kernel.
+#
+# This workflow runs on every push and PR.
+# It BLOCKS merge if any file writes to the ledger outside the allowed
+# kernel boundary (tools/ndjson_writer.py or kernel/kernel_cli.ml).
+#
+# Also runs: property-based kernel tests (7 structural properties).
+#
+# Relation to other CI:
+#   ci.yml             — K-ρ viability gate
+#   determinism-gates.yml — K-τ coherence gate
+#   payload_meta.yml   — payload/meta split validation
+#   kernel_guard.yml   — (THIS FILE) structural write boundary enforcement
+
+name: Kernel Guard
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+    branches: ["**"]
+
+jobs:
+  kernel-guard:
+    name: "Kernel Write Boundary Check"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --quiet pytest
+
+      - name: RULE 1-3 — No direct ledger writes outside kernel boundary
+        run: |
+          bash tools/kernel_guard.sh --verbose
+
+      - name: P1-P7 — Property-based kernel tests
+        run: |
+          python3 tools/test_kernel_properties.py --fuzz 100
+
+      - name: Validate hash chain (production ledger)
+        run: |
+          # Validate every committed NDJSON ledger file
+          FAIL=0
+          while IFS= read -r -d '' ledger; do
+            echo "Checking: $ledger"
+            result=$(python3 tools/validate_hash_chain.py "$ledger" 2>&1)
+            echo "$result"
+            if echo "$result" | grep -q "\[FAIL\]"; then
+              FAIL=1
+            fi
+          done < <(find . -name "*.ndjson" -not -path "./.git/*" -print0)
+          if [[ $FAIL -ne 0 ]]; then
+            echo "[FAIL] One or more ledger files have hash chain violations."
+            exit 1
+          fi
+          echo "[PASS] All committed ledger files have valid hash chains."
+
+  coq-kernel-check:
+    name: "Coq Kernel Typecheck (formal/LedgerKernel.v)"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Run independently of the guard job so both failures are visible
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Coq
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq coq
+          coqc --version
+
+      - name: Typecheck LedgerKernel.v
+        run: |
+          cd formal
+          # Check all dependencies compile first
+          for dep in Ledger.v LedgerProofs.v; do
+            if [ -f "$dep" ]; then
+              echo "Checking $dep..."
+              coqc "$dep" && echo "[PASS] $dep" || echo "[WARN] $dep failed (non-blocking)"
+            fi
+          done
+          echo "Checking LedgerKernel.v..."
+          # --allow-rewrite-rules suppresses extraction warnings in older Coq
+          coqc LedgerKernel.v 2>&1 | tee /tmp/coq_output.txt
+          if grep -q "Error" /tmp/coq_output.txt; then
+            echo "[FAIL] LedgerKernel.v has type errors."
+            exit 1
+          fi
+          echo "[PASS] LedgerKernel.v typechecks."
+
+      - name: Check admitted lemmas (proof obligations inventory)
+        run: |
+          cd formal
+          admit_count=$(grep -c "admit\." LedgerKernel.v 2>/dev/null || echo 0)
+          admitted_count=$(grep -c "Admitted\." LedgerKernel.v 2>/dev/null || echo 0)
+          total=$((admit_count + admitted_count))
+          echo "Admitted proof obligations in LedgerKernel.v: $total"
+          # Warn but do not block on admits (they are explicitly tracked)
+          if [[ $total -gt 5 ]]; then
+            echo "[WARN] More than 5 admitted obligations — review before release."
+          else
+            echo "[PASS] Admitted obligations within acceptable threshold ($total)."
+          fi

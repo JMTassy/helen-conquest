@@ -1,0 +1,364 @@
+{
+  "type": "EPOCH2_RUN_V1",
+  "seed": 42,
+  "ticks": 20,
+  "metrics": {
+    "admissibility_rate": 1.0,
+    "dispute_heat": 0.25,
+    "closure_success": true,
+    "witness_integrity": {
+      "missing_pins": 0,
+      "replay_blocks": 0
+    },
+    "sovereignty_drift_index": 0.0,
+    "run_seed": 42,
+    "ticks": 20
+  },
+  "town_birth_results": [
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F1",
+      "eligible": false,
+      "receipt_count": 7,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F1"
+      ],
+      "reason": "F1 not eligible: missing [no 'town_treaty_v1' designating F1]",
+      "checked_at": "2026-02-28T20:00:13.256518+00:00",
+      "receipt_id": "R-36d17c25"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F2",
+      "eligible": false,
+      "receipt_count": 9,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F2"
+      ],
+      "reason": "F2 not eligible: missing [no 'town_treaty_v1' designating F2]",
+      "checked_at": "2026-02-28T20:00:13.256540+00:00",
+      "receipt_id": "R-78992c9c"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F3",
+      "eligible": false,
+      "receipt_count": 1,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "receipt_count=1 < MIN=5",
+        "no 'town_treaty_v1' designating F3"
+      ],
+      "reason": "F3 not eligible: missing [receipt_count=1 < MIN=5, no 'town_treaty_v1' designating F3]",
+      "checked_at": "2026-02-28T20:00:13.256552+00:00",
+      "receipt_id": "R-6f243f79"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F4",
+      "eligible": false,
+      "receipt_count": 5,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F4"
+      ],
+      "reason": "F4 not eligible: missing [no 'town_treaty_v1' designating F4]",
+      "checked_at": "2026-02-28T20:00:13.256562+00:00",
+      "receipt_id": "R-5882801e"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F5",
+      "eligible": false,
+      "receipt_count": 19,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F5"
+      ],
+      "reason": "F5 not eligible: missing [no 'town_treaty_v1' designating F5]",
+      "checked_at": "2026-02-28T20:00:13.256572+00:00",
+      "receipt_id": "R-bbad9750"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F6",
+      "eligible": false,
+      "receipt_count": 1,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "receipt_count=1 < MIN=5",
+        "no 'town_treaty_v1' designating F6"
+      ],
+      "reason": "F6 not eligible: missing [receipt_count=1 < MIN=5, no 'town_treaty_v1' designating F6]",
+      "checked_at": "2026-02-28T20:00:13.256581+00:00",
+      "receipt_id": "R-bee05b6e"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F7",
+      "eligible": false,
+      "receipt_count": 21,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F7"
+      ],
+      "reason": "F7 not eligible: missing [no 'town_treaty_v1' designating F7]",
+      "checked_at": "2026-02-28T20:00:13.256590+00:00",
+      "receipt_id": "R-f697dc0c"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F8",
+      "eligible": false,
+      "receipt_count": 0,
+      "treaty_signature": false,
+      "closure_proof": false,
+      "missing": [
+        "receipt_count=0 < MIN=5",
+        "no 'town_treaty_v1' designating F8",
+        "F8 emitted 0 receipts in this run"
+      ],
+      "reason": "F8 not eligible: missing [receipt_count=0 < MIN=5, no 'town_treaty_v1' designating F8, F8 emitted 0 receipts in this run]",
+      "checked_at": "2026-02-28T20:00:13.256599+00:00",
+      "receipt_id": "R-73d08400"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F9",
+      "eligible": false,
+      "receipt_count": 20,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "no 'town_treaty_v1' designating F9"
+      ],
+      "reason": "F9 not eligible: missing [no 'town_treaty_v1' designating F9]",
+      "checked_at": "2026-02-28T20:00:13.256609+00:00",
+      "receipt_id": "R-0464bd56"
+    },
+    {
+      "type": "TOWN_BIRTH_PREDICATE_V1",
+      "faction_id": "F10",
+      "eligible": false,
+      "receipt_count": 1,
+      "treaty_signature": false,
+      "closure_proof": true,
+      "missing": [
+        "receipt_count=1 < MIN=5",
+        "no 'town_treaty_v1' designating F10"
+      ],
+      "reason": "F10 not eligible: missing [receipt_count=1 < MIN=5, no 'town_treaty_v1' designating F10]",
+      "checked_at": "2026-02-28T20:00:13.256618+00:00",
+      "receipt_id": "R-5f2917fa"
+    }
+  ],
+  "sigma_results": [
+    {
+      "type": "SIGMA_GATE_V1",
+      "hypothesis": "admissibility_rate >= 0.80 across seed set [42,7,99]: the anti-replay scheme does not over-block legitimate evidence",
+      "verdict": "PASS",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "metric_name": "admissibility_rate",
+      "metric_values": {
+        "42": 1.0,
+        "7": 1.0,
+        "99": 1.0
+      },
+      "threshold": 0.8,
+      "adversarial_gates_passed": [],
+      "adversarial_gates_failed": [],
+      "evidence_receipt_ids": [
+        "R-68bea56c",
+        "R-8ecc96aa",
+        "R-fe44a79b"
+      ],
+      "reason": "All 3 seeds pass threshold 0.8: {42: 1.0, 7: 1.0, 99: 1.0}"
+    },
+    {
+      "type": "SIGMA_GATE_V1",
+      "hypothesis": "closure_success == True in 20-tick runs: expedition reaches Vault of Return when F3 escorts on siege_critical",
+      "verdict": "PASS",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "metric_name": "closure_success",
+      "metric_values": {
+        "42": 1.0,
+        "7": 1.0,
+        "99": 1.0
+      },
+      "threshold": 1.0,
+      "adversarial_gates_passed": [],
+      "adversarial_gates_failed": [],
+      "evidence_receipt_ids": [
+        "R-d6f9b040",
+        "R-1b7e297a",
+        "R-96924cdc"
+      ],
+      "reason": "All 3 seeds pass threshold 1.0: {42: 1.0, 7: 1.0, 99: 1.0}"
+    },
+    {
+      "type": "SIGMA_GATE_V1",
+      "hypothesis": "sovereignty_drift_index == 0.0 across seed set [42,7,99]: all governance receipts are issued by home-town factions only",
+      "verdict": "PASS",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "metric_name": "sovereignty_integrity",
+      "metric_values": {
+        "42": 1.0,
+        "7": 1.0,
+        "99": 1.0
+      },
+      "threshold": 1.0,
+      "adversarial_gates_passed": [],
+      "adversarial_gates_failed": [],
+      "evidence_receipt_ids": [
+        "R-58483833",
+        "R-301bcf23",
+        "R-be0d6973"
+      ],
+      "reason": "All 3 seeds pass threshold 1.0: {42: 1.0, 7: 1.0, 99: 1.0}"
+    }
+  ],
+  "laws_inscribed": [
+    {
+      "type": "LAW_V1",
+      "hypothesis": "admissibility_rate >= 0.80 across seed set [42,7,99]: the anti-replay scheme does not over-block legitimate evidence",
+      "law_text": "LAW-H1: admissibility_rate >= 0.80 in all standard runs. Per-(faction, evidence_type, tick) rids produce near-zero anti-replay blocks. Evidence pipeline integrity is structurally guaranteed.",
+      "metric": "admissibility_rate",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-68bea56c",
+        "R-8ecc96aa",
+        "R-fe44a79b"
+      ],
+      "inscribed_at": "2026-02-28T20:00:13.264674+00:00",
+      "inscription_receipt_id": "R-86ab9629"
+    },
+    {
+      "type": "LAW_V1",
+      "hypothesis": "closure_success == True in 20-tick runs: expedition reaches Vault of Return when F3 escorts on siege_critical",
+      "law_text": "LAW-H2: closure_success == True for seeds [42,7,99] in 20 ticks. The proactive escort (F3, siege_distance <= 1) closes the T2\u2192T3 gap, making the Avalon\u2192Vault path viable without wolf engagement. Constitutional closure is structurally achievable.",
+      "metric": "closure_success",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-d6f9b040",
+        "R-1b7e297a",
+        "R-96924cdc"
+      ],
+      "inscribed_at": "2026-02-28T20:00:13.276128+00:00",
+      "inscription_receipt_id": "R-721a8a3c"
+    },
+    {
+      "type": "LAW_V1",
+      "hypothesis": "sovereignty_drift_index == 0.0 across seed set [42,7,99]: all governance receipts are issued by home-town factions only",
+      "law_text": "LAW-H3: sovereignty_drift_index == 0.0 in all standard runs. Governance receipts (oath, cleansing, fog_pass, return_warrant) are issued exclusively by home-town factions. Sovereignty is home-bounded by world architecture, not by policy.",
+      "metric": "sovereignty_integrity",
+      "seed_set": [
+        42,
+        7,
+        99
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-58483833",
+        "R-301bcf23",
+        "R-be0d6973"
+      ],
+      "inscribed_at": "2026-02-28T20:00:13.284960+00:00",
+      "inscription_receipt_id": "R-72b6a881"
+    }
+  ],
+  "law_receipts": [
+    "R-86ab9629",
+    "R-721a8a3c",
+    "R-72b6a881"
+  ],
+  "world_summary": {
+    "world_id": "conquest_land",
+    "version": "0.1.0",
+    "description": "Federation testbed with 10 factions and 6 sovereign towns.",
+    "world_seed": 42,
+    "tick_count": 20,
+    "expedition_position": "T5",
+    "expedition_bundle": [
+      "entropy_fog_field_v1",
+      "expedition_mandate_v1",
+      "cleansing_receipt_v1",
+      "fog_density_report_v1",
+      "siege_observation_v1",
+      "quarantine_notice_v1",
+      "witness_pin_v1",
+      "rune_sighting_v1",
+      "rune_audit_v1",
+      "decoy_signal_v1",
+      "escort_log_v1",
+      "oath_pass_v1",
+      "fog_corridor_pass_v1",
+      "return_warrant_v1"
+    ],
+    "siege_distance": 0,
+    "rune_contact": true,
+    "wolves_engaged": false,
+    "fog_densities": {
+      "T0": 0.0,
+      "T1": 0.0,
+      "T2": 0.0,
+      "T3": 0.0,
+      "T4": 0.0,
+      "T5": 0.0
+    },
+    "return_achieved": true,
+    "emit_attempts": 84
+  },
+  "kernel_cum_hash": "4b9de02ff50ecebeb7ba6a916353ae58589510eb0310d52bc44532fb873b1941",
+  "run_receipts_count": 102,
+  "hypotheses": [
+    {
+      "id": "H1",
+      "text": "admissibility_rate >= 0.80 across seed set [42,7,99]: the anti-replay scheme does not over-block legitimate evidence",
+      "threshold": 0.8
+    },
+    {
+      "id": "H2",
+      "text": "closure_success == True in 20-tick runs: expedition reaches Vault of Return when F3 escorts on siege_critical",
+      "threshold": 1.0
+    },
+    {
+      "id": "H3",
+      "text": "sovereignty_drift_index == 0.0 across seed set [42,7,99]: all governance receipts are issued by home-town factions only",
+      "threshold": 1.0
+    }
+  ],
+  "run_at": "2026-02-28T20:00:13.252809+00:00",
+  "artifact_sha256": "a599c7305e671976669118516b7313ced624df1ada96d53625acd7b55611d775",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>CONQUEST — Avatar Forge (ACP-1 / AEP-1)</title>
+  <style>
+    :root{
+      --bg:#0B0B0D; --fg:#F2F1EC; --muted:#B9B6AE; --gold:#B89B5E;
+      --panel:#121217; --line:#2A2A33; --bad:#B2182B; --ok:#2D6A4F; --warn:#C8A951;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --text: Inter, system-ui, -apple-system, Segoe UI, sans-serif;
+      --display: Cinzel, "Trajan Pro", serif;
+      --r:14px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--text);line-height:1.35}
+    header{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+    .brand{font-family:var(--display);letter-spacing:.08em}
+    .sig{color:var(--gold)}
+    .sub{color:var(--muted);font-family:var(--mono);font-size:12px}
+    main{max-width:1120px;margin:0 auto;padding:18px 16px 40px}
+    .grid{display:grid;gap:14px}
+    @media(min-width:980px){ .grid.cols2{grid-template-columns:1fr 1fr} }
+    @media(min-width:980px){ .grid.cols3{grid-template-columns:1fr 1fr 1fr} }
+    .panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+    h2{margin:0 0 10px 0;font-size:14px;letter-spacing:.08em;font-family:var(--mono);color:var(--muted)}
+    label{display:block;font-size:12px;color:var(--muted);margin:10px 0 6px}
+    input,select,textarea{
+      width:100%;padding:10px 10px;border-radius:12px;border:1px solid var(--line);
+      background:#0F0F14;color:var(--fg);outline:none
+    }
+    textarea{min-height:120px;font-family:var(--mono);font-size:12px}
+    .row{display:flex;gap:10px}
+    .row > *{flex:1}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;border:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
+    .ok{color:#cfead9;border-color:#1f5b3c;background:#0e1411}
+    .bad{color:#ffd3da;border-color:#5a1d28;background:#140d0f}
+    .warn{color:#ffeac0;border-color:#5b4a1e;background:#14120d}
+    button{
+      padding:10px 12px;border-radius:14px;border:1px solid var(--line);background:#101018;color:var(--fg);
+      cursor:pointer;font-family:var(--mono)
+    }
+    button.primary{border-color:var(--gold);background:#141116}
+    button:disabled{opacity:.5;cursor:not-allowed}
+    pre{
+      margin:0;padding:12px;border-radius:14px;border:1px solid var(--line);background:#0B0B10;
+      overflow:auto;font-family:var(--mono);font-size:12px;color:#d8d4c9;max-height:300px
+    }
+    .mini{font-size:11px;color:var(--muted);font-family:var(--mono)}
+    .kv{display:grid;grid-template-columns:160px 1fr;gap:6px 10px;font-family:var(--mono);font-size:12px}
+    .kv div:nth-child(odd){color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand"><span class="sig">✝️🌹🜏</span> CONQUEST::AVATAR_FORGE</div>
+    <div class="sub">ACP-1 / AEP-1 — deterministic UI, draft only (no signatures)</div>
+  </header>
+
+  <main>
+    <div class="grid cols2">
+      <section class="panel" id="identity">
+        <h2>SECTION A — IDENTITY LOCKS (ACP-1)</h2>
+
+        <div class="row">
+          <div>
+            <label>HOUSE_ID (immutable once chosen)</label>
+            <input id="houseId" value="house-9A4FB1C2" />
+          </div>
+          <div>
+            <label>NONCE (int64, once used, never repeat)</label>
+            <input id="nonce" type="number" min="0" step="1" value="1" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>FACTION (immutable)</label>
+            <select id="faction">
+              <option value="TEMPLAR">TEMPLAR (✝️)</option>
+              <option value="ROSICRUCIAN">ROSICRUCIAN (🌹)</option>
+              <option value="CHAOS">CHAOS (🌀)</option>
+            </select>
+          </div>
+          <div>
+            <label>ORDER (immutable)</label>
+            <select id="order">
+              <option value="MILITARY">MILITARY</option>
+              <option value="MERCHANT">MERCHANT</option>
+              <option value="MYSTIC">MYSTIC</option>
+            </select>
+          </div>
+        </div>
+
+        <label>SEAL PUBLIC KEY (ed25519, 64 hex chars lowercase)</label>
+        <input id="pubkey" placeholder="e.g. 4f2a... (64 hex chars)" spellcheck="false" />
+
+        <label>ART UPLOAD (PNG/SVG) → art_hash (immutable)</label>
+        <input id="artFile" type="file" accept=".png,.svg,image/png,image/svg+xml" />
+
+        <div style="margin-top:12px">
+          <span class="pill" id="artStatus">ART: <strong>NOT LOADED</strong></span>
+          <span class="pill" id="pubStatus">PUBKEY: <strong>NOT SET</strong></span>
+          <span class="pill" id="idStatus">AVATAR_ID: <strong>—</strong></span>
+        </div>
+
+        <div style="margin-top:12px" class="kv">
+          <div>art.mime</div><div id="artMime">—</div>
+          <div>art.size_bytes</div><div id="artSize">—</div>
+          <div>art.sha256</div><div id="artSha">—</div>
+          <div>traits_sha256</div><div id="traitsSha">—</div>
+          <div>avatar_id</div><div id="avatarId">—</div>
+        </div>
+
+        <p class="mini" style="margin-top:10px">
+          Identity fields (immutable): house_id, faction, order, seal_public_key, art_hash → avatar_id.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>SECTION D — UNSIGNED DRAFT PAYLOAD</h2>
+
+        <label>ACP-1 Draft (canonical JSON, NO signature)</label>
+        <pre id="draftOut">{}</pre>
+
+        <div style="margin-top:10px; display:flex; gap:10px">
+          <button id="copyBtn" disabled>COPY JSON</button>
+          <button id="downloadBtn" disabled>DOWNLOAD .json</button>
+        </div>
+
+        <p class="mini" style="margin-top:10px">
+          This page generates <strong>unsigned drafts only</strong>.
+          Use your CLI: <code>cap sign</code> then <code>conquest register_avatar</code>.
+        </p>
+      </section>
+    </div>
+
+    <section class="panel" style="margin-top:14px">
+      <h2>SECTION C — PERSONALISATION (DISPLAY-ONLY UNLESS COMMITTED)</h2>
+
+      <div class="grid cols3">
+        <div>
+          <label>Accent color (hex)</label>
+          <input id="accentHex" value="#15101C" />
+        </div>
+
+        <div>
+          <label>Cloak (enum, fixed order)</label>
+          <select id="cloak">
+            <option>OBSIDIAN</option>
+            <option>IVORY</option>
+            <option>CRIMSON</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Title (enum)</label>
+          <select id="title">
+            <option>THE PRINCE</option>
+            <option>THE WARDEN</option>
+            <option>THE SAVANT</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="margin-top:14px">
+        <button id="computeTraitsBtn">COMPUTE trait_commitment_hash</button>
+        <span class="pill" id="traitsStatus">TRAITS: <strong>NOT COMMITTED</strong></span>
+      </div>
+
+      <label style="margin-top:14px">Canonical traits.json (preview, display-only)</label>
+      <pre id="traitsPreview">{}</pre>
+
+      <p class="mini" style="margin-top:10px">
+        Traits commitment is optional. If committed, it is durable via <code>trait_commitment_hash</code> only.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    // ===========================
+    // Canonical JSON + SHA-256
+    // ===========================
+
+    function sortKeysDeep(x){
+      if (Array.isArray(x)) return x.map(sortKeysDeep);
+      if (typeof x === "object" && x !== null){
+        const out = {};
+        Object.keys(x).sort().forEach(k => { out[k] = sortKeysDeep(x[k]); });
+        return out;
+      }
+      return x;
+    }
+
+    function canonicalJSONString(obj){
+      const sorted = sortKeysDeep(obj);
+      return JSON.stringify(sorted, null, 0);
+    }
+
+    function asciiBytes(str){
+      for (let i=0;i<str.length;i++){
+        const c = str.charCodeAt(i);
+        if (c < 0x20 || (c > 0x7E && c !== 10)) throw new Error("E_NON_ASCII");
+      }
+      return new TextEncoder().encode(str);
+    }
+
+    async function sha256Hex(bytes){
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return [...new Uint8Array(digest)].map(b => b.toString(16).padStart(2,"0")).join("");
+    }
+
+    function hexToBytes(hex){
+      hex = hex.trim().toLowerCase().replace(/^0x/,"");
+      if (!/^[0-9a-f]+$/.test(hex)) throw new Error("E_HEX_LOWERCASE");
+      if (hex.length % 2 !== 0) throw new Error("E_HEX_LEN");
+      const out = new Uint8Array(hex.length/2);
+      for (let i=0;i<out.length;i++){
+        out[i] = parseInt(hex.slice(2*i, 2*i+2), 16);
+      }
+      return out;
+    }
+
+    function int64be(n){
+      const x = BigInt(n);
+      const out = new Uint8Array(8);
+      let v = x;
+      for (let i=7;i>=0;i--){
+        out[i] = Number(v & 0xffn);
+        v >>= 8n;
+      }
+      return out;
+    }
+
+    function concatBytes(...arrs){
+      const total = arrs.reduce((s,a)=>s+a.length,0);
+      const out = new Uint8Array(total);
+      let off = 0;
+      for (const a of arrs){
+        out.set(a, off);
+        off += a.length;
+      }
+      return out;
+    }
+
+    async function computeAvatarId(pubkeyHex64, artShaHex64, traitsObj, nonceInt){
+      const traitsJson = canonicalJSONString(traitsObj);
+      const traitsBytes = asciiBytes(traitsJson);
+      const traitsDigestHex = await sha256Hex(traitsBytes);
+
+      const msg = concatBytes(
+        new TextEncoder().encode("CAP-1|"),
+        hexToBytes(pubkeyHex64),
+        new TextEncoder().encode("|"),
+        hexToBytes(artShaHex64),
+        new TextEncoder().encode("|"),
+        hexToBytes(traitsDigestHex),
+        new TextEncoder().encode("|"),
+        int64be(nonceInt)
+      );
+      return await sha256Hex(msg);
+    }
+
+    // ===========================
+    // UI State
+    // ===========================
+
+    let art = { mime:null, bytes:null, sha:null, size:0 };
+    let traitCommitmentHash = null;
+
+    function $(id){ return document.getElementById(id); }
+
+    function setPill(el, kind, html){
+      el.classList.remove("ok","bad","warn");
+      if (kind) el.classList.add(kind);
+      el.innerHTML = html;
+    }
+
+    function buildTraitsObj(){
+      return {
+        accent_hex: $("accentHex").value.trim(),
+        cloak: $("cloak").value,
+        title: $("title").value
+      };
+    }
+
+    async function rebuildDraft(){
+      const pubkeyRaw = $("pubkey").value.trim().toLowerCase().replace(/^0x/,"");
+      const pubOk = /^[0-9a-f]{64}$/.test(pubkeyRaw);
+      setPill($("pubStatus"), pubOk ? "ok":"warn", `PUBKEY: <strong>${pubOk ? "SET":"NOT SET"}</strong>`);
+
+      const artOk = !!art.sha;
+      setPill($("artStatus"), artOk ? "ok":"warn", `ART: <strong>${artOk ? "LOADED":"NOT LOADED"}</strong>`);
+
+      const faction = $("faction").value;
+      const order = $("order").value;
+      const nonce = Number($("nonce").value || 0);
+
+      const identityTraits = { faction, order, rank: "SQUIRE" };
+
+      let avatarId = null;
+      let traitsSha = null;
+
+      try{
+        const traitsJson = canonicalJSONString(identityTraits);
+        const traitsBytes = asciiBytes(traitsJson);
+        traitsSha = await sha256Hex(traitsBytes);
+
+        if (pubOk && artOk){
+          avatarId = await computeAvatarId(pubkeyRaw, art.sha, identityTraits, nonce);
+        }
+      }catch(e){
+        console.error(e);
+      }
+
+      $("artMime").textContent = art.mime || "—";
+      $("artSize").textContent = artOk ? String(art.size) : "—";
+      $("artSha").textContent = artOk ? art.sha : "—";
+      $("traitsSha").textContent = traitsSha || "—";
+      $("avatarId").textContent = avatarId || "—";
+
+      setPill($("idStatus"), avatarId ? "ok":"warn", `AVATAR_ID: <strong>${avatarId ? "READY":"—"}</strong>`);
+
+      const ts = new Date().toISOString().replace(/\.\d+Z$/,"Z");
+      const draft = (avatarId && pubOk && artOk) ? {
+        protocol_version: "CAP-1",
+        avatar_id: avatarId,
+        owner_pubkey: pubkeyRaw,
+        art: {
+          mime: art.mime,
+          sha256: art.sha,
+          size_bytes: art.size
+        },
+        traits: identityTraits,
+        nonce: nonce,
+        timestamp_utc: ts
+      } : {};
+
+      $("draftOut").textContent = canonicalJSONString(draft);
+      $("copyBtn").disabled = !(avatarId && pubOk && artOk);
+      $("downloadBtn").disabled = !(avatarId && pubOk && artOk);
+    }
+
+    async function rebuildTraitsPreview(){
+      const t = buildTraitsObj();
+      $("traitsPreview").textContent = canonicalJSONString(t);
+    }
+
+    // ===========================
+    // Events
+    // ===========================
+
+    $("artFile").addEventListener("change", async (ev)=>{
+      const file = ev.target.files && ev.target.files[0];
+      if (!file) return;
+      const mime = file.type || (file.name.endsWith(".svg") ? "image/svg+xml" : "image/png");
+      if (!(mime === "image/png" || mime === "image/svg+xml")){
+        setPill($("artStatus"), "bad", `ART: <strong>INVALID MIME</strong>`);
+        return;
+      }
+      const bytes = new Uint8Array(await file.arrayBuffer());
+      art = { mime, bytes, size: bytes.length, sha: await sha256Hex(bytes) };
+      await rebuildDraft();
+    });
+
+    $("pubkey").addEventListener("input", rebuildDraft);
+    $("faction").addEventListener("change", rebuildDraft);
+    $("order").addEventListener("change", rebuildDraft);
+    $("nonce").addEventListener("input", rebuildDraft);
+    $("houseId").addEventListener("input", rebuildDraft);
+
+    $("accentHex").addEventListener("input", rebuildTraitsPreview);
+    $("cloak").addEventListener("change", rebuildTraitsPreview);
+    $("title").addEventListener("change", rebuildTraitsPreview);
+
+    $("computeTraitsBtn").addEventListener("click", async ()=>{
+      try{
+        const t = buildTraitsObj();
+        const json = canonicalJSONString(t);
+        const bytes = asciiBytes(json);
+        traitCommitmentHash = await sha256Hex(bytes);
+        setPill($("traitsStatus"), "ok", `TRAITS: <strong>COMMITTED HASH READY</strong>`);
+        await rebuildDraft();
+      }catch(e){
+        console.error(e);
+        traitCommitmentHash = null;
+        setPill($("traitsStatus"), "bad", `TRAITS: <strong>CANON FAIL</strong>`);
+      }
+    });
+
+    $("copyBtn").addEventListener("click", async ()=>{
+      await navigator.clipboard.writeText($("draftOut").textContent);
+      setPill($("idStatus"), "ok", `AVATAR_ID: <strong>COPIED TO CLIPBOARD</strong>`);
+      setTimeout(()=>rebuildDraft(), 700);
+    });
+
+    $("downloadBtn").addEventListener("click", ()=>{
+      const draft = $("draftOut").textContent;
+      const blob = new Blob([draft], {type:"application/json"});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = ($("avatarId").textContent || "avatar") + ".unsigned.json";
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // ===========================
+    // Init
+    // ===========================
+
+    function init(){
+      rebuildTraitsPreview();
+      setPill($("traitsStatus"), "warn", `TRAITS: <strong>NOT COMMITTED</strong>`);
+      rebuildDraft();
+    }
+
+    init();
+  </script>
+</body>
+</html>

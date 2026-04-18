@@ -1,0 +1,25 @@
+{
+  "day": 3,
+  "territory": 3,
+  "stability": 7,
+  "entropy": 2.9,
+  "knowledge_efficiency": 1.2,
+  "hunger": 2,
+  "ledger": [
+    {
+      "day": 2,
+      "timestamp": "2026-02-12T17:58:37.985932",
+      "label": "RESEARCH_INITIATED"
+    },
+    {
+      "day": 3,
+      "timestamp": "2026-02-12T18:07:44.625506",
+      "label": "TERRITORY_EXPANDED"
+    },
+    {
+      "day": 4,
+      "timestamp": "2026-02-12T18:09:36.857043",
+      "label": "STABILITY_REINFORCED"
+    }
+  ]
+}

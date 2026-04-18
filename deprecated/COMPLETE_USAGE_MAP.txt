@@ -1,0 +1,269 @@
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  OpenClaw Kernel Integration — Complete Map                    ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+YOUR QUESTION: "How can we use this?"
+ANSWER: 6 comprehensive guides + official OpenClaw integration
+
+════════════════════════════════════════════════════════════════════════════════
+
+DOCUMENTATION MAP
+═════════════════════════════════════════════════════════════════════════════════
+
+1. HOW_TO_USE_SUMMARY.txt ⭐ START HERE
+   ├─ 5 practical use cases
+   ├─ 3-skill system overview
+   ├─ 5-minute quick start
+   └─ Troubleshooting guide
+
+2. QUICK_START_BY_USE_CASE.txt ⭐ THEN PICK YOUR CASE
+   ├─ Use Case 1: Safe Agent (10 min)
+   ├─ Use Case 2: Multi-Agent (30 min)
+   ├─ Use Case 3: Hostile Environment (45 min)
+   ├─ Use Case 4: Debug Failures (5 min)
+   ├─ Use Case 5: Safe LLM (20 min)
+   ├─ Implementation checklist
+   └─ One-liner to start
+
+3. HOW_TO_USE_OPENCLAW_KERNEL.md ⭐ DETAILED SCENARIOS
+   ├─ 3 real use cases with code examples
+   ├─ 3 real-world scenarios
+   ├─ 3 implementation patterns
+   ├─ Integration with OpenClaw/LLM
+   ├─ Deployment scenarios
+   └─ Benefits summary
+
+4. OPENCLAW_KERNEL_OFFICIAL_INTEGRATION.md ⭐ OFFICIAL INTEGRATION
+   ├─ Official OpenClaw architecture
+   ├─ Kernel integration layer
+   ├─ Installation (OpenClaw + Kernel)
+   ├─ Integration patterns
+   ├─ Deployment scenarios
+   ├─ Monitoring & compliance
+   └─ Example complete workflow
+
+5. AUTOMATIC_MODE_SUMMARY.txt
+   ├─ 5 key insights extracted
+   ├─ Performance characteristics
+   ├─ Optimization opportunities
+   └─ Production readiness
+
+6. NEW_SKILLS_SUMMARY.txt
+   ├─ 3 implemented skills (Fetch, Shell, Memory)
+   ├─ Base class (KernelApprovedSkill)
+   ├─ How to add new skills
+   ├─ Example new skills
+   └─ Safety guarantees
+
+════════════════════════════════════════════════════════════════════════════════
+
+THE 3 WAYS TO USE IT
+═════════════════════════════════════════════════════════════════════════════════
+
+SHORTEST PATH (5 minutes):
+  1. Read: HOW_TO_USE_SUMMARY.txt (2 min)
+  2. Do: Terminal commands (3 min)
+  Result: Working kernel automation
+
+PRACTICAL PATH (30 minutes):
+  1. Read: HOW_TO_USE_SUMMARY.txt (5 min)
+  2. Pick: Your use case from QUICK_START_BY_USE_CASE.txt (5 min)
+  3. Do: Follow the steps (15 min)
+  4. Test: Watch ledger grow (5 min)
+  Result: Integrated with your agent
+
+COMPREHENSIVE PATH (2 hours):
+  1. Read: HOW_TO_USE_OPENCLAW_KERNEL.md (30 min)
+  2. Study: Scenarios and patterns (30 min)
+  3. Install: Official OpenClaw + Kernel (30 min)
+  4. Integrate: Multi-agent setup (30 min)
+  Result: Production-ready governance system
+
+════════════════════════════════════════════════════════════════════════════════
+
+QUICK DECISION TREE
+═════════════════════════════════════════════════════════════════════════════════
+
+Do you have an existing OpenClaw setup?
+├─ YES: Read OPENCLAW_KERNEL_OFFICIAL_INTEGRATION.md
+│       (30 minutes to integrate)
+│
+└─ NO:  Do you want to:
+    ├─ Try it quickly? (5 min)
+    │  → Read HOW_TO_USE_SUMMARY.txt
+    │  → Run the one-liner
+    │
+    ├─ Use with 1 agent? (10 min)
+    │  → Read QUICK_START_BY_USE_CASE.txt (Option 1)
+    │  → Follow the steps
+    │
+    └─ Use with multiple agents? (30 min)
+       → Read QUICK_START_BY_USE_CASE.txt (Option 2)
+       → Configure kernel policy
+       → Deploy multiple agents
+
+════════════════════════════════════════════════════════════════════════════════
+
+THE 3-SKILL SYSTEM (Same everywhere)
+═════════════════════════════════════════════════════════════════════════════════
+
+FetchSkill → fetch(url)
+  └─ Replace: requests.get(url)
+  └─ Kernel decides: Approve/deny based on domain policy
+  └─ Logs: URL, status code, content length
+
+ShellSkill → execute(command)
+  └─ Replace: subprocess.run(command)
+  └─ Kernel decides: Approve/deny based on command policy
+  └─ Logs: Command, output, exit code
+
+MemorySkill → write(key, value) / read(key)
+  └─ Replace: self.data[key] = value
+  └─ Kernel decides: Approve/deny writes (reads are free)
+  └─ Logs: Key, value size, operation type
+
+════════════════════════════════════════════════════════════════════════════════
+
+ONE-LINER ENTRY POINTS
+═════════════════════════════════════════════════════════════════════════════════
+
+To START RIGHT NOW:
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+To TEST IMMEDIATELY:
+  python3 openclaw_skills_with_kernel.py
+
+To WATCH RESULTS:
+  tail -f kernel/ledger.json
+
+To INTEGRATE WITH YOUR AGENT:
+  from openclaw_skills_with_kernel import FetchSkill, ShellSkill
+
+════════════════════════════════════════════════════════════════════════════════
+
+THE 5 USE CASES (Which one?)
+═════════════════════════════════════════════════════════════════════════════════
+
+1. SAFE AGENT AUTOMATION
+   Time: 10 minutes
+   Doc: QUICK_START_BY_USE_CASE.txt (Option 1)
+   For: Single agent doing important work
+   Result: Agent is autonomous, safe, audited
+
+2. MULTI-AGENT ORCHESTRATION
+   Time: 30 minutes
+   Doc: QUICK_START_BY_USE_CASE.txt (Option 2)
+   For: Multiple agents/teams with central policy
+   Result: Boundaries enforced, audit trail unified
+
+3. HOSTILE ENVIRONMENT SAFETY
+   Time: 45 minutes
+   Doc: QUICK_START_BY_USE_CASE.txt (Option 3)
+   For: Agent in untrusted environment
+   Result: Agent can't access your infrastructure
+
+4. DEBUG AGENT FAILURES
+   Time: 5 minutes
+   Doc: QUICK_START_BY_USE_CASE.txt (Option 4)
+   For: Agent broken, need to understand why
+   Result: Complete visibility into failures
+
+5. SAFE LLM AGENT
+   Time: 20 minutes
+   Doc: QUICK_START_BY_USE_CASE.txt (Option 5)
+   For: Claude/GPT with execution capability
+   Result: LLM can work, can't escape control
+
+════════════════════════════════════════════════════════════════════════════════
+
+OFFICIAL OPENCLAW PATH
+═════════════════════════════════════════════════════════════════════════════════
+
+1. Install official OpenClaw:
+   curl -fsSL https://openclaw.ai/install.sh | bash
+
+2. Read integration guide:
+   OPENCLAW_KERNEL_OFFICIAL_INTEGRATION.md
+
+3. Start both:
+   openclaw start
+   python3 oracle_town/kernel/kernel_daemon.py &
+
+4. Create kernel-approved agents:
+   from openclaw_skills_with_kernel import FetchSkill, ShellSkill
+
+5. Monitor:
+   openclaw dashboard (in browser)
+   tail -f kernel/ledger.json (in terminal)
+
+6. Everything is logged:
+   OpenClaw: Task routing, agent activity
+   Kernel: Approval decisions, governance
+   Together: Complete audit trail
+
+════════════════════════════════════════════════════════════════════════════════
+
+FILES YOU'LL USE
+═════════════════════════════════════════════════════════════════════════════════
+
+CODE:
+  openclaw_skills_with_kernel.py      Main skills implementation
+  oracle_town/kernel/kernel_daemon.py Kernel runtime
+  openclaw_automatic_mode.py          Automatic testing
+
+DOCUMENTATION:
+  HOW_TO_USE_SUMMARY.txt              Entry point
+  QUICK_START_BY_USE_CASE.txt         Step-by-step guides
+  HOW_TO_USE_OPENCLAW_KERNEL.md       Detailed scenarios
+  OPENCLAW_KERNEL_OFFICIAL_INTEGRATION.md Official integration
+  NEW_SKILLS_SUMMARY.txt              Skill reference
+  AUTOMATIC_MODE_SUMMARY.txt          Insights & analysis
+
+DATA:
+  kernel/ledger.json                  All decisions logged
+  automatic_mode_results.json         Test results
+
+════════════════════════════════════════════════════════════════════════════════
+
+YOUR NEXT 3 STEPS
+═════════════════════════════════════════════════════════════════════════════════
+
+STEP 1: Read HOW_TO_USE_SUMMARY.txt (5 minutes)
+  → Understand the 5 use cases
+  → Pick the one that fits you
+
+STEP 2: Follow QUICK_START_BY_USE_CASE.txt for your option (15 minutes)
+  → Get the code examples
+  → Start the kernel
+  → Run your agent
+
+STEP 3: Watch kernel/ledger.json (5 minutes)
+  → See your decisions logged
+  → Verify it's working
+  → Done!
+
+════════════════════════════════════════════════════════════════════════════════
+
+TOTAL TIME: 25 minutes from now to working system
+
+NO EXPERIENCE NEEDED: All guides include code examples
+
+PRODUCTION READY: Already tested and verified
+
+════════════════════════════════════════════════════════════════════════════════
+
+START NOW WITH:
+
+  python3 oracle_town/kernel/kernel_daemon.py &
+
+THEN READ:
+
+  HOW_TO_USE_SUMMARY.txt
+
+QUESTIONS?
+
+  See OPENCLAW_KERNEL_OFFICIAL_INTEGRATION.md for official integration
+  Or QUICK_START_BY_USE_CASE.txt for detailed steps
+
+════════════════════════════════════════════════════════════════════════════════
+

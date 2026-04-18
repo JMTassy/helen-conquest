@@ -1,0 +1,105 @@
+{
+  "type": "EPOCH_MARK_V1",
+  "epoch": "EPOCH1",
+  "name": "SELF_MODEL_ONLINE",
+  "inscription": "EPOCH1: SELF_MODEL_ONLINE \u2014 invariants introspectable + enforced; agent loop mediated by receipts; sealing defines mutation boundary.",
+  "wild_town_inscription": "ORACLE CREATIVE WILD TOWN: creativity allowed + execution impossible by construction. Ledger stores blocks, not wild ideas. HELEN observes the boundary \u2014 never commanded.",
+  "artifacts": {
+    "META_SELF_MODEL_V1_EPOCH1": {
+      "path": "artifacts/META_SELF_MODEL_V1_EPOCH1.json",
+      "sha256": "3bbd83b196eff67f4e8d20ef8b81a2461f4376b3ffa3689306df68f379d75e80"
+    },
+    "META_SELF_MODEL_V1_LIVE": {
+      "path": "artifacts/META_SELF_MODEL_V1_LIVE.json",
+      "sha256": "6ea99fc290209c735a485d9562780693a219d46a5f67ac349a8cb24067d7eed3"
+    }
+  },
+  "modules": {
+    "meta_self_model": {
+      "path": "helen_os/meta/self_model.py",
+      "sha256": "ab7bdcf5a218c47e7d1849448ac399d07e8423af9993c0432c87a98a18485095"
+    },
+    "meta_wild_policy": {
+      "path": "helen_os/meta/wild_policy.py",
+      "sha256": "31806a772cbe3b45990dafc6605b395a6c3a073f78d638564811ad6e7b4001c5"
+    },
+    "meta_transmutation": {
+      "path": "helen_os/meta/transmutation.py",
+      "sha256": "e66ad96859fc23f9b7136df8039a10e246bae0301169a2d19d21f22391b588ce"
+    },
+    "meta_canonical": {
+      "path": "helen_os/meta/canonical.py",
+      "sha256": "95a40409f6c96f061add397c676ff18db48f433d1e45876dc17d4fedc1ee9ed1"
+    },
+    "seeds_conquest_land": {
+      "path": "helen_os/seeds/worlds/conquest_land.py",
+      "sha256": "dd00c9b559477c3724a3aa6ffaceff0df3eedf87b89018e953b4d94da3e7ac8c"
+    },
+    "seeds_wild_town": {
+      "path": "helen_os/seeds/worlds/wild_town.py",
+      "sha256": "7777987ad7dfa492d487403548a40b8abf46c9e7888ebdc7a8af5eda40db6bb8"
+    }
+  },
+  "tests": {
+    "EPOCH1_S1": {
+      "path": "tests/test_epoch1_s1_fail_closed.py",
+      "sha256": "c4355aca752eab045a51d47ec2cf3ba8fda4bc9480b73835d771be1beaa4d1c2"
+    },
+    "EPOCH1_S2": {
+      "path": "tests/test_epoch1_s2_introspection.py",
+      "sha256": "0c574135ef55f41f1c5f1fa500c00d4cecb3991583901462e5295cdb18e643c5"
+    },
+    "EPOCH1_S3": {
+      "path": "tests/test_epoch1_s3_loop_receipt.py",
+      "sha256": "b63fa6724774ece292b319826d8b0744900492a5eca2aebab05783ab1e3904b4"
+    },
+    "WILD_T1": {
+      "path": "tests/test_wild_town_t1_no_ship.py",
+      "sha256": "9320049e11880be76bf54be7e539fe401ed6b1068979fa2ecee4dacfbf02aa5c"
+    },
+    "WILD_T2": {
+      "path": "tests/test_wild_town_t2_transmutation.py",
+      "sha256": "862a1a16b9ef682e39a5778b98e59af9efd2f52f3917f656aaaf2adbc931cc6b"
+    },
+    "WILD_T3": {
+      "path": "tests/test_wild_town_t3_hal_boundary.py",
+      "sha256": "edfef8493cec8dc9cf9ab18612beee6f7acd0f7d5c96944a770e2d6a2fdc333a"
+    },
+    "CANONICAL_C": {
+      "path": "tests/test_canonical_sha256.py",
+      "sha256": "92570e9bf97baf9ef0e1664d9e6c041496be1277dbca611742d898be26697e57"
+    }
+  },
+  "content_hashes": {
+    "meta_self_model": "ab7bdcf5a218c47e7d1849448ac399d07e8423af9993c0432c87a98a18485095",
+    "meta_wild_policy": "31806a772cbe3b45990dafc6605b395a6c3a073f78d638564811ad6e7b4001c5",
+    "meta_transmutation": "e66ad96859fc23f9b7136df8039a10e246bae0301169a2d19d21f22391b588ce",
+    "meta_canonical": "95a40409f6c96f061add397c676ff18db48f433d1e45876dc17d4fedc1ee9ed1",
+    "seeds_conquest_land": "dd00c9b559477c3724a3aa6ffaceff0df3eedf87b89018e953b4d94da3e7ac8c",
+    "seeds_wild_town": "7777987ad7dfa492d487403548a40b8abf46c9e7888ebdc7a8af5eda40db6bb8",
+    "EPOCH1_S1": "c4355aca752eab045a51d47ec2cf3ba8fda4bc9480b73835d771be1beaa4d1c2",
+    "EPOCH1_S2": "0c574135ef55f41f1c5f1fa500c00d4cecb3991583901462e5295cdb18e643c5",
+    "EPOCH1_S3": "b63fa6724774ece292b319826d8b0744900492a5eca2aebab05783ab1e3904b4",
+    "WILD_T1": "9320049e11880be76bf54be7e539fe401ed6b1068979fa2ecee4dacfbf02aa5c",
+    "WILD_T2": "862a1a16b9ef682e39a5778b98e59af9efd2f52f3917f656aaaf2adbc931cc6b",
+    "WILD_T3": "edfef8493cec8dc9cf9ab18612beee6f7acd0f7d5c96944a770e2d6a2fdc333a",
+    "CANONICAL_C": "92570e9bf97baf9ef0e1664d9e6c041496be1277dbca611742d898be26697e57",
+    "META_SELF_MODEL_V1_EPOCH1": "3bbd83b196eff67f4e8d20ef8b81a2461f4376b3ffa3689306df68f379d75e80",
+    "META_SELF_MODEL_V1_LIVE": "6ea99fc290209c735a485d9562780693a219d46a5f67ac349a8cb24067d7eed3"
+  },
+  "manifest_sha256": "e98a345ae0ca80bcd8a75b208aaaa28b72a3e4cf8518316605a9c99de336e80c",
+  "manifest_sha256_scheme": "SHA256(canonical_json(content_hashes))",
+  "epoch_receipt": {
+    "receipt_id": "R-2196808e",
+    "payload_hash": "2196808ef8df00ce6555716a5b894763b6dcafa1704000ee7a7b53b7c06ca797",
+    "cum_hash": "1e2cd2b8ec059471cd60fc0b68c46315d90be0df5c3843e17e0ed555d310548a",
+    "timestamp": "2026-02-28T19:29:44.991051Z",
+    "kernel_mode": ":memory: (ephemeral \u2014 canonical epoch anchor)",
+    "receipt_role": "canonical_epoch_anchor"
+  },
+  "verdict": "PASS",
+  "marked_at": "2026-02-28T19:29:44.991642+00:00",
+  "hash_law": "CWL_CANONICAL_V1",
+  "artifact_sha256": "71210f5dab895e738c885846800f2e46559b03da1df8f6cca9089c7dda85aebe",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

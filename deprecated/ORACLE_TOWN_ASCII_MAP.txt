@@ -1,0 +1,348 @@
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                         ORACLE TOWN — ASCII MAP                               ║
+║                    Governance Jurisdiction (Level 2 Authority)                 ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+
+                              ┌─────────────────────┐
+                              │   LAYER 3: WORLD    │
+                              │  (State Mutations)  │
+                              └────────┬────────────┘
+                                       │
+                    ┌──────────────────┴──────────────────┐
+                    │ Only with signed receipt exists    │
+                    │ Only if Mayor verdict == ACCEPT    │
+                    │ All changes recorded in ledger     │
+                    └──────────────────────────────────────┘
+
+
+                    ┌──────────────────────────────────────┐
+                    │    LAYER 2: AUTHORITY (Uncheckable)  │
+                    │       (Verification & Ratification)   │
+                    └────────┬─────────────────────────────┘
+                             │
+        ┌────────────────────┼────────────────────┐
+        │                    │                    │
+   ┌────▼────┐          ┌────▼────┐         ┌────▼────┐
+   │TRI GATE │          │  MAYOR  │         │  LEDGER │
+   │(Verify) │          │ (Sign)  │         │(Record) │
+   └────┬────┘          └────┬────┘         └────┬────┘
+        │                    │                    │
+   [Pure Logic]         [Ed25519 Sig]        [Immutable]
+   [No I/O]             [Legally Binding]    [Append-only]
+   [Deterministic K5]   [Zero Override]      [Auditable]
+        │                    │                    │
+        └────────────────────┼────────────────────┘
+                             │
+                   ┌─────────┴──────────┐
+                   │ Claims flow here:  │
+                   │ TRI→Mayor→Ledger   │
+                   └────────────────────┘
+
+
+        ┌────────────────────────────────────────────────────────┐
+        │      LAYER 1: LABOR (Parallel Workers / Cheap)         │
+        │              (Claims Generation)                        │
+        └────────┬─────────────────────────────────────────────┘
+                 │
+        ┌────────┴────────┬──────────┬──────────┬──────────┬─────────┐
+        │                 │          │          │          │         │
+   ┌────▼────┐     ┌──────▼───┐ ┌───▼───┐ ┌───▼───┐ ┌───▼──┐ ┌───▼──┐
+   │OBS_SCAN │     │INS_CLUSTER│ │BRF_   │ │PUB_   │ │MEM_  │ │EVO_  │
+   │(Observe)│     │(Insights) │ │ONE    │ │SHIP   │ │LINK  │ │EVOLVE│
+   │         │     │           │ │PAGE   │ │(Pub)  │ │(Mem) │ │(Adapt)
+   │ 249 ✓   │     │ 342 ✓     │ │ 238 ✓ │ │ —     │ │ —    │ │ —    │
+   └─────────┘     └───────────┘ └───────┘ └───────┘ └──────┘ └──────┘
+        │                 │          │          │          │         │
+   [Load obs]        [Cluster]  [Synthesis] [Publish]  [Update] [Adapt]
+   [Normalize]       [Anomaly]   [Brief]    [Ledger]   [Graph]  [Policy]
+   [Hash ID]         [Detect]    [One Bet]  [Claim]    [Claim]  [Claim]
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                           THE K-GATES (Deterministic)
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │              TRI GATE: Five Immutable K-Checks               │
+    └──────────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────┐
+      │ K0: Authority Separation                                │
+      │ ├─ Check: Attestor in registry?                        │
+      │ ├─ PASS: Yes → continue                                │
+      │ └─ FAIL: Not in registry → REJECT (K1 fail-closed)     │
+      └─────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────┐
+      │ K1: Fail-Closed (Default NO_SHIP)                       │
+      │ ├─ Check: All evidence present?                         │
+      │ ├─ PASS: Yes → continue                                │
+      │ └─ FAIL: Missing evidence → REJECT immediately          │
+      └─────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────┐
+      │ K2: No Self-Attestation                                 │
+      │ ├─ Check: attestor_id ≠ target module?                 │
+      │ ├─ PASS: Yes → continue                                │
+      │ └─ FAIL: Self-attestation → REJECT (prevents corruption)
+      └─────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────┐
+      │ K5: Determinism (K5 Invariant)                          │
+      │ ├─ Check: Same input 200x → identical output?           │
+      │ ├─ PASS: Yes → continue                                │
+      │ └─ FAIL: Non-deterministic → REJECT (audit breaks)      │
+      └─────────────────────────────────────────────────────────┘
+
+      ┌─────────────────────────────────────────────────────────┐
+      │ K7: Policy Pinning (Constitutional)                     │
+      │ ├─ Check: claim.policy_hash == pinned policy?           │
+      │ ├─ PASS: Yes → continue                                │
+      │ └─ FAIL: Policy mismatch → REJECT (prevents rewriting)  │
+      └─────────────────────────────────────────────────────────┘
+
+           ┌──────────────────────────────────────┐
+           │  All K-gates PASS?                   │
+           └────┬─────────────────────┬──────────┘
+                │                     │
+           ┌────▼────┐            ┌───▼────┐
+           │ ACCEPT  │            │ REJECT │
+           │(→Mayor) │            │ (END)  │
+           └─────────┘            └────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                      THE MAYOR: Single Authority Point
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │  MAYOR_SIGN: Pure Function (No I/O, No LLM, No Timestamps)   │
+    └──────────────────────────────────────────────────────────────┘
+
+         Input: (claim, tri_verdict, evidence, policy)
+            │
+            ▼
+       ┌─────────────────┐
+       │ Mayor receives: │
+       │ ├─ Claim        │
+       │ ├─ TRI verdict  │
+       │ ├─ Evidence     │
+       │ └─ Policy hash  │
+       └────────┬────────┘
+                │
+    ┌───────────▼──────────────┐
+    │ Check: All gates passed? │
+    └───────────┬──────────────┘
+                │
+        ┌───────┴───────┐
+        │               │
+    ┌───▼───┐       ┌───▼────┐
+    │ PASS  │       │ FAIL   │
+    └───┬───┘       └───┬────┘
+        │               │
+    ┌───▼──────────┐ ┌──▼───────────┐
+    │ Emit Receipt │ │ Emit Receipt │
+    │ verdict=     │ │ verdict=     │
+    │ "ACCEPT"     │ │ "REJECT"     │
+    │              │ │              │
+    │ Sign with    │ │ Sign with    │
+    │ Ed25519 key  │ │ Ed25519 key  │
+    └───┬──────────┘ └──┬───────────┘
+        │               │
+        └───────┬───────┘
+                │
+        ┌───────▼──────────┐
+        │ Write Receipt:   │
+        │ receipt_id:      │
+        │ R-2026-01-30-... │
+        │ (Immutable,      │
+        │  Legally        │
+        │  Binding)       │
+        └───────┬──────────┘
+                │
+        ┌───────▼──────────────────┐
+        │ Append to Ledger:        │
+        │ oracle_town/ledger/      │
+        │ 2026/01/claim_id/        │
+        │ ├─ claim.json            │
+        │ ├─ tri_verdict.json      │
+        │ └─ mayor_receipt.json    │
+        └──────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                         THE LEDGER: Immutable Record
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │              Append-Only Claim/Verdict/Receipt Storage        │
+    └──────────────────────────────────────────────────────────────┘
+
+
+    oracle_town/ledger/
+    │
+    ├─ 2026/
+    │  ├─ 01/
+    │  │  │
+    │  │  ├─ claim_20260130_abc123/
+    │  │  │  ├─ claim.json              ← Original claim
+    │  │  │  ├─ tri_verdict.json        ← Unsigned verdict (TRI gate output)
+    │  │  │  └─ mayor_receipt.json      ← Signed receipt (legally binding)
+    │  │  │
+    │  │  ├─ claim_20260130_def456/
+    │  │  │  ├─ claim.json
+    │  │  │  ├─ tri_verdict.json
+    │  │  │  └─ mayor_receipt.json
+    │  │  │
+    │  │  └─ claim_20260130_ghi789/
+    │  │     ├─ claim.json
+    │  │     ├─ tri_verdict.json
+    │  │     └─ mayor_receipt.json
+    │  │
+    │  └─ 02/
+    │     ├─ claim_20260201_jkl012/
+    │     │  └─ ...
+    │     └─ ...
+    │
+    └─ [Append-only: never modify, never delete]
+
+
+    Structure of mayor_receipt.json:
+    {
+      "receipt_id": "R-2026-01-30-0041",
+      "claim_id": "claim_20260130_abc123",
+      "decision": "ACCEPT",
+      "policy_version": "sha256:abc123...",
+      "timestamp": "2026-01-30T14:22:07Z",
+      "gates_passed": [
+        "K0:PASS",
+        "K1:PASS",
+        "K2:PASS",
+        "K5:PASS",
+        "K7:PASS"
+      ],
+      "signature": "Ed25519:..."
+    }
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                      THE FIVE IMMUTABLE RULES
+
+    ┌──────────────────────────────────────────────────────────────┐
+    │           CONSTITUTIONAL: Cannot Be Bent or Waived           │
+    └──────────────────────────────────────────────────────────────┘
+
+    Rule 1: NO DIRECT LEDGER WRITES
+    ┌────────────────────────────────────────────────────────────┐
+    │ Only Mayor can commit to ledger.                           │
+    │ Labor produces claims only (no world mutations).           │
+    │ TRI gate outputs unsigned verdicts only.                   │
+    └────────────────────────────────────────────────────────────┘
+
+    Rule 2: EVERY STATE CHANGE REQUIRES SIGNED RECEIPT
+    ┌────────────────────────────────────────────────────────────┐
+    │ Code merge? Claim → TRI → Mayor → Receipt.                │
+    │ Skill update? Claim → TRI → Mayor → Receipt.              │
+    │ Policy patch? Claim → TRI → Mayor → Receipt.              │
+    │ No execution without receipt (K1 fail-closed).            │
+    └────────────────────────────────────────────────────────────┘
+
+    Rule 3: SKILLS CANNOT SELF-EDIT MANIFESTS
+    ┌────────────────────────────────────────────────────────────┐
+    │ Self-edit = root access (breaks K2 invariant).            │
+    │ All manifest changes go through claims → TRI → Mayor.     │
+    │ Prevents skill rug-pulls.                                 │
+    └────────────────────────────────────────────────────────────┘
+
+    Rule 4: DAEMON HAS ZERO MERGE AUTHORITY
+    ┌────────────────────────────────────────────────────────────┐
+    │ Can observe, measure, propose (generate claims).          │
+    │ Cannot modify policy, sign receipts, commit ledger.       │
+    │ Prevents autonomous corruption.                           │
+    └────────────────────────────────────────────────────────────┘
+
+    Rule 5: ORACLE TOWN'S JOB IS NOT "FIND TRUTH"
+    ┌────────────────────────────────────────────────────────────┐
+    │ Enforces: anything entering reality is justified + logged.│
+    │ Silence is safer than incorrect speech.                   │
+    │ REJECT is always the safe default (K1 fail-closed).       │
+    └────────────────────────────────────────────────────────────┘
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                        EXAMPLE CLAIM FLOW
+
+    1. OBS_SCAN generates observation claim
+       └─ "New email from vendor with proposal"
+
+    2. INS_CLUSTER analyzes & generates insight claim
+       └─ "Vendor proposal clusters with 3 similar ones (anomaly A2)"
+
+    3. BRF_ONEPAGER synthesizes & generates brief claim
+       └─ "ONE BET: Negotiate volume discount on recurring asks"
+
+    4. PUB_DELIVERY publishes to ledger (future)
+       └─ Claim ready for TRI verification
+
+    5. TRI_GATE verifies against K-gates
+       └─ K0: Attestor registered? ✓
+       └─ K1: All evidence present? ✓
+       └─ K2: No self-attestation? ✓
+       └─ K5: Deterministic (200x)? ✓
+       └─ K7: Policy hash matches? ✓
+       └─ Result: TriVerdict.ACCEPT (unsigned)
+
+    6. MAYOR_SIGN ratifies & emits receipt
+       └─ Ed25519 signature (legally binding)
+       └─ Recorded in ledger: oracle_town/ledger/2026/01/claim_id/
+
+    7. WORLD MUTATES (only with receipt)
+       └─ "Implement negotiation strategy"
+       └─ All changes logged in ledger
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                           KEY PROPERTIES
+
+    ✓ No self-ratification — Labor proposes, Authority verifies
+    ✓ Deterministic K5 — Same input → identical output (200x verified)
+    ✓ Fail-closed K1 — Missing evidence → REJECT by default
+    ✓ Authority separation K0 — Attestors in registry, no rogue signers
+    ✓ No self-attestation K2 — Module X cannot ratify X's own claims
+    ✓ Policy pinning K7 — Rules frozen per run, evolution transparent
+    ✓ Immutable ledger — Append-only, auditable, replayable
+    ✓ Cryptographic signatures — Ed25519 (unforgeable)
+    ✓ Transparent evolution — Policy changes become claims (auditable)
+    ✓ Precedent-aware (future) — Search ledger for historical decisions
+
+
+═══════════════════════════════════════════════════════════════════════════════
+
+
+                    ORACLE TOWN: JURISDICTION, NOT TOOL
+
+    "Anything that enters reality must be justified, verified, and logged."
+
+    Not a pipeline. Not a batch processor. Not an optimization.
+
+    A jurisdiction that enforces immutable decision-making through:
+    ├─ Cryptographic receipts (unforgeable, permanent)
+    ├─ Deterministic verification (K5 invariant, auditable)
+    ├─ Fail-closed defaults (K1 invariant, safer than permissive)
+    ├─ Structural separation (labor ≠ authority, prevents corruption)
+    └─ Immutable ledger (git append-only, historical accountability)
+
+
+═══════════════════════════════════════════════════════════════════════════════
+

@@ -1,0 +1,3397 @@
+[
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_0f2b0256bfb2d9a9",
+    "links": [],
+    "obs_id": "obs_20260204_d058bfbdcc8a73b2",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (476 chars) with system failure indicators",
+    "id": "anom_20260204_10638a8112df86dc",
+    "links": [],
+    "obs_id": "obs_20260204_32808ed864c580b1",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (493 chars) with system failure indicators",
+    "id": "anom_20260204_12bfc1be90a6fb7f",
+    "links": [],
+    "obs_id": "obs_20260204_070e7f5fdfca6c6c",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (490 chars) with system failure indicators",
+    "id": "anom_20260204_12c5cf1cb8472b1c",
+    "links": [],
+    "obs_id": "obs_20260204_50e147a0310a7f8c",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (493 chars) with system failure indicators",
+    "id": "anom_20260204_234f7c41d3a0516c",
+    "links": [],
+    "obs_id": "obs_20260204_7cea76c4b33fcb91",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (497 chars) with system failure indicators",
+    "id": "anom_20260204_29be570fab68d28a",
+    "links": [],
+    "obs_id": "obs_20260204_792a00a08e6a093b",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_31d11a3fcaf34e7f",
+    "links": [],
+    "obs_id": "obs_20260204_452f460628deed10",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_36539c9fbc7ded3b",
+    "links": [],
+    "obs_id": "obs_20260204_85e865b2a57c4696",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_3d8aa66aa76f352b",
+    "links": [],
+    "obs_id": "obs_20260204_372dffa9bfe81856",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (496 chars) with system failure indicators",
+    "id": "anom_20260204_40115818df5e0fec",
+    "links": [],
+    "obs_id": "obs_20260204_ab2b23101510c546",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (496 chars) with system failure indicators",
+    "id": "anom_20260204_42236bbc4774fff7",
+    "links": [],
+    "obs_id": "obs_20260204_b97bb54b0189ace2",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_46dd6cca17f86ff7",
+    "links": [],
+    "obs_id": "obs_20260204_3d1573d49443cba7",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (495 chars) with system failure indicators",
+    "id": "anom_20260204_51d92aa6c9936cd6",
+    "links": [],
+    "obs_id": "obs_20260204_5b3daae8014dbba5",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (495 chars) with system failure indicators",
+    "id": "anom_20260204_534238f1fbf32a51",
+    "links": [],
+    "obs_id": "obs_20260204_7845efd1df106236",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (488 chars) with system failure indicators",
+    "id": "anom_20260204_59546ff070331d5c",
+    "links": [],
+    "obs_id": "obs_20260204_a84a6b9257fb13ca",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (495 chars) with system failure indicators",
+    "id": "anom_20260204_688e6dd872a94567",
+    "links": [],
+    "obs_id": "obs_20260204_6f4964fd4e666a8d",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (496 chars) with system failure indicators",
+    "id": "anom_20260204_6c467f460e0e4f05",
+    "links": [],
+    "obs_id": "obs_20260204_b9c274caf4b15a8b",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_6d3b943a1ef6305c",
+    "links": [],
+    "obs_id": "obs_20260204_980e72fdf2c9f579",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (417 chars) with system failure indicators",
+    "id": "anom_20260204_7503f633fe21f1b4",
+    "links": [],
+    "obs_id": "obs_20260204_cfb88060b6dd98ac",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_8ee0d64fb969d4e4",
+    "links": [],
+    "obs_id": "obs_20260204_2b0b6e05ba90d99f",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (495 chars) with system failure indicators",
+    "id": "anom_20260204_92d40c61e7ff948e",
+    "links": [],
+    "obs_id": "obs_20260204_83a8f5e291d5fb7b",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (492 chars) with system failure indicators",
+    "id": "anom_20260204_9a3ae941ef77339f",
+    "links": [],
+    "obs_id": "obs_20260204_e427f4087c4e6a84",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (489 chars) with system failure indicators",
+    "id": "anom_20260204_9c2361e0fafebc80",
+    "links": [],
+    "obs_id": "obs_20260204_e8aaa4f58bc91133",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_a021e5b4f01f69ac",
+    "links": [],
+    "obs_id": "obs_20260204_9ca1e045540aa421",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_c4ae08b9be0b3250",
+    "links": [],
+    "obs_id": "obs_20260204_95577b059ae53dc4",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_c7b97daafbe367f5",
+    "links": [],
+    "obs_id": "obs_20260204_7aafd66cc89dd91c",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (493 chars) with system failure indicators",
+    "id": "anom_20260204_d0252a3363d18467",
+    "links": [],
+    "obs_id": "obs_20260204_bf47ea1b50724a42",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (494 chars) with system failure indicators",
+    "id": "anom_20260204_d3e2c076ccc569f5",
+    "links": [],
+    "obs_id": "obs_20260204_cf64e66b048750db",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "code": "A3",
+    "date": "2026-02-04",
+    "description": "Large incident description (478 chars) with system failure indicators",
+    "id": "anom_20260204_e32b7e598f75b558",
+    "links": [],
+    "obs_id": "obs_20260204_26a883de315ce21f",
+    "run_id": 1,
+    "severity": "high",
+    "type": "anomaly"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "active_launch",
+    "date": "2026-02-04",
+    "id": "ins_20260204_017437e2f892a791",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8be62b2cb69c9aed"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Active Launch"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "2026-01-26_execution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_017df3aa8f857afb",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7752ea31de69a486"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: 2026-01-26 Execution"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "autonomous_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_04b89a0a0245bb93",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_0124ceb8f810d181"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Autonomous Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "censorship_post-generation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_068c6b8c7d3365c1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fc4f391b1c750ae4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Censorship Post-Generation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "canonique_corse",
+    "date": "2026-02-04",
+    "id": "ins_20260204_07cd49ecdec6939a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7bfb8eec08c4acb7"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Canonique Corse"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_action",
+    "date": "2026-02-04",
+    "id": "ins_20260204_0afd1a741ac706f1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_4e275b2c8ab8922a"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Action"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_definition",
+    "date": "2026-02-04",
+    "id": "ins_20260204_0c551288cf61805c",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7506a72db79c6684"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Definition"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_constitution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_0e22f5f5d2072f42",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b9efeea865d95ec0"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Constitution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "governance_mechanically",
+    "date": "2026-02-04",
+    "id": "ins_20260204_0ea9393585105f90",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_47742f0938eae3b5"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Governance Mechanically"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "graph_indices",
+    "date": "2026-02-04",
+    "id": "ins_20260204_0f0c725c08a2c1d6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_32808ed864c580b1"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Graph Indices"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "accomplished_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_14269a53e4ff6fbe",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_2175946f96eb9cd1"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Accomplished Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_explanation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_14dd21be96cfb8d4",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_95b11dc285e3ac60"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Explanation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_hypothetical",
+    "date": "2026-02-04",
+    "id": "ins_20260204_169be592507d981f",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_77c7be1523c4196d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Hypothetical"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constrain_district",
+    "date": "2026-02-04",
+    "id": "ins_20260204_1895ed698e5998ce",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_1dfc7ed0ea4bd877"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constrain District"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_implementation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_18cb85d59486b5f9",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_1555d5064d9669a7"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Implementation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-31_attestation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_1a7bfcc62d5412fd",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e275814cee8961c4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-31 Attestation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "applied_architectural",
+    "date": "2026-02-04",
+    "id": "ins_20260204_1d8fe4391f6515d6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_278a2630f7db1048"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Applied Architectural"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-25_convenience",
+    "date": "2026-02-04",
+    "id": "ins_20260204_1f45ac4192964641",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f5d9c556493155fc"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-25 Convenience"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_culturally",
+    "date": "2026-02-04",
+    "id": "ins_20260204_20713e9649f19502",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_6807ecb166b9660e"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Culturally"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_breakthroughs",
+    "date": "2026-02-04",
+    "id": "ins_20260204_21b039d44eb95a2d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8c9f4baa9e765496"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Breakthroughs"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "adversarial_architecture",
+    "date": "2026-02-04",
+    "id": "ins_20260204_220a18572a525ba1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7ae538a4a7e71b7e"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Adversarial Architecture"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "consciousness_functional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_22e5d47e43ad1065",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8caaee966d76e4e8"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Consciousness Functional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2024-01-15_completion",
+    "date": "2026-02-04",
+    "id": "ins_20260204_22ffa4a84374ab35",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_84fef8320a5f69a3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2024-01-15 Completion"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "certificate_certificates",
+    "date": "2026-02-04",
+    "id": "ins_20260204_23b52803d431d20d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_4af514f415ce53a6"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Certificate Certificates"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_dashboard",
+    "date": "2026-02-04",
+    "id": "ins_20260204_23da0731bdf560b6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f49ea641a8bd4404"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Dashboard"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "collective-intelligence_correlated",
+    "date": "2026-02-04",
+    "id": "ins_20260204_244f355faa888fe7",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_acc2dd2ac2168c4c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Collective-Intelligence Correlated"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "agentx_established",
+    "date": "2026-02-04",
+    "id": "ins_20260204_25b2e4eae653b584",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8cf6d6798073b511"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Agentx Established"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-22_comprehensive",
+    "date": "2026-02-04",
+    "id": "ins_20260204_28d5c64fed99dcdf",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fdd3b6fc92e0b259"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-22 Comprehensive"
+  },
+  {
+    "avg_confidence": 0.95,
+    "cluster": "complete_delivered",
+    "date": "2026-02-04",
+    "id": "ins_20260204_2957211928937658",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_7aafd66cc89dd91c",
+      "obs_20260204_af038ce5e0eef5e3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Delivered"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "compliance_dedicated",
+    "date": "2026-02-04",
+    "id": "ins_20260204_299704331c0f2976",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_d671763107c20144"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Compliance Dedicated"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "applied_convention",
+    "date": "2026-02-04",
+    "id": "ins_20260204_29b1753eabf37405",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_84c49d8e89ab7487"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Applied Convention"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_configuration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_2d7ad174e331bef1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_6da25bbcd33ff1dc"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Configuration"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "hypothesis-driven_implementation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_325cc8a31f97f5ae",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_391e0f6391d3de12"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Hypothesis-Driven Implementation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_32926eb5374346f5",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_033e5626f22ef406"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_conceptual",
+    "date": "2026-02-04",
+    "id": "ins_20260204_33cbf0d82ce10f3a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9670b7cda3c4fa72"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Conceptual"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "dashboard_directory",
+    "date": "2026-02-04",
+    "id": "ins_20260204_3612674e21d8409b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_dcc0962565b3647f"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Dashboard Directory"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "components_emulation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_362b37306f92e4c3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3f7f85e91f1598d0"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Components Emulation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "5-minute_consulting",
+    "date": "2026-02-04",
+    "id": "ins_20260204_38024ef4dbf5cd55",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e8aaa4f58bc91133"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 5-Minute Consulting"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "deterministic_jurisdictional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_38c74c772732c8c7",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_6f4964fd4e666a8d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Deterministic Jurisdictional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "longitudinal_observation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_3badfbe34d2a08d1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_d058bfbdcc8a73b2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Longitudinal Observation"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "dashboard_insights",
+    "date": "2026-02-04",
+    "id": "ins_20260204_3c234a68b3eaaaf1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_834c9e4aa5082ca3"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Dashboard Insights"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_actionable",
+    "date": "2026-02-04",
+    "id": "ins_20260204_401bdab3df7099f4",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_0ec9eef7e61d76a8"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Actionable"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "analysis_architecture",
+    "date": "2026-02-04",
+    "id": "ins_20260204_45377aafb32a5207",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_d9d081692237148f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Analysis Architecture"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_453829b5902289a7",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_00b939c7ecbcad66",
+      "obs_20260204_5b3daae8014dbba5"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "aggregation_gateway",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4758f3f68d97c206",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c95c4c1fac9479d4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Aggregation Gateway"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-22_attestations",
+    "date": "2026-02-04",
+    "id": "ins_20260204_478aebee7a50e4a8",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_992464f2368c09b9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-22 Attestations"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "2026-01-28_completion",
+    "date": "2026-02-04",
+    "id": "ins_20260204_489238b0eb8541a9",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_118c36b6378db8a0"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: 2026-01-28 Completion"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "canonical_configuration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4b6849b3af8f1eb9",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7cea76c4b33fcb91"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Canonical Configuration"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-31_applied",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4c506ed74c54c992",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_2ab5124f3255b7b2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-31 Applied"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "analysis_improvement",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4cfba2252375c243",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_216d1cd127cf3d9d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Analysis Improvement"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-02-01_analyse",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4d95d5e0e35b4f50",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_bf666b2b6b8da2bb"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-02-01 Analyse"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "decisions_describes",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4df6df36cd3fd954",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_ef780b97c7fa3a27"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Decisions Describes"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "biblioth\u00e8que_certification",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4e5457171257c6cc",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_980e72fdf2c9f579"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Biblioth\u00e8que Certification"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "append-only_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4f32276b9f099532",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c38385aaef84259a"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Append-Only Complete"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "2026-02-04_deployment",
+    "date": "2026-02-04",
+    "id": "ins_20260204_4fe6c5416033fff5",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e2c74e03b5fb5df0"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: 2026-02-04 Deployment"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_addressed",
+    "date": "2026-02-04",
+    "id": "ins_20260204_503c05410775c79b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_db0c9315e5d91abe"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Addressed"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "ascii_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_51aba22f1b1daeff",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3c643e27ffc4224b"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Ascii Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_51b5a6c27f715117",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_68f0daf5f41518d0",
+      "obs_20260204_b0546f950f8c7354"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "adversarial_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_52c24e4e8370e1a4",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_be80eaa16406d354"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Adversarial Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "ci-enforced_convention",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5314d79960512822",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_792a00a08e6a093b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Ci-Enforced Convention"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-02-01_configuration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5358af5f1950630d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e427f4087c4e6a84"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-02-01 Configuration"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "2026-01-29_city",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5366f473131500d6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_ed3c679d49f1897d"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: 2026-01-29 City"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "auto-generated_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_55491789a9bfa835",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_039b2fbf2ebd96b1"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Auto-Generated Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-26_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_55fa6b2735ff8a82",
+    "links": [],
+    "observation_count": 4,
+    "observation_ids": [
+      "obs_20260204_0a95e957cc1b7d66",
+      "obs_20260204_317708bc0b0a7c1b",
+      "obs_20260204_da43c6ce1d040ef6",
+      "obs_20260204_f3b0d42668144770"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-26 Autonomous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "actually_centralization",
+    "date": "2026-02-04",
+    "id": "ins_20260204_57a8316a7941cc46",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_a13446775dbd9ad9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Actually Centralization"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "deterministic_emergence",
+    "date": "2026-02-04",
+    "id": "ins_20260204_58d29708af5462a5",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9c7758729d37ffc5"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Deterministic Emergence"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architectural_continuous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5979a34542cfc8dd",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_a3ef2b078e9fa6f9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architectural Continuous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "documentation_local",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5e013bf011e7819c",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_070e7f5fdfca6c6c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Documentation Local"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5f21e16da445137f",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_9500051fa3171639",
+      "obs_20260204_cd7aafe5b604918b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_collaborate",
+    "date": "2026-02-04",
+    "id": "ins_20260204_5f3f4386bf0587bc",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3c3da4e97ef84d04"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Collaborate"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-22_constitution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_61a5bfa3ed67b835",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_6b8cdcd75456f4e4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-22 Constitution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-28_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_62028d09ab864fe7",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e927478f98e0f28b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-28 Autonomous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "--oneline_actually",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6412333043d647be",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b97bb54b0189ace2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: --Oneline Actually"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "attestation_canonical",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6414eeace07548ae",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c076fec6deabdca8"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Attestation Canonical"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_autonomy",
+    "date": "2026-02-04",
+    "id": "ins_20260204_655578332fcb93a8",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_c18b5d207ca2b2ee",
+      "obs_20260204_e1bb9e9061a7093a"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Autonomy"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-25_authorization",
+    "date": "2026-02-04",
+    "id": "ins_20260204_665d71d9b505d694",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b1c6424555b2dc4b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-25 Authorization"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "documented_implications",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6699fe8b64830c2a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_6769dbe29f2b5602"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Documented Implications"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "evolution_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_66da9e2acd3fee8d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5131d931a671f56e"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Evolution Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "decision_doctrine",
+    "date": "2026-02-04",
+    "id": "ins_20260204_675f6311d344077d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e0ddf388be497779"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Decision Doctrine"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "aggregation_execution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_67ef9256a33c6138",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9e69bf9462404274"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Aggregation Execution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_69f3119fbc51c485",
+    "links": [],
+    "observation_count": 4,
+    "observation_ids": [
+      "obs_20260204_051bb075ec9ba115",
+      "obs_20260204_0b3f88c15054e0c9",
+      "obs_20260204_3e6cdcfb530266dc",
+      "obs_20260204_90b81dc5229b2d96"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "artifacts_breakthrough",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6b2f4022d3a92ca3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_d72304207bd6d110"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Artifacts Breakthrough"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "audit_finite-dimensional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6bf862f3e00d8470",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3dbf5a8204f5d089"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Audit Finite-Dimensional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_failure",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6c179ac697d457f3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_cfb88060b6dd98ac"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Failure"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "corse_gouvernance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6c84db387c8484ce",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f98696fbb70a5bd2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Corse Gouvernance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_integration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6d11f4224f87147d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fae90f9e6687615b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Integration"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "autonomy_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6e41ea647484b2b2",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e1ecf8d443ebedae"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Autonomy Complete"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "deterministic_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6f3e9bc7cc22be1f",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_71b432d84cbc600d"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Deterministic Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_determinism",
+    "date": "2026-02-04",
+    "id": "ins_20260204_6fa5524938012940",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_065c456ed687e617"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Determinism"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_delivery",
+    "date": "2026-02-04",
+    "id": "ins_20260204_718f231035784fde",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3d1573d49443cba7"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Delivery"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "attestations_consolidation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_726be06f8468fc51",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5050d8290de7f621"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Attestations Consolidation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "compatible_essential",
+    "date": "2026-02-04",
+    "id": "ins_20260204_73807a4577b28dd0",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_2ff323cac7ed08b8"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Compatible Essential"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "accomplished_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_739dffd9ff6cff1e",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f75ed812fe1733b1"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Accomplished Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "application_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_749e874fb2faf515",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e3e94a326d9607b3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Application Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_755f08240395dd1d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_0d9306a4e45fb742"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_76e7e5519e74911b",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_afa29e76a7a44326",
+      "obs_20260204_f7694bc7dd686740"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Autonomous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_comprehensive",
+    "date": "2026-02-04",
+    "id": "ins_20260204_76fd91f96911895a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b11b1fdf471fde36"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Comprehensive"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomously_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_7b3ae8c9a6180597",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_2a8d2c872c4cd076"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomously Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2024-01-15_end-to-end",
+    "date": "2026-02-04",
+    "id": "ins_20260204_7b3efd861f229e83",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_92cc25adfb700a4c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2024-01-15 End-To-End"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_compromising",
+    "date": "2026-02-04",
+    "id": "ins_20260204_7b704c92738cfe90",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9c266c5cf2f2e970"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Compromising"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-28_one-command",
+    "date": "2026-02-04",
+    "id": "ins_20260204_7e8dcc307900236d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9230a8062c391383"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-28 One-Command"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "charte_chromatique",
+    "date": "2026-02-04",
+    "id": "ins_20260204_7fa59c14aca43026",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5a881d3ad0fe975f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Charte Chromatique"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "governance_integration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_807806675394d7d0",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_4d8127ea27ffe944"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Governance Integration"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "architecture_drop-in",
+    "date": "2026-02-04",
+    "id": "ins_20260204_80f038ae44c253ac",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_d654c624a3809607"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Architecture Drop-In"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "delivered_documentation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_8505ded8fa092df0",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9ee96364efaab3a7"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Delivered Documentation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "correctly_enforced",
+    "date": "2026-02-04",
+    "id": "ins_20260204_890150e7d06342e5",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_452f460628deed10"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Correctly Enforced"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_capability",
+    "date": "2026-02-04",
+    "id": "ins_20260204_8b7d14ab32d9d883",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c5fe2e1b2e397227"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Capability"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "2026-01-26_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_8c9d0ed85332fe4e",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_465297da5e499653"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: 2026-01-26 Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "dependencies_deployment",
+    "date": "2026-02-04",
+    "id": "ins_20260204_8f2c6add35f22e3b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f194a317cd630c4c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Dependencies Deployment"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "absorption_implement",
+    "date": "2026-02-04",
+    "id": "ins_20260204_94a6e19914de07d3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_077f68f2e25b51a9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Absorption Implement"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_cryptographic",
+    "date": "2026-02-04",
+    "id": "ins_20260204_95de4f886ca799b6",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_48d320a56d20a743",
+      "obs_20260204_be5b43f3ae81513a"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Cryptographic"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "accomplished_comprehensive",
+    "date": "2026-02-04",
+    "id": "ins_20260204_95fc37c12456b4f8",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_ce746bcca3797e6b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Accomplished Comprehensive"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architectures_chatdev",
+    "date": "2026-02-04",
+    "id": "ins_20260204_96e8ab23f87f7c1a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e22f7002363a4937"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architectures Chatdev"
+  },
+  {
+    "avg_confidence": 0.95,
+    "cluster": "complete_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_98a9337b508c39f9",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_60b9e672cc406b71",
+      "obs_20260204_c5cc6ff3e3237656"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_adversarial",
+    "date": "2026-02-04",
+    "id": "ins_20260204_9979d8db0924eb84",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5cdfea1a0389212d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Adversarial"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "determinism_extension",
+    "date": "2026-02-04",
+    "id": "ins_20260204_9a0d79671f6d054f",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3c2eb8658ec659a3"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Determinism Extension"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "generated_jurisdiction",
+    "date": "2026-02-04",
+    "id": "ins_20260204_9ac0ef61da6837b1",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_630e7dd7a03fe983"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Generated Jurisdiction"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "enforcement_implementation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_9bcc2f1875a0f147",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_1666b4e968206cb1"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Enforcement Implementation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_determinism",
+    "date": "2026-02-04",
+    "id": "ins_20260204_9db58a4a1a9f709b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_db95f145668492ef"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Determinism"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "chatdev_checkpoint",
+    "date": "2026-02-04",
+    "id": "ins_20260204_a0f9ef4e72b8b197",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_59cf80ab7ec00559"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Chatdev Checkpoint"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "autonomous_confederation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_a655ec745dc24b6d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_cd79ead45bae1795"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Autonomous Confederation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "accomplished_implemented",
+    "date": "2026-02-04",
+    "id": "ins_20260204_a7fe33f6fa87467e",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_cf64e66b048750db"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Accomplished Implemented"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_catastrophic",
+    "date": "2026-02-04",
+    "id": "ins_20260204_aa49057f4ece57dd",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_ab2b23101510c546"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Catastrophic"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architectural_evolution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_abcdb709415767a2",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_efc95d8a6da618f2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architectural Evolution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architecture_guide",
+    "date": "2026-02-04",
+    "id": "ins_20260204_af32d53618f8fcb9",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9ca1e045540aa421"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architecture Guide"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "deterministic_execution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b01cd2bdf719163e",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8cb2eeece346ffd9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Deterministic Execution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "clawdbot_demonstrates",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b03690311ab43d73",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_995e660eeb92d9ec"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Clawdbot Demonstrates"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "breakthrough_deterministic",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b03c4f626e360e6f",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b0904449b4200ea9"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Breakthrough Deterministic"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "explicitly_integration",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b18b6cddf302b155",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_eefaf09b4a87db0f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Explicitly Integration"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "categories_confirmed",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b1c27191bdc6cf88",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8e5f226807085da8"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Categories Confirmed"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "articulation_index",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b55808b8f5480d49",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b08d5481e23a1350"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Articulation Index"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "chatdev_checkpoints",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b6b078cfafa49e26",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_277e7b0bdd7c3693"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Chatdev Checkpoints"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "consolidation_emergence",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b8165c46345ecef8",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_17a3d093f34b2138"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Consolidation Emergence"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "checklist_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b921ee8eed98b5c5",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_f9f3d3a247bde4ef"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Checklist Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "certificates_determinism",
+    "date": "2026-02-04",
+    "id": "ins_20260204_b98bdb9ea27ab939",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_77554a960c345985"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Certificates Determinism"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_calculations",
+    "date": "2026-02-04",
+    "id": "ins_20260204_bacbf92c8d9861d6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3e9472c20bf16596"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Calculations"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "auto-evaluation_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_bb73902b7ef86170",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_e475840cf5c50fb3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Auto-Evaluation Autonomous"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "completed_dashboard",
+    "date": "2026-02-04",
+    "id": "ins_20260204_bce35f03416e80a8",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_82f88862e7fb16dc"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Completed Dashboard"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_accomplished",
+    "date": "2026-02-04",
+    "id": "ins_20260204_bfd7fdf8601ad02a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5c1f808ad3dfdccf"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Accomplished"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_hierarchical",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c090fdb81c09a104",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fa7418b8d655de8b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Hierarchical"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_constitutionally",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c1642c1e607066ec",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c068a4831b5a5733"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Constitutionally"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitutional_contract",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c29ae671cf30bffb",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_3a7cf113083c11c2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitutional Contract"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-26_completion",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c4d9c3f757c8bb8a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_83a8f5e291d5fb7b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-26 Completion"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "blocking_detection",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c51594a2b2091ef0",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_4c0d81f541c8cf1a"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Blocking Detection"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "districts_engineering",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c52504612fcf89bb",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_336e1dea489ab9c6"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Districts Engineering"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "requirements-ci",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c5fed1b010e9cb4b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_389848054e18d328"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Requirements-Ci"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "aggregation_audit",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c7bc51c607482ca6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_962e4823716b44a3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Aggregation Audit"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "censorship_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c7ea421b9cee87b3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fd8bad9d80530cbf"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Censorship Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "adversarial_audit-ready",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c83faf2a05f190ef",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_89547fd901b168af"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Adversarial Audit-Ready"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_c919b498727ee7d1",
+    "links": [],
+    "observation_count": 3,
+    "observation_ids": [
+      "obs_20260204_2b0b6e05ba90d99f",
+      "obs_20260204_7845efd1df106236",
+      "obs_20260204_97227ae147d0e0af"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "charter_discipline",
+    "date": "2026-02-04",
+    "id": "ins_20260204_ca19d8a7b8908c27",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_87f3c6d928cccc8d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Charter Discipline"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "gate_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_ca89774942204b77",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_246805017938fa69"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Gate Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "deterministic_enforcement",
+    "date": "2026-02-04",
+    "id": "ins_20260204_cfd880dee762e4c3",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_77b84a8b335fed8f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Deterministic Enforcement"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "analysis_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d0d926026b1af68c",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_bdd76cd3665f674e"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Analysis Autonomous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "emergence_explicitly",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d26b2cfb04de8801",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_103598394821e9b5"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Emergence Explicitly"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "consulting_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d3ce52025d29c5ec",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_32fc0638d8ed609e"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Consulting Governance"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "autonomous_deliverables",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d447be90d7f1d647",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_15a9c05f0cd56cee"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Autonomous Deliverables"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_assessment",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d45ec80445fed817",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_5603d0dc50a2413d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Assessment"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "continuously_daily",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d47e32a75e573faa",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_a0f61b2de1c54fbf"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Continuously Daily"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architectural_complete",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d502d4316990734d",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_24e37478b0eb20c7",
+      "obs_20260204_fce47a5bf3c5e5b6"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architectural Complete"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "completion_emergence",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d5a1c484cde94fe7",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_894da26b0496d5e5"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Completion Emergence"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "convergence_falsifiable",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d60ae8ab88de3d34",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b57e8c351da9895d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Convergence Falsifiable"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_deliverables",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d7060aa838ff9398",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_83df97e29fa2ef68"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Deliverables"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "actually_breakthroughs",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d7dd39a32350d3f4",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8c15269a925cae1b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Actually Breakthroughs"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "governance_iterates",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d8b13b962a3052aa",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_9a1a2fba8e60d399"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Governance Iterates"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "exploration_methodology",
+    "date": "2026-02-04",
+    "id": "ins_20260204_d95cecc47c0c6107",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_fcb249d2e27e2f3f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Exploration Methodology"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "conflicting_deceptively",
+    "date": "2026-02-04",
+    "id": "ins_20260204_da0c71e99f70f370",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_c2295b92646b1dfb"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Conflicting Deceptively"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constitution_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_dfea4250889336cf",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_90898445075642b0"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constitution Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "definition_execution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e0bdce8bebc97028",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_670782e8d4a26cb2"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Definition Execution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_dangerous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e16bcb28c8849b69",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_2028111eab2237f4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Dangerous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "comprehensively_contained",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e3d250039f771cce",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_1f01824250d1426d"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Comprehensively Contained"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architectural_kernel",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e64ef4f886ca05eb",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_a81d52d1292c4d50"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architectural Kernel"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-24_chatdev",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e69d8575b6e82bfd",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_df9b96e6aa5d04bc"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-24 Chatdev"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "determinism_governance",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e83cf76f671da9ff",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_50e147a0310a7f8c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Determinism Governance"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-28_activated",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e959c7e0b9ec8985",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8513d960dc801fec"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-28 Activated"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-29_dashboard",
+    "date": "2026-02-04",
+    "id": "ins_20260204_e9c8e1deba6f0044",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b4a52a7c4155a7b3"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-29 Dashboard"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "demonstrating_inefficiency",
+    "date": "2026-02-04",
+    "id": "ins_20260204_ea0b98338309928b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_85e865b2a57c4696"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Demonstrating Inefficiency"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-26_autonomy",
+    "date": "2026-02-04",
+    "id": "ins_20260204_ea2eaa367e2540ca",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_66218092d5bb85bc"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-26 Autonomy"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "compliance_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_eb9b85d260836b77",
+    "links": [],
+    "observation_count": 2,
+    "observation_ids": [
+      "obs_20260204_8e53a880adc084e8",
+      "obs_20260204_95577b059ae53dc4"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Compliance Constitutional"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-30_analysis",
+    "date": "2026-02-04",
+    "id": "ins_20260204_eeeb99f539f19fa9",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_bf47ea1b50724a42"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-30 Analysis"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_implementation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_ef0f368ba569efe6",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_59d4722d07130c89"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Implementation"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "entering_extended",
+    "date": "2026-02-04",
+    "id": "ins_20260204_efdc101d6db92a4a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_df8b31d33fde2be4"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Entering Extended"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "complete_constrained",
+    "date": "2026-02-04",
+    "id": "ins_20260204_f0e507769702ba98",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_7ec9ac3ea80b0d13"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Complete Constrained"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "agents_autonomous",
+    "date": "2026-02-04",
+    "id": "ins_20260204_f1710575f1e87bcf",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_372dffa9bfe81856"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Agents Autonomous"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "daily_emulation",
+    "date": "2026-02-04",
+    "id": "ins_20260204_f44b2a27a2ff180b",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_4dfdfcb95acd207c"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Daily Emulation"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "architect_architecture",
+    "date": "2026-02-04",
+    "id": "ins_20260204_f4a273a2e26034be",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8b08434795669564"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Architect Architecture"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "catastrophic_deterministic",
+    "date": "2026-02-04",
+    "id": "ins_20260204_f552e5984549ab1a",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_b9c274caf4b15a8b"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Catastrophic Deterministic"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "2026-01-21_constitution",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fa2483e8670d6a2e",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_a84a6b9257fb13ca"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: 2026-01-21 Constitution"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "consolidation_constitutional",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fa3d969cb4adfa6c",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_647d53cbaaf291cf"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Consolidation Constitutional"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "analysis_comprehensive",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fa694ff48d60401d",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_ec1291ba72fd7af1"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: Analysis Comprehensive"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "analysis_breakthrough",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fb3901acb15758e4",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_84b4945c8f14a7af"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Analysis Breakthrough"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "dependencies_documentati",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fcb38e2e1d6205a8",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_846280ca57a720de"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Dependencies Documentati"
+  },
+  {
+    "avg_confidence": 0.9,
+    "cluster": "constrained_controlled",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fce18895376d1261",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_26a883de315ce21f"
+    ],
+    "run_id": 1,
+    "tags": [
+      "document"
+    ],
+    "theme": "Cluster: Constrained Controlled"
+  },
+  {
+    "avg_confidence": 1.0,
+    "cluster": "--insights_identifies",
+    "date": "2026-02-04",
+    "id": "ins_20260204_fee5314af198c8de",
+    "links": [],
+    "observation_count": 1,
+    "observation_ids": [
+      "obs_20260204_8267491e699ef013"
+    ],
+    "run_id": 1,
+    "tags": [],
+    "theme": "Cluster: --Insights Identifies"
+  }
+]

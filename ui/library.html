@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HELEN — Knowledge Library</title>
+  <link rel="stylesheet" href="library.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="library-container">
+    <header>
+      <img src="helen-avatar.svg" alt="HELEN" class="header-avatar"/>
+      <div class="header-info">
+        <h1>HELEN Knowledge Library</h1>
+        <p>Append-only wisdom, facts, and lessons</p>
+      </div>
+      <div class="header-nav">
+        <a href="/chat.html" class="nav-link">Chat</a>
+        <a href="/" class="nav-link">Console</a>
+      </div>
+    </header>
+
+    <div class="search-bar">
+      <input type="text" id="search-input" placeholder="Search wisdom, facts, lessons..." autocomplete="off"/>
+      <span class="search-icon">🔍</span>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="wisdom">Wisdom (38)</button>
+      <button class="tab-btn" data-tab="facts">Facts</button>
+    </div>
+
+    <main id="library-content">
+      <section id="wisdom-tab" class="tab-content active">
+        <div id="wisdom-list" class="entries-list">
+          <p class="loading">Loading wisdom...</p>
+        </div>
+      </section>
+
+      <section id="facts-tab" class="tab-content">
+        <div id="facts-list" class="facts-grid">
+          <p class="loading">Loading facts...</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>S1-S4 Rules: Drafts Only | No Receipt = No Claim | Append-Only | Authority Separation</p>
+    </footer>
+  </div>
+
+  <script src="library.js"></script>
+</body>
+</html>

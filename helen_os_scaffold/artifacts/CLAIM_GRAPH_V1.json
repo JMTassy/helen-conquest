@@ -1,0 +1,313 @@
+{
+  "type": "CLAIM_GRAPH_V1",
+  "graph": {
+    "type": "CLAIM_GRAPH_V1",
+    "topic": "D \u2208 {INCLUDE_V0.1, DEFER}",
+    "scenario": "Delayed Decay Gameplay Mechanic \u2014 CONQUEST Land",
+    "nodes": [
+      {
+        "node_id": "H1",
+        "role": "HELEN",
+        "kind": "BENEFIT",
+        "text": "Delayed Decay adds compounding strategic depth \u2014 towns that ignore upkeep suffer measurable entropy without sudden bankruptcy",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "H2",
+        "role": "HELEN",
+        "kind": "FACT",
+        "text": "The decay function is deterministic \u2014 same seed, same tick produces same decay rate; sovereignty_drift_index == 0 across seeds [42, 7, 99]",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "H3",
+        "role": "HELEN",
+        "kind": "PROPOSAL",
+        "text": "Decay is reversible within a configurable grace period (default: 100 ticks); no evidence is deleted, only marked DORMANT",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "H4",
+        "role": "HELEN",
+        "kind": "BENEFIT",
+        "text": "Decay motivates escort and resupply quests \u2014 it creates a natural cadence for F2/F3 activations",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "PERF1",
+        "role": "PM",
+        "kind": "CONSTRAINT",
+        "text": "Governance kernel throughput >= 10M ticks/day (required for production deployment)",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "ARCH1",
+        "role": "ARCH",
+        "kind": "CONSTRAINT",
+        "text": "Decay step must be insertable at end-of-tick without interleaving with other reducers",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "A1",
+        "role": "HAL",
+        "kind": "RISK",
+        "text": "Decay could create zombie towns \u2014 towns that appear solvent but are silently decaying, misleading other agents",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "A2",
+        "role": "HAL",
+        "kind": "RISK",
+        "text": "Grace period makes the decay onset non-obvious \u2014 agents may not detect when they entered the grace window",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "A3",
+        "role": "HAL",
+        "kind": "RISK",
+        "text": "Throughput cost of decay computation at 10M ticks/day is unknown \u2014 PERF1 may not hold",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "QA1",
+        "role": "DEV",
+        "kind": "GATE",
+        "text": "REPLAY_IDENTITY verified \u2014 decay step is deterministic at seeds [42, 7, 99, 13, 1337]",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "QA2",
+        "role": "QA",
+        "kind": "GATE",
+        "text": "PARTITION_IDENTITY verified \u2014 decay affects only towns in the decay window; non-decayed towns are unaffected",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "QA3",
+        "role": "QA",
+        "kind": "GATE",
+        "text": "ROLLBACK_IDENTITY verified \u2014 restoring a DORMANT town to ACTIVE fully restores its admissibility_rate, defeating zombie-town and grace-period concerns",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "QA4",
+        "role": "ARCH",
+        "kind": "GATE",
+        "text": "End-of-tick insertion verified \u2014 decay reducer runs after all event reducers, no interleaving detected",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      },
+      {
+        "node_id": "QA5",
+        "role": "DEV",
+        "kind": "GATE",
+        "text": "PERF_TICK_RATE_MIN verified \u2014 decay adds O(active_towns) cost; at 10M ticks/day with 100 active towns overhead is < 0.01%, defeating PERF1 concern",
+        "status": "ACTIVE",
+        "tags": [],
+        "evidence_receipts": []
+      }
+    ],
+    "edges": [
+      {
+        "edge_id": "E-A1->H3",
+        "type": "OBJECTS_TO",
+        "src": "A1",
+        "dst": "H3",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-A2->H3",
+        "type": "OBJECTS_TO",
+        "src": "A2",
+        "dst": "H3",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-A3->PERF1",
+        "type": "OBJECTS_TO",
+        "src": "A3",
+        "dst": "PERF1",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA1->H2",
+        "type": "REFINES",
+        "src": "QA1",
+        "dst": "H2",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA2->ARCH1",
+        "type": "REFINES",
+        "src": "QA2",
+        "dst": "ARCH1",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA3->H3",
+        "type": "REFINES",
+        "src": "QA3",
+        "dst": "H3",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA4->ARCH1",
+        "type": "REFINES",
+        "src": "QA4",
+        "dst": "ARCH1",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA5->PERF1",
+        "type": "REFINES",
+        "src": "QA5",
+        "dst": "PERF1",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA3->A1",
+        "type": "OBJECTS_TO",
+        "src": "QA3",
+        "dst": "A1",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA3->A2",
+        "type": "OBJECTS_TO",
+        "src": "QA3",
+        "dst": "A2",
+        "rationale": null
+      },
+      {
+        "edge_id": "E-QA5->A3",
+        "type": "OBJECTS_TO",
+        "src": "QA5",
+        "dst": "A3",
+        "rationale": null
+      }
+    ],
+    "g_set": [
+      "H1",
+      "H2",
+      "H3",
+      "H4",
+      "PERF1",
+      "ARCH1",
+      "QA1",
+      "QA2",
+      "QA3",
+      "QA4",
+      "QA5"
+    ],
+    "r_set": [],
+    "decision_rules": [
+      {
+        "rule_id": "DR2",
+        "decision_variable": "D",
+        "domain": [
+          "INCLUDE_V0.1",
+          "DEFER"
+        ],
+        "rule_text": "INCLUDE_V0.1 if PERF1 in G-set and QA1 in G-set and QA2 in G-set and QA3 in G-set and ARCH1 in G-set; else DEFER",
+        "depends_on": [
+          "PERF1",
+          "QA1",
+          "QA2",
+          "QA3",
+          "ARCH1"
+        ]
+      }
+    ],
+    "tasks": [
+      {
+        "task_id": "T1",
+        "role": "ARCH",
+        "text": "Produce formal decay step specification with tick-order insertion proof",
+        "hypothesis": "Decay step can be inserted as a single end-of-tick reducer without introducing intra-tick cascades",
+        "validation_gate": "REPLAY_IDENTITY && PARTITION_IDENTITY && ROLLBACK_IDENTITY"
+      },
+      {
+        "task_id": "T2",
+        "role": "DEV",
+        "text": "Verify REPLAY_IDENTITY under decay \u2014 same seed yields same decay pattern",
+        "hypothesis": "sovereignty_drift_index == 0 at seeds [42, 7, 99] with decay enabled",
+        "validation_gate": "REPLAY_IDENTITY"
+      },
+      {
+        "task_id": "T3",
+        "role": "QA",
+        "text": "Verify PARTITION_IDENTITY \u2014 decay must not alter non-decayed evidence partitions",
+        "hypothesis": "Evidence outside the decay window is identical to the no-decay run",
+        "validation_gate": "PARTITION_IDENTITY"
+      },
+      {
+        "task_id": "T4",
+        "role": "QA",
+        "text": "Verify ROLLBACK_IDENTITY \u2014 full admissibility restore after DORMANT-to-ACTIVE transition",
+        "hypothesis": "admissibility_rate after rollback equals pre-decay admissibility_rate",
+        "validation_gate": "ROLLBACK_IDENTITY"
+      }
+    ],
+    "source_digest": "fb38948a139a3096d7962dd264a5db6a4d5ff21759eb48dc9f2301eb3be19f4f"
+  },
+  "receipt_id": "R-beb00579",
+  "cum_hash": "d00091cc0d2fe3cfa1336334e46d9470d9f6582bef9df9fcee042cd70f159404",
+  "logs": {
+    "log_a": {
+      "status": "PASS",
+      "claims_count": 14,
+      "edges_count": 11,
+      "tasks_count": 4,
+      "dr_count": 1,
+      "source_digest": "fb38948a139a3096d7962dd264a5db6a4d5ff21759eb48dc9f2301eb3be19f4f"
+    },
+    "log_b": {
+      "status": "PASS",
+      "edge_count": 11,
+      "g_set_declared": 11,
+      "r_set_declared": 0,
+      "objects_to_edges": 6,
+      "g_set_final": 11,
+      "r_set_final": 0
+    },
+    "log_c": {
+      "status": "PASS",
+      "dr_ids": [
+        "DR2"
+      ],
+      "message": "All DR dependencies are CONSTRAINT or GATE kind"
+    },
+    "log_d": {
+      "status": "PASS",
+      "message": "No forbidden authority tokens (SHIP/SEALED/APPROVED) in node texts"
+    }
+  },
+  "run_at": "2026-03-01T03:06:23.470380+00:00",
+  "artifact_sha256": "82847d55dee5e6879c379292d0be535afcfcc02a2e3e57ae5ff53134149ed415",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

@@ -1,0 +1,261 @@
+{
+  "themes": {
+    "pixel-cozy": {
+      "name": "Pixel Cozy",
+      "description": "Warm, retro pixel-art aesthetic inspired by classic 8-bit games. Soft colors, rounded sprites.",
+      "palette": {
+        "background": "#1a1a2e",
+        "primary": "#16c784",
+        "secondary": "#ffd700",
+        "accent": "#ff6b6b",
+        "text": "#f0f0f0",
+        "quarantine": "#cc5555"
+      },
+      "sprites": {
+        "claim": {
+          "color": "#4a9eff",
+          "emoji": "🔵",
+          "size": "32x32"
+        },
+        "evidence": {
+          "color": "#ffd700",
+          "emoji": "🟡",
+          "size": "32x32"
+        },
+        "artifact": {
+          "color": "#b19cd9",
+          "emoji": "🟣",
+          "size": "32x32"
+        },
+        "receipt": {
+          "color": "#16c784",
+          "emoji": "🟢",
+          "size": "32x32"
+        },
+        "wild_text": {
+          "color": "#ff6b6b",
+          "emoji": "🔴",
+          "size": "32x32",
+          "quarantined": true
+        }
+      },
+      "zones": {
+        "exploration": {
+          "label": "🌍 EXPLORATION",
+          "background_color": "#2a3f5f",
+          "border_color": "#4a9eff"
+        },
+        "tension": {
+          "label": "⚡ TENSION",
+          "background_color": "#3f2a3f",
+          "border_color": "#ff6b6b"
+        },
+        "drafting": {
+          "label": "✍️ DRAFTING",
+          "background_color": "#3f3a2f",
+          "border_color": "#ffd700"
+        },
+        "editorial": {
+          "label": "✂️ EDITORIAL",
+          "background_color": "#2f3a3f",
+          "border_color": "#16c784"
+        },
+        "termination": {
+          "label": "🏁 TERMINATION",
+          "background_color": "#3a2f3f",
+          "border_color": "#b19cd9"
+        }
+      },
+      "badges": {
+        "receipt_pass": {
+          "emoji": "✅",
+          "color": "#16c784",
+          "label": "SHIP"
+        },
+        "receipt_fail": {
+          "emoji": "❌",
+          "color": "#ff6b6b",
+          "label": "ABORT"
+        },
+        "receipt_pending": {
+          "emoji": "⏳",
+          "color": "#ffd700",
+          "label": "PENDING"
+        }
+      }
+    },
+    "governance-formal": {
+      "name": "Governance Formal",
+      "description": "Professional bureaucratic aesthetic. Grid-based, monochrome with governance gold accents.",
+      "palette": {
+        "background": "#0d1117",
+        "primary": "#d4af37",
+        "secondary": "#404450",
+        "accent": "#ffffff",
+        "text": "#e0e0e0",
+        "quarantine": "#990000"
+      },
+      "sprites": {
+        "claim": {
+          "color": "#1e90ff",
+          "emoji": "📋",
+          "size": "32x32"
+        },
+        "evidence": {
+          "color": "#d4af37",
+          "emoji": "📜",
+          "size": "32x32"
+        },
+        "artifact": {
+          "color": "#c0c0c0",
+          "emoji": "🏛️",
+          "size": "32x32"
+        },
+        "receipt": {
+          "color": "#228b22",
+          "emoji": "✓",
+          "size": "32x32"
+        },
+        "wild_text": {
+          "color": "#990000",
+          "emoji": "⚠️",
+          "size": "32x32",
+          "quarantined": true
+        }
+      },
+      "zones": {
+        "exploration": {
+          "label": "EXPLORATION",
+          "background_color": "#1a1f26",
+          "border_color": "#d4af37"
+        },
+        "tension": {
+          "label": "TENSION",
+          "background_color": "#1a1f26",
+          "border_color": "#d4af37"
+        },
+        "drafting": {
+          "label": "DRAFTING",
+          "background_color": "#1a1f26",
+          "border_color": "#d4af37"
+        },
+        "editorial": {
+          "label": "EDITORIAL",
+          "background_color": "#1a1f26",
+          "border_color": "#d4af37"
+        },
+        "termination": {
+          "label": "TERMINATION",
+          "background_color": "#1a1f26",
+          "border_color": "#d4af37"
+        }
+      },
+      "badges": {
+        "receipt_pass": {
+          "emoji": "✓",
+          "color": "#228b22",
+          "label": "AUTHORIZED"
+        },
+        "receipt_fail": {
+          "emoji": "✗",
+          "color": "#990000",
+          "label": "REJECTED"
+        },
+        "receipt_pending": {
+          "emoji": "…",
+          "color": "#d4af37",
+          "label": "PENDING REVIEW"
+        }
+      }
+    },
+    "digital-minimal": {
+      "name": "Digital Minimal",
+      "description": "Clean, modern, minimalist design. High contrast, sans-serif, data-forward.",
+      "palette": {
+        "background": "#ffffff",
+        "primary": "#000000",
+        "secondary": "#cccccc",
+        "accent": "#ff0000",
+        "text": "#1a1a1a",
+        "quarantine": "#666666"
+      },
+      "sprites": {
+        "claim": {
+          "color": "#0066cc",
+          "emoji": "◆",
+          "size": "32x32"
+        },
+        "evidence": {
+          "color": "#ff9900",
+          "emoji": "●",
+          "size": "32x32"
+        },
+        "artifact": {
+          "color": "#9900cc",
+          "emoji": "★",
+          "size": "32x32"
+        },
+        "receipt": {
+          "color": "#00cc00",
+          "emoji": "✓",
+          "size": "32x32"
+        },
+        "wild_text": {
+          "color": "#cc0000",
+          "emoji": "◉",
+          "size": "32x32",
+          "quarantined": true
+        }
+      },
+      "zones": {
+        "exploration": {
+          "label": "EXPLORATION",
+          "background_color": "#f5f5f5",
+          "border_color": "#000000"
+        },
+        "tension": {
+          "label": "TENSION",
+          "background_color": "#f5f5f5",
+          "border_color": "#000000"
+        },
+        "drafting": {
+          "label": "DRAFTING",
+          "background_color": "#f5f5f5",
+          "border_color": "#000000"
+        },
+        "editorial": {
+          "label": "EDITORIAL",
+          "background_color": "#f5f5f5",
+          "border_color": "#000000"
+        },
+        "termination": {
+          "label": "TERMINATION",
+          "background_color": "#f5f5f5",
+          "border_color": "#000000"
+        }
+      },
+      "badges": {
+        "receipt_pass": {
+          "emoji": "✓",
+          "color": "#00cc00",
+          "label": "PASS"
+        },
+        "receipt_fail": {
+          "emoji": "✗",
+          "color": "#cc0000",
+          "label": "FAIL"
+        },
+        "receipt_pending": {
+          "emoji": "…",
+          "color": "#999999",
+          "label": "PENDING"
+        }
+      }
+    }
+  },
+  "default_theme": "pixel-cozy",
+  "user_preferences_storage": "localStorage",
+  "animation_duration_ms": 200,
+  "receipt_fade_time_ms": 5000,
+  "state_polling_interval_ms": 2000
+}

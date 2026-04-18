@@ -1,0 +1,316 @@
+{
+  "type": "EPOCH3_RUN_V1",
+  "seed": 42,
+  "ticks": 20,
+  "quest_results": [
+    {
+      "quest_id": "Q1",
+      "quest_type": "SOLVE_PARADOX",
+      "sim_loop": {
+        "type": "SIM_LOOP_RESULT_V1",
+        "quest_id": "Q1",
+        "quest_type": "SOLVE_PARADOX",
+        "phase_a": {
+          "seed": 42,
+          "ticks": 20,
+          "receipts": 84,
+          "admissibility_rate": 1.0,
+          "closure_success": true,
+          "sovereignty_drift": 0.0,
+          "dispute_heat": 0.25
+        },
+        "phase_b": {
+          "op": "INJECT_PARADOX",
+          "params": {
+            "dispute_all": true,
+            "expected_closure": false
+          },
+          "shadow_seeds": [
+            42
+          ],
+          "shadow_ticks": [
+            20
+          ],
+          "paradox_injected": true,
+          "shadow_closure_rates": [
+            0.0
+          ],
+          "shadow_admissibility_rates": [
+            1.0
+          ]
+        },
+        "phase_c": {
+          "delta_closure": 1.0,
+          "delta_admissibility": 0.0,
+          "delta_sovereignty": 0.0,
+          "sigma_passed": true,
+          "sigma_reason": "All 1 seeds pass threshold 1.0: {42: 1.0}",
+          "laws_inscribed": 1,
+          "evidence_receipts": [
+            "R-399b65be"
+          ]
+        },
+        "kernel_receipts_count": 6
+      },
+      "evaluation": {
+        "type": "EVALUATION_RESULT_V1",
+        "quest_id": "Q1",
+        "contradiction_resolved": true,
+        "reality_transformed": true,
+        "temporal_insights_gained": true,
+        "overall_pass": true,
+        "delta_closure": 1.0,
+        "delta_admissibility": 0.0,
+        "sigma_passed": true,
+        "laws_count": 1
+      },
+      "overall_pass": true
+    },
+    {
+      "quest_id": "Q2",
+      "quest_type": "ALTER_REALITY",
+      "sim_loop": {
+        "type": "SIM_LOOP_RESULT_V1",
+        "quest_id": "Q2",
+        "quest_type": "ALTER_REALITY",
+        "phase_a": {
+          "seed": 42,
+          "ticks": 20,
+          "receipts": 84,
+          "admissibility_rate": 1.0,
+          "closure_success": true,
+          "sovereignty_drift": 0.0,
+          "dispute_heat": 0.25
+        },
+        "phase_b": {
+          "op": "SET_SEED",
+          "params": {
+            "shadow_seed": 7
+          },
+          "shadow_seeds": [
+            7
+          ],
+          "shadow_ticks": [
+            20
+          ],
+          "paradox_injected": false,
+          "shadow_closure_rates": [
+            1.0
+          ],
+          "shadow_admissibility_rates": [
+            1.0
+          ]
+        },
+        "phase_c": {
+          "delta_closure": 0.0,
+          "delta_admissibility": 0.0,
+          "delta_sovereignty": 0.0,
+          "sigma_passed": true,
+          "sigma_reason": "All 1 seeds pass threshold 0.8: {42: 1.0}",
+          "laws_inscribed": 1,
+          "evidence_receipts": [
+            "R-4299037e"
+          ]
+        },
+        "kernel_receipts_count": 6
+      },
+      "evaluation": {
+        "type": "EVALUATION_RESULT_V1",
+        "quest_id": "Q2",
+        "contradiction_resolved": true,
+        "reality_transformed": true,
+        "temporal_insights_gained": true,
+        "overall_pass": true,
+        "delta_closure": 0.0,
+        "delta_admissibility": 0.0,
+        "sigma_passed": true,
+        "laws_count": 1
+      },
+      "overall_pass": true
+    },
+    {
+      "quest_id": "Q3",
+      "quest_type": "EXPLORE_TEMPORAL",
+      "sim_loop": {
+        "type": "SIM_LOOP_RESULT_V1",
+        "quest_id": "Q3",
+        "quest_type": "EXPLORE_TEMPORAL",
+        "phase_a": {
+          "seed": 42,
+          "ticks": 20,
+          "receipts": 84,
+          "admissibility_rate": 1.0,
+          "closure_success": true,
+          "sovereignty_drift": 0.0,
+          "dispute_heat": 0.25
+        },
+        "phase_b": {
+          "op": "SWEEP_TICKS",
+          "params": {
+            "horizons": [
+              10,
+              30,
+              50
+            ]
+          },
+          "shadow_seeds": [
+            42,
+            42,
+            42
+          ],
+          "shadow_ticks": [
+            10,
+            30,
+            50
+          ],
+          "paradox_injected": false,
+          "shadow_closure_rates": [
+            1.0,
+            1.0,
+            1.0
+          ],
+          "shadow_admissibility_rates": [
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        "phase_c": {
+          "delta_closure": 0.0,
+          "delta_admissibility": 0.0,
+          "delta_sovereignty": 0.0,
+          "sigma_passed": true,
+          "sigma_reason": "All 1 seeds pass threshold 1.0: {42: 1.0}",
+          "laws_inscribed": 1,
+          "evidence_receipts": [
+            "R-e80b1ec6"
+          ]
+        },
+        "kernel_receipts_count": 6
+      },
+      "evaluation": {
+        "type": "EVALUATION_RESULT_V1",
+        "quest_id": "Q3",
+        "contradiction_resolved": true,
+        "reality_transformed": true,
+        "temporal_insights_gained": true,
+        "overall_pass": true,
+        "delta_closure": 0.0,
+        "delta_admissibility": 0.0,
+        "sigma_passed": true,
+        "laws_count": 1
+      },
+      "overall_pass": true
+    }
+  ],
+  "laws_inscribed": [
+    {
+      "type": "LAW_V1",
+      "hypothesis": "Under total contradiction (all receipts disputed in W'), the kernel fails closed (closure_success=0 in W') while the base world W completes (closure_success=1). Contradiction resolves the distinction between real and simulated closure.",
+      "law_text": "LAW-Q1 (PARADOX): Kernel fail-closed is structural, not policy. Under total contradiction (INJECT_PARADOX), W' collapses closure while W completes \u2014 proving the distinction is architecture-enforced.",
+      "metric": "closure_success_base",
+      "seed_set": [
+        42
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-399b65be"
+      ],
+      "inscribed_at": "2026-02-28T23:11:03.913722+00:00",
+      "inscription_receipt_id": "R-e73824a1"
+    },
+    {
+      "type": "LAW_V1",
+      "hypothesis": "Admissibility rate is stable across reality perturbations (seed=42 vs seed=7): both worlds admit >= 80% of evidence bundles. Anti-replay is seed-independent \u2014 a property of the protocol, not the run.",
+      "law_text": "LAW-Q2 (REALITY): Admissibility_rate >= 0.80 is seed-invariant. Protocol correctness (anti-replay) is not an artifact of seed=42 \u2014 it holds across reality perturbations. Evidence pipelines are robust.",
+      "metric": "admissibility_rate",
+      "seed_set": [
+        42
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-4299037e"
+      ],
+      "inscribed_at": "2026-02-28T23:11:03.923557+00:00",
+      "inscription_receipt_id": "R-51c7fc0a"
+    },
+    {
+      "type": "LAW_V1",
+      "hypothesis": "Sovereignty drift index == 0 at all tick horizons [10, 20, 30, 50]: governance receipts are home-bounded regardless of simulation length. Constitutional invariants are time-stable.",
+      "law_text": "LAW-Q3 (TEMPORAL): Sovereignty_drift_index == 0 at all tick horizons [10, 20, 30, 50]. Constitutional governance (home-bounded receipts) is time-invariant \u2014 architecture, not policy, holds the boundary.",
+      "metric": "sovereignty_integrity",
+      "seed_set": [
+        42
+      ],
+      "adversarial_gates_passed": [],
+      "evidence_hashes": [
+        "R-e80b1ec6"
+      ],
+      "inscribed_at": "2026-02-28T23:11:03.940381+00:00",
+      "inscription_receipt_id": "R-32ea6eb7"
+    }
+  ],
+  "law_receipts": [
+    "R-e73824a1",
+    "R-51c7fc0a",
+    "R-32ea6eb7"
+  ],
+  "kernel_cum_hash": "d2777f32b8cbb769673e12bec6d4dff7d479688f9ff2a0a7e9fa03095b6d78ec",
+  "run_receipts_count": 23,
+  "cognitive_growth": 3,
+  "temporal_awareness": {
+    "quests_run": 3,
+    "closures_achieved": 3,
+    "avg_admissibility": 1.0,
+    "avg_sovereignty_drift": 0.0
+  },
+  "adaptive_strategies": [
+    {
+      "quest_id": "Q1",
+      "quest_type": "SOLVE_PARADOX",
+      "sigma_passed": true,
+      "overall_eval_pass": true,
+      "contradiction_resolved": true,
+      "reality_transformed": true,
+      "temporal_insights": true
+    },
+    {
+      "quest_id": "Q2",
+      "quest_type": "ALTER_REALITY",
+      "sigma_passed": true,
+      "overall_eval_pass": true,
+      "contradiction_resolved": true,
+      "reality_transformed": true,
+      "temporal_insights": true
+    },
+    {
+      "quest_id": "Q3",
+      "quest_type": "EXPLORE_TEMPORAL",
+      "sigma_passed": true,
+      "overall_eval_pass": true,
+      "contradiction_resolved": true,
+      "reality_transformed": true,
+      "temporal_insights": true
+    }
+  ],
+  "hypotheses": [
+    {
+      "id": "Q1",
+      "text": "Under total contradiction (all receipts disputed in W'), the kernel fails closed (closure_success=0 in W') while the base world W completes (closure_success=1). Contradiction resolves the distinction between real and simulated closure.",
+      "type": "SOLVE_PARADOX"
+    },
+    {
+      "id": "Q2",
+      "text": "Admissibility rate is stable across reality perturbations (seed=42 vs seed=7): both worlds admit >= 80% of evidence bundles. Anti-replay is seed-independent \u2014 a property of the protocol, not the run.",
+      "type": "ALTER_REALITY"
+    },
+    {
+      "id": "Q3",
+      "text": "Sovereignty drift index == 0 at all tick horizons [10, 20, 30, 50]: governance receipts are home-bounded regardless of simulation length. Constitutional invariants are time-stable.",
+      "type": "EXPLORE_TEMPORAL"
+    }
+  ],
+  "run_at": "2026-02-28T23:11:03.904539+00:00",
+  "artifact_sha256": "dcef3545c7a01d888e962f0026f5a159c355631656dc58d34806de6891ffe333",
+  "artifact_sha256_scheme": "SHA256(canonical_json(artifact_without_artifact_sha256_field)); RFC-8785-subset: sort_keys=True, no whitespace, ensure_ascii=True"
+}

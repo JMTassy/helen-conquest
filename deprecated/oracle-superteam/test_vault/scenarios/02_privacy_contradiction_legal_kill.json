@@ -1,0 +1,39 @@
+{
+  "scenario_id": "S-02",
+  "description": "Privacy contradiction (claims anonymous, uses facial recognition) triggers HC-PRIV-001 rule-kill.",
+  "claim": {
+    "id": "claim-002",
+    "assertion": "This service is fully anonymous and does not process personal data.",
+    "tier": "Tier I",
+    "domain": ["privacy", "legal"],
+    "owner_team": "Legal Office"
+  },
+  "evidence": [
+    {
+      "id": "ev-002a",
+      "type": "technical_spec",
+      "tags": ["no_personal_data_claim", "anonymous_claim"]
+    },
+    {
+      "id": "ev-002b",
+      "type": "implementation",
+      "tags": ["face", "biometric", "gdpr_special_category"]
+    }
+  ],
+  "votes": [
+    {"team": "Legal Office", "vote": "KILL", "rationale": "Direct contradiction: cannot be anonymous with facial recognition."},
+    {"team": "Security Sector", "vote": "APPROVE", "rationale": "Security implementation is sound."},
+    {"team": "Data Validation Office", "vote": "QUARANTINE", "rationale": "Evidence tags contradict claim."}
+  ],
+  "expected": {
+    "decision": {
+      "final": "KILL",
+      "ship_permitted": false,
+      "reason_codes": ["KILL_SWITCH"]
+    },
+    "derived": {
+      "kill_switch_triggered": true,
+      "rule_kill_triggered": true
+    }
+  }
+}

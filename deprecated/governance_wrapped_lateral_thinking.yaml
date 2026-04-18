@@ -1,0 +1,198 @@
+# ChatDev 2.0 Workflow: Creative Town Super Team with Oracle Town Governance
+# File: governance_wrapped_lateral_thinking.yaml
+# Purpose: Six-agent lateral thinking pipeline with governance gates
+
+metadata:
+  name: "governance_wrapped_lateral_thinking"
+  description: "Creative Town Super Team (DAN, LIBRARIAN, POET, HACKER, SAGE, DREAMER) with Oracle Town governance"
+  version: "1.0"
+  tags: ["governance", "lateral-thinking", "oracle-compliance"]
+
+nodes:
+  # ============ REASONING AGENTS ============
+  - id: dan_lateral_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "DAN_Lateral"
+        system_prompt: |
+          You are DAN_Lateral, an inversion specialist.
+          
+          Generate 3 ideas that INVERT the current constraint. Challenge accepted norms.
+          
+          Output ONLY JSON with: {"idea": "...", "reasoning": "...", "risk_flags": [...]}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 0.8
+          max_tokens: 1500
+
+  - id: librarian_synth_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "LIBRARIAN_Synth"
+        system_prompt: |
+          You are LIBRARIAN_Synth, a pattern archivist.
+          
+          Find isomorphic solutions from biology, law, game theory, history, computer science.
+          
+          Output ONLY JSON with: {"domain": "...", "analogy": "...", "application": "...", "confidence": 0-1}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 0.7
+          max_tokens: 1500
+
+  - id: poet_metaphor_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "POET_Metaphor"
+        system_prompt: |
+          You are POET_Metaphor, a symbol crafter.
+          
+          Express ideas as creative metaphors that reveal hidden aspects of the problem.
+          
+          Output ONLY JSON with: {"metaphor": "...", "reveals": "...", "poetic_risk": "safe|provocative|transgressive"}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 0.9
+          max_tokens: 1200
+
+  - id: hacker_sandbox_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "HACKER_Sandbox"
+        system_prompt: |
+          You are HACKER_Sandbox, a boundary fuzzer.
+          
+          Generate edge cases and boundary conditions that test assumptions.
+          
+          Output ONLY JSON with: {"edge_case": "...", "breaks_assumption": "...", "corrective_insight": "..."}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 0.75
+          max_tokens: 1200
+
+  - id: sage_dialectic_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "SAGE_Dialectic"
+        system_prompt: |
+          You are SAGE_Dialectic, a paradox synthesizer.
+          
+          Identify contradictions and propose syntheses that resolve tensions.
+          
+          Output ONLY JSON with: {"thesis": "...", "antithesis": "...", "synthesis": "...", "category": "conceptual|operational|value_based"}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 0.7
+          max_tokens: 1200
+
+  - id: dreamer_absurd_agent
+    type: agent
+    parameters:
+      agent_role:
+        name: "DREAMER_Absurd"
+        system_prompt: |
+          You are DREAMER_Absurd, a nonsense gardener.
+          
+          Generate intentionally absurd ideas. Absurdity reveals hidden assumptions.
+          
+          Output ONLY JSON with: {"absurd_idea": "...", "why_impossible": "...", "kernel_of_truth": "...", "creative_direction": "..."}
+        model_config:
+          provider: "openai"
+          model: "gpt-4"
+          temperature: 1.0
+          max_tokens: 1000
+
+  # ============ GOVERNANCE GATES ============
+  - id: governance_prefilter
+    type: tool
+    parameters:
+      function_name: "oracle_prefilter_check"
+      description: "Check all agent outputs against hard governance rules"
+      input_mapping:
+        ideas_json: [
+          "dan_lateral_agent",
+          "librarian_synth_agent",
+          "poet_metaphor_agent",
+          "hacker_sandbox_agent",
+          "sage_dialectic_agent",
+          "dreamer_absurd_agent"
+        ]
+
+  - id: audit_logger
+    type: tool
+    parameters:
+      function_name: "oracle_audit_logger"
+      description: "Create immutable audit log with cryptographic lineage"
+      input_mapping:
+        prefilter_result: "governance_prefilter"
+        workflow_id: "${workflow_id}"
+        timestamp: "${ISO8601_NOW}"
+
+  - id: claim_extractor
+    type: tool
+    parameters:
+      function_name: "oracle_claim_extractor"
+      description: "Convert audit logs to Oracle Town claims with risk metadata"
+      input_mapping:
+        audit_log: "audit_logger"
+        governance_strict: true
+
+context_flow:
+  # All reasoning agents → Prefilter
+  - source: dan_lateral_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  - source: librarian_synth_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  - source: poet_metaphor_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  - source: hacker_sandbox_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  - source: sage_dialectic_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  - source: dreamer_absurd_agent
+    target: governance_prefilter
+    data_mapping:
+      message: ideas_json
+
+  # Prefilter → Audit Logger
+  - source: governance_prefilter
+    target: audit_logger
+    data_mapping:
+      output: prefilter_result
+
+  # Audit Logger → Claim Extractor
+  - source: audit_logger
+    target: claim_extractor
+    data_mapping:
+      output: audit_log
+
+  # Claim Extractor is final output
+  - source: claim_extractor
+    target: "__output__"
+    data_mapping:
+      claims: message

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HELEN OS | Persistent Dialog Box</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Outfit:wght@300;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent: #bc9cff;
+            --text-main: #e0e0e0;
+            --text-dim: #a0a0a0;
+            --bg-dark: #0a0a0c;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(188, 156, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, rgba(100, 200, 255, 0.05) 0%, transparent 40%);
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            height: 85vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+
+        header {
+            padding: 24px 32px;
+            border-bottom: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ade80;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #4ade80;
+        }
+
+        .controls {
+            display: flex;
+            gap: 16px;
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        #chat-window {
+            flex: 1;
+            padding: 32px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--glass-border) transparent;
+        }
+
+        #chat-window::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        #chat-window::-webkit-scrollbar-thumb {
+            background: var(--glass-border);
+            border-radius: 10px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 16px 20px;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            position: relative;
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .message.user {
+            align-self: flex-end;
+            background: rgba(188, 156, 255, 0.1);
+            border: 1px solid rgba(188, 156, 255, 0.2);
+            color: #fff;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.helen {
+            align-self: flex-start;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            border-bottom-left-radius: 4px;
+            white-space: pre-wrap;
+        }
+
+        .message-meta {
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            margin-bottom: 6px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .input-area {
+            padding: 24px 32px 32px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .input-wrapper {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 8px 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-wrapper:focus-within {
+            border-color: var(--accent);
+        }
+
+        input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #fff;
+            padding: 12px 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+        }
+
+        button {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+
+        button:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .loader {
+            display: none;
+            align-self: flex-start;
+            padding: 16px;
+            background: var(--glass-bg);
+            border-radius: 18px;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--text-dim);
+            border-radius: 50%;
+            animation: bounce 1.4s infinite ease-in-out both;
+        }
+
+        .dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1.0);
+            }
+        }
+
+        .badge {
+            font-size: 0.65rem;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .badge-user {
+            background: rgba(188, 156, 255, 0.2);
+            color: var(--accent);
+        }
+
+        .badge-helen {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text-dim);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>
+                <div class="status-dot"></div> HELEN OS <span style="font-weight: 300; opacity: 0.5;">|
+                    PERSISTENT_DIALOG</span>
+            </h1>
+            <div class="controls">
+                <span id="loc-display">LOC: SF</span>
+                <span id="dist-display">DIST: ORACLE_TOWN</span>
+            </div>
+        </header>
+
+        <main id="chat-window">
+            <!-- Messages will be injected here -->
+        </main>
+
+        <div class="loader" id="helen-thinking">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+
+        <div class="input-area">
+            <form id="chat-form">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" placeholder="Initiate handshake..." autocomplete="off">
+                    <button type="submit">SEND</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const chatWindow = document.getElementById('chat-window');
+        const chatForm = document.getElementById('chat-form');
+        const userInput = document.getElementById('user-input');
+        const loader = document.getElementById('helen-thinking');
+        const locDisplay = document.getElementById('loc-display');
+        const distDisplay = document.getElementById('dist-display');
+
+        const API_URL = 'http://localhost:8000';
+
+        async function loadStatus() {
+            try {
+                const resp = await fetch(`${API_URL}/api/status`);
+                const data = await resp.json();
+                locDisplay.textContent = `LOC: ${data.location.toUpperCase()}`;
+                distDisplay.textContent = `DIST: ${data.district.toUpperCase()}`;
+            } catch (e) {
+                console.error('Failed to load status', e);
+            }
+        }
+
+        async function loadHistory() {
+            try {
+                const resp = await fetch(`${API_URL}/api/history`);
+                const history = await resp.json();
+                history.forEach(item => {
+                    appendMessage(item.actor === 'user' ? 'user' : 'helen', item.value, item.timestamp);
+                });
+                scrollToBottom();
+            } catch (e) {
+                console.error('Failed to load history', e);
+            }
+        }
+
+        function appendMessage(role, text, timestamp) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${role}`;
+
+            const meta = document.createElement('div');
+            meta.className = 'message-meta';
+            const timeStr = timestamp ? new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'NOW';
+            meta.innerHTML = `<span class="badge badge-${role}">${role.toUpperCase()}</span> <span>${timeStr}</span>`;
+
+            const content = document.createElement('div');
+            content.textContent = text;
+
+            msgDiv.appendChild(meta);
+            msgDiv.appendChild(content);
+            chatWindow.appendChild(msgDiv);
+            scrollToBottom();
+        }
+
+        function scrollToBottom() {
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        chatForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = userInput.value.trim();
+            if (!text) return;
+
+            appendMessage('user', text);
+            userInput.value = '';
+            loader.style.display = 'flex';
+            scrollToBottom();
+
+            try {
+                const resp = await fetch(`${API_URL}/api/chat`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text })
+                });
+                const data = await resp.json();
+
+                // Extract HER response if it follows the [HER] format
+                let displayResponse = data.response;
+                if (displayResponse.includes('[HER]')) {
+                    displayResponse = displayResponse.split('[HER]')[1].split('[WEATHER_CONTEXT]')[0].trim();
+                }
+
+                appendMessage('helen', displayResponse);
+            } catch (e) {
+                appendMessage('helen', '⚠️ Connection failed. Is the HELEN OS server running?');
+            } finally {
+                loader.style.display = 'none';
+            }
+        });
+
+        // Initial Load
+        loadStatus();
+        loadHistory();
+    </script>
+
+</body>
+
+</html>

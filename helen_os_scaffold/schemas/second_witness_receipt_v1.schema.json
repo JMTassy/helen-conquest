@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "second_witness_receipt_v1.schema.json",
+  "title": "SECOND_WITNESS_RECEIPT_V1",
+  "description": "Receipt schema for second-witness attestation required by TEMPLE_SANDBOX_POLICY_V1. Without a valid receipt of this type, no transcendence-sensitive Temple artifact may exit the Sandbox.",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "artifact_id",
+    "artifact_hash",
+    "witness_role",
+    "witness_identity",
+    "verdict",
+    "scope_of_reference",
+    "export_permission",
+    "related_policy_id"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^RCPT-SW-[A-Z0-9_-]{6,}$",
+      "description": "Unique identifier for this attestation event"
+    },
+    "artifact_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Local handle identifying the artifact being witnessed; must resolve within the claim graph"
+    },
+    "artifact_hash": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$",
+      "description": "canonical_sha256 of the referenced artifact per CANONICALIZATION_V1"
+    },
+    "witness_role": {
+      "type": "string",
+      "enum": ["MAYOR", "SENATE_MEMBER"],
+      "description": "Class of witness: MAYOR (adjudicator) or SENATE_MEMBER (designated human). Machine-only roles are not valid."
+    },
+    "senate_id": {
+      "type": ["string", "null"],
+      "description": "Required iff witness_role=SENATE_MEMBER; identifies which senate member is witnessing. Null or omitted iff witness_role=MAYOR."
+    },
+    "witness_identity": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Specific identifier of the human witness"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["AUTHORIZED", "REJECTED", "DEFERRED"],
+      "description": "AUTHORIZED: approves declared scope. REJECTED: denies export. DEFERRED: more information required."
+    },
+    "scope_of_reference": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Narrow, specific declaration of what external use is authorized. General authorizations are invalid."
+    },
+    "export_permission": {
+      "type": "boolean",
+      "description": "Machine-readable authorization flag. Must be true iff verdict=AUTHORIZED."
+    },
+    "related_policy_id": {
+      "type": "string",
+      "const": "TEMPLE_SANDBOX_POLICY_V1",
+      "description": "Binds this receipt to its governing policy"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional human-readable narrative. Does not grant permissions beyond verdict+scope_of_reference."
+    },
+    "witness_timestamp_basis": {
+      "type": ["string", "null"],
+      "description": "Deterministic timing anchor (ledger entry, block height, or null). Wall-clock is not authoritative."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "verdict": { "const": "AUTHORIZED" } },
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": { "export_permission": { "const": true } },
+        "required": ["export_permission"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "verdict": { "enum": ["REJECTED", "DEFERRED"] }
+        },
+        "required": ["verdict"]
+      },
+      "then": {
+        "properties": { "export_permission": { "const": false } },
+        "required": ["export_permission"]
+      }
+    },
+    {
+      "if": {
+        "properties": { "witness_role": { "const": "SENATE_MEMBER" } },
+        "required": ["witness_role"]
+      },
+      "then": {
+        "required": ["senate_id"],
+        "properties": { "senate_id": { "type": "string", "minLength": 1 } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "witness_role": { "const": "MAYOR" } },
+        "required": ["witness_role"]
+      },
+      "then": {
+        "properties": { "senate_id": { "type": "null" } }
+      }
+    }
+  ]
+}

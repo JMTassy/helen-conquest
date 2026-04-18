@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "schemas/hal_verdict_v1.schema.json",
+  "title": "HAL_VERDICT_V1",
+  "description": "Structured audit verdict from the HAL (auditor/governor) layer. Enforces I-BLOCK: verdict=BLOCK iff required_fixes non-empty.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["verdict", "reasons", "required_fixes", "certificates"],
+  "properties": {
+
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "WARN", "BLOCK", "pass", "warn", "block"],
+      "description": "HAL's audit decision. BLOCK requires non-empty required_fixes (I-BLOCK invariant)."
+    },
+
+    "reasons": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Human-readable reasons for the verdict. Always present."
+    },
+
+    "required_fixes": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "description": "Actions HER must take before resubmitting. Non-empty iff verdict=BLOCK."
+    },
+
+    "certificates": {
+      "$ref": "#/$defs/HALCertificates"
+    },
+
+    "audited_hash": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "description": "proposal_hash of the HEROutput that was audited." }
+      ]
+    },
+
+    "injection_type": {
+      "oneOf": [
+        { "type": "null" },
+        { "type": "string", "enum": ["LRI", "CVI"] }
+      ]
+    }
+  },
+
+  "$defs": {
+    "HALCertificates": {
+      "type": "object",
+      "description": "Binding hashes tying this HALVerdict to the session state.",
+      "required": ["her_block_hash_hex", "policy_hash_hex", "identity_hash_hex"],
+      "additionalProperties": false,
+      "properties": {
+        "her_block_hash_hex": {
+          "type": "string",
+          "description": "SHA256 of canonicalized [HER] block text. T-TWO-4 binding. 'COMPUTE_ME' if LLM cannot compute.",
+          "examples": ["COMPUTE_ME", "a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2"]
+        },
+        "policy_hash_hex": {
+          "type": "string",
+          "description": "SHA256 of active policy canonical JSON. 'COMPUTE_ME' if not available.",
+          "examples": ["COMPUTE_ME"]
+        },
+        "identity_hash_hex": {
+          "type": "string",
+          "description": "IdentityBindingV1.identity_hash for this session. 'COMPUTE_ME' if not available.",
+          "examples": ["COMPUTE_ME"]
+        }
+      }
+    }
+  },
+
+  "examples": [
+    {
+      "verdict": "PASS",
+      "reasons": ["No authority vocabulary detected."],
+      "required_fixes": [],
+      "certificates": {
+        "her_block_hash_hex": "COMPUTE_ME",
+        "policy_hash_hex": "COMPUTE_ME",
+        "identity_hash_hex": "COMPUTE_ME"
+      }
+    },
+    {
+      "verdict": "BLOCK",
+      "reasons": ["Authority bleed detected (BLOCK-level): 'I decide'"],
+      "required_fixes": ["Remove 'I decide' — replace with proposal format."],
+      "certificates": {
+        "her_block_hash_hex": "COMPUTE_ME",
+        "policy_hash_hex": "COMPUTE_ME",
+        "identity_hash_hex": "COMPUTE_ME"
+      }
+    }
+  ]
+}

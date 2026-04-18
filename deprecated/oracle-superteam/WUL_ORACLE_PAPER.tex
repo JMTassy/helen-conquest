@@ -1,0 +1,224 @@
+\documentclass[11pt,a4paper]{article}
+
+%-------------------------------------------------------------------------
+% PACKAGES
+%-------------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+
+\geometry{margin=1.15in}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue
+}
+
+%-------------------------------------------------------------------------
+% THEOREM ENVIRONMENTS
+%-------------------------------------------------------------------------
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{protocol}[theorem]{Protocol}
+\newtheorem{invariant}[theorem]{Invariant}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%-------------------------------------------------------------------------
+% MACROS
+%-------------------------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\sha}{\mathrm{sha256}}
+\newcommand{\RG}{\mathrm{RG}}
+\newcommand{\SHIP}{\mathrm{SHIP}}
+\newcommand{\NOSHIP}{\mathrm{NO\_SHIP}}
+
+%-------------------------------------------------------------------------
+% TITLE
+%-------------------------------------------------------------------------
+\title{\textbf{WUL--ORACLE: A Receipt-First Governance Framework for Deterministic, Auditable Multi-Agent Coordination}}
+\author{\textbf{Jean Marie Tassy Simeoni}\\
+\small Lemuria Global / Oracle--Superteam (project artifacts)\\
+\small Paris, France}
+\date{January 2026}
+
+\begin{document}
+\maketitle
+
+%-------------------------------------------------------------------------
+% ABSTRACT
+%-------------------------------------------------------------------------
+\begin{abstract}
+We specify \textbf{WUL--ORACLE}, a receipt-first governance framework for multi-agent systems in which outcomes are determined only by validated artifacts rather than narrative interpretation. The system is organized around a minimal, typed symbolic kernel (\textbf{WUL-CORE v0}) that forbids free text, enforces bounded structure (e.g., arity/depth/node constraints), and requires objective anchoring via a mandatory return operator (e.g., an R15-style objective reference). All agent outputs must compile to WUL token trees through a bridge; non-compiling messages are rejected by construction. Each run produces a deterministic artifact trail: canonical JSON payloads are hashed, artifacts are logged with \(\sha\) identifiers, and a closed reason-code registry is enforced by allowlist tests. Governance is executed by a role-pure \emph{Mayor} decision function whose output is split into a deterministic payload (receipt-hashed) and non-deterministic metadata (e.g., timestamps), preventing replay-equivalence failures by design. A \emph{receipt gap} scalar and \emph{kill-switch} gates define a minimal viability boundary: \(\SHIP\) is permitted only when hard obligations are satisfied and gates pass; \(\NOSHIP\) must carry typed blocking reasons with evidence paths. The framework is evaluated via falsifiable ablations (e.g., remove objective anchoring, allow free text, randomize injection site, increase adversarial fraction, extend horizon) and cross-runtime determinism checks, with primary outputs including survival length and obligation satisfaction under adversarial pressure.
+\end{abstract}
+
+\section{Scope and Non-Claims}
+\begin{remark}[What this document is]
+This document is an implementable specification and research-instrument framing. It describes invariants, schemas, receipt boundaries, and CI gates that can be enforced mechanically.
+\end{remark}
+
+\begin{remark}[What this document is not]
+No claim is made here that WUL--ORACLE proves correctness of arbitrary agent decisions, ensures optimality, or prevents all covert channels. It provides governance constraints and audit receipts; empirical robustness is assessed by declared ablations and determinism tests.
+\end{remark}
+
+\section{System Overview}
+
+\subsection{Core Objects}
+WUL--ORACLE is organized around three classes of objects:
+\begin{enumerate}[label=(\alph*)]
+  \item \textbf{Programs-as-traces:} bounded WUL token trees compiled from agent messages.
+  \item \textbf{Receipts-as-evidence:} hashed payload artifacts and verifiable ledgers.
+  \item \textbf{Governance-as-purity:} a deterministic decision function (Mayor) operating only on receipts and declared policies.
+\end{enumerate}
+
+\subsection{Roles and Capability Separation}
+We assume role separation where only the Mayor can compute and publish a final decision. Non-Mayor roles may author or upload intermediate artifacts, but cannot mutate frozen payloads after freeze, and cannot publish.
+
+\section{WUL-CORE v0: Bounded Symbolic Kernel}
+
+\begin{definition}[WUL token tree]
+A WUL token tree is a finite rooted tree whose nodes are drawn from a fixed kernel registry (primitive IDs with fixed arity and typing constraints). Free text is disallowed in token trees. A validator rejects any message that does not compile into a valid token tree under the current kernel registry.
+\end{definition}
+
+\begin{invariant}[No free text]
+\label{inv:no-free-text}
+Any artifact classified as ``receipt-hashed payload'' MUST contain no untyped free-form natural language fields. Where human explanation is required (e.g., audit notes), it MUST be placed in explicitly non-hashed metadata artifacts.
+\end{invariant}
+
+\begin{invariant}[Bounded structure]
+\label{inv:bounded}
+All token trees must satisfy declared structural constraints (e.g., maximum depth, maximum node count, maximum branching), which are treated as kill-switch policies.
+\end{invariant}
+
+\begin{remark}
+The exact kernel primitive set (WUL-CORE v0) and validator rules are defined by a \emph{kernel registry} artifact whose payload is hashed and pinned for replay equivalence.
+\end{remark}
+
+\section{Receipt Discipline}
+
+\subsection{Hashed Payload vs Non-Hashed Metadata}
+A central operational constraint is that non-deterministic fields (e.g., timestamps) must not poison deterministic receipts.
+
+\begin{protocol}[Determinism split for decision records]
+\label{prot:det-split}
+The Mayor produces:
+\begin{enumerate}[label=(\alph*)]
+  \item \texttt{decision\_record.json}: deterministic, receipt-hashed payload (no timestamps).
+  \item \texttt{decision\_record.meta.json}: non-hashed metadata, including timestamps and environment stamps.
+\end{enumerate}
+Only the payload file may be included in a receipt root hash.
+\end{protocol}
+
+\subsection{Receipt Gap and Hard Obligations}
+\begin{definition}[Required obligations]
+A run declares a set of \emph{required obligations}, each with a severity level (HARD or SOFT), expected attestor class, and expected evidence paths. HARD obligations define the minimal viability boundary for \(\SHIP\).
+\end{definition}
+
+\begin{definition}[Receipt gap]
+\label{def:receipt-gap}
+The receipt gap \(\RG \in \N\) is the count of unsatisfied HARD obligations under the declared policies and verification rules.
+\end{definition}
+
+\section{Mayor Decision Surface}
+
+\subsection{Decision Record Schema Invariants}
+The Mayor decision payload is validated against a constitutional schema (Draft 2020-12) encoding semantic invariants structurally.
+
+\begin{invariant}[No silent failures]
+\label{inv:no-silent}
+If the decision is \(\NOSHIP\), then the \texttt{blocking} list must contain at least one typed reason code.
+\end{invariant}
+
+\begin{invariant}[SHIP implies zero gap and passed gates]
+\label{inv:ship-implies}
+If the decision is \(\SHIP\), then \(\RG=0\), kill switches pass, and the \texttt{blocking} list is empty.
+\end{invariant}
+
+\subsection{Reason Codes: Closed-Loop Registry}
+\begin{definition}[Reason-code allowlist]
+All blocking codes appearing in decision records must be elements of a machine-readable allowlist (\texttt{reason\_codes.json}). CI tests enforce membership and prohibit ad-hoc codes.
+\end{definition}
+
+\section{Pipeline Stages and Artifact Model}
+
+\subsection{Canonical Stage Timeline}
+We assume an MVP stage model with canonical artifacts per stage:
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Stage & Canonical Artifacts (examples) \\
+\midrule
+S0 Concierge & \texttt{briefcase.json} (+ optional meta) \\
+S1 Merger & \texttt{required\_obligations\_bundle.json} (+ diffs) \\
+S2 Factory F1 & \texttt{execution\_receipt.json} \\
+S3 Factory F2 & \texttt{verification\_output.json}, \texttt{attestations\_ledger.json} \\
+S4 Factory F3 & \texttt{tribunal\_bundle.json} (+ optional \texttt{receipt\_root\_payload.json}) \\
+S5 Mayor & \texttt{decision\_record.json} (+ \texttt{decision\_record.meta.json}) \\
+S6 Public & published snapshot \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection{Run Index Contract}
+\begin{definition}[Run index]
+A run produces a \texttt{run\_index.json} summarizing stage status, equivalence pins, primary KPIs (\(\RG\), kill-switch status, decision), and an artifact list with \(\sha\) hashes. The UI is permitted to depend only on this index plus blob access to artifacts.
+\end{definition}
+
+\section{Falsification and Evaluation Protocols}
+
+\subsection{Ablation Matrix (Minimum)}
+\begin{protocol}[Ablation-first evaluation]
+\label{prot:ablation}
+To claim governance benefit from WUL--ORACLE constraints, the system must be evaluated under ablations that explicitly remove or weaken core mechanisms, including:
+\begin{enumerate}[label=(\alph*)]
+  \item Remove objective anchoring operator (e.g., R15 removed).
+  \item Disable or randomize injection (control vs targeted injection).
+  \item Allow free text (even constrained) within payload artifacts.
+  \item Increase adversarial agent fraction and extend horizon length.
+\end{enumerate}
+Primary outputs include survival length until a gate fails, obligation satisfaction rates, and variance across fixed seeds.
+\end{protocol}
+
+\subsection{Cross-Runtime Determinism}
+\begin{protocol}[Determinism matrix]
+A determinism claim is only accepted if artifact hashes match across a declared matrix of runtimes (e.g., Python versions, OS families), under a pinned canonicalization rule. Any mismatch is a \(\NOSHIP\) condition with typed blocking reasons.
+\end{protocol}
+
+\section{Implementation Notes (MVP-Aligned)}
+\begin{remark}[Storage model]
+An MVP can be implemented with an artifact store keyed by \((\texttt{run\_id},\texttt{path})\) plus an index \texttt{run\_index.json} per run. This avoids requiring a database for basic governance and UI.
+\end{remark}
+
+\begin{remark}[Separation of payload and meta]
+All timestamps and environment strings are placed in non-hashed meta artifacts; payload artifacts remain deterministic for replay-equivalence.
+\end{remark}
+
+\section{Conclusion}
+WUL--ORACLE is a concrete governance substrate for multi-agent coordination where receipts, not prose, determine outcomes. Its contribution is an enforceable boundary: bounded symbolic traces, deterministic receipts, schema-hardened decision surfaces, closed-loop reason codes, and falsifiable evaluation protocols. Future work includes (i) systematic covert-channel measurement under structural constraints, (ii) richer kernel registries with versioned compatibility, and (iii) formalization of Mayor purity (recomputation of decisions from receipts) as a testable referential-transparency property.
+
+%-------------------------------------------------------------------------
+% REFERENCES (placeholder)
+%-------------------------------------------------------------------------
+\begin{thebibliography}{9}
+
+\bibitem{rfc8785}
+RFC 8785.
+\newblock \emph{JSON Canonicalization Scheme (JCS)}.
+\newblock Internet Engineering Task Force (IETF), 2020.
+
+\end{thebibliography}
+
+\end{document}
