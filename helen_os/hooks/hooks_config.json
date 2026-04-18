@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "script": "k8_precheck.py",
+        "matcher": {"tool": "Write"},
+        "description": "K8 Non-Determinism Boundary — blocks writes to ND-scoped dirs without wrap tokens"
+      },
+      {
+        "script": "k8_precheck.py",
+        "matcher": {"tool": "Edit"},
+        "description": "K8 Non-Determinism Boundary — blocks edits to ND-scoped dirs without wrap tokens"
+      }
+    ]
+  }
+}
