@@ -300,3 +300,131 @@ def from_template(template: str, title: str, script: str) -> DirectorPlan:
     plan = direct(title, script, voice_profile=t["voice"], tempo=t["tempo"])
     plan.music = t["music"]
     return plan
+
+
+# ─── Governance layer ─────────────────────────────────────────────────────────
+# Wraps DirectorPlan with receipt provenance + authority enforcement.
+# Keeps creative layer pure; governance is additive, not invasive.
+
+@dataclass
+class DirectorPlanV1:
+    """
+    Governed director plan.
+    Wraps DirectorPlan with source provenance and authority=False enforcement.
+    """
+    plan:                DirectorPlan
+    source_artifact_id:  str
+    source_receipt_hash: str
+    plan_hash:           str
+    authority:           bool = False
+
+    def __post_init__(self) -> None:
+        if self.authority:
+            raise ValueError("DirectorPlanV1.authority must be False")
+        if not self.source_receipt_hash.startswith("sha256:"):
+            raise ValueError("source_receipt_hash must be sha256: prefixed")
+
+    # Delegate creative interface to inner plan
+    @property
+    def plan_id(self)       -> str:       return self.plan.plan_id
+    @property
+    def title(self)         -> str:       return self.plan.title
+    @property
+    def tempo(self)         -> str:       return self.plan.tempo
+    @property
+    def emotion_curve(self) -> List[str]: return self.plan.emotion_curve
+    @property
+    def shots(self)         -> List[Shot]: return self.plan.shots
+    @property
+    def voice_profile(self) -> str:       return self.plan.voice_profile
+    @property
+    def style(self)         -> str:       return self.plan.tempo
+    @property
+    def sound(self):
+        class _Sound:
+            music = self.plan.music
+            fx    = self.plan.sfx
+            mix_notes = ""
+        return _Sound()
+    @property
+    def voice(self):
+        prefix = self.plan.voice_prefix()
+        class _Voice:
+            state         = self.plan.voice_profile
+            energy_curve  = self.plan.emotion_curve[:3]
+            breath        = "audible"
+            tempo         = self.plan.tempo
+            first_lines   = prefix
+            mid_section   = ""
+            final_line    = ""
+            delivery_notes = prefix
+        return _Voice()
+
+    def total_duration(self) -> float:
+        return self.plan.total_duration()
+
+    def to_dict(self) -> dict:
+        d = self.plan.to_dict()
+        d["source_artifact_id"]  = self.source_artifact_id
+        d["source_receipt_hash"] = self.source_receipt_hash
+        d["plan_hash"]           = self.plan_hash
+        d["authority"]           = False
+        return d
+
+
+# Compat aliases (SoundDesign / VoiceDirective no longer standalone classes)
+class SoundDesign:
+    def __init__(self, music="ambient_pad_low", fx=None, mix_notes=""):
+        self.music = music
+        self.fx = fx or []
+        self.mix_notes = mix_notes
+
+class VoiceDirective:
+    def __init__(self, state="calm", energy_curve=None, breath="subtle",
+                 tempo="steady", first_lines="", mid_section="",
+                 final_line="", delivery_notes=""):
+        self.state         = state
+        self.energy_curve  = energy_curve or []
+        self.breath        = breath
+        self.tempo         = tempo
+        self.first_lines   = first_lines
+        self.mid_section   = mid_section
+        self.final_line    = final_line
+        self.delivery_notes = delivery_notes
+
+
+def _sha256_hex(s: str) -> str:
+    return "sha256:" + hashlib.sha256(s.encode()).hexdigest()
+
+
+def govern(plan: DirectorPlan, artifact) -> DirectorPlanV1:
+    """
+    Stamp a DirectorPlan with receipt provenance.
+    Returns a DirectorPlanV1 bound to the execution artifact.
+    Deterministic: same plan + artifact → same plan_hash.
+    """
+    plan_body = json.dumps(plan.to_dict(), sort_keys=True, separators=(",", ":"))
+    plan_hash = _sha256_hex(plan_body + artifact.receipt_hash)
+    return DirectorPlanV1(
+        plan=                plan,
+        source_artifact_id=  artifact.artifact_id,
+        source_receipt_hash= artifact.receipt_hash,
+        plan_hash=           plan_hash,
+        authority=           False,
+    )
+
+
+def direct_governed(artifact, template: str = "meditation") -> DirectorPlanV1:
+    """direct() + govern() in one call. Primary entry point for the pipeline."""
+    plan = from_template(template, title=artifact.artifact_id, script=artifact.content)
+    return govern(plan, artifact)
+
+
+def _tone_to_style(tone: str) -> str:
+    return {
+        "calm":       "meditation",
+        "reflective": "witness",
+        "precise":    "clarity",
+        "serious":    "manifesto",
+        "warm":       "meditation",
+    }.get(tone, "meditation")
