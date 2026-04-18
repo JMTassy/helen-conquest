@@ -7,3 +7,5 @@ __pycache__/
 /tmp/
 node_modules/
 .DS_Store
+helen_os/knowledge/index.json
+helen_os/knowledge/embeddings/
