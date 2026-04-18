@@ -1,26 +1,15 @@
+"""HELEN Render Boundary — pure function of governed execution output.
+
+Renderer may: transform, stylize, materialize media.
+Renderer may NOT: reason, decide, mutate governed state, call tools, read ambient memory.
 """
-helen_os.render — Embodiment layer.
-
-Pure function of execution output. No reasoning. No state mutation.
-Position in pipeline: after E (execution), never before.
-
-  C (cognition) → G (governor) → E (execution) → receipt → render
-
-render.video   — MP4 via HyperFrames
-render.voice   — WAV via Gemini TTS (thin wrapper, re-exported)
-
-Law:
-  - RenderRequest must carry a receipt_hash binding it to the ledger
-  - Render functions are deterministic: same input → same output bytes
-  - No hidden prompts, no independent reasoning, no tool calls
-  - authority: False always — rendering ≠ truth
-"""
-from helen_os.render.video import (
-    RenderRequest, RenderScript, ScriptSegment,
-    RenderReceipt, render_video, assemble_from_ledger, new_render_id,
-)
+from helen_os.render.models import ExecutionArtifactV1, MediaArtifactV1, RenderReceiptV1
+from helen_os.render.pipeline import run_video_render, run_audio_render
 
 __all__ = [
-    "RenderRequest", "RenderScript", "ScriptSegment",
-    "RenderReceipt", "render_video", "assemble_from_ledger", "new_render_id",
+    "ExecutionArtifactV1",
+    "MediaArtifactV1",
+    "RenderReceiptV1",
+    "run_video_render",
+    "run_audio_render",
 ]

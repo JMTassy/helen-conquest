@@ -523,3 +523,27 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# ─── Knowledge Integration ───────────────────────────────────────────────────
+
+def search_knowledge(question: str, top_k: int = 3) -> str:
+    """Search HELEN's knowledge index for context relevant to the question."""
+    if not GEMINI_KEY:
+        return ""
+    try:
+        import sys as _sys
+        _sys.path.insert(0, str(ROOT))
+        from helen_os.knowledge.ingest import query
+        results = query(question, GEMINI_KEY, top_k=top_k)
+        if not results:
+            return ""
+        context_parts = []
+        for r in results:
+            if r["score"] > 0.5:  # only include relevant results
+                context_parts.append(f"[From {Path(r['file']).name}, relevance {r['score']}]\n{r['preview']}")
+        if context_parts:
+            return "\n---\n".join(context_parts)
+    except Exception as e:
+        print(f"  [knowledge] search error: {e}")
+    return ""
