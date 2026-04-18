@@ -1,15 +1,24 @@
 """HELEN Render Boundary — pure function of governed execution output.
 
-Renderer may: transform, stylize, materialize media.
-Renderer may NOT: reason, decide, mutate governed state, call tools, read ambient memory.
+Chain: ExecutionArtifactV1 → DirectorPlanV1 → MediaArtifactV1 + RenderReceiptV1
+
+Renderer may:  transform, stylize, materialize media.
+Director may:  decide tempo, emotion, shots, sound, voice performance.
+Neither may:   reason, claim authority, mutate governed state.
 """
 from helen_os.render.models import ExecutionArtifactV1, MediaArtifactV1, RenderReceiptV1
+from helen_os.render.director import DirectorPlanV1, Shot, SoundDesign, VoiceDirective, direct
 from helen_os.render.pipeline import run_video_render, run_audio_render
 
 __all__ = [
     "ExecutionArtifactV1",
     "MediaArtifactV1",
     "RenderReceiptV1",
+    "DirectorPlanV1",
+    "Shot",
+    "SoundDesign",
+    "VoiceDirective",
+    "direct",
     "run_video_render",
     "run_audio_render",
 ]

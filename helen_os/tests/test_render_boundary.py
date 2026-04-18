@@ -63,11 +63,12 @@ def test_compile_spec_changes_with_different_content():
 
 def test_render_receipt_authority_is_always_false():
     artifact = _artifact()
-    media, receipt = run_video_render(
+    media, receipt, plan = run_video_render(
         artifact, _profile(), previous_hash="sha256:" + "0" * 64, renderer_name="stub"
     )
 
     assert receipt.authority is False, "R2 violated: receipt.authority must be False"
+    assert plan.authority    is False, "R2 extended: plan.authority must also be False"
     assert media.source_artifact_id == artifact.artifact_id
 
 
@@ -89,7 +90,7 @@ def test_render_receipt_authority_cannot_be_set_true():
 
 def test_render_receipt_bound_to_source_receipt_hash():
     artifact = _artifact()
-    _, receipt = run_video_render(
+    _, receipt, _ = run_video_render(
         artifact, _profile(), previous_hash="sha256:" + "0" * 64, renderer_name="stub"
     )
 
@@ -104,8 +105,8 @@ def test_different_artifacts_produce_different_receipts():
     a2 = _artifact(artifact_id="art_002", content="second")
     prev = "sha256:" + "0" * 64
 
-    _, r1 = run_video_render(a1, _profile(), previous_hash=prev, renderer_name="stub")
-    _, r2 = run_video_render(a2, _profile(), previous_hash=prev, renderer_name="stub")
+    _, r1, _ = run_video_render(a1, _profile(), previous_hash=prev, renderer_name="stub")
+    _, r2, _ = run_video_render(a2, _profile(), previous_hash=prev, renderer_name="stub")
 
     assert r1.receipt_hash != r2.receipt_hash
     assert r1.output_hash  != r2.output_hash
