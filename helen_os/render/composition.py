@@ -31,7 +31,7 @@ from dataclasses import dataclass, field
 from typing import Any, Dict, List
 
 from .contracts import canonical_json, sha256_hex
-from .director import DirectorPlanV1, Shot, CameraMove
+from .director import DirectorPlanV1, Shot
 from .models import ExecutionArtifactV1
 
 
@@ -103,26 +103,35 @@ def _camera_css(move: CameraMove, duration: int) -> str:
 # ── Shot → HTML block ──────────────────────────────────────────────────────────
 
 def _shot_to_div(shot: Shot, start: int, z_index: int) -> str:
-    cam_css   = _camera_css(shot.camera, shot.duration)
-    visual_id = sha256_hex(shot.visual)[:8]
+    # Support both old Shot (visual, text_overlay) and new Shot (visual_prompt, text)
+    visual    = getattr(shot, "visual", None) or getattr(shot, "visual_prompt", "")
+    text_ovly = getattr(shot, "text_overlay", None) or getattr(shot, "text", None)
+    duration  = int(getattr(shot, "duration", 8))
+    shot_type = getattr(shot, "type", None) or getattr(shot, "shot_type", "medium")
+    fx_list   = getattr(shot, "fx", []) or []
+    emotion   = getattr(shot, "emotion", "")
+
+    cam_css   = _camera_css(shot.camera, duration)
+    visual_id = sha256_hex(visual)[:8]
 
     overlay = ""
-    if shot.text_overlay:
+    if text_ovly:
         overlay = f"""
-        <div class="text-overlay" data-start="{start}" data-duration="{shot.duration}">
-          <span class="overlay-text">{shot.text_overlay}</span>
+        <div class="text-overlay" data-start="{start}" data-duration="{duration}">
+          <span class="overlay-text">{text_ovly}</span>
         </div>"""
 
-    fx_classes = " ".join(f"fx-{f}" for f in (shot.fx or []))
+    fx_classes = " ".join(f"fx-{f}" for f in fx_list)
 
     return f"""
-    <div class="shot shot-{shot.type} {fx_classes}"
+    <div class="shot shot-{shot_type} {fx_classes}"
          data-start="{start}"
-         data-duration="{shot.duration}"
+         data-duration="{duration}"
          data-camera="{shot.camera}"
          data-visual="{visual_id}"
+         data-emotion="{emotion}"
          style="z-index:{z_index}; {cam_css}"
-         title="{shot.visual}">
+         title="{visual[:80]}">
       <div class="shot-inner">
         <div class="visual-layer visual-{visual_id}"></div>
         <div class="particle-layer"></div>
@@ -423,8 +432,8 @@ def director_to_html(
     shots_html_parts = []
     cursor = 0
     for i, shot in enumerate(plan.shots):
-        shots_html_parts.append(_shot_to_div(shot, start=cursor, z_index=10 + i))
-        cursor += shot.duration
+        shots_html_parts.append(_shot_to_div(shot, start=int(cursor), z_index=10 + i))
+        cursor += float(getattr(shot, "duration", 8)) + float(getattr(shot, "silence_after", 0))
 
     total_duration = cursor
     shots_html     = "\n  ".join(shots_html_parts)

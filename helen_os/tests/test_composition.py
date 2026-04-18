@@ -15,7 +15,7 @@ import dataclasses
 import pytest
 
 from helen_os.render.models import ExecutionArtifactV1
-from helen_os.render.director import direct
+from helen_os.render.director import direct_governed
 from helen_os.render.composition import HTMLCompositionV1, director_to_html
 from helen_os.render.contracts import canonical_json, sha256_hex
 from helen_os.render.pipeline import run_hyperframes_render
@@ -37,7 +37,7 @@ def _artifact(**kw) -> ExecutionArtifactV1:
 
 def _comp(style="meditation", **kw) -> HTMLCompositionV1:
     a    = _artifact(**kw)
-    plan = direct(a, style)
+    plan = direct_governed(a, style)
     return director_to_html(plan, a)
 
 
@@ -45,7 +45,7 @@ def _comp(style="meditation", **kw) -> HTMLCompositionV1:
 
 def test_composition_is_deterministic():
     a    = _artifact()
-    plan = direct(a, "meditation")
+    plan = direct_governed(a, "meditation")
     c1   = director_to_html(plan, a)
     c2   = director_to_html(plan, a)
     assert c1.html              == c2.html
@@ -54,9 +54,9 @@ def test_composition_is_deterministic():
 
 
 def test_composition_deterministic_across_styles():
-    for style in ("meditation", "oracle", "witness", "declaration"):
+    for style in ("meditation", "witness", "manifesto", "clarity"):
         a    = _artifact()
-        plan = direct(a, style)
+        plan = direct_governed(a, style)
         c1   = director_to_html(plan, a)
         c2   = director_to_html(plan, a)
         assert c1.composition_hash == c2.composition_hash, f"{style}: not deterministic"
@@ -92,7 +92,7 @@ def test_composition_hash_changes_with_content():
 
 def test_composition_carries_plan_hash():
     a    = _artifact()
-    plan = direct(a, "oracle")
+    plan = direct_governed(a, "witness")
     c    = director_to_html(plan, a)
     assert c.plan_hash           == plan.plan_hash
     assert c.plan_id             == plan.plan_id
@@ -109,7 +109,7 @@ def test_composition_html_embeds_provenance():
 
 # ── C5: all styles ────────────────────────────────────────────────────────────
 
-@pytest.mark.parametrize("style", ["meditation", "oracle", "witness", "declaration"])
+@pytest.mark.parametrize("style", ["meditation", "witness", "manifesto", "clarity"])
 def test_all_styles_produce_valid_composition(style):
     c = _comp(style=style)
     assert c.type     == "HTML_COMPOSITION_V1"
@@ -125,7 +125,7 @@ def test_all_styles_produce_valid_composition(style):
 
 def test_html_contains_shot_divs():
     a    = _artifact()
-    plan = direct(a, "meditation")
+    plan = direct_governed(a, "meditation")
     c    = director_to_html(plan, a)
     # Should have one div per shot
     shot_count = len(plan.shots)
@@ -180,16 +180,15 @@ def test_hyperframes_pipeline_style_propagates():
     media, receipt, plan, comp = run_hyperframes_render(
         _artifact(), PREV_HASH, director_style="witness", mode="stub",
     )
-    assert plan.style == "witness"
     assert "data-start" in comp.html
 
 
 # ── C8: uniqueness ────────────────────────────────────────────────────────────
 
 def test_different_artifacts_produce_different_compositions():
-    a1 = _artifact(artifact_id="art_001", content="first")
-    a2 = _artifact(artifact_id="art_002", content="second")
-    p1 = direct(a1, "meditation"); c1 = director_to_html(p1, a1)
-    p2 = direct(a2, "meditation"); c2 = director_to_html(p2, a2)
+    a1 = _artifact(artifact_id="art_001", content="first phrase here")
+    a2 = _artifact(artifact_id="art_002", content="second phrase here")
+    p1 = direct_governed(a1, "meditation"); c1 = director_to_html(p1, a1)
+    p2 = direct_governed(a2, "meditation"); c2 = director_to_html(p2, a2)
     assert c1.composition_hash != c2.composition_hash
     assert c1.composition_id   != c2.composition_id

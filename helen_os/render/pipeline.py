@@ -25,7 +25,7 @@ from typing import Literal, Optional, Tuple
 
 from .contracts import canonical_json, sha256_hex
 from .composition import HTMLCompositionV1, director_to_html
-from .director import DirectorPlanV1, direct
+from .director import DirectorPlanV1, direct_governed
 from .models import ExecutionArtifactV1, MediaArtifactV1, RenderReceiptV1
 from .receipts import make_render_receipt
 from .renderer import RenderMode, render_composition
@@ -47,7 +47,7 @@ def run_video_render(
     Pure forward flow. No back-edge into kernel.
     """
     if plan is None:
-        plan = direct(artifact, director_style)
+        plan = direct_governed(artifact, director_style)
 
     spec       = compile_video_spec(artifact, profile, plan=plan)
     input_hash = sha256_hex(canonical_json(spec))
@@ -98,7 +98,7 @@ def run_hyperframes_render(
     → MediaArtifactV1 + RenderReceiptV1
     """
     if plan is None:
-        plan = direct(artifact, director_style)
+        plan = direct_governed(artifact, director_style)
 
     comp   = director_to_html(plan, artifact, width=width, height=height, fps=fps)
     result = render_composition(comp, mode=mode, output_dir=output_dir)

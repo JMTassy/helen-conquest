@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from .contracts import canonical_json, sha256_hex
-from .director import DirectorPlanV1, direct
+from .director import DirectorPlanV1, direct_governed
 
 
 @dataclass(frozen=True)
@@ -43,7 +43,7 @@ def compile_video_spec(
     If plan is None, generates one via direct() — still deterministic.
     """
     if plan is None:
-        plan = direct(artifact, director_style)
+        plan = direct_governed(artifact, director_style)
 
     shots_serialized = [dataclasses.asdict(s) for s in plan.shots]
 
