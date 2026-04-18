@@ -273,7 +273,7 @@ class KnowledgeEngine:
                     source_id=source_id,
                 )
                 self.units[unit_id] = unit
-                self.tag_graph.add_unit(unit_id, tags)
+                self.tag_graph.add_unit(unit_id, unit_tags)
                 existing_hashes.add(h)
                 new_count += 1
 
