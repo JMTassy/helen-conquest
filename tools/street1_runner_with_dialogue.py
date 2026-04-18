@@ -137,7 +137,7 @@ def normalize_reason_codes(codes: List[str]) -> List[str]:
     Returns: sorted list of codes matching ^[A-Z0-9_]{3,64}$
     """
     # Load canonical reason codes from schema
-    schema_path = Path(__file__).parent.parent / "schemas" / "hal_reason_codes.enum.json"
+    schema_path = Path(__file__).parent.parent / "helen_os" / "schemas" / "hal_reason_codes.enum.json"
     if schema_path.exists():
         schema = json.loads(schema_path.read_text())
         canonical_codes = set(schema.get("reason_code_registry", []))
