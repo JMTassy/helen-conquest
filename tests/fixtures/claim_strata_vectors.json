@@ -93,7 +93,7 @@
     "expected_stratum": "DOCTRINE",
     "expected_decision": "REJECTED",
     "expected_reason_codes": ["R5"],
-    "notes": "Pipeline-local success inflated into a generalized system claim. Evidence field 'local_render_success_2026-04-19' is a non-resolvable receipt pointer — R5 fires because it does not resolve to a real git commit hash, ledger entry, or on-disk provenance file. 'Confirms' elevates force to PROOF."
+    "notes": "Pipeline-local success inflated into a generalized system claim. Evidence field 'local_render_success_2026-04-19' is a non-resolvable receipt pointer — R5 fires. 'Confirms' elevates force to PROOF."
   },
   {
     "id": "V007",
