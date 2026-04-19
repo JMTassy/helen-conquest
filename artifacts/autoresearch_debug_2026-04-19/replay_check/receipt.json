@@ -1,0 +1,40 @@
+{
+  "schema_name": "BATCH_RECEIPT_PACKET_V1",
+  "schema_version": "1.0.0",
+  "receipt_id": "batch_receipt_b973ddbd8964",
+  "batch_id": "debug_20epochs_2026-04-19",
+  "executor_id": "helen_os_kernel_v1",
+  "run_id": "run_debug_2026-04-19",
+  "batch_timestamp": "2026-04-19T17:00:00+00:00",
+  "decisions_processed": 20,
+  "decisions_appended": 20,
+  "decision_type_breakdown": {
+    "ADMITTED": 16,
+    "REJECTED": 4,
+    "QUARANTINED": 0,
+    "ROLLED_BACK": 0
+  },
+  "initial_state_hash": "sha256:9f79340153f645b979238e96d20345d880c27c18dedf5b62b5ac1d699ffe0be8",
+  "final_state_hash": "sha256:9f79340153f645b979238e96d20345d880c27c18dedf5b62b5ac1d699ffe0be8",
+  "ledger_hash": "sha256:459ac3fddca7eca7606289d0c6fa08d408d74d38b5c0dd67c16835c34a270f4c",
+  "execution_replay_proof": {
+    "environment_manifest": {
+      "reducer_version": "v1",
+      "law_surface_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "canonicalization": "JCS_SHA256_V1"
+    },
+    "determinism_certificate": "FAILED"
+  },
+  "ledger_replay_proof": {
+    "from_initial_state_hash": "sha256:9f79340153f645b979238e96d20345d880c27c18dedf5b62b5ac1d699ffe0be8",
+    "via_ledger_entries": 20,
+    "yields_final_state_hash": "sha256:9f79340153f645b979238e96d20345d880c27c18dedf5b62b5ac1d699ffe0be8",
+    "corruption_check": "FAIL"
+  },
+  "authority_lineage": {
+    "approved_by": null,
+    "visibility_level": "CORE",
+    "ready_for_hal": true,
+    "ready_for_mayor": false
+  }
+}

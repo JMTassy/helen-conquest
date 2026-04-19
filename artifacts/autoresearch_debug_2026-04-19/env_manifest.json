@@ -1,0 +1,6 @@
+{
+  "reducer_version": "v1",
+  "law_surface_hash": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "canonicalization": "JCS_SHA256_V1",
+  "operator_intent": "DEBUG_AUTORESEARCH_20_EPOCHS_2026-04-19"
+}

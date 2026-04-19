@@ -1,0 +1,63 @@
+{
+  "schema_name": "HAL_REVIEW_PACKET_V1",
+  "schema_version": "1.0.0",
+  "review_id": "hal_review_b973ddbd8964",
+  "receipt_id": "batch_receipt_b973ddbd8964",
+  "batch_summary": {
+    "batch_id": "debug_20epochs_2026-04-19",
+    "total_steps": 20,
+    "successful_admissions": 16,
+    "failures_analyzed": 4,
+    "rollbacks_applied": 0
+  },
+  "governance_checks": {
+    "all_decisions_validated": false,
+    "ledger_integrity_verified": false,
+    "replay_determinism_proven": false,
+    "authority_boundaries_respected": false
+  },
+  "flags_for_hal": [
+    {
+      "entry_index": -1,
+      "decision_type": "UNKNOWN",
+      "reason_code": "LEDGER_VALIDATION_FAILED",
+      "skill_id": "system",
+      "flag_category": "BLOCK",
+      "interpretation": "Ledger failed validation: cannot proceed to state mutation."
+    },
+    {
+      "entry_index": 4,
+      "decision_type": "REJECTED",
+      "reason_code": "ERR_THRESHOLD_NOT_MET",
+      "skill_id": "skill.debug_2026-04-19.epoch_04",
+      "flag_category": "INFO",
+      "interpretation": "REJECTED decision recorded with code ERR_THRESHOLD_NOT_MET"
+    },
+    {
+      "entry_index": 9,
+      "decision_type": "REJECTED",
+      "reason_code": "ERR_THRESHOLD_NOT_MET",
+      "skill_id": "skill.debug_2026-04-19.epoch_09",
+      "flag_category": "INFO",
+      "interpretation": "REJECTED decision recorded with code ERR_THRESHOLD_NOT_MET"
+    },
+    {
+      "entry_index": 14,
+      "decision_type": "REJECTED",
+      "reason_code": "ERR_THRESHOLD_NOT_MET",
+      "skill_id": "skill.debug_2026-04-19.epoch_14",
+      "flag_category": "INFO",
+      "interpretation": "REJECTED decision recorded with code ERR_THRESHOLD_NOT_MET"
+    },
+    {
+      "entry_index": 19,
+      "decision_type": "REJECTED",
+      "reason_code": "ERR_THRESHOLD_NOT_MET",
+      "skill_id": "skill.debug_2026-04-19.epoch_19",
+      "flag_category": "INFO",
+      "interpretation": "REJECTED decision recorded with code ERR_THRESHOLD_NOT_MET"
+    }
+  ],
+  "ready_for_verdict": true,
+  "suggested_verdict": "BLOCK"
+}
