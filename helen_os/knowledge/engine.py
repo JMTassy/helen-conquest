@@ -49,6 +49,13 @@ ACCESS_LOG_PATH = KNOWLEDGE_DIR / "access_log.ndjson"
 SKIP_DIRS = {"node_modules", ".git", ".venv", "__pycache__", "worktrees"}
 SUPPORTED_EXTS = {".md", ".txt", ".pdf", ".py", ".json", ".ndjson"}
 
+# Source epistemic priority — controls retrieval ranking weight per corpus
+SOURCE_WEIGHT = {
+    "plugins": 1.0,
+    "apple_notes": 0.8,
+    "helen_os": 0.9,
+}
+
 # Tag extraction pattern: #word or #wordWord or #word_word
 TAG_RE = re.compile(r'#([A-Za-z][A-Za-z0-9_]{2,})')
 
@@ -317,26 +324,45 @@ class KnowledgeEngine:
             if tag_unit_ids:
                 candidates = [u for u in candidates if u.id in tag_unit_ids]
 
-        # Score
+        # Score — hybrid: keyword + exact phrase + tag + source weight
         query_lower = query.lower()
         query_words = set(query_lower.split())
         scored = []
         for unit in candidates:
             content_lower = unit.content.lower()
-            # Keyword score
+            # Keyword score (lexical precision)
             word_hits = sum(1 for w in query_words if w in content_lower)
-            # Exact phrase bonus
+            # Exact phrase bonus (semantic precision)
             phrase_bonus = 2.0 if query_lower in content_lower else 0
             # Tag relevance bonus
             tag_bonus = 0
             if tags:
                 tag_bonus = sum(0.5 for t in tags if t.lower() in [ut.lower() for ut in unit.tags])
-            score = word_hits + phrase_bonus + tag_bonus
+            # Source epistemic weight
+            source_w = SOURCE_WEIGHT.get(unit.source_id, 1.0)
+            score = (word_hits + phrase_bonus + tag_bonus) * source_w
             if score > 0:
                 scored.append((score, unit))
 
         scored.sort(key=lambda x: -x[0])
-        results = [unit for _, unit in scored[:k]]
+
+        # Diversity filter (MMR-lite): prevent same-file repetition
+        selected: List[KnowledgeUnit] = []
+        seen_files: Set[str] = set()
+        for _, unit in scored:
+            if len(selected) >= k:
+                break
+            if unit.source_file not in seen_files:
+                selected.append(unit)
+                seen_files.add(unit.source_file)
+        # If not enough diverse results, backfill from remaining
+        if len(selected) < k:
+            for _, unit in scored:
+                if len(selected) >= k:
+                    break
+                if unit not in selected:
+                    selected.append(unit)
+        results = selected
 
         # Log access receipt
         receipt = AccessReceipt(
