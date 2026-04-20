@@ -1,16 +1,35 @@
-# HELEN — MATH → FACE → MATH Manifesto
+# HELEN — MATH → FACE → MATH Doctrine
 
-## The three canonical lines (use these everywhere)
+## Closed-Loop Identity Control for Semantic-Compressed Video Editing (SCVE)
 
-> **Core claim** — HELEN is a **persistent identity compiler**.
+## The canonical naming stack (use these verbatim everywhere)
+
+> **Core claim** — HELEN is a **dual-render identity compiler**: one mathematical identity, multiple renderer realizations.
 >
 > **Emergent property** — **Persistent emotional identity under cheap transformation.**
 >
+> **Technical principle** — **Semantic-Compressed Video Editing (SCVE).**
+>
+> **System type** — **Closed-loop identity control system.**
+>
 > **Business value** — **Maximum artistic coherence per credit spent.**
 
-Formal paper term: **SCVE — Semantic-Compressed Video Editing** (identity-stable, cross-style, emotion-controllable).
+The strongest single sentence (the thesis):
 
-One-liner for hallway pitches: *"HELEN is not a generated face. HELEN is a persistent cinematic identity that can be emotionally directed at low cost."*
+> *Semantic compression of video editing: you edit meaning in latent space instead of paying to re-solve pixels and identity every frame.*
+
+One-liner pitches:
+
+- **Hallway**: *"HELEN is not a generated face. HELEN is a persistent cinematic identity that can be emotionally directed at low cost."*
+- **Technical**: *"A factorized latent identity state with dual renderers and modality-specific verification gates enables semantic-compressed video editing."*
+
+---
+
+## Non-negotiable experimental principle
+
+**All evaluation and editing experiments route through `clone_from_latent(z_struct)` — no re-encoding, no confounds.**
+
+Payload-salting re-runs `H(m)` and contaminates slice-isolation. This was fixed in v0.3.1 (sweep + mood scripts both refactored). Any future experiment that bypasses `clone_from_latent` is scientifically invalid regardless of how the numbers look.
 
 ---
 

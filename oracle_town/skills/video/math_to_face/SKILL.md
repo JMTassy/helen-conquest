@@ -8,13 +8,19 @@ helen_prerequisite: helen-director/SKILL.md (peer), HELEN_CHARACTER_V2.md (T3 em
 
 # MATH → FACE (HELEN) — Sovereign Rendering Skill
 
-## Positioning (the three canonical lines)
+## Positioning (the canonical naming stack)
 
-- **Core claim**: HELEN is a **persistent identity compiler**.
+- **Core claim**: HELEN is a **dual-render identity compiler** — one mathematical identity, multiple renderer realizations.
 - **Emergent property**: **Persistent emotional identity under cheap transformation.**
+- **Technical principle**: **Semantic-Compressed Video Editing (SCVE).**
+- **System type**: **Closed-loop identity control system.**
 - **Business value**: **Maximum artistic coherence per credit spent.**
 
-Formal term: **SCVE (Semantic-Compressed Video Editing)**. Full positioning in `references/MANIFESTO.md`.
+Thesis: *"Semantic compression of video editing — you edit meaning in latent space instead of paying to re-solve pixels and identity every frame."*
+
+**Non-negotiable experimental rule**: all evaluation and editing experiments route through `clone_from_latent(z_struct)` — no re-encoding, no confounds.
+
+Full positioning + equations + cost moat + roadmap in `references/MANIFESTO.md`.
 
 ---
 
