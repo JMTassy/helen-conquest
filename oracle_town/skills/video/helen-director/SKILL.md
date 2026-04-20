@@ -383,3 +383,108 @@ Standard operator acceptance after Phase 1 test shot (single 6s clip):
 - < 7/10 → single-shot retry before scaling
 
 Validated path: Phase 1 source-convergence (msg 708, operator rated ≥8) → Phase 2 10-shot cut (msg 711 v1, rated 7.5; msg 712 v2 with voice, rated higher).
+
+---
+
+## 16. Full-song recomposition pattern (calibrated 2026-04-20 pm)
+
+**Use when**: you have N≥8 normalized shots already rendered (sunk credits) and want to produce a 3-4 minute music clip without re-spending on new video generation.
+
+**Cost**: near-zero new Higgsfield credits (optionally +10 credits for one variety shot). All ffmpeg work is local.
+
+### 16.1 Pattern (applied to Helen Os.mp3, 236s song, 10 shots + 1 new HELEN shot)
+
+For an N-shot base, recompose into ~25 segments via four transformations:
+
+| Transformation | ffmpeg filter | Output duration |
+|---|---|---|
+| Forward (`fwd`) | (none) | = source duration (5-6s) |
+| Reverse (`rev`) | `reverse` | = source duration (5-6s) |
+| Slow 2× (`slow`) | `setpts=2*PTS,fps=24` | = 2× source (10-12s) |
+| Slow reverse (`slow_rev`) | `reverse,setpts=2*PTS,fps=24` | = 2× source (10-12s) |
+
+Script builder pattern:
+```python
+def make_segment(tag, shot_n, mode, factor=1.0):
+    vf_parts = []
+    if mode == "rev": vf_parts.append("reverse")
+    if mode in ("slow", "slow_rev"):
+        if mode == "slow_rev": vf_parts.append("reverse")
+        vf_parts.append(f"setpts={factor}*PTS")
+    vf_parts.append("fps=24")
+    return ffmpeg(-i src -vf ",".join(vf_parts) -an -c:v libx264 -crf 22 out)
+```
+
+### 16.2 Sequence design (validated 2026-04-20, msg 713)
+
+Target: ~210-240s of video against song length. Structure by song phase:
+
+| Song phase | Segments | Register |
+|---|---|---|
+| **Intro (0-25s)** | HELEN cold open → establishing anomaly → slow closure shot | introduce water language, HELEN presence |
+| **Verse 1 (25-75s)** | Fwd anomalies + slows, different classes per beat | accumulate anomaly vocabulary |
+| **Break (75-90s)** | HELEN witness return + hero anomaly shot | pivot point |
+| **Verse 2 (90-145s)** | Slow variations + **first reverses** (palindrome thesis emerges) | uncanny deepens |
+| **Climax (145-175s)** | New HELEN variety shot + anomaly climax | emotional peak (where +10 credit extra HELEN shot earns its cost) |
+| **Verse 3 (175-215s)** | Reverse passes + uncanny HELEN reverse | unsettling |
+| **Outro (215-end)** | Slow-reverse of climax HELEN + slow-resolution physics shot | bookend, physics restored |
+
+### 16.3 Variety rule
+
+For 4 min of video, **add at least one new HELEN-visible shot** (+10 credits) specifically for the climax beat. Reusing only shots 1 and 6 via forward/reverse/slow gets repetitive past ~180s. The new shot anchors the emotional center.
+
+Proven climax prompt (2026-04-20 msg 713): HELEN eyes-close over three seconds, slow blink reopen, subtle breath, camera locked, identity stable. 5s duration per §5 drift mitigation.
+
+### 16.4 Voice beats for song-length cuts
+
+Per HELEN_CHARACTER_V2 §14.2: 3-4 beats spaced across song structure. Validated placements (2026-04-20):
+
+| Beat | Timestamp | Line | Over shot |
+|---|---|---|---|
+| Intro | 0.3s | "I am here." | shot 1 (HELEN cold open) |
+| Verse break or climax | mid (70s or 145s) | "I see." | HELEN shot OR hero anomaly |
+| Outro | ~5s before video end | "One source." | resolution shot |
+
+### 16.5 Critical: voice beats must not exceed video duration
+
+**Lesson from 2026-04-20 msg 713**: recomposed video was 210s, song was 236s, outro voice beat scheduled at 225s → ffmpeg `-shortest` truncated at 210s → third voice beat dropped silently. Only intro + mid beats reached the operator.
+
+**Rule**: before mux, compute final video duration via ffprobe. Shift any voice beat timestamp > `video_duration - 4s` to `video_duration - 4s` minimum, or drop it entirely. Never trust the song length as the bound.
+
+```python
+# Correct pattern
+dur = ffprobe_duration(concat)
+voice_beats = [(t, text) for t, text in planned_beats if t < dur - 4]
+```
+
+### 16.6 Budget calibration (2026-04-20 msg 713)
+
+| Item | Credits |
+|---|---|
+| Reused 10 shots from earlier cut | 0 (sunk) |
+| 1 new HELEN-visible Seedance (variety shot) | 10 |
+| 25 ffmpeg segments (local) | 0 |
+| 3 Zephyr TTS beats (free tier) | 0 |
+| Concat + mux + compress + Telegram | 0 |
+| **Total new spend** | **10 credits** |
+
+Alternate: with **zero new shots**, pure 2-shot HELEN recomposition works but risks repetition in the 4-min range. Recommended only if budget is locked.
+
+### 16.7 Concat-mux order
+
+1. Generate all segments first (parallel or serial — they're local fast)
+2. Concat via `ffmpeg -f concat` (fast, no re-encode, `-c copy`)
+3. ffprobe the concat to get exact video duration
+4. Filter-reject voice beats past `duration - 4s`
+5. Mux: music trim to `duration`, afade in 2s / out 3s, volume 0.65; voice beats `adelay` + volume 1.3; amix with `duration=longest` OR `first` depending on whether you want audio to continue past visible end
+6. Compress if > 49 MB for Telegram
+
+### 16.8 Artifact inventory (after successful run)
+
+- `song_segs/seg_*.mp4` — 25 per-segment files
+- `song_concat.mp4` — pre-audio full video
+- `song_voice_*.wav` — Zephyr voice beats (plus sibling `.provenance.json` each per K8)
+- `song_clip_full.mp4` — final delivered artifact
+- `song_clip_state.json` — resumable state
+
+All under `/tmp/helen_temple/` per SKILL.md §10 (non-sovereign working dir).
