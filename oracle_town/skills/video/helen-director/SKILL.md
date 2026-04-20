@@ -260,3 +260,48 @@ This document is **DOCTRINE**, not INVARIANT. It describes patterns calibrated i
 - K2 / Rule 3: the session that promotes must not be the session that authored
 
 Until then: cite as "current working doctrine calibrated from 2026-04-19/20 session."
+
+---
+
+## 14. Signing discipline (tiered)
+
+HELEN video output signs itself three different ways depending on output channel. Governing principle: **sign, don't scream.** Overlay "HELEN" text, centered logos, or stacked branding break the anomaly register and read as cringe on TikTok. Silent signature — HELEN present in the world, not stamped on the screen — is the default.
+
+### Tier A — TikTok anomaly clips
+
+- No big overlay text (title card, bottom-third banner, etc.)
+- No centered logo on top of the anomaly
+- Silent signature only — HELEN is identified by the anomaly itself
+- Optional: subtle wardrobe logo if the shot includes a figure
+- Account handle, profile caption, and AI-generated disclosure carry brand identity — not the video frame itself
+
+### Tier B — Partner / premium reels (investor decks, Telegram sends, partner proofs)
+
+- Subtle embedded logo in wardrobe or environment (glitch-font HELEN on tank/jacket is proven, see `HELEN_CHARACTER_V2.md`)
+- + 0.5-second end card: minimal plate, "HELEN" typography, optional tiny emblem
+- Duration of end card: 0.3–0.7s
+- Black screen or minimal plate; no music cue, no fade animation
+- Purpose: "wow" presentations where authorship must be unambiguous without sacrificing mystique
+
+### Tier C — Festival / authority cut
+
+- Opening OR closing title allowed (not both)
+- Still minimal, elegant, not noisy
+- Typography aligned with HELEN_CHARACTER_V2 glitch-font register
+- No animation gimmicks, no logo-plus-tagline stacks
+
+### Sharpest single rule for edge cases
+
+If unsure which tier applies: **"HELEN" only at the end, and a tiny HELEN logo on clothing during the shot.** That combination gives brand presence without collapsing the anomaly effect.
+
+### Per-channel blunt verdict
+
+- **TikTok**: almost invisible signature
+- **Partner / premium**: tasteful end-card
+- **HELEN herself as character**: logo in costume is the cleanest move
+
+### Interaction with HELEN-as-perception-layer shots
+
+When HELEN is NOT visible as a character (pure anomaly shots — water, reflection, causal violation, etc.), **Tier A applies automatically** regardless of output channel. A wardrobe logo cannot be placed on water. Silent signature is the only option.
+
+The tiered signing rule only kicks in when HELEN-as-character is present (HELEN_CHARACTER_V2 shots).
