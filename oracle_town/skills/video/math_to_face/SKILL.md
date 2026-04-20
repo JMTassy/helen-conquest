@@ -488,3 +488,75 @@ Paired render doubles Higgsfield credit cost per frame (one real + one twin) —
 ### 14.8 Status
 
 DOCTRINE (scaffold). `HelenDualIdentity` + `paired_render()` interfaces landed 2026-04-20. Backends (G_real, G_manga, anime-face embedder) pending Phase 4 wiring. First validation target: single paired-render still image (the duo poster) before extending to video.
+
+---
+
+## 15. v0.4 sparse-keyframe pipeline — runnable scaffold
+
+Operator-directed 2026-04-20: ship the pipeline shell before the embedder upgrade, so the wiring is in place when ArcFace/CLIP/LPIPS land. Scripts live alongside `fit_aura_score.py` under `helen_os/render/math_to_face_starter/scripts/`.
+
+### 15.1 Six-stage pipeline
+
+Target: a 3-minute video assembled from ~12 sparse keyframes (one per ~15s) with audio overlay, ken-burns motion, and mirror-oracle verdict pass.
+
+| Stage | Script | In | Out | Backend |
+|---|---|---|---|---|
+| 1. analyze audio | `audio_analyze.py` | `.mp3/.wav` | `audio_analysis.json` (duration, RMS windows, silences) | ffmpeg astats + silencedetect |
+| 2. build arc | `build_arc_spec.py` | audio_analysis | `arc_spec.json` (N segments with mood + ken_burns) | stdlib |
+| 3. render keyframes | `render_keyframes.py` | arc_spec + refs dir | `{kf_NN.png}` + `keyframes_manifest.json` | **stub**: PIL color grade on curated refs (TODO: `G(clone_from_latent(z_struct))`) |
+| 4. assemble | `assemble_video.py` | arc_spec + manifest + audio | `.mp4` | ffmpeg zoompan + xfade |
+| 5. verdict | `mirror_oracle_report.py` | video + MIA v1 | `mirror_oracle.json` (✅/⚠️/❌ per frame) | **stub**: pixel_hash distance (TODO: ArcFace+CLIP swap at MIA v2) |
+| 6. publish | `telegram_post.py` | video + oracle report | Telegram message | urllib stdlib (TELEGRAM_BOT_TOKEN env) |
+
+### 15.2 Stub boundaries (honest)
+
+Two components are stubs with explicit TODO markers:
+
+- **`render_keyframes.py` / `clone_from_latent_stub`** — picks from `mia/refs/real/` and applies Pillow color grade per mood. Real path (Phase 4) swaps to `G(clone_from_latent(z_struct))` per §2 non-negotiable rule. The stub emits `rendered_via: stub` + explicit TODO in the manifest so downstream consumers know to discount it.
+- **`mirror_oracle_report.py` / `pixel_hash_distance`** — SHA256 prefix Hamming distance over downscaled grayscale bytes. Same stub semantics as MIA v1 audit. Real path: ArcFace (REAL) + CLIP (TWIN) once laptop pip is fixed and the aura_score fit crosses Spearman ≥0.7.
+
+### 15.3 Run command (dry, full 3-min arc)
+
+```bash
+cd helen_os/render/math_to_face_starter
+
+# 1. analyze audio
+python3 scripts/audio_analyze.py /path/to/track.mp3
+
+# 2. build arc
+python3 scripts/build_arc_spec.py /path/to/track.audio_analysis.json --n 12
+
+# 3. render keyframes (uses curated refs)
+python3 scripts/render_keyframes.py arc_spec.json --refs mia/refs/real
+
+# 4. assemble (with audio)
+python3 scripts/assemble_video.py arc_spec.json /tmp/helen_keyframes_v04/keyframes_manifest.json --audio /path/to/track.mp3 --out /tmp/helen_arc_v04.mp4
+
+# 5. mirror oracle verdict
+python3 scripts/mirror_oracle_report.py /tmp/helen_arc_v04.mp4 --mia mia/mia_helen_dual_v1.json
+
+# 6. publish (set TELEGRAM_BOT_TOKEN first; --dry-run to preview caption)
+TELEGRAM_BOT_TOKEN=... python3 scripts/telegram_post.py /tmp/helen_arc_v04.mp4 \
+    --oracle-report /tmp/helen_arc_v04.mirror_oracle.json
+```
+
+### 15.4 Laptop stack constraint
+
+Pip is broken on laptop Python 3.14 (libexpat mismatch). All six scripts use **stdlib + ffmpeg subprocess + Pillow only** — no numpy, no librosa, no moviepy, no torch. When the environment is repaired, swap the two stub backends (§15.2) and rerun — interfaces don't change.
+
+### 15.5 Caption pack (Telegram)
+
+Per WULmoji enhancer rules (`oracle_town/skills/ops/wulmoji_enhancer/SKILL.md`): one emoji per line max, never as a claim. `telegram_post.py` ships a default template that respects this:
+
+```
+🎬 HELEN arc v0.4 — sparse keyframe render
+📊 12 keyframes over 180s
+🔴 stub embedder (pixel_hash); MIA v2 pending operator ratings
+⚪ clone_from_latent TODO — ref-set surrogate until G() is wired
+```
+
+Emoji grade the line; the words carry the actual state. Operator may override with `--caption` or `--caption-file`.
+
+### 15.6 Status
+
+**DOCTRINE (scaffold runnable)**. All 6 scripts parse clean; `build_arc_spec` + `telegram_post --dry-run` verified end-to-end. `audio_analyze` / `assemble_video` / `mirror_oracle_report` require an actual audio or video input to smoke-test; logic matches the aura_score precedent. Two stubs (`clone_from_latent`, `pixel_hash`) are isolated behind function names with TODO markers — Phase 4 embedder swap touches ≤20 lines total.
