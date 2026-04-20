@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "mia_id": "mia_helen_dual_v1",
+  "calibrated_at_utc": "2026-04-20T17:51:17.957045Z",
+  "embedder": {
+    "type": "PixelHistogramEmbedder_stdlib",
+    "dim": 256,
+    "features": "16x16 RGB downsample + 3x64 global histograms, L2-normalized",
+    "note": "stub embedder (stdlib + PIL only, no numpy dep). Swap to ArcFace (REAL) + anime-face/CLIP (TWIN) for v0.4."
+  },
+  "latent_spec": {
+    "id_dim": 256,
+    "control_dim": 128,
+    "style_dim": 128,
+    "temporal_dim": 0
+  },
+  "cross_canonical_distance": 0.06733649919802576,
+  "canonicals": {
+    "REAL": {
+      "canonical": "HELEN_REAL_V1",
+      "n_refs": 8,
+      "mu_dim": 256,
+      "tau_cosine": 0.12772248914214854,
+      "intra_mean_cosine_dist": 0.08716229484907773,
+      "intra_max_cosine_dist": 0.13017229148848664,
+      "mu_sha256": "93fe96caec8e451b0971b390092eeaa851913379571f9fb36a30527d5273f3fd",
+      "mu_first8": [
+        0.08002366958171547,
+        0.05684424453396054,
+        0.051598511482564564,
+        0.07529536102755965,
+        0.054914705394471956,
+        0.050235815441027676,
+        0.07206780623716208,
+        0.05305357863460858
+      ],
+      "ref_paths": [
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_00.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_01.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_02.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_03.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_04.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_05.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_06.png",
+        "helen_os/render/math_to_face_starter/refs/real/helen_real_07.png"
+      ]
+    },
+    "TWIN": {
+      "canonical": "HELEN_TWIN_V1",
+      "n_refs": 5,
+      "mu_dim": 256,
+      "tau_cosine": 0.1271638932693838,
+      "intra_mean_cosine_dist": 0.06591092393618345,
+      "intra_max_cosine_dist": 0.12943022759204348,
+      "mu_sha256": "06607e4fda0e315e108a1ab74d0898605a492dc4fc7b71c0c433b8e3cdaecd23",
+      "mu_first8": [
+        0.06016576728815381,
+        0.05949032598329132,
+        0.06393028045389246,
+        0.07688468636677795,
+        0.07398924921382494,
+        0.07593193834369837,
+        0.09489104187831562,
+        0.08859453551752323
+      ],
+      "ref_paths": [
+        "helen_os/render/math_to_face_starter/refs/twin/helen_twin_00.png",
+        "helen_os/render/math_to_face_starter/refs/twin/helen_twin_01.png",
+        "helen_os/render/math_to_face_starter/refs/twin/helen_twin_02.png",
+        "helen_os/render/math_to_face_starter/refs/twin/helen_twin_03.png",
+        "helen_os/render/math_to_face_starter/refs/twin/helen_twin_04.png"
+      ]
+    }
+  }
+}
