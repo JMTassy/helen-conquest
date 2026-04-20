@@ -1,6 +1,16 @@
 # HELEN — MATH → FACE → MATH Manifesto
 
-> **Persistent emotional identity under cheap transformation.**
+## The three canonical lines (use these everywhere)
+
+> **Core claim** — HELEN is a **persistent identity compiler**.
+>
+> **Emergent property** — **Persistent emotional identity under cheap transformation.**
+>
+> **Business value** — **Maximum artistic coherence per credit spent.**
+
+Formal paper term: **SCVE — Semantic-Compressed Video Editing** (identity-stable, cross-style, emotion-controllable).
+
+One-liner for hallway pitches: *"HELEN is not a generated face. HELEN is a persistent cinematic identity that can be emotionally directed at low cost."*
 
 ---
 
@@ -165,6 +175,32 @@ Every competitor can render *a* face. Only HELEN can render *HELEN* provably, ch
 ## 7. One-line positioning
 
 > HELEN is a low-cost identity compiler for emotionally meaningful video, where mathematical latent control replaces brute-force generative retries — and identity is a contract, not a hope.
+
+---
+
+## 7.5 SCVE — Semantic-Compressed Video Editing (the paper term)
+
+The emergent property has a name usable in publications and pitch decks:
+
+> **SCVE** — the class of video-editing systems where one frame's cost scales with the *semantic delta* from the previous frame, not with full-character regeneration. HELEN is the first sovereign SCVE stack — identity, emotion, style, and time as addressable latent factors over a gated realization pipeline.
+
+Three-layer intuition:
+
+| Layer | Statement |
+|---|---|
+| Dummy | "Keep the actress; only change her acting, costume, camera." |
+| Operator | "Edit meaning in latent space instead of paying to re-solve pixels and identity every frame." |
+| PhD | "A verified factorized latent state-space model with `z = z_id ⊕ z_control ⊕ z_style ⊕ z_temporal`, two observation maps `(G_real, G_twin)`, and two acceptance regions `(τ_real, τ_twin)` — identity invariance under renderer swap, falsifiable at inference time, with per-frame cost dominated by `‖Δz_control‖ + ‖Δz_style‖ + ‖Δz_temporal‖` while `k_id = 0`." |
+
+Short bullet list of proprietary differentiators (product-style):
+
+- same HELEN across shots
+- mood changes without losing identity
+- style changes without losing identity
+- fewer retries → lower credit burn
+- more artistic control per dollar
+- measurable failure detection (identity drift caught by gates)
+- scalable from single shot → montage → scene → full video
 
 ---
 

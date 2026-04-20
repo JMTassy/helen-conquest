@@ -8,6 +8,16 @@ helen_prerequisite: helen-director/SKILL.md (peer), HELEN_CHARACTER_V2.md (T3 em
 
 # MATH → FACE (HELEN) — Sovereign Rendering Skill
 
+## Positioning (the three canonical lines)
+
+- **Core claim**: HELEN is a **persistent identity compiler**.
+- **Emergent property**: **Persistent emotional identity under cheap transformation.**
+- **Business value**: **Maximum artistic coherence per credit spent.**
+
+Formal term: **SCVE (Semantic-Compressed Video Editing)**. Full positioning in `references/MANIFESTO.md`.
+
+---
+
 **Class**: Non-sovereign render layer. No kernel authority. No ledger write.
 
 **Position vs helen-director**: helen-director is the **rental** pipeline (Higgsfield Seedance Pro API, closed-box, ~95% identity hold empirically). math_to_face is the **sovereign** pipeline (every component trained + owned + auditable). They coexist. helen-director delivers today; math_to_face delivers long-term ownership.
