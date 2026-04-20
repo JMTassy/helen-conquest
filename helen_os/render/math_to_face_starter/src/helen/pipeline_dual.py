@@ -63,7 +63,23 @@ class HelenDualCloner:
         self.twin_tau = twin_tau
 
     def clone(self, m: MathObject, seed: int = 0, use_phi_refine: bool = False) -> DualRun:
+        """End-to-end from a math object. Runs H(m) then clone_from_latent()."""
         z = self.H(m)
+        return self.clone_from_latent(z, seed=seed, use_phi_refine=use_phi_refine)
+
+    def clone_from_latent(
+        self,
+        z: StructuredLatent,
+        seed: int = 0,
+        use_phi_refine: bool = False,
+    ) -> DualRun:
+        """Scientific-isolation entrypoint — skip H(m), use a given latent directly.
+
+        Required for slice sweeps and mood offsets: payload-salting re-runs H
+        and destroys the controlled-perturbation semantics. This method keeps
+        the latent fixed so z_id / z_control / z_style isolation holds.
+        """
+        assert z.spec == self.spec, (z.spec, self.spec)
 
         if use_phi_refine:
             z_vec = z.as_vector().astype(np.float32)
