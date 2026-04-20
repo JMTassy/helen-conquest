@@ -1,0 +1,86 @@
+{
+  "project": {
+    "title": "HELEN_3MIN_TEST_001",
+    "mode": "music_clip_ultra_cheap",
+    "duration_sec": 180,
+    "fps_out": 24,
+    "keyframe_count": 18,
+    "renderer_policy": "real+twin",
+    "gate_policy": "keyframes_only",
+    "motion_policy": "ken_burns_crossfade",
+    "telegram_publish": true,
+    "render_mode": "REAL_master_TWIN_oracle"
+  },
+  "identity": {
+    "identity_id": "HELEN_CANONICAL_V1",
+    "math_object_ref": "helen_math_identity_v1",
+    "lock_z_id": true,
+    "latent_spec": {
+      "id_dim": 256,
+      "control_dim": 128,
+      "style_dim": 128,
+      "temporal_dim": 0
+    }
+  },
+  "gates": {
+    "real_profile": "HELEN_REAL_V1",
+    "twin_profile": "HELEN_TWIN_V1",
+    "mirror_oracle": true,
+    "thermostat_mode": "cold_to_warm",
+    "retry_policy": {
+      "max_retries_per_keyframe": 2,
+      "first_action_on_fail": "reduce_control_step",
+      "second_action_on_fail": "reduce_style_step",
+      "third_action_on_fail": "fallback_to_previous_accepted"
+    }
+  },
+  "style_defaults": {
+    "watermark": "HELEN / CONQUEST",
+    "subtitle_mode": "scene_labels",
+    "palette_mode": "auto_by_emotion",
+    "real_weight_default": 0.6,
+    "twin_weight_default": 0.4
+  },
+  "timeline": [
+    {"t0": 0,   "t1": 10,  "label": "INTRO_01",           "emotion": "MYSTERY",            "intensity": 0.25, "camera": "close",   "real_weight": 0.55, "twin_weight": 0.45, "control_delta": "low",  "style_delta": "low",  "subtitle": "HELEN awakens"},
+    {"t0": 10,  "t1": 20,  "label": "INTRO_02",           "emotion": "SERENITY",           "intensity": 0.30, "camera": "close",   "real_weight": 0.60, "twin_weight": 0.40, "control_delta": "low",  "style_delta": "low",  "subtitle": "A calm signal forms"},
+    {"t0": 20,  "t1": 30,  "label": "RISE_01",            "emotion": "CONFIDENCE",         "intensity": 0.45, "camera": "medium",  "real_weight": 0.65, "twin_weight": 0.35, "control_delta": "mid",  "style_delta": "low",  "subtitle": "She takes the frame"},
+    {"t0": 30,  "t1": 40,  "label": "RISE_02",            "emotion": "PLAYFUL",            "intensity": 0.50, "camera": "medium",  "real_weight": 0.50, "twin_weight": 0.50, "control_delta": "mid",  "style_delta": "mid",  "subtitle": "The mask begins to dance"},
+    {"t0": 40,  "t1": 50,  "label": "VERSE_01",           "emotion": "JOY",                "intensity": 0.60, "camera": "medium",  "real_weight": 0.55, "twin_weight": 0.45, "control_delta": "mid",  "style_delta": "mid",  "subtitle": "Light enters the system"},
+    {"t0": 50,  "t1": 60,  "label": "VERSE_02",           "emotion": "AWE",                "intensity": 0.65, "camera": "wide",    "real_weight": 0.60, "twin_weight": 0.40, "control_delta": "mid",  "style_delta": "mid",  "subtitle": "A larger world appears"},
+    {"t0": 60,  "t1": 70,  "label": "TENSION_01",         "emotion": "DOUBT",              "intensity": 0.55, "camera": "profile", "real_weight": 0.65, "twin_weight": 0.35, "control_delta": "mid",  "style_delta": "low",  "subtitle": "The signal hesitates"},
+    {"t0": 70,  "t1": 80,  "label": "TENSION_02",         "emotion": "SADNESS",            "intensity": 0.50, "camera": "close",   "real_weight": 0.70, "twin_weight": 0.30, "control_delta": "low",  "style_delta": "low",  "subtitle": "Soft fracture"},
+    {"t0": 80,  "t1": 90,  "label": "PRECHORUS_01",       "emotion": "FEAR",               "intensity": 0.70, "camera": "close",   "real_weight": 0.60, "twin_weight": 0.40, "control_delta": "high", "style_delta": "mid",  "subtitle": "Threshold detected"},
+    {"t0": 90,  "t1": 100, "label": "CHORUS_01",          "emotion": "FIRE",               "intensity": 0.85, "camera": "wide",    "real_weight": 0.50, "twin_weight": 0.50, "control_delta": "high", "style_delta": "high", "subtitle": "She expands"},
+    {"t0": 100, "t1": 110, "label": "CHORUS_02",          "emotion": "JOY",                "intensity": 0.90, "camera": "wide",    "real_weight": 0.45, "twin_weight": 0.55, "control_delta": "high", "style_delta": "high", "subtitle": "Maximum bloom"},
+    {"t0": 110, "t1": 120, "label": "CHORUS_03",          "emotion": "CONFIDENCE",         "intensity": 0.80, "camera": "medium",  "real_weight": 0.55, "twin_weight": 0.45, "control_delta": "mid",  "style_delta": "mid",  "subtitle": "Stable center"},
+    {"t0": 120, "t1": 130, "label": "BRIDGE_01",          "emotion": "MYSTERY",            "intensity": 0.55, "camera": "profile", "real_weight": 0.40, "twin_weight": 0.60, "control_delta": "mid",  "style_delta": "high", "subtitle": "Mirror domain"},
+    {"t0": 130, "t1": 140, "label": "BRIDGE_02",          "emotion": "AURA",               "intensity": 0.50, "camera": "close",   "real_weight": 0.35, "twin_weight": 0.65, "control_delta": "low",  "style_delta": "high", "subtitle": "Presence over form"},
+    {"t0": 140, "t1": 150, "label": "CLIMAX_01",          "emotion": "FIRE",               "intensity": 0.95, "camera": "wide",    "real_weight": 0.50, "twin_weight": 0.50, "control_delta": "high", "style_delta": "high", "subtitle": "Full release"},
+    {"t0": 150, "t1": 160, "label": "CLIMAX_02",          "emotion": "TRIUMPH",            "intensity": 0.90, "camera": "medium",  "real_weight": 0.60, "twin_weight": 0.40, "control_delta": "high", "style_delta": "mid",  "subtitle": "HELEN holds"},
+    {"t0": 160, "t1": 170, "label": "OUTRO_01",           "emotion": "SERENITY",           "intensity": 0.40, "camera": "close",   "real_weight": 0.70, "twin_weight": 0.30, "control_delta": "low",  "style_delta": "low",  "subtitle": "Cooling the arc"},
+    {"t0": 170, "t1": 180, "label": "OUTRO_02",           "emotion": "CANONICAL_RETURN",   "intensity": 0.20, "camera": "close",   "real_weight": 0.75, "twin_weight": 0.25, "control_delta": "low",  "style_delta": "low",  "subtitle": "HELEN remains"}
+  ],
+  "logging": {
+    "metrics": [
+      "pass_rate_real",
+      "pass_rate_twin",
+      "mirror_oracle_green",
+      "mirror_oracle_yellow",
+      "mirror_oracle_red",
+      "retry_tax",
+      "identity_drift_score",
+      "smoothness_score",
+      "credits_per_accepted_keyframe",
+      "credits_per_final_minute"
+    ],
+    "write_manifest": true
+  },
+  "telegram": {
+    "post_full_clip": true,
+    "post_teaser_30s": true,
+    "post_vertical_cut": true,
+    "post_poster_grid": true,
+    "caption_template": "HELEN test run {project.title} | REAL pass={pass_rate_real:.2f} | TWIN pass={pass_rate_twin:.2f} | Mirror {mirror_oracle_green}/{mirror_oracle_yellow}/{mirror_oracle_red} | retry_tax={retry_tax:.2f}"
+  }
+}

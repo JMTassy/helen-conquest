@@ -67,8 +67,17 @@ A successful clone run is:
 
 Everything else (styles, moods, outfits) is allowed to vary.
 
+## Director plans (v0.4 test protocol)
+
+`director_plans/HELEN_3MIN_TEST_001.json` — canonical 3-minute music-clip test. 18 scenes × 10s each, REAL_master + TWIN_oracle, ken_burns_crossfade motion, gate_policy=keyframes_only, Telegram distribution. Execute via `scripts/run_director_plan.py` once v0.4 backends are wired.
+
+The plan encodes the operator's full director-spec: per-scene emotion, intensity, camera, real/twin weights, control/style deltas, subtitles, retry cascade, logging contract, Telegram caption template. The runner carries the non-negotiable experimental rule — every keyframe routes through `clone_from_latent(z_struct)`, `z_id` is locked once, and payload-salting is never used.
+
 ## Cross-references
 
 - `oracle_town/skills/video/math_to_face/SKILL.md` §14 — dual-canonical doctrine
+- `oracle_town/skills/video/math_to_face/references/MANIFESTO.md` — positioning + locked 5-stack + third-eye insight
+- `oracle_town/skills/video/math_to_face/references/LATERAL_EMERGENT_PROPERTIES.md` — 14-property catalog (Twin Mirror Lie Detector §11 governs the REAL+TWIN verdict logic used by this runner)
+- `oracle_town/skills/video/math_to_face/references/EMERGENT_SPEC_TABLE.md` — one-page execution board
 - `oracle_town/skills/video/math_to_face/references/DUO_POSTER_PROMPT.md` — canonical paired scene template
 - `oracle_town/skills/video/math_to_face/references/HELEN_MATH_FACE_PROTOCOL.tex` — formal LaTeX protocol
