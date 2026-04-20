@@ -212,32 +212,68 @@ def reverse_sde(
 
 @dataclass
 class HelenIdentity:
-    """HELEN's identity anchor in latent space.
+    """HELEN Identity Artifact (MIA) — formal identity anchor.
 
-    In production:
-        helen_z_anchor: averaged latent from N HELEN reference photos
-                        (via E encoder on the session-validated set).
-        helen_arcface_anchor: averaged ArcFace embedding for the id-gate.
+    Formalized in the LaTeX protocol (references/HELEN_MATH_FACE_PROTOCOL.tex).
 
-    The "T3 photo-seed" method (HELEN_CHARACTER_V2 §2) is the empirical
-    precursor: one photo as seed + motion-only prompt. MATH→FACE replaces
-    that with averaged anchors + mathematical conditioning.
+        MIA_HELEN = (id, D_ref, E_face, μ_e, Σ_e, μ_z, Σ_z, τ_id, τ_rt, V)
+
+    The T3 photo-seed method (HELEN_CHARACTER_V2 §2) is the empirical
+    precursor: one photo as seed + motion-only prompt. The MIA replaces
+    that with averaged anchors + Mahalanobis identity gate + manifest.
     """
-    helen_z_anchor: "Tensor"  # shape (1, latent_dim)
-    helen_arcface_anchor: Optional["Tensor"] = None  # shape (1, 512)
+    # Identifier
+    id: str = "HELEN/v1"
+
+    # Reference image set D_ref
     reference_photos: list = field(default_factory=list)  # absolute paths
 
+    # Embedding-space statistics (identity anchor in ArcFace space E)
+    mu_e: Optional["Tensor"] = None          # shape (d_e,) — mean ArcFace embedding
+    sigma_e: Optional["Tensor"] = None       # shape (d_e, d_e) — covariance (or diagonal)
+    sigma_e_diag: Optional["Tensor"] = None  # shape (d_e,) — √diag(Σ_e) for MVP isotropic gate
 
-def identity_distance_arcface(
-    face_img: "Tensor", anchor: "Tensor", arcface_model: "Callable"
+    # Latent-space statistics (generator anchor in Z)
+    mu_z: Optional["Tensor"] = None          # shape (latent_dim,) — mean latent
+    sigma_z: Optional["Tensor"] = None       # shape (latent_dim, latent_dim) — covariance
+
+    # Gate thresholds
+    tau_id: float = 0.35                     # identity gate (Mahalanobis or cosine)
+    tau_rt: float = 0.10                     # round-trip latent drift gate
+    tau_vis: float = 0.20                    # LPIPS visual consistency gate
+
+    # Versioned manifest V — hashes, seeds, model versions, config snapshot
+    manifest: dict = field(default_factory=dict)
+
+    # Back-compat alias used elsewhere in scaffold: treat mu_z as the z_anchor
+    @property
+    def helen_z_anchor(self) -> "Tensor":
+        if self.mu_z is None:
+            raise ValueError("HelenIdentity.mu_z not set; run record_identity() first")
+        return self.mu_z.unsqueeze(0) if self.mu_z.dim() == 1 else self.mu_z
+
+    @property
+    def helen_arcface_anchor(self) -> Optional["Tensor"]:
+        if self.mu_e is None:
+            return None
+        return self.mu_e.unsqueeze(0) if self.mu_e.dim() == 1 else self.mu_e
+
+
+def identity_distance_mahalanobis(
+    face_img: "Tensor", helen: HelenIdentity, arcface_model: "Callable"
 ) -> "Tensor":
-    """id_dist = 1 − cos(ArcFace(face_img), anchor).
+    """ArcFace Mahalanobis identity distance per MIA §Operational gates.
 
-    STUB: requires insightface / arcface_resnet50 per the HELEN config schema.
-    Wire arcface_model to a real loaded model instance.
+        D_id(Î) = √((ê − μ_e)^T Σ_e^{-1} (ê − μ_e))
+
+    where ê = E_face(Î).
+
+    STUB: requires insightface / arcface_resnet50 + loaded MIA statistics.
     """
     raise NotImplementedError(
-        "Wire arcface_model to insightface.app.FaceAnalysis() or equivalent."
+        "Wire arcface_model to insightface.app.FaceAnalysis() and compute "
+        "(ê − μ_e)^T Σ_e^{-1} (ê − μ_e). For MVP, use diagonal Σ_e via "
+        "helen.sigma_e_diag (isotropic gate)."
     )
 
 
@@ -245,16 +281,42 @@ def passes_identity_gate(
     face_img: "Tensor",
     helen: HelenIdentity,
     arcface_model: "Callable",
-    delta_id: float = 0.35,
 ) -> bool:
-    """Identity gate: id_dist(ArcFace(face), anchor) < δ_id.
+    """Identity gate: D_id(Î) ≤ τ_id (MIA PASS condition).
 
-    Default δ_id = 0.35 (cosine-distance equivalent). Tune per model.
+    Threshold τ_id is per-MIA (see HelenIdentity.tau_id).
     """
-    if helen.helen_arcface_anchor is None:
-        raise ValueError("HelenIdentity missing helen_arcface_anchor")
-    d = identity_distance_arcface(face_img, helen.helen_arcface_anchor, arcface_model)
-    return bool(d.item() < delta_id)
+    if helen.mu_e is None:
+        raise ValueError("MIA missing μ_e; run record_identity() first")
+    d = identity_distance_mahalanobis(face_img, helen, arcface_model)
+    return bool(d.item() <= helen.tau_id)
+
+
+def passes_roundtrip_gate(
+    m: Any, helen: HelenIdentity, cfg: "SDEConfig"
+) -> bool:
+    """Round-trip gate: ‖ẑ − z₀‖₂ ≤ τ_rt.
+
+    Where z₀ = H(m), ẑ = E(G(z₀)).
+
+    STUB: requires G and E wired.
+    """
+    raise NotImplementedError(
+        "Wire: z0 = helen_math_to_latent(H(m), helen); img = G_render(z0); "
+        "zhat = E_invert(img); then return ||zhat - z0||_2 <= helen.tau_rt."
+    )
+
+
+def passes_visual_consistency_gate(
+    z: "Tensor", helen: HelenIdentity, G1: "Callable", G2: "Callable"
+) -> bool:
+    """Visual consistency gate: LPIPS(G(z), G'(z)) ≤ τ_vis.
+
+    Used to check generator variant / sampling-seed stability.
+    """
+    raise NotImplementedError(
+        "Wire LPIPS metric (e.g., via lpips package) and two generator variants."
+    )
 
 
 # ═════════════════════════════════════════════════════════════════════════

@@ -62,19 +62,59 @@ Scaffolded in `math_to_face.py`:
 
 ---
 
-## 3. HELEN Identity Artifact (per Phase 2)
+## 3. HELEN Identity Artifact (MIA) — formal object
 
-```python
-@dataclass
-class HelenIdentity:
-    helen_z_anchor: Tensor           # averaged latent from N reference photos
-    helen_arcface_anchor: Tensor     # averaged ArcFace embedding
-    reference_photos: list           # absolute paths
+Formalized in `references/HELEN_MATH_FACE_PROTOCOL.tex` §MIA. Python scaffold at `HelenIdentity` in `math_to_face.py`.
+
+```
+MIA_HELEN = (id, D_ref, E_face, μ_e, Σ_e, μ_z, Σ_z, τ_id, τ_rt, V)
 ```
 
-Build via `record_identity(face_images, arcface_model)` — iterate reference set, invert via E, ArcFace-embed, average. This is the **durable identity object** the operator can store and reuse ("make HELEN in this pose/emotion").
+Components:
 
-Empirical precursor: HELEN_CHARACTER_V2 §2 T3 method (single-photo Seedance seed). math_to_face formalizes this as averaged anchors + ArcFace gate.
+| Field | Space | Role |
+|---|---|---|
+| `id` | str | Stable identifier (e.g. `HELEN/v1`) |
+| `D_ref` | `{I_k} ⊂ I` | Curated reference image set |
+| `E_face` | `I → E` | Fixed face embedding model (ArcFace recommended) |
+| `μ_e, Σ_e` | embedding space | Identity anchor (mean + covariance) |
+| `μ_z, Σ_z` | latent space `Z ⊂ R^512` | Generator anchor (mean + covariance) |
+| `τ_id` | scalar | Identity gate threshold (Mahalanobis distance) |
+| `τ_rt` | scalar | Round-trip drift gate threshold |
+| `V` | manifest dict | Hashes, seeds, model versions, config snapshot (reproducibility) |
+
+### Estimators
+
+**Embedding statistics** (identity anchor):
+```
+e_k = E_face(I_k)
+μ_e = (1/N) Σ e_k
+Σ_e = (1/(N-1)) Σ (e_k − μ_e)(e_k − μ_e)^T
+```
+
+**Latent statistics** (generator anchor):
+```
+z_k = E(I_k)    (via inversion encoder)
+μ_z = (1/N) Σ z_k
+Σ_z = (1/(N-1)) Σ (z_k − μ_z)(z_k − μ_z)^T
+```
+
+### Operational gates (PASS/FAIL, all deterministic)
+
+| Gate | Definition | Scaffold function |
+|---|---|---|
+| **Identity (Mahalanobis)** | `D_id(Î) = √((ê − μ_e)^T Σ_e⁻¹ (ê − μ_e)) ≤ τ_id` | `passes_identity_gate()` |
+| **Round-trip** | `‖ẑ − z₀‖₂ ≤ τ_rt` where `z₀ = H(m)`, `ẑ = E(G(z₀))` | `passes_roundtrip_gate()` |
+| **Visual consistency (LPIPS)** | `LPIPS(G(z), G'(z)) ≤ τ_vis` | `passes_visual_consistency_gate()` |
+| **Math attribution** | `H⁻¹(E(G(H(m)))) = m` | stubbed in `round_trip_invariants()` |
+
+### MVP simplification
+
+For small N or early development, set `Σ_e ≈ σ² I` (diagonal/isotropic) via `sigma_e_diag`. Upgrade to full covariance when reference set diversity makes it meaningful.
+
+### Empirical precursor
+
+HELEN_CHARACTER_V2 §2 T3 method (single-photo Seedance seed, ~95% operator-rated identity hold). The MIA formalizes this as averaged anchors + **mathematically measurable** Mahalanobis gate (rather than operator-rated emotional reaction).
 
 ---
 
@@ -233,3 +273,116 @@ Until then: cite as "sovereign rendering scaffold per 2026-04-20 session — int
 - `oracle_town/skills/video/helen-director/HELEN_CHARACTER_V2.md` — T3 photo-seed empirical precursor
 - `/Users/jean-marietassy/Desktop/PLUGINS_JMT/#pluginEmotionsSpectrum.pdf` — emotion taxonomy (input vocabulary for H)
 - `/Users/jean-marietassy/Desktop/#pluginHELEN 20 avril 26.pdf` — MATH RIEMANN / QAM framework (source for Π_QAM projector)
+
+---
+
+## 13. Video falsifiable test protocol — "One Year of HELEN"
+
+End-to-end experiment that proves (or falsifies) that MATH → FACE holds identity across the full emotion × hairstyle matrix, tested as a video. Must run AFTER H / G / E / H⁻¹ are wired (Phases 3-4); this section is the contract the assistant will execute once backends exist.
+
+### 13.1 Test suite axes
+
+- **Emotions** `E = {neutral, joy, sadness, anger, fear, surprise, disgust}` (minimal Ekman-7; expand later to Emotions Spectrum 100+).
+- **Hairstyles** `H = {bob, long, ponytail, bangs, wet, straight, curly, updo, …}` (8+ styles).
+- **Timeline**: T timestamps (`T = 365` days or `T = 52` weeks). Each timestamp `t` has `c_t = (emotion_t, hair_t)`.
+- **Optional later axes**: lighting, outfits. Don't add until emotion × hair stabilizes.
+
+### 13.2 Two valid production modes
+
+**Mode A — strict Math → Face per frame**:
+```
+z_{0,t} = H(m_t)
+ẑ_{0,t} = Refine_φ(z_{0,t}; c_t)    # φ-SDE forward/reverse
+I_t     = G(ẑ_{0,t})
+```
+Round-trip gate must pass: `H⁻¹(E(G(H(m_t)))) = m_t`.
+
+**Mode B — Face → Math → Face continuity** (recommended for video):
+```
+z_t     = E(I_{t-1})
+z'_t    = Edit(z_t; c_t)            # QΦ-SoftPrompt or learned edit
+I_t     = G(Refine_φ(z'_t))
+```
+Previous frame is the identity anchor → better temporal continuity.
+
+### 13.3 Control signals per axis
+
+**Emotion**: facial action coding (AU targets) OR emotion classifier on output images as feedback signal.
+**Hairstyle**: segmentation mask / hair attributes OR CLIP-like text-image embedding scoring ("short bob haircut").
+
+These are **condition signals**, separate from the identity signal.
+
+### 13.4 Per-frame gates (all must PASS for frame ACCEPTED)
+
+| Gate | Definition | Threshold |
+|---|---|---|
+| **Identity (Mahalanobis)** | `D_id(I_t) = √((ê_t − μ_e)^T Σ_e⁻¹ (ê_t − μ_e)) ≤ τ_id` | per-MIA `tau_id` |
+| **Round-trip (Mode A only)** | `‖E(I_t) − H(m_t)‖ ≤ ε` AND `H⁻¹(E(I_t)) ≈ m_t` | per-MIA `tau_rt` |
+| **Temporal consistency** | `LPIPS(I_t, I_{t-1}) ≤ τ_temp` — EXCEPT at intentional jump cuts (e.g., hairstyle transitions) | `tau_temp` ≈ 0.25 |
+| **Emotion condition** | `S_emo(t) ≥ τ_emo` | `tau_emo` ≈ 0.7 |
+| **Hair condition** | `S_hair(t) ≥ τ_hair` | `tau_hair` ≈ 0.7 |
+
+Frame accepted iff product of indicator variables = 1. On FAIL: regenerate with adjusted SDE steps / edit magnitude / re-seed; up to `K = 3` retries per frame.
+
+### 13.5 Build algorithm
+
+```
+for t in 1..T:
+    # Anchor from previous frame (Mode B)
+    z_{t-1} = E(I_{t-1})
+    # Apply edit: hair + emotion → z'_t
+    z'_t = Edit(z_{t-1}, c_t)
+    # φ-SDE refinement (reverse SDE with score net)
+    ẑ_t = reverse_sde(z'_t, cfg, score_net)
+    # Render
+    I_t = G(ẑ_t)
+    # Gate
+    if not all_gates_pass(I_t, I_{t-1}, c_t, helen):
+        retry up to K times with adjustments
+        if still fails: mark frame FAILED, log reason
+    # Log
+    append manifest entry
+```
+
+### 13.6 Manifest per frame (mandatory logging contract)
+
+Every frame MUST log:
+- Input condition `c_t` (emotion name, hair name)
+- Latents `z_{t-1}, z'_t, ẑ_t` (hashes if too large to store raw)
+- Identity distance `D_id(t)`
+- `LPIPS(I_t, I_{t-1})`
+- Emotion score, hair score
+- Retry count, final verdict (ACCEPTED / FAILED with reason)
+- Seeds, model versions, config snapshot (`latent_dim=512`, `φ_regularization` flag, etc.)
+- `helen_say.py` receipt ID if this frame is promoted to canon
+
+This makes the test **reproducible** and **falsifiable** — not vibes.
+
+### 13.7 Output artifacts
+
+- **Final montage video** — "One Year of HELEN" sequence (accepted frames in order, with planned jump cuts)
+- **QC dashboard** — identity-distance / hair-score / emotion-score time series plots; failure rate per (emotion, hair) cell
+- **Failure reel** — only failed frames with gate-failure reasons (critical for debugging drift hotspots like "ponytail + fear")
+
+### 13.8 Gates that failure reveals
+
+Running this test across all (emotion, hair) cells reveals:
+- Which combinations destabilize identity (drift hotspots)
+- Whether φ-SDE step count / γ need per-axis tuning
+- Whether certain emotions need pre-anchor warm-up (e.g., fear might need a lower edit magnitude than joy)
+- Whether the generator G has blind spots (e.g., certain hair styles unsupported)
+
+Failures are data. The test isn't "pass everywhere" — it's "produce a calibrated failure map that tells us where the stack is weak."
+
+### 13.9 Prerequisites (what must exist before running this test)
+
+- [ ] MIA estimated for HELEN (μ_e, Σ_e, μ_z, Σ_z populated from reference set)
+- [ ] G wired (StyleGAN3 / SD / Flux — decision pending)
+- [ ] E wired (e4e / ReStyle — baseline choice)
+- [ ] H baseline (handcrafted Fourier + φ-reg OR learned encoder)
+- [ ] Score network trained via DSM on clean latents
+- [ ] Π_QAM decision made (identity / low-rank / HELEN-anchor projector)
+- [ ] Emotion classifier + hair scorer wired for condition gates
+- [ ] Manifest logging infrastructure (JSON append-only + model-version registry)
+
+This test is explicitly **NOT** a session-scope deliverable. It's a multi-week integration milestone that validates the whole stack end-to-end once Phase 4 + Phase 5 are complete.

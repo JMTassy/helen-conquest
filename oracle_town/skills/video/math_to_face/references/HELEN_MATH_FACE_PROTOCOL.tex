@@ -181,4 +181,113 @@ and a containerized environment with a Makefile target that regenerates results 
 \item \textbf{Validate:} compute round-trip + identity gates; return PASS/FAIL with metrics.
 \item \textbf{Edit (optional):} apply Q$\phiGR$ edits, then re-run gates.
 \end{enumerate}
+
+% ==========================================================
+\section{HELEN Identity Artifact (MIA): Formal Object, Estimation, and Gates}
+% ==========================================================
+
+\subsection{Purpose and interface position}
+The \emph{HELEN Identity Artifact} (MIA) is the canonical, reproducible object that
+binds a named identity (\textsf{HELEN}) to a set of mathematical constraints and
+operational gates used by the assistant. It acts as the identity anchor for the
+round-trip system $m\mapsto z\mapsto I\mapsto z\mapsto \hat m$ and for controlled
+generation $I=G(H(m))$.
+
+\subsection{Canonical spaces and fixed dimension}
+We fix a latent space $\cZ\subset\mathbb{R}^{d}$ with $d=512$ and a facial embedding
+space $\cE\subset\mathbb{R}^{d_e}$ produced by a fixed face-embedding model
+(e.g.\ ArcFace).
+
+\subsection{Definition of the MIA}
+\begin{definition}[MIA object]
+A \textbf{HELEN MIA} is a tuple
+\[
+\mathrm{MIA}_{\textsf{HELEN}}
+=
+\Big(
+\mathrm{id},\ \mathcal{D}_{\text{ref}},\ E_{\text{face}},\ \mu_e,\Sigma_e,\
+\mu_z,\Sigma_z,\ \tau_{\mathrm{id}},\ \tau_{\mathrm{rt}},\ \mathcal{V}
+\Big),
+\]
+where:
+\begin{itemize}
+  \item $\mathrm{id}$ is a stable identifier and semantic label (e.g.\ \textsf{HELEN/v1}).
+  \item $\mathcal{D}_{\text{ref}}=\{I_k\}_{k=1}^N\subset\cI$ is a reference image set (curated).
+  \item $E_{\text{face}}:\cI\to\cE$ is the fixed face-embedding model (ArcFace recommended).
+  \item $(\mu_e,\Sigma_e)$ are the estimated mean/covariance in embedding space (identity anchor).
+  \item $(\mu_z,\Sigma_z)$ are the estimated mean/covariance in latent space (generator anchor).
+  \item $\tau_{\mathrm{id}}$ is the identity gate threshold; $\tau_{\mathrm{rt}}$ is the round-trip gate threshold.
+  \item $\mathcal{V}$ is a versioned manifest (hashes, seeds, model versions, config snapshot).
+\end{itemize}
+\end{definition}
+
+\subsection{Estimators (what ``scan into math'' means)}
+\paragraph{Embedding statistics (identity anchor).}
+Let $e_k := E_{\text{face}}(I_k)\in\cE$. Define
+\[
+\mu_e := \frac{1}{N}\sum_{k=1}^N e_k,
+\qquad
+\Sigma_e := \frac{1}{N-1}\sum_{k=1}^N (e_k-\mu_e)(e_k-\mu_e)^\top.
+\]
+In practice, store also $\sigma_e := \sqrt{\mathrm{diag}(\Sigma_e)}$.
+
+\paragraph{Latent statistics (generator anchor).}
+Let $z_k := E(I_k)\in\cZ$ be inversion latents from a pretrained inverter
+(e.g.\ e4e/ReStyle). Define
+\[
+\mu_z := \frac{1}{N}\sum_{k=1}^N z_k,
+\qquad
+\Sigma_z := \frac{1}{N-1}\sum_{k=1}^N (z_k-\mu_z)(z_k-\mu_z)^\top.
+\]
+
+\subsection{Operational gates (PASS/FAIL)}
+\paragraph{Identity gate (ArcFace Mahalanobis).}
+For any candidate image $\hat I$, compute $\hat e:=E_{\text{face}}(\hat I)$ and
+\[
+D_{\mathrm{id}}(\hat I)
+:=
+\sqrt{(\hat e-\mu_e)^\top \Sigma_e^{-1}(\hat e-\mu_e)}.
+\]
+\textbf{PASS} iff $D_{\mathrm{id}}(\hat I)\le \tau_{\mathrm{id}}$.
+
+\paragraph{Round-trip gate (latent drift).}
+For a math input $m$, define $z_0:=H(m)$ and $\hat z := E(G(z_0))$. Require
+\[
+\| \hat z - z_0 \|_2 \le \tau_{\mathrm{rt}}.
+\]
+
+\paragraph{Visual consistency gate.}
+For two generator variants $G,G'$ (or two sampling seeds), require
+\[
+\mathrm{LPIPS}(G(z),G'(z)) \le \tau_{\mathrm{vis}}.
+\]
+
+\paragraph{Math attribution gate.}
+Require (exact or approximate, per object type)
+\[
+H^{-1}\big(E(G(H(m)))\big)=m.
+\]
+
+\subsection{Identity Preservation Function as a stability contract}
+We track the global stability envelope using the identity preservation functional
+\[
+\IP(\delta)=\sup_{d_{\cM}(m_1,m_2)<\delta}\ \|G(H(m_1)) - G(H(m_2))\|_{\cI},
+\]
+with regime thresholds (preserved / slight shift / major change / break) as part
+of the declared identity contract.
+
+\subsection{Reproducibility and versioning requirements}
+Each $\mathrm{MIA}_{\textsf{HELEN}}$ must include:
+\begin{itemize}
+\item model identifiers for $E_{\text{face}}$, $E$, $H$, $G$, and latent dimension $512$,
+\item a complete config snapshot (including $\phi$-regularization flag),
+\item hashes of $\mathcal{D}_{\text{ref}}$ and all derived arrays $(\mu_e,\Sigma_e,\mu_z,\Sigma_z)$,
+\item fixed random seeds and deterministic preprocessing.
+\end{itemize}
+
+\begin{remark}[Engineering note]
+In an MVP, you may set $\Sigma_e\approx \sigma^2 I$ (diagonal/isotropic) for a robust
+distance gate, then upgrade to full covariance once $N$ is large and references are diverse.
+\end{remark}
+
 \end{document}
