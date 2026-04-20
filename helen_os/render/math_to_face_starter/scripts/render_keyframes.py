@@ -152,6 +152,85 @@ def clone_from_latent_gemini(ref_path: Path, mood: str, api_key: str,
     return None, diag
 
 
+OPENAI_IMAGE_MODEL = "gpt-image-1"
+OPENAI_EDIT_ENDPOINT = "https://api.openai.com/v1/images/edits"
+
+
+def clone_from_latent_openai(ref_path: Path, mood: str, api_key: str,
+                             dry_run: bool = False) -> tuple[Image.Image | None, dict]:
+    """OpenAI gpt-image-1 — images/edits endpoint with HELEN ref as source.
+
+    Uses the edit endpoint (not generations) so the reference is treated as the
+    identity anchor; the prompt describes the mood only. Multipart/form-data
+    upload via stdlib urllib.
+    """
+    ref_bytes = ref_path.read_bytes()
+    prompt = (
+        f"Render the woman in the source image with {MOOD_PROMPT.get(mood, MOOD_PROMPT['canonical_return'])}. "
+        "Keep the exact same face, hair color, and eyes. Portrait framing."
+    )
+    diag = {
+        "backend": "openai-gpt-image-1-edit",
+        "mood": mood,
+        "ref": str(ref_path),
+        "prompt": prompt,
+        "ref_bytes": len(ref_bytes),
+    }
+    if dry_run:
+        return None, {**diag, "dry_run": True, "endpoint": OPENAI_EDIT_ENDPOINT}
+
+    boundary = "----helen_openai_img_boundary"
+    body_parts: list[bytes] = []
+    def add_field(name: str, value: str):
+        body_parts.append(f"--{boundary}\r\n".encode())
+        body_parts.append(f'Content-Disposition: form-data; name="{name}"\r\n\r\n'.encode())
+        body_parts.append(f"{value}\r\n".encode())
+    def add_file(name: str, filename: str, data: bytes, mime: str):
+        body_parts.append(f"--{boundary}\r\n".encode())
+        body_parts.append(
+            f'Content-Disposition: form-data; name="{name}"; filename="{filename}"\r\n'.encode()
+        )
+        body_parts.append(f"Content-Type: {mime}\r\n\r\n".encode())
+        body_parts.append(data)
+        body_parts.append(b"\r\n")
+    add_field("model", OPENAI_IMAGE_MODEL)
+    add_field("prompt", prompt)
+    add_field("size", "1024x1536")
+    add_file("image", ref_path.name, ref_bytes, "image/png")
+    body_parts.append(f"--{boundary}--\r\n".encode())
+    body = b"".join(body_parts)
+
+    req = urllib.request.Request(
+        OPENAI_EDIT_ENDPOINT, data=body,
+        headers={
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": f"multipart/form-data; boundary={boundary}",
+        },
+    )
+    ctx = ssl.create_default_context()
+    try:
+        with urllib.request.urlopen(req, context=ctx, timeout=180) as resp:
+            resp_body = json.loads(resp.read().decode())
+    except urllib.error.HTTPError as e:
+        err_body = e.read().decode(errors="replace")
+        diag["status"] = f"http_{e.code}"
+        diag["http_code"] = e.code
+        diag["error_body"] = err_body[:2000]
+        return None, diag
+
+    data_list = resp_body.get("data", [])
+    if data_list and data_list[0].get("b64_json"):
+        img_bytes = base64.b64decode(data_list[0]["b64_json"])
+        from io import BytesIO
+        img = Image.open(BytesIO(img_bytes)).convert("RGB")
+        diag["status"] = "ok"
+        diag["response_bytes"] = len(img_bytes)
+        return img, diag
+    diag["status"] = "no_image_in_response"
+    diag["raw_response_keys"] = list(resp_body.keys())
+    return None, diag
+
+
 def select_ref(refs: list[Path], idx: int) -> Path:
     return refs[idx % len(refs)]
 
@@ -163,8 +242,8 @@ def main() -> int:
                     help="directory with curated HELEN reference images")
     ap.add_argument("--out", default="/tmp/helen_keyframes_v04",
                     help="output directory for rendered PNGs")
-    ap.add_argument("--backend", choices=["stub", "gemini"], default="stub",
-                    help="image backend: stub=PIL color grade; gemini=img-ref API")
+    ap.add_argument("--backend", choices=["stub", "gemini", "openai"], default="stub",
+                    help="image backend: stub=PIL color grade; gemini=img-ref API; openai=gpt-image-1 edit")
     ap.add_argument("--limit", type=int, default=None,
                     help="render only first N keyframes (for cost-bounded smoke test)")
     ap.add_argument("--dry-run", action="store_true",
@@ -183,6 +262,12 @@ def main() -> int:
         api_key = os.environ.get("GEMINI_API_KEY", "")
         if not api_key and not args.dry_run:
             print("ERROR: GEMINI_API_KEY unset; use --dry-run to preview POST body",
+                  file=sys.stderr)
+            return 3
+    elif args.backend == "openai":
+        api_key = os.environ.get("OPENAI_API_KEY", "")
+        if not api_key and not args.dry_run:
+            print("ERROR: OPENAI_API_KEY unset; use --dry-run to preview POST body",
                   file=sys.stderr)
             return 3
 
@@ -218,8 +303,12 @@ def main() -> int:
             entry["out_path"] = str(out_path)
             print(f"  rendered {seg['keyframe_id']}  mood={seg['mood']:20s} ref={ref.name}")
         else:
-            img, diag = clone_from_latent_gemini(ref, seg["mood"], api_key,
-                                                 dry_run=args.dry_run)
+            if args.backend == "gemini":
+                img, diag = clone_from_latent_gemini(ref, seg["mood"], api_key,
+                                                     dry_run=args.dry_run)
+            else:
+                img, diag = clone_from_latent_openai(ref, seg["mood"], api_key,
+                                                     dry_run=args.dry_run)
             entry["diag"] = diag
             if args.dry_run:
                 print(f"  [dry-run] {seg['keyframe_id']}  mood={seg['mood']}")
