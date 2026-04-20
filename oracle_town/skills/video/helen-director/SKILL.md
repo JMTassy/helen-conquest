@@ -188,6 +188,8 @@ Mode A honours invisible-anomaly principle. Mode B carries narrative/vocal regis
 | ffmpeg `drawtext` not available | Homebrew build variance | Fallback: Pillow PNG with text, then `overlay` filter |
 | Telegram bot rejects upload | >50MB (bot API limit) | Compress to CRF 26, maxrate 2.4 Mbps |
 | Schema unknown for new endpoint | Evolving API | Iterate probes with defaults (UUID for `hf-api-key`, string for `image_url`, int for `duration`) and parse 400-error field hints |
+| Zephyr TTS output filename glob mismatch | `helen_tts.py` writes `YYYY-MM-DD_HHMMSS__<voice>.wav`, not `helen_tts_*.wav` | Glob `*__<voice>.wav` or `*__zephyr.wav`; script that invokes TTS must match this pattern. Documented 2026-04-20 after v1 cut shipped voiceless because wrapper script used wrong glob |
+| Higgsfield Soul Standard global queue stall | Soul endpoint can hold requests in `queued` state for 15+ min without ETA; test probes confirm system-wide, not account-specific | Abort after ~3 min of queued-state; pivot to single-seed fallback (§15.2); never wait indefinitely; stuck requests eventually bill when they complete regardless of whether we used them |
 
 ---
 
@@ -305,3 +307,79 @@ If unsure which tier applies: **"HELEN" only at the end, and a tiny HELEN logo o
 When HELEN is NOT visible as a character (pure anomaly shots — water, reflection, causal violation, etc.), **Tier A applies automatically** regardless of output channel. A wardrobe logo cannot be placed on water. Silent signature is the only option.
 
 The tiered signing rule only kicks in when HELEN-as-character is present (HELEN_CHARACTER_V2 shots).
+
+---
+
+## 15. Parallel submission + single-seed fallback (calibrated 2026-04-20 pm)
+
+**Context**: the 10-shot `2026-04-20-stabilize-helen-runtime` session produced a 1-minute HELEN-directed cut end-to-end. First attempt ran Seedance serially (~40-60 min projected) AND hit a Higgsfield Soul Standard global queue backlog. Recovery: pivot to parallel submission + single-seed register. Delivered in ~6 min of compute, operator-rated 7.5/10 v1, 8/10 v2 (with voice overlay).
+
+### 15.1 Parallel submission pattern (canonical)
+
+For any multi-shot cut (≥4 shots), submit all Seedance Pro I2V jobs concurrently, then poll them in a single loop checking each until terminal. Do NOT render serially.
+
+```python
+# Pseudocode
+pending = []
+for shot in SHOTS:
+    submit = iterate_submit(endpoint, body, defaults)
+    pending.append((shot, submit))
+
+while pending:
+    still = []
+    for shot, submit in pending:
+        status, obj = check_status_once(submit["status_url"])
+        if status in ("completed","failed","canceled","nsfw"):
+            shot.terminal = (status, obj)
+        else:
+            still.append((shot, submit))
+    pending = still
+    if pending: time.sleep(10)
+```
+
+**Time budget**: serial = sum(per-shot time) ≈ 2-5 min × N. Parallel = max(per-shot time) ≈ 2-5 min total, independent of N. A 10-shot cut: serial ~40 min, parallel ~6-8 min. This is a 5-6× speedup at zero additional credit cost.
+
+**Concurrency observed**: Higgsfield accepts at least 10 concurrent Seedance Pro submissions on a single account without rate-limit errors. Higher counts untested.
+
+### 15.2 Single-seed fallback (when Soul T2I is unavailable)
+
+If Higgsfield's Soul Standard T2I endpoint is queued / backlogged / failing, skip Soul entirely and run the whole cut on ONE image seed reused across all anomaly shots.
+
+**Tradeoff**:
+- (+) Zero dependency on Soul. Pipeline unblocks immediately.
+- (+) Saves ~3 credits × N seeds (the Rule of 3 is a cost optimization; dropping it costs a little visual variety).
+- (−) All anomaly shots share the same visual base → **visual monotony** is a real risk. Operator feedback 2026-04-20: monotony cost ~2 points out of 10.
+- (−) Canon `§3 seed–prompt alignment` rule still applies: single seed's aesthetic must match every shot's prompt register.
+
+**When to use**:
+- Soul queue stalled (>5 min no transition from `queued`)
+- Time-critical delivery (no budget for Soul troubleshooting)
+- Cut is short enough (<15 shots) that monotony is acceptable
+- Anomaly class variety can carry the visual variety (since all anomalies happen on the same surface)
+
+**When NOT to use**:
+- Full-length song clip / 3-min+ cut → monotony compounds, need seed variety
+- Partner pitch / investor demo → polish expected, do the Soul work
+- Festival cut → visual variety is a festival-grade metric
+
+### 15.3 Budget calibration from 10-shot parallel run (2026-04-20)
+
+| Component | Measured | Per-shot |
+|---|---|---|
+| 10 × Seedance Pro I2V (2 HELEN 5s + 8 anomaly 10s→6s trim) | 100 credits | 10 |
+| Parallel poll duration | 6 min 18s | max(per-shot), not sum |
+| Longest shot | ~6 min | shot 9 aggregate convergence |
+| Fastest shot | ~1 min 44s | shot 1 HELEN portrait + shot 3 |
+| All-normalized artifact size | ~13.8 MB pre-audio | 1080x1920 24fps yuv420p CRF 20 |
+| Final with music + voice | 14.3 MB | well under 50MB Telegram cap |
+
+Retries: 0 on this run (all 10 completed first pass). Retry buffer: keep ~13 credits for 1 shot's re-submission if needed.
+
+### 15.4 Extension to Phase 2 (operator review → scale up)
+
+Standard operator acceptance after Phase 1 test shot (single 6s clip):
+- ≥ 8/10 → greenlight 10-shot Phase 2 (~100 credits)
+- 7-8/10 → 10-shot Phase 2 with prompt adjustments OR seed variety fix first
+- < 7/10 → single-shot retry before scaling
+
+Validated path: Phase 1 source-convergence (msg 708, operator rated ≥8) → Phase 2 10-shot cut (msg 711 v1, rated 7.5; msg 712 v2 with voice, rated higher).
