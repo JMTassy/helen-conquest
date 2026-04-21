@@ -1,0 +1,104 @@
+{
+  "schema": "helen_effects_registry_v1",
+  "version": "1.0",
+  "calibrated_at": "2026-04-21",
+  "description": "Named ffmpeg filter recipes for HELEN video assembly. Callers reference by key; bodies are plain filter strings with {placeholders} for runtime params (duration, fps, size).",
+  "effects": [
+    {
+      "name": "ken_burns_slow_in",
+      "category": "motion",
+      "description": "Slow zoom-in from 1.00 to 1.08, center hold",
+      "ffmpeg_filter": "zoompan=z='1.00+(0.08)*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:fps={fps}:s={size}"
+    },
+    {
+      "name": "ken_burns_slow_out",
+      "category": "motion",
+      "description": "Slow zoom-out from 1.10 to 1.00, center hold",
+      "ffmpeg_filter": "zoompan=z='1.10-(0.10)*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={frames}:fps={fps}:s={size}"
+    },
+    {
+      "name": "ken_burns_pan_left_to_center",
+      "category": "motion",
+      "description": "Zoom 1.10→1.00 while panning from left to center",
+      "ffmpeg_filter": "zoompan=z='1.10-(0.10)*on/{frames}':x='iw/2-(iw/zoom/2)+(iw/zoom/4)*(1-on/{frames})':y='ih/2-(ih/zoom/2)':d={frames}:fps={fps}:s={size}"
+    },
+    {
+      "name": "ken_burns_pan_up",
+      "category": "motion",
+      "description": "Slow zoom + upward pan",
+      "ffmpeg_filter": "zoompan=z='1.00+(0.06)*on/{frames}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)-(ih/zoom/8)*(on/{frames})':d={frames}:fps={fps}:s={size}"
+    },
+    {
+      "name": "xfade_dissolve",
+      "category": "transition",
+      "description": "Standard dissolve crossfade",
+      "ffmpeg_filter_fragment": "xfade=transition=dissolve:duration={duration}:offset={offset}"
+    },
+    {
+      "name": "xfade_fade",
+      "category": "transition",
+      "description": "Hard fade to black between clips",
+      "ffmpeg_filter_fragment": "xfade=transition=fade:duration={duration}:offset={offset}"
+    },
+    {
+      "name": "xfade_wiperight",
+      "category": "transition",
+      "description": "Wipe right transition",
+      "ffmpeg_filter_fragment": "xfade=transition=wiperight:duration={duration}:offset={offset}"
+    },
+    {
+      "name": "grade_warm_golden",
+      "category": "color",
+      "description": "Warm golden-hour tint — saturation + brightness up",
+      "ffmpeg_filter": "eq=saturation=1.15:brightness=0.03:contrast=1.05"
+    },
+    {
+      "name": "grade_cool_twilight",
+      "category": "color",
+      "description": "Cool twilight — saturation down, slight blue shift",
+      "ffmpeg_filter": "eq=saturation=0.85:brightness=-0.02:contrast=1.00,hue=h=-10"
+    },
+    {
+      "name": "grade_dramatic_contrast",
+      "category": "color",
+      "description": "High contrast dramatic grade",
+      "ffmpeg_filter": "eq=saturation=1.10:brightness=-0.05:contrast=1.25"
+    },
+    {
+      "name": "grade_manga_bw",
+      "category": "color",
+      "description": "Desaturate for manga-style B&W; requires downstream dither for real manga look",
+      "ffmpeg_filter": "hue=s=0,eq=contrast=1.30"
+    },
+    {
+      "name": "vignette_soft",
+      "category": "overlay",
+      "description": "Soft circular vignette",
+      "ffmpeg_filter": "vignette=angle=PI/4"
+    },
+    {
+      "name": "vignette_strong",
+      "category": "overlay",
+      "description": "Strong vignette for cinematic framing",
+      "ffmpeg_filter": "vignette=angle=PI/6"
+    }
+  ],
+  "usage_contract": {
+    "placeholders": {
+      "{frames}": "integer, total frames for the effect (duration_sec * fps)",
+      "{fps}": "integer fps (typically 24 or 30)",
+      "{size}": "WxH string, e.g. 1080x1920",
+      "{duration}": "float seconds — for xfade",
+      "{offset}": "float seconds — for xfade (when the transition starts)"
+    },
+    "composition": "Motion + color effects chain with commas. Transitions use fragment form, composed separately in filter_complex graph.",
+    "caller_responsibility": "Caller substitutes placeholders before passing to ffmpeg. Registry does NOT evaluate or execute — it's a lookup table."
+  },
+  "gaps": [
+    "No per-channel color curves (only global eq) — add for finer grade control",
+    "No LUT application — could add for operator-custom 3D LUTs if desired",
+    "No text/drawtext recipes — handled separately by caption skills",
+    "No motion blur — would require minterpolate, expensive",
+    "No stabilization — our input is already stable stills"
+  ]
+}
