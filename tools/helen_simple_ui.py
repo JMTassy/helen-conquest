@@ -1,17 +1,33 @@
 #!/usr/bin/env python3
 """
 HELEN Simple Web UI (no Flask required)
-Uses Python's built-in http.server + Gemini TTS for voice
+Uses Python's built-in http.server + Gemini TTS for voice.
+Memory-aware: carries Helen's learnings across sessions.
 """
 import os, sys, json, subprocess, urllib.parse, base64
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 
-LEDGER_PATH = os.path.join(os.getcwd(), "town", "ledger_v1.ndjson")
-HELEN_SAY_SCRIPT = os.path.join(os.path.dirname(__file__), "helen_say.py")
-HELEN_TTS_SCRIPT = os.path.join(os.path.dirname(__file__), "..", "oracle_town", "skills", "voice", "gemini_tts", "helen_tts.py")
-VENV_PYTHON = os.path.join(os.getcwd(), ".venv", "bin", "python")
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+LEDGER_PATH = str(ROOT / "town" / "ledger_v1.ndjson")
+HELEN_SAY_SCRIPT = str(ROOT / "tools" / "helen_say.py")
+HELEN_TTS_SCRIPT = str(ROOT / "oracle_town" / "skills" / "voice" / "gemini_tts" / "helen_tts.py")
+VENV_PYTHON = str(ROOT / ".venv" / "bin" / "python")
 GEMINI_KEY = os.environ.get("GEMINI_API_KEY") or os.environ.get("GOOGLE_API_KEY") or ""
+
+# ── Companion (memory-aware) ──────────────────────────────────────────
+try:
+    from helen_companion import HelenCompanion
+    _companion = HelenCompanion()
+    _ui_session = _companion.open_session(source="web_ui")
+    _COMPANION_OK = True
+except Exception as _ce:
+    _companion = None
+    _ui_session = ""
+    _COMPANION_OK = False
+    print(f"[companion] unavailable: {_ce}", file=sys.stderr)
 
 HTML = """<!DOCTYPE html>
 <html>
@@ -186,35 +202,48 @@ class Handler(BaseHTTPRequestHandler):
             params = self._read_params()
             msg = params.get("msg", [""])[0]
             try:
-                result = subprocess.run(
-                    ["python3", HELEN_SAY_SCRIPT, msg, "--ledger", LEDGER_PATH],
-                    capture_output=True, text=True, timeout=10
-                )
-                output = result.stdout + result.stderr
-                # Strip ANSI escape codes
-                import re
-                clean = re.sub(r'\x1b\[[0-9;]*m', '', output)
-                her_text = ""
-                verdict = "?"
-                lines = clean.split("\n")
-                in_her = False
-                her_lines = []
-                for line in lines:
-                    if "[HER]" in line:
-                        in_her = True
-                        continue
-                    if "[HAL]" in line:
-                        in_her = False
-                        if "PASS" in line: verdict = "PASS"
-                        elif "BLOCK" in line: verdict = "BLOCK"
-                        elif "WARN" in line: verdict = "WARN"
-                        continue
-                    if in_her and line.strip():
-                        her_lines.append(line.strip())
-                her_text = "\n".join(her_lines)
-                self._json_response({"success": True, "her": her_text or msg, "verdict": verdict})
+                if _COMPANION_OK and _companion:
+                    her_text = _companion.chat(msg, session_id=_ui_session)
+                    verdict = "PASS"
+                else:
+                    import re
+                    result = subprocess.run(
+                        ["python3", HELEN_SAY_SCRIPT, msg, "--ledger", LEDGER_PATH],
+                        capture_output=True, text=True, timeout=10
+                    )
+                    clean = re.sub(r'\x1b\[[0-9;]*m', '', result.stdout + result.stderr)
+                    her_text = ""
+                    verdict = "?"
+                    in_her = False
+                    her_lines = []
+                    for line in clean.split("\n"):
+                        if "[HER]" in line:
+                            in_her = True
+                            continue
+                        if "[HAL]" in line:
+                            in_her = False
+                            if "PASS" in line: verdict = "PASS"
+                            elif "BLOCK" in line: verdict = "BLOCK"
+                            elif "WARN" in line: verdict = "WARN"
+                            continue
+                        if in_her and line.strip():
+                            her_lines.append(line.strip())
+                    her_text = "\n".join(her_lines) or msg
+                self._json_response({"success": True, "her": her_text, "verdict": verdict})
             except Exception as e:
                 self._json_response({"success": False, "error": str(e)})
+
+        elif self.path == "/api/memory":
+            if _companion:
+                mem = _companion.memory
+                self._json_response({
+                    "observations": mem.recent_observations(10),
+                    "reflections": mem.recent_reflections(3),
+                    "sessions": mem.recent_sessions(3),
+                    "context_block": mem.context_block(),
+                })
+            else:
+                self._json_response({"error": "companion not loaded"})
 
         elif self.path == "/api/tts":
             params = self._read_params()
@@ -257,8 +286,14 @@ if __name__ == "__main__":
         print(f"HELEN UI + Voice (Zephyr) on http://localhost:5001")
     else:
         print(f"HELEN UI on http://localhost:5001 (no voice — set GEMINI_API_KEY)")
+    if _COMPANION_OK:
+        print(f"  Companion: loaded (memory-aware)")
+    else:
+        print(f"  Companion: unavailable (kernel-only mode)")
     server = HTTPServer(("127.0.0.1", 5001), Handler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
         print("\nStopped.")
+        if _companion and _ui_session:
+            _companion.close_session(_ui_session)

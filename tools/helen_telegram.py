@@ -21,11 +21,25 @@ from pathlib import Path
 import datetime as _dt
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
 HELEN_SAY = ROOT / "tools" / "helen_say.py"
 HELEN_TTS = ROOT / "oracle_town" / "skills" / "voice" / "gemini_tts" / "helen_tts.py"
 VENV_PYTHON = ROOT / ".venv" / "bin" / "python"
 LEDGER = ROOT / "town" / "ledger_v1.ndjson"
 INTENTS = ROOT / "town" / "intents_v1.ndjson"
+
+# ── Companion (memory-aware) ──────────────────────────────────────────
+try:
+    from helen_companion import HelenCompanion
+    _companion = HelenCompanion()
+    _chat_sessions: dict = {}  # chat_id → session_id
+    _COMPANION_OK = True
+except Exception as _e:
+    _companion = None
+    _chat_sessions = {}
+    _COMPANION_OK = False
+    print(f"[companion] unavailable: {_e}")
 
 # Config from openclaw.json
 OPENCLAW_CFG = Path.home() / ".openclaw" / "openclaw.json"
@@ -418,6 +432,26 @@ def cmd_video(chat_id: int, topic: str) -> None:
         print(f"  [VIDEO ERROR] {e}")
 
 
+# ─── Companion helpers ───────────────────────────────────────────────────────
+
+def _companion_session(chat_id: int) -> str:
+    """Get or create a companion session for this chat."""
+    if not _companion:
+        return ""
+    if chat_id not in _chat_sessions:
+        sid = _companion.open_session(source=f"telegram:{chat_id}")
+        _chat_sessions[chat_id] = sid
+    return _chat_sessions[chat_id]
+
+
+def companion_respond(chat_id: int, text: str) -> str:
+    """Generate a memory-aware Helen response via companion."""
+    if not _companion:
+        return ""
+    sid = _companion_session(chat_id)
+    return _companion.chat(text, session_id=sid)
+
+
 # ─── Message Handler ──────────────────────────────────────────────────────────
 
 def handle_message(msg: dict):
@@ -429,6 +463,56 @@ def handle_message(msg: dict):
         return
 
     print(f"  [{user}] {text}")
+
+    # Command routing — memory
+    if text.strip() in ("/memory", "/memory@bot"):
+        if _companion:
+            mem = _companion.memory
+            obs = mem.recent_observations(8)
+            refs = mem.recent_reflections(3)
+            sess = mem.recent_sessions(3)
+            parts = ["HELEN MEMORY"]
+            if obs:
+                parts.append("\nObservations:")
+                for o in obs:
+                    parts.append(f"  • {o.get('content','')[:100]}")
+            if refs:
+                parts.append("\nJournal:")
+                for r in refs:
+                    parts.append(f"  {r.get('ts','')[:10]}: {r.get('content','')[:120]}")
+            if sess:
+                parts.append("\nSessions:")
+                for s in sess:
+                    hi = "; ".join(s.get("highlights", []))
+                    parts.append(f"  {s.get('ts','')[:10]}: {hi[:100]}")
+            if len(parts) == 1:
+                parts.append("  (empty — no memory yet)")
+            send_text(chat_id, "\n".join(parts))
+        else:
+            send_text(chat_id, "Companion not loaded.")
+        return
+
+    if text.strip() in ("/reflect", "/reflect@bot"):
+        if _companion:
+            send_text(chat_id, "Helen is writing...")
+            try:
+                from helen_reflect import generate_and_save_reflection
+                sid = _companion_session(chat_id)
+                entry = generate_and_save_reflection(_companion.memory, session_id=sid)
+                if entry:
+                    reply = f"[journal]\n{entry}"
+                    send_text(chat_id, reply)
+                    voice_path = generate_voice(entry[:200])
+                    if voice_path:
+                        send_voice(chat_id, voice_path, caption="Helen reflects")
+                        os.remove(voice_path)
+                else:
+                    send_text(chat_id, "No reflection generated.")
+            except Exception as e:
+                send_text(chat_id, f"Reflect error: {e}")
+        else:
+            send_text(chat_id, "Companion not loaded.")
+        return
 
     # Command routing — video
     if text.startswith("/video "):
@@ -485,22 +569,33 @@ def handle_message(msg: dict):
     except Exception as e:
         print(f"  [knowledge] {e}")
 
-    # Default: free text through kernel (with knowledge context appended)
-    msg_with_context = text
-    if knowledge_context:
-        msg_with_context = f"{text}\n\n[HELEN knowledge context from your corpus:]\n{knowledge_context}"
-    her_text, verdict = helen_say(msg_with_context)
-    print(f"  [HELEN {verdict}] {her_text[:80]}")
+    # Default: companion (memory-aware) first, kernel as fallback
+    if _COMPANION_OK and _companion:
+        msg_for_companion = text
+        if knowledge_context:
+            msg_for_companion = f"{text}\n\n[context from your corpus:]\n{knowledge_context}"
+        her_text = companion_respond(chat_id, msg_for_companion)
+        verdict = "PASS"
+        print(f"  [COMPANION] {her_text[:80]}")
+        reply = her_text
+    else:
+        msg_with_context = text
+        if knowledge_context:
+            msg_with_context = f"{text}\n\n[HELEN knowledge context from your corpus:]\n{knowledge_context}"
+        her_text, verdict = helen_say(msg_with_context)
+        print(f"  [HELEN {verdict}] {her_text[:80]}")
+        reply = f"[HAL {verdict}]\n{her_text}"
 
-    # Send text response immediately
-    reply = f"[HAL {verdict}]\n{her_text}"
     if knowledge_context:
-        reply += f"\n\n📚 Sources: {', '.join(r.source_file.split('/')[-1] for r in results)}"
+        try:
+            reply += f"\n\n📚 Sources: {', '.join(r.source_file.split('/')[-1] for r in results)}"
+        except Exception:
+            pass
     send_text(chat_id, reply)
 
-    # Generate and send voice (async-ish)
-    # Speak only the ACK/receipt part, not the full dump
-    speak_text = her_text.split("\n")[0] if her_text else text
+    # Generate and send voice
+    # For companion: speak the full response (short). For kernel ACK: first line only.
+    speak_text = her_text[:300] if (_COMPANION_OK and _companion) else (her_text.split("\n")[0] if her_text else text)
     voice_path = generate_voice(speak_text)
     if voice_path:
         try:
