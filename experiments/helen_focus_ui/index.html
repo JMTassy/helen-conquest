@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HELEN OS v2 — Focus Mode</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ── macOS-style menu bar ── -->
+<div class="menubar">
+  <div class="menubar-left">
+    <span class="apple-logo">&#xF8FF;</span>
+    <span class="app-name">HELEN OS v2</span>
+    <span class="menu-item">File</span>
+    <span class="menu-item">Edit</span>
+    <span class="menu-item">View</span>
+    <span class="menu-item active">Intent</span>
+    <span class="menu-item">Window</span>
+    <span class="menu-item">Help</span>
+  </div>
+  <div class="menubar-right">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0"/><path d="M1.42 9a16 16 0 0121.16 0"/><path d="M8.53 16.11a6 6 0 016.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+    <svg width="18" height="12" viewBox="0 0 24 12" fill="currentColor"><rect x="0" y="0" width="20" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="1.5"/><rect x="1.5" y="1.5" width="15" height="9" rx="1.5"/><rect x="21" y="3.5" width="2.5" height="5" rx="1" fill="currentColor"/></svg>
+    <span class="clock">Mon May 18&nbsp;&nbsp;11:52 AM</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+  </div>
+</div>
+
+<!-- ── App surface ── -->
+<div class="app">
+
+  <!-- Background mountain scene -->
+  <div class="bg-scene"></div>
+
+  <!-- ── LEFT PANEL — Current Intent ── -->
+  <aside class="panel-left">
+    <div class="intent-card">
+      <div class="intent-card-header">
+        <div class="intent-icon">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <span class="intent-label">CURRENT INTENT</span>
+      </div>
+      <div class="intent-text" id="intent-text">Understand the nature of consciousness</div>
+      <div class="clarity-bar-wrap">
+        <div class="clarity-bar">
+          <div class="clarity-fill" style="width: 72%"></div>
+        </div>
+        <span class="clarity-pct">72% clarity</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── CENTER — HELEN Core ── -->
+  <section class="center-stage">
+
+    <!-- HELEN title -->
+    <div class="helen-title-block">
+      <div class="helen-wordmark">H E L E N <span class="helen-dot">·</span></div>
+      <div class="helen-subtitle">INTELLIGENCE CORE</div>
+    </div>
+
+    <!-- Sacred geometry orb -->
+    <div class="helen-orb-wrap">
+      <div class="helen-orb">
+        <svg class="orb-svg" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <radialGradient id="orbGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#c084fc" stop-opacity="0.12"/>
+              <stop offset="40%" stop-color="#7c3aed" stop-opacity="0.08"/>
+              <stop offset="100%" stop-color="#1e1030" stop-opacity="0"/>
+            </radialGradient>
+            <radialGradient id="coreGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#f8f0ff"/>
+              <stop offset="30%" stop-color="#e0c0ff"/>
+              <stop offset="70%" stop-color="#a855f7"/>
+              <stop offset="100%" stop-color="#6d28d9"/>
+            </radialGradient>
+            <radialGradient id="ringGold" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.3"/>
+            </radialGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="softglow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="coreglow">
+              <feGaussianBlur stdDeviation="10" result="coloredBlur"/>
+              <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- Outer ambient glow -->
+          <circle cx="200" cy="200" r="190" fill="url(#orbGrad)"/>
+
+          <!-- Outer ring -->
+          <circle cx="200" cy="200" r="160" fill="none" stroke="#f59e0b" stroke-width="0.8" stroke-opacity="0.5" filter="url(#softglow)"/>
+
+          <!-- Mid ring -->
+          <circle cx="200" cy="200" r="135" fill="none" stroke="#c084fc" stroke-width="0.6" stroke-opacity="0.4"/>
+
+          <!-- Flower of Life pattern (7 circles) -->
+          <g opacity="0.25" stroke="#a78bfa" stroke-width="0.8" fill="none">
+            <!-- Center circle -->
+            <circle cx="200" cy="200" r="52"/>
+            <!-- 6 surrounding circles at 52px radius -->
+            <circle cx="252" cy="200" r="52"/>
+            <circle cx="226" cy="245" r="52"/>
+            <circle cx="174" cy="245" r="52"/>
+            <circle cx="148" cy="200" r="52"/>
+            <circle cx="174" cy="155" r="52"/>
+            <circle cx="226" cy="155" r="52"/>
+          </g>
+
+          <!-- Inner sacred geometry lines -->
+          <g opacity="0.35" stroke="#c084fc" stroke-width="0.6" fill="none" filter="url(#softglow)">
+            <line x1="200" y1="110" x2="200" y2="290"/>
+            <line x1="110" y1="200" x2="290" y2="200"/>
+            <line x1="136" y1="136" x2="264" y2="264"/>
+            <line x1="264" y1="136" x2="136" y2="264"/>
+            <!-- Star polygon points -->
+            <polygon points="200,118 219,163 268,163 230,190 244,238 200,211 156,238 170,190 132,163 181,163" fill="none" stroke="#f59e0b" stroke-width="0.7" opacity="0.4"/>
+          </g>
+
+          <!-- Inner ring (bright) -->
+          <circle cx="200" cy="200" r="95" fill="none" stroke="url(#ringGold)" stroke-width="1.2" filter="url(#softglow)"/>
+
+          <!-- Core circle dark bg -->
+          <circle cx="200" cy="200" r="60" fill="#120820" opacity="0.9"/>
+
+          <!-- Core burst -->
+          <g filter="url(#coreglow)">
+            <circle cx="200" cy="200" r="22" fill="url(#coreGrad)"/>
+            <!-- Burst rays -->
+            <g stroke="white" stroke-width="0.8" opacity="0.9">
+              <line x1="200" y1="170" x2="200" y2="155"/>
+              <line x1="200" y1="230" x2="200" y2="245"/>
+              <line x1="170" y1="200" x2="155" y2="200"/>
+              <line x1="230" y1="200" x2="245" y2="200"/>
+              <line x1="179" y1="179" x2="168" y2="168"/>
+              <line x1="221" y1="221" x2="232" y2="232"/>
+              <line x1="221" y1="179" x2="232" y2="168"/>
+              <line x1="179" y1="221" x2="168" y2="232"/>
+            </g>
+          </g>
+
+          <!-- Gold accent dots on outer ring -->
+          <g fill="#f59e0b" filter="url(#glow)">
+            <circle cx="200" cy="40" r="2.5"/>
+            <circle cx="360" cy="200" r="2.5"/>
+            <circle cx="200" cy="360" r="2.5"/>
+            <circle cx="40" cy="200" r="2.5"/>
+            <circle cx="313" cy="87" r="2"/>
+            <circle cx="313" cy="313" r="2"/>
+            <circle cx="87" cy="313" r="2"/>
+            <circle cx="87" cy="87" r="2"/>
+          </g>
+
+        </svg>
+      </div>
+    </div>
+
+    <!-- Status line -->
+    <div class="helen-status">
+      <span class="status-dot-gold"></span>
+      <span>AWAKE</span>
+      <span class="status-bull">·</span>
+      <span>ATTENTIVE</span>
+      <span class="status-bull">·</span>
+      <span>ALIGNED</span>
+    </div>
+
+    <!-- Tagline -->
+    <div class="helen-tagline">
+      HELEN sees. HELEN proposes.<br>
+      You choose. <span class="tagline-gold">The ledger remembers.</span>
+    </div>
+
+    <!-- Receipt + Ledger bar -->
+    <div class="receipt-bar">
+      <div class="receipt-pill" id="receipt-pill" onclick="toggleLedger()">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+        <span class="receipt-label">LATEST RECEIPT</span>
+        <span class="receipt-status" id="receipt-status">No new mutations</span>
+        <span class="receipt-time" id="receipt-time">11:51 AM</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+      </div>
+      <div class="ledger-btn" id="ledger-btn" onclick="toggleLedger()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+        <span>LEDGER</span>
+        <svg class="ledger-chevron" id="ledger-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </div>
+    </div>
+
+    <!-- Ledger dropdown -->
+    <div class="ledger-dropdown" id="ledger-dropdown">
+      <div class="ledger-inner">
+        <div class="ledger-header">
+          <span>SESSION LEDGER</span>
+          <span class="ledger-meta">NON_SOVEREIGN · prototype · no mutation</span>
+        </div>
+        <div class="ledger-entries" id="ledger-entries">
+          <div class="ledger-empty">No entries. Confirm an action to append a receipt.</div>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── RIGHT PANEL — HELEN Suggests ── -->
+  <aside class="panel-right" id="panel-right">
+    <div class="suggests-panel">
+      <div class="suggests-header">
+        <div class="suggests-title-row">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          <span class="suggests-label">HELEN SUGGESTS</span>
+        </div>
+        <button class="suggests-close" onclick="closeSuggests()">✕</button>
+      </div>
+      <div class="suggests-subtitle">Next best actions</div>
+      <div class="action-cards" id="action-cards">
+        <!-- rendered by JS -->
+      </div>
+      <button class="see-more-btn" onclick="shuffleSuggestions()">
+        See other options
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+    </div>
+  </aside>
+
+</div><!-- /.app -->
+
+<!-- ── Bottom area ── -->
+<div class="bottom-area">
+  <button class="add-btn" onclick="openModule('new')">+</button>
+
+  <!-- Dock -->
+  <div class="dock">
+    <div class="dock-inner">
+      <button class="dock-icon" onclick="openModule('amp')" title="HELEN AMP">
+        <div class="dock-icon-bg dock-icon-amp">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="12" stroke="#e9d5ff" stroke-width="1.5" fill="none"/>
+            <circle cx="24" cy="24" r="7" stroke="#c084fc" stroke-width="1" fill="none"/>
+            <path d="M24 12 L27 19 L35 19 L29 24 L31 32 L24 27 L17 32 L19 24 L13 19 L21 19 Z" fill="#c084fc" opacity="0.7"/>
+            <circle cx="24" cy="24" r="3" fill="white"/>
+          </svg>
+        </div>
+        <span>HELEN AMP</span>
+        <div class="dock-dot"></div>
+      </button>
+      <button class="dock-icon" onclick="openModule('files')" title="Files">
+        <div class="dock-icon-bg dock-icon-files">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <rect x="8" y="14" width="32" height="26" rx="3" fill="#3b82f6" opacity="0.8"/>
+            <rect x="8" y="14" width="16" height="8" rx="3" fill="#60a5fa"/>
+            <rect x="14" y="22" width="20" height="2.5" rx="1" fill="white" opacity="0.5"/>
+            <rect x="14" y="27" width="16" height="2.5" rx="1" fill="white" opacity="0.4"/>
+            <rect x="14" y="32" width="12" height="2.5" rx="1" fill="white" opacity="0.3"/>
+          </svg>
+        </div>
+        <span>Files</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('internet')" title="Internet">
+        <div class="dock-icon-bg dock-icon-internet">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="16" fill="#2563eb" opacity="0.9"/>
+            <circle cx="24" cy="24" r="16" fill="none" stroke="#93c5fd" stroke-width="0.5"/>
+            <ellipse cx="24" cy="24" rx="7" ry="16" fill="none" stroke="#93c5fd" stroke-width="0.8"/>
+            <line x1="8" y1="24" x2="40" y2="24" stroke="#93c5fd" stroke-width="0.8"/>
+            <line x1="10" y1="17" x2="38" y2="17" stroke="#93c5fd" stroke-width="0.6"/>
+            <line x1="10" y1="31" x2="38" y2="31" stroke="#93c5fd" stroke-width="0.6"/>
+          </svg>
+        </div>
+        <span>Internet</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('notes')" title="Notes">
+        <div class="dock-icon-bg dock-icon-notes">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <rect x="10" y="8" width="28" height="34" rx="3" fill="#fef08a"/>
+            <rect x="10" y="8" width="28" height="8" rx="3" fill="#fbbf24"/>
+            <line x1="16" y1="22" x2="32" y2="22" stroke="#92400e" stroke-width="1.5"/>
+            <line x1="16" y1="27" x2="32" y2="27" stroke="#92400e" stroke-width="1.5"/>
+            <line x1="16" y1="32" x2="26" y2="32" stroke="#92400e" stroke-width="1.5"/>
+          </svg>
+        </div>
+        <span>Notes</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('calendar')" title="Calendar">
+        <div class="dock-icon-bg dock-icon-calendar">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="10" width="36" height="32" rx="4" fill="white"/>
+            <rect x="6" y="10" width="36" height="12" rx="4" fill="#ef4444"/>
+            <rect x="6" y="18" width="36" height="4" fill="#ef4444"/>
+            <text x="24" y="15" text-anchor="middle" fill="white" font-size="7" font-weight="bold">MAY</text>
+            <text x="24" y="35" text-anchor="middle" fill="#1e293b" font-size="13" font-weight="bold">18</text>
+          </svg>
+        </div>
+        <span>Calendar</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('mail')" title="Mail">
+        <div class="dock-icon-bg dock-icon-mail">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <rect x="6" y="14" width="36" height="24" rx="3" fill="#3b82f6"/>
+            <path d="M6 17 L24 29 L42 17" stroke="white" stroke-width="1.5" fill="none"/>
+          </svg>
+          <div class="dock-badge">2</div>
+        </div>
+        <span>Mail</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('oracle')" title="Oracle">
+        <div class="dock-icon-bg dock-icon-oracle">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="16" fill="none" stroke="#c084fc" stroke-width="1"/>
+            <circle cx="24" cy="24" r="10" fill="none" stroke="#a855f7" stroke-width="1"/>
+            <polygon points="24,8 27,18 38,18 29,24 32,35 24,29 16,35 19,24 10,18 21,18" fill="#9333ea" opacity="0.6"/>
+            <circle cx="24" cy="24" r="4" fill="#e9d5ff"/>
+          </svg>
+        </div>
+        <span>Oracle</span>
+      </button>
+      <button class="dock-icon" onclick="openModule('settings')" title="Settings">
+        <div class="dock-icon-bg dock-icon-settings">
+          <svg width="28" height="28" viewBox="0 0 48 48" fill="none">
+            <circle cx="24" cy="24" r="7" fill="#94a3b8"/>
+            <path d="M24 8l2 5h5l-4 3 1.5 5L24 18l-4.5 3 1.5-5-4-3h5z" fill="#cbd5e1" opacity="0.7"/>
+            <path d="M24 40l2-5h5l-4-3 1.5-5L24 30l-4.5-3 1.5 5-4 3h5z" fill="#cbd5e1" opacity="0.7"/>
+            <path d="M8 24l5-2v-5l3 4 5-1.5L18 24l3 4.5-5-1.5-3 4v-5z" fill="#cbd5e1" opacity="0.7"/>
+            <path d="M40 24l-5-2v-5l-3 4-5-1.5L30 24l-3 4.5 5-1.5 3 4v-5z" fill="#cbd5e1" opacity="0.7"/>
+          </svg>
+        </div>
+        <span>Settings</span>
+      </button>
+    </div>
+    <div class="dock-dots">
+      <div class="dock-dot-nav active"></div>
+      <div class="dock-dot-nav"></div>
+      <div class="dock-dot-nav"></div>
+      <div class="dock-dot-nav"></div>
+    </div>
+  </div>
+
+  <!-- Voice / mic area -->
+  <div class="voice-area">
+    <div class="voice-waveform" id="voice-waveform">
+      <div class="wv-bar" style="height:8px"></div>
+      <div class="wv-bar" style="height:14px"></div>
+      <div class="wv-bar" style="height:22px"></div>
+      <div class="wv-bar" style="height:16px"></div>
+      <div class="wv-bar" style="height:10px"></div>
+      <div class="wv-bar" style="height:20px"></div>
+      <div class="wv-bar" style="height:12px"></div>
+    </div>
+    <button class="mic-btn-main" id="mic-btn" onclick="toggleMic()" title="Voice input">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+        <rect x="9" y="2" width="6" height="13" rx="3"/>
+        <path d="M5 10a7 7 0 0014 0"/>
+        <line x1="12" y1="19" x2="12" y2="22"/>
+        <line x1="9" y1="22" x2="15" y2="22"/>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<!-- ── Confirmation sheet ── -->
+<div class="overlay-backdrop" id="confirm-backdrop" onclick="cancelConfirm()"></div>
+<div class="confirmation-sheet" id="confirmation-sheet">
+  <div class="confirm-header">
+    <span class="confirm-label">CONFIRM ACTION</span>
+    <button class="confirm-close" onclick="cancelConfirm()">✕</button>
+  </div>
+  <div class="confirm-action-text" id="confirm-action-text"></div>
+  <div class="confirm-meta">
+    <div class="confirm-row"><span class="cm-key">Actor</span><span class="cm-val">HELEN</span></div>
+    <div class="confirm-row"><span class="cm-key">Authority</span><span class="cm-val cm-ns">NON_SOVEREIGN</span></div>
+    <div class="confirm-row"><span class="cm-key">Mutation</span><span class="cm-val cm-none">none (prototype)</span></div>
+    <div class="confirm-row"><span class="cm-key">Receipt</span><span class="cm-val">local in-memory only</span></div>
+  </div>
+  <div class="confirm-buttons">
+    <button class="btn-cancel" onclick="cancelConfirm()">Cancel</button>
+    <button class="btn-confirm" onclick="confirmAction()">◆ Confirm</button>
+  </div>
+</div>
+
+<!-- ── Module pop-in panel ── -->
+<div class="module-backdrop" id="module-backdrop" onclick="closeModule()"></div>
+<div class="module-panel" id="module-panel">
+  <div class="module-panel-header">
+    <span class="module-panel-title" id="module-panel-title"></span>
+    <button class="module-close-btn" onclick="closeModule()">✕</button>
+  </div>
+  <div class="module-panel-body" id="module-panel-body"></div>
+</div>
+
+<!-- ── Receipt flash ── -->
+<div class="receipt-flash" id="receipt-flash"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

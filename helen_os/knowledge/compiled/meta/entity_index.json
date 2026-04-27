@@ -1,0 +1,863 @@
+{
+  "only ledger": [
+    "source__claude_md",
+    "only_ledger"
+  ],
+  "python": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "unix": [
+    "source__claude_md",
+    "unix"
+  ],
+  "test": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "sovereign": [
+    "source__claude_md",
+    "sovereign"
+  ],
+  "layer": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "execution": [
+    "source__claude_md"
+  ],
+  "voice": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "this": [
+    "source__claude_md",
+    "this",
+    "source__engine_py",
+    "source__receipt_observation_report_md"
+  ],
+  "ledger": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct",
+    "source__receipt_observation_report_md",
+    "ledger"
+  ],
+  "skills": [
+    "source__claude_md"
+  ],
+  "source: claude.md": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "gate": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "constitutional membrane": [
+    "source__claude_md",
+    "constitutional_membrane"
+  ],
+  "admissibility": [
+    "source__claude_md",
+    "admissibility"
+  ],
+  "claude code": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "autonomy": [
+    "source__claude_md"
+  ],
+  "what this is": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "direct": [
+    "source__claude_md",
+    "direct"
+  ],
+  "architecture layers": [
+    "source__claude_md",
+    "architecture_layers"
+  ],
+  "source metadata": [
+    "source__claude_md",
+    "source__engine_py",
+    "source__receipt_observation_report_md"
+  ],
+  "key concepts": [
+    "source__claude_md",
+    "source__engine_py",
+    "source__receipt_observation_report_md"
+  ],
+  "append": [
+    "source__claude_md",
+    "append"
+  ],
+  "tools": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "only": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "governance": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct",
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "venv": [
+    "source__claude_md",
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct"
+  ],
+  "wikilinks": [
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct",
+    "governed",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "see also": [
+    "this",
+    "claude_code",
+    "what_this_is",
+    "architecture_layers",
+    "layer",
+    "constitutional_membrane",
+    "unix",
+    "sovereign",
+    "append",
+    "only_ledger",
+    "admissibility",
+    "direct",
+    "governed",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "this\n\nfirst": [
+    "this"
+  ],
+  "claude code\n\nfirst": [
+    "claude_code"
+  ],
+  "what this is\n\nfirst": [
+    "what_this_is"
+  ],
+  "architecture layers\n\nfirst": [
+    "architecture_layers"
+  ],
+  "layer\n\nfirst": [
+    "layer"
+  ],
+  "constitutional membrane\n\nfirst": [
+    "constitutional_membrane"
+  ],
+  "unix\n\nfirst": [
+    "unix"
+  ],
+  "sovereign\n\nfirst": [
+    "sovereign"
+  ],
+  "append\n\nfirst": [
+    "append"
+  ],
+  "only ledger\n\nfirst": [
+    "only_ledger"
+  ],
+  "admissibility\n\nfirst": [
+    "admissibility"
+  ],
+  "direct\n\nfirst": [
+    "direct"
+  ],
+  "return": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "governed": [
+    "source__engine_py",
+    "governed"
+  ],
+  "list": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "usage": [
+    "source__engine_py",
+    "usage"
+  ],
+  "unit": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "tags": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "differences": [
+    "source__engine_py",
+    "differences"
+  ],
+  "path": [
+    "source__engine_py"
+  ],
+  "pipeline": [
+    "source__engine_py",
+    "pipeline"
+  ],
+  "index": [
+    "source__engine_py",
+    "index"
+  ],
+  "query": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "units": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "text": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "dict": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "import": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "cognition": [
+    "source__engine_py",
+    "cognition"
+  ],
+  "corpus": [
+    "source__engine_py",
+    "corpus"
+  ],
+  "self": [
+    "source__engine_py",
+    "governed",
+    "this",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "tag graph": [
+    "source__engine_py",
+    "tag_graph"
+  ],
+  "augmented kernel": [
+    "source__engine_py",
+    "augmented_kernel"
+  ],
+  "source: engine.py": [
+    "source__engine_py",
+    "governed",
+    "retrieval",
+    "augmented_kernel",
+    "differences",
+    "tags",
+    "pipeline",
+    "corpus",
+    "index",
+    "tag_graph",
+    "cognition",
+    "usage"
+  ],
+  "retrieval": [
+    "source__engine_py",
+    "retrieval"
+  ],
+  "governed\n\nfirst": [
+    "governed"
+  ],
+  "retrieval\n\nfirst": [
+    "retrieval"
+  ],
+  "augmented kernel\n\nfirst": [
+    "augmented_kernel"
+  ],
+  "differences\n\nfirst": [
+    "differences"
+  ],
+  "tags\n\nfirst": [
+    "tags"
+  ],
+  "pipeline\n\nfirst": [
+    "pipeline"
+  ],
+  "corpus\n\nfirst": [
+    "corpus"
+  ],
+  "index\n\nfirst": [
+    "index"
+  ],
+  "tag graph\n\nfirst": [
+    "tag_graph"
+  ],
+  "cognition\n\nfirst": [
+    "cognition"
+  ],
+  "usage\n\nfirst": [
+    "usage"
+  ],
+  "helen": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "report": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "source: receipt_observation_report.md": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "note": [
+    "source__receipt_observation_report_md",
+    "note"
+  ],
+  "schema": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "authority": [
+    "source__receipt_observation_report_md",
+    "authority"
+  ],
+  "observation report": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "last": [
+    "source__receipt_observation_report_md",
+    "last"
+  ],
+  "witness": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "total": [
+    "source__receipt_observation_report_md",
+    "total"
+  ],
+  "actions": [
+    "source__receipt_observation_report_md"
+  ],
+  "ship": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "focus mode": [
+    "source__receipt_observation_report_md",
+    "focus_mode"
+  ],
+  "generated": [
+    "source__receipt_observation_report_md",
+    "generated"
+  ],
+  "receipt observer": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "focus": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "source": [
+    "source__receipt_observation_report_md",
+    "source"
+  ],
+  "intent": [
+    "source__receipt_observation_report_md"
+  ],
+  "schemas": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "mode": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "autoresearch": [
+    "source__receipt_observation_report_md",
+    "receipt_observer",
+    "observation_report",
+    "generated",
+    "authority",
+    "source",
+    "note",
+    "this",
+    "ledger",
+    "total",
+    "last",
+    "schema",
+    "focus_mode"
+  ],
+  "classified": [
+    "source__receipt_observation_report_md"
+  ],
+  "receipt observer\n\nfirst": [
+    "receipt_observer"
+  ],
+  "observation report\n\nfirst": [
+    "observation_report"
+  ],
+  "generated\n\nfirst": [
+    "generated"
+  ],
+  "authority\n\nfirst": [
+    "authority"
+  ],
+  "source\n\nfirst": [
+    "source"
+  ],
+  "note\n\nfirst": [
+    "note"
+  ],
+  "ledger\n\nfirst": [
+    "ledger"
+  ],
+  "total\n\nfirst": [
+    "total"
+  ],
+  "last\n\nfirst": [
+    "last"
+  ],
+  "schema\n\nfirst": [
+    "schema"
+  ],
+  "focus mode\n\nfirst": [
+    "focus_mode"
+  ]
+}

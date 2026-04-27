@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "source_id": "src_812c7bfd80cd",
+      "source_name": "CLAUDE.md",
+      "source_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/.claude/worktrees/elated-mirzakhani-ee1c46/CLAUDE.md",
+      "source_type": "document",
+      "content_hash": "sha256:d6837eb580843757e06a23cbdd25551b6959e5846dc176b071fa0c765bbe99ae",
+      "char_count": 8465,
+      "ingested_at": "2026-04-21T23:18:48.874568Z",
+      "compiled": true,
+      "compiled_at": "2026-04-21T23:18:52.562704Z",
+      "dispatch_id": "dispatch_src_812c7bfd80cd"
+    },
+    {
+      "source_id": "src_bed2bea63f21",
+      "source_name": "engine.py",
+      "source_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/.claude/worktrees/elated-mirzakhani-ee1c46/helen_os/knowledge/engine.py",
+      "source_type": "code",
+      "content_hash": "sha256:0774a01100c495ae2d15f593f5c5da7bc7b9d37232e0b9498054a06ee0dcc490",
+      "char_count": 15590,
+      "ingested_at": "2026-04-21T23:19:43.820618Z",
+      "compiled": true,
+      "compiled_at": "2026-04-21T23:19:44.058260Z",
+      "dispatch_id": "dispatch_src_bed2bea63f21"
+    },
+    {
+      "source_id": "src_7cda0dd05583",
+      "source_name": "receipt_observation_report.md",
+      "source_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/.claude/worktrees/elated-mirzakhani-ee1c46/artifacts/receipt_observation_report.md",
+      "source_type": "document",
+      "content_hash": "sha256:e77ba2a3e9124e4e1d170b1b1dd23708d0854ea85b1bb97ee1802f3f681b1063",
+      "char_count": 2717,
+      "ingested_at": "2026-04-27T17:39:21.298155Z",
+      "compiled": true,
+      "compiled_at": "2026-04-27T17:39:23.813801Z",
+      "dispatch_id": "dispatch_src_7cda0dd05583"
+    }
+  ]
+}
