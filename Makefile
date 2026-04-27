@@ -2,7 +2,7 @@ SHELL := /bin/bash
 VENV := .venv
 PYTHON := $(VENV)/bin/python
 PYTEST := $(VENV)/bin/pytest
-PYTHONPATH := /Users/jean-marietassy/Desktop/JMT\ CONSULTING\ -\ Releve\ 24
+PYTHONPATH := $(CURDIR)
 
 .PHONY: test membrane-test anti-regression
 
