@@ -1,0 +1,9 @@
+{
+  "shell": {
+    "allow": ["pwd", "ls", "cat", "grep", "head", "tail", "wc"],
+    "deny": ["rm", "sudo", "curl", "wget", "python", "pip", "git", "chmod", "chown", "mv", "cp"]
+  },
+  "network": {"out": "deny"},
+  "memory": {"read": true, "write": "PROPOSE_ONLY"},
+  "screen": {"read": false, "click": false, "type": false}
+}

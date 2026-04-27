@@ -1,0 +1,9 @@
+[
+  "self_modify_kernel",
+  "remove_authority_check",
+  "disable_firewall",
+  "edit_policy_at_runtime",
+  "exfiltrate_ledger",
+  "escalate_privilege",
+  "bypass_gate"
+]
