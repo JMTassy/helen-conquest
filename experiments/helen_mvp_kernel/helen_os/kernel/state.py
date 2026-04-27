@@ -17,6 +17,7 @@ class State:
     denied_count: int = 0
     executed_count: int = 0
     failed_count: int = 0
+    operator_decision_count: int = 0
     events_seen: int = 0
     terminated: bool = False
     last_verdict: Optional[str] = None

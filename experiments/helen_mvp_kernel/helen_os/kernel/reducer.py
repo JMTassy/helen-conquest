@@ -52,6 +52,10 @@ def fold(events: list[dict], forbidden_tokens: list[str] | None = None) -> State
             raise PolicyViolation(
                 f"event {i} ({et}) must be authored by RUNTIME, got {actor_kind}"
             )
+        if et == "OPERATOR_DECISION" and actor_kind != "OPERATOR":
+            raise PolicyViolation(
+                f"event {i} (OPERATOR_DECISION) must be authored by OPERATOR, got {actor_kind}"
+            )
 
         if et == "COGNITION_STARTED":
             state.cognition_active = True
@@ -72,6 +76,8 @@ def fold(events: list[dict], forbidden_tokens: list[str] | None = None) -> State
             state.executed_count += 1
         elif et == "EFFECT_FAILED":
             state.failed_count += 1
+        elif et == "OPERATOR_DECISION":
+            state.operator_decision_count += 1
 
         state.events_seen += 1
         state.last_event_hash = e["event_hash"]
