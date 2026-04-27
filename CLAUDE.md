@@ -6,6 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 HELEN OS is a five-layer constitutional AI companion with an append-only governance kernel. The system is built on a single invariant: **NO RECEIPT = NO CLAIM**.
 
+## Two Trees — Disambiguation
+
+Two top-level Python trees with confusingly similar names:
+
+- `helen_os/` — sovereign tree. Governance, executor, autonomy, schemas, tests. This is what `make test` runs and what the gates police.
+- `helen_os_scaffold/` — separate scaffold tree. Hosts the Click CLI (`helen_os_scaffold/helen_os/cli.py`) that exposes `helen talk` / `helen chat`, the LLM adapters, and the `helen.speak()` agent stack. **Has its own venv expectation** — chat workflows run via `cd helen_os_scaffold && source .venv/bin/activate`.
+
+Treat them as independent packages. Imports do not cross.
+
 ## Repository Identity
 
 - **Canonical GitHub repo:** `https://github.com/JMTassy/helen-conquest.git`
@@ -134,6 +143,12 @@ GEMINI_API_KEY=... .venv/bin/python oracle_town/skills/voice/gemini_tts/helen_tt
 # K8 lint
 .venv/bin/python scripts/helen_k8_lint.py --mode all_nd
 
+# K-tau lint (boundary, IO, determinism, allowlist, schema)
+.venv/bin/python scripts/helen_k_tau_lint.py
+
+# K-rho lint (numeric consistency of rho traces)
+.venv/bin/python scripts/helen_rho_lint.py
+
 # K-wul lint (canonical WUL compile+validate)
 .venv/bin/python scripts/helen_wul_lint.py /path/to/slab.json
 
@@ -146,6 +161,25 @@ bash tools/kernel_guard.sh
 
 ### Packaging note
 `pyproject.toml` declares the project as `oracle-town` v1.0.0 with `dependencies = []` — it is not the dependency source of truth. Use `requirements.txt` / `requirements-ci.txt` when installing.
+
+## Chat Surfaces
+
+Multiple chat entry points exist; they are **not interchangeable**.
+
+| Surface | Code | LLM call | Receipts | Notes |
+|---|---|---|---|---|
+| `helen talk` | `helen_os_scaffold/helen_os/cli.py:120` | only with `--reply` | always (kernel-routed) | Add `--hal` for two-block HER/HAL, BLOCK paths emit `BLOCK_RECEIPT_V1` |
+| `helen chat` | `helen_os_scaffold/helen_os/cli.py:262` | yes (full pipeline) | via `helen.speak()` | District/street context, agent stack |
+| `helen_os_scaffold/helen_talk.py` | scaffold root | **never** | yes | **Receipt-only by design** — does NOT call the LLM. Common confusion. |
+| `tools/helen_telegram.py` | tools | yes | yes | Two-way Telegram with voice |
+| `tools/helen_simple_ui.py` | tools | yes | yes | Web UI on `localhost:5001` |
+| `helen_dialog_server.py` + `helen_dialog/` | repo root | yes | engine-managed | TEMPLE dialog engine, HER/AL moment detection |
+
+**`--ledger :memory:` gotcha** — when the configured ledger is a sealed sovereign file (e.g. `storage/ledger_epoch*_work.ndjson`), `helen talk --reply` writes the receipt **before** the LLM call and crashes with `LNSA_ERROR: Sovereign ledger is SEALED. No further mutations allowed.` Pass `--ledger :memory:` for ephemeral chat or `--ledger storage/chat_dev.ndjson` for persistent dev. See `HELEN_CHAT_MODES.md`.
+
+## Operational Notes
+
+- `town/ledger_v1.ndjson` may show as dirty in `git status` due to live kernel daemon writes. Do not stash, do not commit, do not edit — sovereign firewall path.
 
 ## Current State (2026-04-20)
 
