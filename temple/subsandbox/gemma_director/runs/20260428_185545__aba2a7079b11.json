@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T16:55:45.531509Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN in cinematic motion \u2014 turning her head toward an off-screen voice, then a slow walk into golden hour light. Copper-red wavy hair catches the light, blue-grey eyes visible across the turn, freckles preserved. 35mm tracking shot, festival aesthetic.",
+  "intent_sha256": "aba2a7079b11c3c578ad6ec469e0b005503bd113d65631603532686bf959f4c4",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 135889523250,
+    "eval_count": 3042,
+    "raw_response_preview": "[\n  \"HELEN stands amidst the festival crowd, turning her head as her copper-red wavy hair catches the last golden light. The 35mm tracking shot follows her slow walk toward the glowing horizon, where blue-grey eyes lock onto an unseen presence.\",\n  \"Framed in a medium shot, HELEN\u2019s fair skin and sca",
+    "raw_response_len": 1807
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "aba2a7079b11c3c578ad6ec469e0b005503bd113d65631603532686bf959f4c4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A close-up 35mm tracking shot isolates HELEN\u2019s fair skin and freckles against the darkening festival backdrop. She turns her head toward the voice, her copper-red hair glowing as she moves into the golden hour.",
+        "concept_sha256": "8091046f43652d6f08f41915eb7a13123dbf7035b9ab16100c3d018c162234ce",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "aba2a7079b11c3c578ad6ec469e0b005503bd113d65631603532686bf959f4c4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands amidst the festival crowd, turning her head as her copper-red wavy hair catches the last golden light. The 35mm tracking shot follows her slow walk toward the glowing horizon, where blue-grey eyes lock onto an unseen presence.",
+        "concept_sha256": "856123f854224766e1d90b10260b4d3fbd6f448dfaa822a1b91a27434a7bb49f",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "aba2a7079b11c3c578ad6ec469e0b005503bd113d65631603532686bf959f4c4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Framed in a medium shot, HELEN\u2019s fair skin and scattered freckles glow under the festival\u2019s ambient lighting. She pivots her body to the voice, her copper-red locks shimmering as she walks into the warm afternoon sun.",
+        "concept_sha256": "7b6318fe03311ae201c293646dfc5ae812bf1225e213f68872461589c8b282e3",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

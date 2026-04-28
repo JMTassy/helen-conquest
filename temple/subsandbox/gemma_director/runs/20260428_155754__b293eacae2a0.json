@@ -1,0 +1,18 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T13:57:54.845503Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, 85mm lens, rim light, dolly tracking, low-key fill, key-light from screen-left.",
+  "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+  "concepts_generated": 0,
+  "concepts_passed_hal": 0,
+  "her_meta": {
+    "total_duration_ns": 31016621583,
+    "eval_count": 900,
+    "raw_response_preview": "",
+    "raw_response_len": 0
+  },
+  "ship_candidates": [],
+  "rejections": []
+}

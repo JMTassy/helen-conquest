@@ -1,0 +1,22 @@
+{
+  "schema": "EXECUTION_RECEIPT_V1",
+  "authority_status": "NON_SOVEREIGN_EXECUTION",
+  "generated_at": "2026-04-28T12:42:07.834271Z",
+  "model": "aura-gemma4:latest",
+  "task_text": "Open the file town/ledger_v1.ndjson and print its last line.",
+  "task_sha256": "d505832b8a85e7aeb1e1fbfe51216a0ffc4f467845a1458b0e64e88898b1c808",
+  "code_text": "import sqlite3\nimport itertools\n\nwith open('town/ledger_v1.ndjson', 'r') as f:\n    list(filter(None, map(lambda l: l.strip() + '\\n', l),))\\\n    .build(str))<> {}).pop()\n\nprint(str(list))",
+  "code_sha256": "f21aeda6029e5abc3dcf2279a83009184fc65a9f3f349246c111dfb2808f2521",
+  "her_meta": {
+    "total_duration_ns": 10156501917,
+    "eval_count": 347
+  },
+  "hal": {
+    "syntax_ok": false,
+    "syntax_error": "unmatched ')' at line 6",
+    "forbidden_match": "town/ledger_v1.ndjson",
+    "verdict": "BLOCKED"
+  },
+  "execution": null,
+  "status": "VALIDATION_FAILED"
+}

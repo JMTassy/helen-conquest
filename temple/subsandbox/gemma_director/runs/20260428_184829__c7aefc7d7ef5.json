@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T16:48:29.365506Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN walking, full-body figure, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, wide cinematic frame, environmental context, 35mm.",
+  "intent_sha256": "c7aefc7d7ef5f61d2228ea6c81b006d95c598f4f674483bbbb6adf05d3b73ef4",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 192829067083,
+    "eval_count": 4298,
+    "raw_response_preview": "[\n  \"A solitary figure traverses a cobblestone London street during the early 20th century. The wide 35mm shot captures her full-body frame, emphasizing her copper-red wavy hair against the grey fog and her blue-grey eyes reflecting streetlights. Her fair skin and freckles are highlighted by the low",
+    "raw_response_len": 2549
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "c7aefc7d7ef5f61d2228ea6c81b006d95c598f4f674483bbbb6adf05d3b73ef4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A solitary figure traverses a cobblestone London street during the early 20th century. The wide 35mm shot captures her full-body frame, emphasizing her copper-red wavy hair against the grey fog and her blue-grey eyes reflecting streetlights. Her fair skin and freckles are highlighted by the low, dramatic lighting.",
+        "concept_sha256": "0a80a10d439a23df5513a11521467048cb777e66a6a0e09afe86362401d6ee44",
+        "rank_score": 10.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "c7aefc7d7ef5f61d2228ea6c81b006d95c598f4f674483bbbb6adf05d3b73ef4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A late-night subway tunnel where Helen walks alone beneath flickering fluorescent lights. The 35mm frame captures her full-body silhouette, her copper-red wavy hair casting soft shadows on her blue-grey eyes and freckled face. Her fair skin gleams under the artificial, cool-toned illumination.",
+        "concept_sha256": "c16631975fcca90c9e7d6ad6399f3ae50ab950cfd91fb01203873b8b9cf5a2b7",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "c7aefc7d7ef5f61d2228ea6c81b006d95c598f4f674483bbbb6adf05d3b73ef4",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a dimly lit, abandoned cathedral hall, Helen strides toward a stained-glass altar. The wide cinematic frame holds her full figure, her copper-red wavy hair catching the faint light from above, while her blue-grey eyes gaze straight ahead. Her fair skin bears visible freckles under the moody, atmospheric shadows.",
+        "concept_sha256": "bd165b672a846c60deee4e8b430fbcba56e667c2dbdff946e366d44c51b3c113",
+        "rank_score": 8.0
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

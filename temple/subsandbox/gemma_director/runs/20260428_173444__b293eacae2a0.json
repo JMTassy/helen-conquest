@@ -1,0 +1,119 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:34:44.036032Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, 85mm lens, rim light, dolly tracking, low-key fill, key-light from screen-left.",
+  "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 280519493458,
+    "eval_count": 6197,
+    "raw_response_preview": "[\n  \"HELEN stands amidst rain-slicked cobblestones under the glow of neon signs, her copper-red hair catching the first drop of light. The 85mm lens frames her in a medium close-up as the camera dollies forward, bathed in shadow with a screen-left key-light.\",\n  \"A 1920s ballroom filled with flicker",
+    "raw_response_len": 1683
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands amidst rain-slicked cobblestones under the glow of neon signs, her copper-red hair catching the first drop of light. The 85mm lens frames her in a medium close-up as the camera dollies forward, bathed in shadow with a screen-left key-light.",
+        "concept_sha256": "0cd52fd0bf99bf360cc3e969f9d86064e1031c8535a6763ee19934d2d4652333",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a sterile, chrome-drenched lab, HELEN surveys holographic data streams with a cold expression and fair skin. The wide 85mm shot tracks backward through the door as rim light outlines her silhouette.",
+        "concept_sha256": "a6f9a0d805fcc6043ccd4e5c7f3160f9f4c8f1066ed4358f7e3a6d8d74721c9d",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "An empty art gallery at night features a lone figure, HELEN, framed against a single spotlight. The key-light from screen-left illuminates her copper-red hair as the camera dolly moves in for a profile shot.",
+        "concept_sha256": "3e57bd5aefdc9caa00f161f20e5c058401d1356c999f9f8338185880fc58cfba",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A lavish 19th-century carriage interior reflects the moonlight onto HELEN's face. Her fair skin glows against the dark leather as the dolly tracking shot captures her in the window light.",
+        "concept_sha256": "1c5f5e663d247a1b5d6775a7fce5f3ded3ede9fcbf2958f491b5f0e9026ac980",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN moves through the dark corridors of an abandoned hospital, eyes fixed on a flickering light. The low-key fill creates high contrast on her freckles as the 85mm lens tracks forward in suspense.",
+        "concept_sha256": "883af237d0456335529222b32cae09857a785bf7628d3a4bfa65b40b8ea8e6fd",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

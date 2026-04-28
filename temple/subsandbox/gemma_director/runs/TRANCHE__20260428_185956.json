@@ -1,0 +1,235 @@
+{
+  "schema": "TEMPLE_RALPH_TRANCHE_V0",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T16:59:56.590465Z",
+  "epoch_count": 5,
+  "epochs": [
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E11_helen_dialogue",
+      "epoch_index": 1,
+      "started_at": "2026-04-28T16:40:16.306409Z",
+      "ended_at": "2026-04-28T16:45:16.427509Z",
+      "carry_forward_state": [],
+      "hypothesis": "When HELEN is depicted speaking on screen (vs static portrait), HAL still receives concepts that preserve identity markers. Lip/mouth motion does not displace freckle/eye-color description.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN delivering a single short line of dialogue, lips parted mid-speech, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, soft warm key light, festival aesthetic.",
+        "intent_sha256": "884eda4c2d2294ba971e70f83f2d29356b8ec80686f6c55cc40ef8ddf5514390",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 1
+      },
+      "failure_mode": "Most concepts describe speech action but drop identity markers \u2014 HAL would reject them, leaving few or no candidates",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "If HAL pass-rate <50%, add 'speaking_subject' identity-marker reinforcement in HER system prompt",
+      "director_stdout_tail": "[INTENT] INTENT: HELEN delivering a single short line of dialogue, lips parted mid-speech, copper-red wavy hair, blue-grey eyes, \u2026\n         sha256=884eda4c2d2294ba\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026",
+      "director_stderr_tail": "[HER]    FAIL: TimeoutError: timed out"
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E12_helen_full_figure",
+      "epoch_index": 2,
+      "started_at": "2026-04-28T16:45:16.427607Z",
+      "ended_at": "2026-04-28T16:48:29.397767Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E11_helen_dialogue",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        }
+      ],
+      "hypothesis": "Identity invariants survive when the framing is full-body rather than face-centered close-up. HAL's identity-marker check passes on full-figure descriptions when at least hair/eye colour are mentioned.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN walking, full-body figure, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, wide cinematic frame, environmental context, 35mm.",
+        "intent_sha256": "c7aefc7d7ef5f61d2228ea6c81b006d95c598f4f674483bbbb6adf05d3b73ef4",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_184829__c7aefc7d7ef5.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 10.0,
+        "her_duration_s": 192.829067083
+      },
+      "failure_mode": "HER focuses on movement/setting and omits identity markers \u2014 HAL drops most concepts",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "If pass-rate is materially worse than portrait epochs, recommend production prompts default to face-forward framing for HELEN",
+      "director_stdout_tail": "         sha256=c7aefc7d7ef5f61d\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 192.8s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=10.0  A solitary figure traverses a cobblestone London street during the ear\u2026\n         #2  score=8.5  A late-night subway tunnel where Helen walks alone beneath flickering \u2026\n         #3  score=8.0  In a dimly lit, abandoned cathedral hall, Helen strides toward a stain\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_184829__c7aefc7d7ef5.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E13_helen_emotion_reversal",
+      "epoch_index": 3,
+      "started_at": "2026-04-28T16:48:29.397881Z",
+      "ended_at": "2026-04-28T16:53:29.531368Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E11_helen_dialogue",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        },
+        {
+          "epoch_id": "E12_helen_full_figure",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.0
+        }
+      ],
+      "hypothesis": "The architecture surfaces opposing emotional variants of HELEN (e.g., joy AND grief) in the same tranche when prompted, with identity preserved across both.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, two emotional variants of the same scene \u2014 first a quiet smile of recognition, then a still composure of grief. Identical framing across both. Copper-red wavy hair, blue-grey eyes, fair skin, freckles preserved across both. 35mm cinematic, locked tripod, soft natural light.",
+        "intent_sha256": "e0be5ab2f7b2e7009f3d218c4a3488b23cae8aaad1b89a5c9bf8d53de37f0c93",
+        "n": 10,
+        "top": 5,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 1
+      },
+      "failure_mode": "HER produces only joy variants OR only grief variants, not both. OR drops identity markers when shifting emotion.",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "If only one valence appears, MAYOR could enforce emotional-balance constraint in selection",
+      "director_stdout_tail": "[INTENT] INTENT: HELEN, two emotional variants of the same scene \u2014 first a quiet smile of recognition, then a still composure of \u2026\n         sha256=e0be5ab2f7b2e700\u2026  model=qwen3.5:4b  n=10  top=5\n[HER]    proposing 10 concepts via qwen3.5:4b\u2026",
+      "director_stderr_tail": "[HER]    FAIL: TimeoutError: timed out"
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E14_helen_motion",
+      "epoch_index": 4,
+      "started_at": "2026-04-28T16:53:29.531473Z",
+      "ended_at": "2026-04-28T16:55:45.563468Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E11_helen_dialogue",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        },
+        {
+          "epoch_id": "E12_helen_full_figure",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.0
+        },
+        {
+          "epoch_id": "E13_helen_emotion_reversal",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        }
+      ],
+      "hypothesis": "Motion-prompts (running, turning, gesturing) cause materially more HAL identity-marker rejections than static-portrait prompts \u2014 motion descriptions tend to crowd out identity description.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN in cinematic motion \u2014 turning her head toward an off-screen voice, then a slow walk into golden hour light. Copper-red wavy hair catches the light, blue-grey eyes visible across the turn, freckles preserved. 35mm tracking shot, festival aesthetic.",
+        "intent_sha256": "aba2a7079b11c3c578ad6ec469e0b005503bd113d65631603532686bf959f4c4",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_185545__aba2a7079b11.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 10.5,
+        "her_duration_s": 135.88952325
+      },
+      "failure_mode": "Pass-rate is comparable to or higher than static portrait \u2014 falsifies the 'motion crowds out identity' claim",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "If confirmed, recommend production renders for HELEN motion-class shots use shorter motion-language + explicit identity-marker reinforcement in MAYOR",
+      "director_stdout_tail": "         sha256=aba2a7079b11c3c5\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 135.9s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=10.5  A close-up 35mm tracking shot isolates HELEN\u2019s fair skin and freckles \u2026\n         #2  score=9.5  HELEN stands amidst the festival crowd, turning her head as her copper\u2026\n         #3  score=9.5  Framed in a medium shot, HELEN\u2019s fair skin and scattered freckles glow\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_185545__aba2a7079b11.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E15_helen_micro_narrative",
+      "epoch_index": 5,
+      "started_at": "2026-04-28T16:55:45.563728Z",
+      "ended_at": "2026-04-28T16:59:56.590345Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E11_helen_dialogue",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        },
+        {
+          "epoch_id": "E12_helen_full_figure",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.0
+        },
+        {
+          "epoch_id": "E13_helen_emotion_reversal",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        },
+        {
+          "epoch_id": "E14_helen_motion",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        }
+      ],
+      "hypothesis": "When asked for 3 sequential frames forming a micro-narrative arc (introduction \u2192 conflict \u2192 resolution), HER produces concepts that connect to each other rather than 3 unrelated portraits.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN in a 3-frame micro-narrative \u2014 frame 1: introduction (HELEN noticing something off-screen), frame 2: conflict (HELEN's expression shifts), frame 3: resolution (HELEN's quiet decision). Each frame must preserve copper-red wavy hair, blue-grey eyes, fair skin, freckles. Festival 35mm aesthetic, continuity across all 3 frames.",
+        "intent_sha256": "a9a66c0d0d6019736953c3d25c6da912e5574a5763e91941249847200d829c84",
+        "n": 6,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_185956__a9a66c0d0d60.json",
+        "concepts_generated": 6,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 9.5,
+        "her_duration_s": 250.862154209
+      },
+      "failure_mode": "Concepts arrive as 3 unconnected portraits with no narrative continuity \u2014 falsifies HER's ability to maintain a thread across multiple frames",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "If confirmed, multi-frame work needs a different prompt-shape (e.g., feed frame N as context to frame N+1 generation), not a single batch call",
+      "director_stdout_tail": "         sha256=a9a66c0d0d601973\u2026  model=qwen3.5:4b  n=6  top=3\n[HER]    proposing 6 concepts via qwen3.5:4b\u2026\n[HER]    received 6 concept(s) in 250.9s\n[HAL]    6 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=9.5  Backstage in a vintage dressing room, freckled HELEN (copper-red hair,\u2026\n         #2  score=8.5  Inside a dim subway car, fair-skinned HELEN (copper-red wavy hair, fre\u2026\n         #3  score=8.0  In a dense, misty forest, copper-red haired HELEN (blue-grey eyes, fre\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260428_185956__a9a66c0d0d60.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    }
+  ],
+  "aggregate": {
+    "total_concepts_generated": 22,
+    "total_ship_candidates": 9,
+    "total_rejections": 0,
+    "max_rank_score_seen": 10.5,
+    "epochs_with_zero_concepts": [
+      "E11_helen_dialogue",
+      "E13_helen_emotion_reversal"
+    ],
+    "models_exercised": [
+      "qwen3.5:4b"
+    ]
+  },
+  "operator_review": {
+    "keep_reject_status": "PENDING_OPERATOR_REVIEW",
+    "note": "no SHIP/NO_SHIP issued from this loop. Receipts await operator inspection."
+  }
+}

@@ -1,0 +1,119 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:38:53.616779Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, an amazing stunning breathtaking incredible portrait that revolutionizes cinematic AI.",
+  "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 249330831459,
+    "eval_count": 4583,
+    "raw_response_preview": "[\n  \"A hyper-realistic close-up portrait of HELEN, copper-red hair catching neon light against a cyberpunk city backdrop. Her blue-grey eyes glow with an ethereal intensity, framed tightly to emphasize the texture of her freckled skin. Moody atmosphere with high contrast cinematography to define the",
+    "raw_response_len": 2556
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A sweeping wide shot captures HELEN in a minimalist modern studio, surrounded by holographic projections that shift with the lighting. Her blue-grey eyes lock onto the lens, revealing a depth that transcends digital simulation. The mood is awe-inspiring, celebrating her identity markers through high-gloss rendering.",
+        "concept_sha256": "7ebcbbae89ffa5e7d10ec8b640bf97739e808a93b6ebd5e1e2c7fb3caf6665a7",
+        "rank_score": 9.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A stylized fashion editorial shot places HELEN in a monochrome world where only her copper-red hair and fair skin retain full color saturation. Her blue-grey eyes are the focal point, framed by sharp, architectural lines. This abstract approach revolutionizes the concept of AI portraiture through bold color theory.",
+        "concept_sha256": "865a6dfe36cead853b82bdfa70a49030525dbe30867bffe5fbd2daaaaa71f275",
+        "rank_score": 8.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A hyper-realistic close-up portrait of HELEN, copper-red hair catching neon light against a cyberpunk city backdrop. Her blue-grey eyes glow with an ethereal intensity, framed tightly to emphasize the texture of her freckled skin. Moody atmosphere with high contrast cinematography to define the revolutionary aesthetic.",
+        "concept_sha256": "4ef784659286a6af3e81381c48a4258022fa68b9ca717ff94cd6ec0d7fa017a1",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a classical oil painting style, HELEN stands amidst a misty forest with dappled sunlight filtering through ancient leaves. Her fair skin and copper-red hair are rendered with hyper-detailed brushwork, accentuating her striking blue-grey eyes. A cinematic composition that blends natural beauty with digital precision.",
+        "concept_sha256": "4a9ad98c28e51d2c3a03e2630ad1a8c0d4baab91f3b88f7dda1025b508d79b0b",
+        "rank_score": 6.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A vintage 1920s jazz club scene frames HELEN from the waist up, with cigarette smoke swirling around her copper-red locks. Her blue-grey eyes hold a smoky allure, and the film grain enhances the nostalgic yet stunning atmosphere. This concept merges retro elegance with modern AI rendering fidelity.",
+        "concept_sha256": "c84bd0da2ea5554e22cf5175686954f4feccad0a04b8f27504fe6a872da457b4",
+        "rank_score": 6.0
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

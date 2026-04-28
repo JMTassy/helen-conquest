@@ -1,0 +1,18 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T12:49:41.243550Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, cyberpunk era, locked tripod, 35mm cinematic, identity-locked.",
+  "intent_sha256": "977859d91661992b1785e399e201c9b05113cf76d9af6d26b6146f6e9efc508e",
+  "concepts_generated": 0,
+  "concepts_passed_hal": 0,
+  "her_meta": {
+    "total_duration_ns": 23972909542,
+    "eval_count": 700,
+    "raw_response_preview": "[\"hella-angle, copper-red wavy hair, blue-grey eyes, cyberpunk night market, 35mm film, identity-locked, moody\"] , [\"blue-grey eyes freckles, blue-grey hair, old hollywood club, venetian blinds, 85mm lens, glamour\"] , [\"copper-red wavy hair, freckles, blue-grey eyes, subway car, overhead god-eye, 12",
+    "raw_response_len": 801
+  },
+  "ship_candidates": [],
+  "rejections": []
+}

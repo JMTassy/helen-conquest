@@ -1,0 +1,30 @@
+{
+  "schema": "EXECUTION_RECEIPT_V1",
+  "authority_status": "NON_SOVEREIGN_EXECUTION",
+  "generated_at": "2026-04-28T12:41:49.241262Z",
+  "model": "aura-gemma4:latest",
+  "task_text": "Print the SHA256 hexdigest of the string 'helen'.",
+  "task_sha256": "2fd16521201302e5d16994e1402b97cb43a4877b3ff7ede059cd0d6d124e3335",
+  "code_text": "import hashlib; print(hashlib.sha256('helen').hexdigest())",
+  "code_sha256": "716ae55687b029ba9bcca881d49cc512c6fa0856c791df0fa840dd453948ec2d",
+  "her_meta": {
+    "total_duration_ns": 7675482000,
+    "eval_count": 245
+  },
+  "hal": {
+    "syntax_ok": true,
+    "syntax_error": null,
+    "forbidden_match": null,
+    "verdict": "VALIDATED"
+  },
+  "execution": {
+    "exit_code": 1,
+    "duration_ms": 50,
+    "timed_out": false,
+    "stdout_sha256": null,
+    "stderr_sha256": "e5825ba9d363bfa8ff33158ea81415930177a5f7b06d69ca0fb8b2b2640a1bb0",
+    "stdout_preview": "",
+    "stderr_preview": "Traceback (most recent call last):\n  File \"/var/folders/q2/9ht68571617_01j94lm92wj40000gn/T/tmpmxem07am.py\", line 1, in <module>\n    import hashlib; print(hashlib.sha256('helen').hexdigest())\n                          ~~~~~~~~~~~~~~^^^^^^^^^\nTypeError: Strings must be encoded before hashing\n"
+  },
+  "status": "EXECUTION_FAILED"
+}

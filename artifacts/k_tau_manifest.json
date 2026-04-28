@@ -26,9 +26,9 @@
     "delta_audit": 0.0
   },
   "environment": {
-    "commit": "049f0d63686bcf15d7cd71cae5b17892c166def4",
-    "platform": "macOS-26.2-arm64-arm-64bit-Mach-O",
-    "python_version": "3.14.3"
+    "commit": "ce22047397880699e4d6939d22b7efe0b3106c94",
+    "platform": "Darwin-25.2.0-arm64-arm-64bit-Mach-O",
+    "python_version": "3.14.4"
   },
   "invariants": {
     "mu_BOUNDARY": {

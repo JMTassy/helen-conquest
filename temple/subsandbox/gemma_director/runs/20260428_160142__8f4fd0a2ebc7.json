@@ -1,0 +1,18 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T14:01:42.401878Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, freckles, fair skin, single iconic frame combining the strongest elements of prior epochs (cyberpunk + 35mm + locked tripod + warm rim light).",
+  "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+  "concepts_generated": 0,
+  "concepts_passed_hal": 0,
+  "her_meta": {
+    "total_duration_ns": 1375944792,
+    "eval_count": 10,
+    "raw_response_preview": "",
+    "raw_response_len": 0
+  },
+  "ship_candidates": [],
+  "rejections": []
+}

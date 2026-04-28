@@ -1,6 +1,6 @@
 {
   "schema": "K8_MANIFEST_V1",
-  "run_id": "RALPH-PRE",
+  "run_id": "RUN-K8-LOCAL",
   "version": "v1.2",
   "invariants": [
     "mu_NDWRAP",
@@ -122,11 +122,11 @@
     "provenance"
   ],
   "ledger_path": "town/ledger_v1.ndjson",
-  "mode_requested": "all_nd",
-  "mode_used": "all_nd",
-  "changed_count": 11,
+  "mode_requested": "git_diff",
+  "mode_used": "git_diff",
+  "changed_count": 2,
   "allow_absent_ledger": false,
-  "allow_nested_repo": true,
+  "allow_nested_repo": false,
   "nested_repo_warning": null,
   "k8_fail_schema": "K8_FAIL_V1",
   "k8_lint_model_id": "k8_lint_v1.2"

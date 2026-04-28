@@ -1,6 +1,6 @@
 {
   "schema": "K8_SUMMARY_V1",
-  "run_id": "RALPH-PRE",
+  "run_id": "RUN-K8-LOCAL",
   "k8": 1.0,
   "verdict": "PASS",
   "witness": {

@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T16:59:56.560273Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN in a 3-frame micro-narrative \u2014 frame 1: introduction (HELEN noticing something off-screen), frame 2: conflict (HELEN's expression shifts), frame 3: resolution (HELEN's quiet decision). Each frame must preserve copper-red wavy hair, blue-grey eyes, fair skin, freckles. Festival 35mm aesthetic, continuity across all 3 frames.",
+  "intent_sha256": "a9a66c0d0d6019736953c3d25c6da912e5574a5763e91941249847200d829c84",
+  "concepts_generated": 6,
+  "concepts_passed_hal": 6,
+  "her_meta": {
+    "total_duration_ns": 250862154209,
+    "eval_count": 5392,
+    "raw_response_preview": "[\n  \"In a dense, misty forest, copper-red haired HELEN (blue-grey eyes, freckles) notices a rustling sound, captured in a close-up with 35mm grain. Her expression shifts from curiosity to alarm as the shadow reveals itself, then she walks away silently, creating a continuous narrative sequence. The ",
+    "raw_response_len": 1739
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "a9a66c0d0d6019736953c3d25c6da912e5574a5763e91941249847200d829c84",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Backstage in a vintage dressing room, freckled HELEN (copper-red hair, fair skin) finds a lost diary on the floor in a static close-up. Her eyes widen in surprise, then she closes it and decides to keep it safe, staying true to the 35mm look. The mood is nostalgic and intimate.",
+        "concept_sha256": "a0463493f6ab0625b22a0d70914e5cc126ecacd2ff11082d1ec6070d5ac46f6e",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "a9a66c0d0d6019736953c3d25c6da912e5574a5763e91941249847200d829c84",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Inside a dim subway car, fair-skinned HELEN (copper-red wavy hair, freckles) observes a stranger staring back in a medium shot. Her face tightens in conflict before she stands up to confront the situation, maintaining the gritty aesthetic. The mood remains gritty and cinematic.",
+        "concept_sha256": "f93d0ec6896e5d317dd420fa8efbe1e0f6d81a971ba387317c26973d657bebfc",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "a9a66c0d0d6019736953c3d25c6da912e5574a5763e91941249847200d829c84",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a dense, misty forest, copper-red haired HELEN (blue-grey eyes, freckles) notices a rustling sound, captured in a close-up with 35mm grain. Her expression shifts from curiosity to alarm as the shadow reveals itself, then she walks away silently, creating a continuous narrative sequence. The mood remains tense and atmospheric throughout.",
+        "concept_sha256": "87b3911d107477f54c8cdc6b23fc7e49b30a371521a5d535282a4e76fc997f79",
+        "rank_score": 8.0
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

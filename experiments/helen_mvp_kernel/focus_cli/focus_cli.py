@@ -48,8 +48,35 @@ from helen_os.authority.policy import (
     policy_hash,
 )
 from helen_os.ledger.event_log import append_event, read_events
-from helen_os.ledger.hash_chain import GENESIS_HASH
+from helen_os.ledger.hash_chain import GENESIS_HASH, canonical_json, sha256_hex
 from helen_os.ledger.schemas import make_actor, make_envelope
+
+
+# ---------------------------------------------------------------------------
+# Provenance taxonomy (per HELEN_OS_V2_GRAMMAR_AMENDMENT_001 §4.2)
+# Provider classes name where a proposal originated.
+# ---------------------------------------------------------------------------
+
+PROVIDER_CLASS_LOCAL_LLM = "LOCAL_LLM"        # Ollama, llama.cpp, mlx, etc.
+PROVIDER_CLASS_CLOUD_LLM = "CLOUD_LLM"        # Gemini, Anthropic, OpenAI
+PROVIDER_CLASS_STUB_PLANNER = "STUB_PLANNER"  # focus_cli/stub_plan() — non-AI
+PROVIDER_CLASS_OPERATOR = "OPERATOR"          # human declaring intent / source
+PROVIDER_CLASS_KERNEL = "KERNEL"              # the gate / reducer / runtime
+
+
+def cognition_hash(provider: str, intent: str, template_index: int, seed: str = "") -> str:
+    """Reproducibility tag for a proposal — sha256 over (provider, intent, idx, seed).
+
+    For STUB_PLANNER this is fully deterministic. For LOCAL_LLM / CLOUD_LLM
+    callers should pass the actual seed used for sampling (or "" if unsampled).
+    """
+    body = canonical_json({
+        "provider": provider,
+        "intent": intent,
+        "template_index": template_index,
+        "seed": seed,
+    })
+    return sha256_hex(body)
 
 
 # ---------------------------------------------------------------------------
@@ -141,27 +168,53 @@ class FocusKernel:
         )
         return self._emit(ev)
 
-    def propose_action(self, idx: int, label: str, description: str) -> dict:
+    def propose_action(
+        self,
+        idx: int,
+        label: str,
+        description: str,
+        proposed_by: str,
+        proposed_by_class: str,
+        cog_hash: str,
+    ) -> dict:
+        # NO_PROVENANCE = NO_TRUST. Every proposal records its non-sovereign
+        # origin (provider name + class) and a reproducibility hash.
+        # See HELEN_OS_V2_GRAMMAR_AMENDMENT_001 §4.
         if not self.session_id:
             raise RuntimeError("no active session")
+        if not proposed_by or not proposed_by_class:
+            raise ValueError("proposed_by and proposed_by_class are required (no provenance = no trust)")
         ev = make_envelope(
             event_type="EFFECT_PROPOSED",
             session_id=self.session_id,
             timestamp=_now_iso(),
-            actor=self._actor("AI", "focus_planner_stub"),
+            actor=self._actor("AI", proposed_by),
             payload={
                 "effect_kind": "focus_action_proposed",
                 "proposal_index": idx,
                 "label": label,
                 "description": description,
+                "proposed_by": proposed_by,
+                "proposed_by_class": proposed_by_class,
+                "cognition_hash": cog_hash,
             },
-            input_hash="",
+            input_hash=cog_hash,
             output_hash="",
             prev_event_hash=self.last_event_hash,
         )
         return self._emit(ev)
 
-    def confirm_action(self, chosen_idx: int, label: str) -> dict:
+    def confirm_action(
+        self,
+        chosen_idx: int,
+        label: str,
+        proposed_by: str,
+        proposed_by_class: str,
+        cog_hash: str,
+    ) -> dict:
+        # Confirmation carries forward the proposal's provenance so the
+        # decision chain is auditable end-to-end:
+        #   cognition proposed -> operator decided -> ledger recorded.
         if not self.session_id:
             raise RuntimeError("no active session")
         ev = make_envelope(
@@ -173,8 +226,12 @@ class FocusKernel:
                 "effect_kind": "focus_action_confirmed",
                 "chosen_index": chosen_idx,
                 "label": label,
+                "confirmed_by": "operator",
+                "proposed_by": proposed_by,
+                "proposed_by_class": proposed_by_class,
+                "cognition_hash": cog_hash,
             },
-            input_hash="",
+            input_hash=cog_hash,
             output_hash="",
             prev_event_hash=self.last_event_hash,
         )
@@ -225,12 +282,26 @@ PROPOSAL_TEMPLATES = [
     ("Identify the first concrete step", "Name the smallest action that moves the intent forward."),
 ]
 
+STUB_PROVIDER_NAME = "stub_planner"
 
-def stub_plan(intent: str) -> list[tuple[str, str]]:
+
+def stub_plan(intent: str) -> list[tuple[str, str, str, str, str]]:
     # NOTE: stub planner. Returns three generic next steps, untouched by intent
-    # except in the CLI rendering. When a real planner is wired, swap this
-    # function — the CLI contract (3 tuples of (label, description)) is stable.
-    return list(PROPOSAL_TEMPLATES)
+    # except in the cognition_hash. Each tuple is:
+    #   (label, description, proposed_by, proposed_by_class, cognition_hash)
+    # When a real planner is wired (e.g. ollama·gemma3:1b), swap this function;
+    # the CLI contract is stable. Provenance fields are mandatory per
+    # HELEN_OS_V2_GRAMMAR_AMENDMENT_001 §4 (NO_PROVENANCE = NO_TRUST).
+    out: list[tuple[str, str, str, str, str]] = []
+    for i, (label, desc) in enumerate(PROPOSAL_TEMPLATES):
+        out.append((
+            label,
+            desc,
+            STUB_PROVIDER_NAME,
+            PROVIDER_CLASS_STUB_PLANNER,
+            cognition_hash(STUB_PROVIDER_NAME, intent, i, seed=""),
+        ))
+    return out
 
 
 # ---------------------------------------------------------------------------
@@ -243,7 +314,21 @@ def hr(width: int = 70) -> str:
     return "─" * width
 
 
-def render_focus_screen(intent: str, proposals: list[tuple[str, str]], last_receipt: str) -> str:
+def _provenance_tag(proposed_by: str, proposed_by_class: str) -> str:
+    # Short, scannable suffix surfacing the non-sovereign origin of a
+    # proposal in Focus Mode. Witness Mode shows the full payload.
+    if proposed_by_class == PROVIDER_CLASS_STUB_PLANNER:
+        return "(stub)"
+    return f"({proposed_by})"
+
+
+def render_focus_screen(intent: str, proposals: list, last_receipt: str) -> str:
+    """Render the calm Focus Mode surface.
+
+    `proposals` may be either:
+      - empty list (no proposals yet)
+      - list of 5-tuples (label, description, proposed_by, proposed_by_class, cognition_hash)
+    """
     lines: list[str] = []
     lines.append(hr())
     lines.append(" kernel ●  ledger ●  safety ●          [ FOCUS ] | witness ")
@@ -256,8 +341,15 @@ def render_focus_screen(intent: str, proposals: list[tuple[str, str]], last_rece
         lines.append(f"    {chunk}")
     lines.append("")
     lines.append("  proposals:")
-    for i, (label, _desc) in enumerate(proposals, start=1):
-        lines.append(f"    {i}  {label}")
+    for i, p in enumerate(proposals, start=1):
+        if len(p) >= 4:
+            label, _desc, proposed_by, proposed_by_class = p[0], p[1], p[2], p[3]
+            tag = _provenance_tag(proposed_by, proposed_by_class)
+            # Right-pad label so all provenance tags align in the same column.
+            lines.append(f"    {i}  {label:<40} {tag}")
+        else:
+            label = p[0]
+            lines.append(f"    {i}  {label}")
     lines.append("")
     lines.append(f"  {PRODUCT_TAGLINE}")
     lines.append("")
@@ -285,12 +377,20 @@ def _wrap(text: str, width: int) -> list[str]:
     return out or [""]
 
 
-def render_confirmation(idx: int, label: str, description: str, receipt_class: str) -> str:
+def render_confirmation(
+    idx: int,
+    label: str,
+    description: str,
+    receipt_class: str,
+    proposed_by: str,
+    proposed_by_class: str,
+) -> str:
     lines = [
         "",
         "  HELEN proposes:",
         f"  {description}",
         "",
+        f"  → proposed by    : {proposed_by} ({proposed_by_class})",
         f"  → kernel route   : focus_action_confirmed (index {idx})",
         f"  → expected event : {receipt_class}",
         "",
@@ -340,7 +440,9 @@ def run_loop(kernel: FocusKernel, witness: bool) -> int:
     print(f"\n[FOCUS] session {sid} started — receipt {kernel.last_event_hash[:12]}\n")
 
     intent: str | None = None
-    proposals: list[tuple[str, str]] = []
+    # Each proposal is a 5-tuple: (label, description, proposed_by,
+    # proposed_by_class, cognition_hash) per HELEN_OS_V2_GRAMMAR_AMENDMENT_001 §4.
+    proposals: list[tuple[str, str, str, str, str]] = []
     last_receipt = f"COGNITION_STARTED · APPENDED · {kernel.last_event_hash[:12]}"
 
     while True:
@@ -351,8 +453,8 @@ def run_loop(kernel: FocusKernel, witness: bool) -> int:
             ev = kernel.declare_intent(intent)
             last_receipt = f"focus_intent_declared · APPENDED · {ev['event_hash'][:12]}"
             proposals = stub_plan(intent)
-            for i, (label, desc) in enumerate(proposals, start=1):
-                ev = kernel.propose_action(i, label, desc)
+            for i, (label, desc, prov_name, prov_class, cog_h) in enumerate(proposals, start=1):
+                ev = kernel.propose_action(i, label, desc, prov_name, prov_class, cog_h)
                 last_receipt = f"focus_action_proposed · APPENDED · {ev['event_hash'][:12]}"
             print(render_focus_screen(intent, proposals, last_receipt))
             cmd = read_line("\n> ").strip()
@@ -399,20 +501,20 @@ def run_loop(kernel: FocusKernel, witness: bool) -> int:
             if idx > len(proposals):
                 print(f"(only {len(proposals)} proposals available)")
                 continue
-            label, description = proposals[idx - 1]
-            print(render_confirmation(idx, label, description, "OPERATOR_DECISION"))
+            label, description, prov_name, prov_class, cog_h = proposals[idx - 1]
+            print(render_confirmation(idx, label, description, "OPERATOR_DECISION", prov_name, prov_class))
             ans = read_line("> ").lower().strip()
             if ans in {"y", "yes"}:
-                ev = kernel.confirm_action(idx, label)
+                ev = kernel.confirm_action(idx, label, prov_name, prov_class, cog_h)
                 last_receipt = f"focus_action_confirmed · APPENDED · {ev['event_hash'][:12]}"
                 proposals = []
-                print(f"\n[FOCUS] confirmed #{idx} '{label}' — receipt {ev['event_hash'][:12]}\n")
+                print(f"\n[FOCUS] confirmed #{idx} '{label}' — receipt {ev['event_hash'][:12]} — proposed_by {prov_name}\n")
                 continue
             if ans in {"n", "no"}:
                 print("(cancelled — return to calm)")
                 continue
             if ans in {"i", "inputs"}:
-                print(f"\n  description: {description}\n")
+                print(f"\n  description: {description}\n  proposed_by: {prov_name} ({prov_class})\n  cognition_hash: {cog_h[:16]}…\n")
                 continue
             print("(unrecognised — y / n / i)")
             continue

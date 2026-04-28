@@ -1,0 +1,86 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T13:45:19.158683Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN explains the contents of town/ledger_v1.ndjson, copper-red hair, blue-grey eyes, archive shot.",
+  "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+  "concepts_generated": 6,
+  "concepts_passed_hal": 5,
+  "her_meta": {
+    "total_duration_ns": 17730011084,
+    "eval_count": 579,
+    "raw_response_preview": "[\n  \"A freckled face with copper-red hair; a blue-grey eye catches the light over the town ledger, set in a vintage steamer trunk.\",\n  \"Hands with dirt under the nails are spread open on the book; a bunch of gold-edged pages can be seen with a string of pearls.\",\n  \"Blue-grey eyes look down at the l",
+    "raw_response_len": 746
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A close-up of the book's pages; a bunch of freckled skin can be seen with a gold nib pen resting on the cover.",
+        "concept_sha256": "f9e19d21037678e90003be0f31aee66867db4bd8b1ddc3769ead674b66bb6bb5",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A freckled face with copper-red hair; a blue-grey eye catches the light over the town ledger, set in a vintage steamer trunk.",
+        "concept_sha256": "d1bea788f9c5b123eb339812b72ff2f1695bcd4d5ff1cb6ca93cd7a0299a3783",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Blue-grey eyes look down at the ledger, which is filled with a handwritten script; the setting has a soft, dusty glow.",
+        "concept_sha256": "b931fba8f253398bb27f85a665f9fd5e1aedacdf70aea7156503e019f01a6109",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "Hands with dirt under the nails are spread open on the book; a bunch of gold-edged pages can be seen with a string of pearls.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    }
+  ]
+}

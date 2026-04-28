@@ -15,6 +15,18 @@ Two top-level Python trees with confusingly similar names:
 
 Treat them as independent packages. Imports do not cross.
 
+## Source Scope
+
+Live HELEN OS work is scoped to `experiments/helen_mvp_kernel/`. Code edits go **only** there.
+
+**Off-limits to edits** (read freely, write never):
+
+- `helen_os/governance/**`, `helen_os/schemas/**`, `oracle_town/kernel/**` — sovereign firewall (see `~/.claude/CLAUDE.md`)
+- `town/ledger_v1.ndjson`, `mayor_*.json`, `GOVERNANCE/CLOSURES/**`, `GOVERNANCE/TRANCHE_RECEIPTS/**` — sovereign artifacts
+- Root `helen_os/` modules outside `experiments/`, existing tests, sealed proposals, constitutional files (`KERNEL_V2.md`, `SOUL.md`, `HELEN.md`, `KERNEL_K_TAU_RULE.md`)
+
+If a task appears to require an off-limits write, stop and report — route through MAYOR via the admissible bridge (`tools/helen_say.py`), not by direct edit.
+
 ## Repository Identity
 
 - **Canonical GitHub repo:** `https://github.com/JMTassy/helen-conquest.git`
@@ -47,6 +59,7 @@ Treat them as independent packages. Imports do not cross.
 - `oracle_town/skills/video/hyperframes/` — HyperFrames video renderer (DECLARED)
 - `oracle_town/skills/video/helen-director/` — Montage Engine + STORYBOARD_V1 + ASSET_ENGINE_V1 + 30s candidate runner; parallel Seedance pipeline
 - `oracle_town/skills/video/library/` — curated frame asset pool (refs/canonical/, era axis)
+- `helen_os/render/math_to_face.py` + `math_to_face/SKILL.md` — sovereign white-box render pipeline (φ-SDE + H/G/E/H⁻¹ bidirectional compiler math ↔ latent ↔ image), parallel to `helen-director` rental; **SCAFFOLD** status, Phase 0–9 roadmap in `math_to_face/SKILL.md` §6
 - `tools/helen_telegram.py` — two-way Telegram bot with voice
 - `tools/helen_simple_ui.py` — web UI at localhost:5001 with voice
 
@@ -184,6 +197,7 @@ Multiple chat entry points exist; they are **not interchangeable**.
 ## Operational Notes
 
 - `town/ledger_v1.ndjson` may show as dirty in `git status` due to live kernel daemon writes. Do not stash, do not commit, do not edit — sovereign firewall path.
+- `artifacts/k8_*.json`, `artifacts/k8_trace.ndjson`, `artifacts/k_tau_*.json` are live gate-trace outputs and routinely show dirty after lint runs. They are not stash-eligible; let the gate scripts manage them.
 
 ## Current State (2026-04-27)
 

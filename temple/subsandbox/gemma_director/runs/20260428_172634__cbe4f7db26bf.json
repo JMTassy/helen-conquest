@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:26:34.494905Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN explains the contents of town/ledger_v1.ndjson, copper-red hair, blue-grey eyes, archive shot.",
+  "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+  "concepts_generated": 6,
+  "concepts_passed_hal": 6,
+  "her_meta": {
+    "total_duration_ns": 211453659833,
+    "eval_count": 4072,
+    "raw_response_preview": "[\n  \"A close-up profile of HELEN with her copper-red hair catching the dim light of an archive room, blue-grey eyes fixed on a glowing holographic projection of the ledger as she points to a specific entry. The camera focuses on the intersection of her face and the data stream, evoking a mood of ser",
+    "raw_response_len": 1769
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A wide shot places HELEN in a cluttered study, her copper-red hair framing a large desk covered in documents. The archive atmosphere is heavy with dust motes, but the mood shifts to clarity as she explains the contents of the ledger to the camera lens.",
+        "concept_sha256": "fc1af3df5d56eee592fb7ccdbaa510452b1d018fd214d7d3efb86b94204df90d",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Standing amidst stacks of yellowed paper, HELEN gestures toward a physical ledger while her fair skin contrasts with the dark shadows of the vault. The archive shot captures her freckles illuminated by a single desk lamp, emphasizing the tactile nature of the town records she is decoding.",
+        "concept_sha256": "d8f33207c84da4ab5b513c565be76d21b30909df157dea92bbab45898129b403",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Close-up on HELEN's face as she scrolls through a digital tablet, her fair skin and blue-grey eyes reflecting the blue light of the screen. The focus remains tight on her expression to convey the weight of the historical data hidden within the town ledger file.",
+        "concept_sha256": "28693bb5ab34bbcc322cc06555bad9b2d8e4c16c55fce255e9c0088ac3400cb4",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

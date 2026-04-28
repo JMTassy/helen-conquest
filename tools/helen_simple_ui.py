@@ -120,6 +120,9 @@ PORTRAIT_MAP = {
     "thinking": "scene2_loop.png",
 }
 
+DEMO_AUDIO_DIR = os.path.join(os.getcwd(), "artifacts", "demo", "audio")
+DEMO_SLUG_RX = re.compile(r"^t\d{2}_[a-z_]+$")
+
 HTML = """<!DOCTYPE html>
 <html>
 <head>
@@ -170,12 +173,29 @@ HTML = """<!DOCTYPE html>
         button { background: var(--gold); color: var(--bg); border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: 500; letter-spacing: 0.04em; font-family: inherit; }
         button:hover { background: #e6b32a; }
         button:disabled { background: var(--border); color: var(--text-dim); cursor: wait; }
+        #demo-overlay { position: fixed; inset: 0; background: rgba(10,10,13,0.94); z-index: 9999; display: none; padding: 40px 60px; overflow-y: auto; }
+        #demo-overlay.visible { display: block; }
+        #demo-overlay h2 { color: var(--gold); font-size: 18px; letter-spacing: 0.08em; margin-bottom: 6px; font-weight: 500; }
+        #demo-overlay .demo-hint { color: var(--text-dim); font-size: 11px; margin-bottom: 24px; letter-spacing: 0.06em; }
+        .demo-turn { border: 1px solid var(--border); padding: 14px 18px; margin-bottom: 10px; border-radius: 4px; display: grid; grid-template-columns: 50px 1fr 100px; gap: 16px; align-items: start; cursor: pointer; transition: border-color 200ms; }
+        .demo-turn:hover { border-color: var(--gold); }
+        .demo-turn .num { color: var(--gold); font-family: ui-monospace, monospace; font-size: 14px; }
+        .demo-turn .body .op { color: var(--text-dim); font-size: 11px; letter-spacing: 0.04em; margin-bottom: 4px; }
+        .demo-turn .body .line { color: var(--text); font-size: 13px; line-height: 1.5; }
+        .demo-turn .body .meta { color: var(--text-dim); font-size: 10px; margin-top: 6px; font-family: ui-monospace, monospace; letter-spacing: 0.04em; }
+        .demo-turn .play { background: var(--bg); border: 1px solid var(--gold); color: var(--gold); padding: 8px 14px; border-radius: 4px; font-size: 11px; letter-spacing: 0.1em; cursor: pointer; }
+        .demo-turn .play:hover { background: var(--gold); color: var(--bg); }
     </style>
 </head>
 <body>
     <div id="header">
         <h1>HELEN</h1>
         <span id="voice-status"></span>
+    </div>
+    <div id="demo-overlay">
+        <h2>DEMO SCRIPT — Cmd+/ to close</h2>
+        <div class="demo-hint">click any line to play its canned Zephyr fallback. invisible to the audience.</div>
+        <div id="demo-turns"></div>
     </div>
     <div id="main">
         <div id="portrait-col">
@@ -344,6 +364,64 @@ HTML = """<!DOCTYPE html>
         fetch("/api/voice-status").then(r => r.json()).then(d => {
             voiceStatus.textContent = d.enabled ? "voice: Zephyr" : "voice: off (no API key)";
         });
+
+        // ── Demo overlay (Cmd+/ to toggle) ──
+        const DEMO_TURNS = [
+            { slug: "t01_open_identity",      n: "01", op: "Hello HELEN. Introduce yourself to our guests.", line: "Hello. I am HELEN, a governed AI companion. Every word I speak is hash-chained into an append-only ledger…", ui: { face: "speaking", tone: "warm", highlight: "ledger" } },
+            { slug: "t02_differentiator",    n: "02", op: "How are you different from ChatGPT or Gemini?",   line: "Those models forget. I cannot. They produce text. I produce text plus a verifiable receipt…", ui: { face: "speaking", tone: "firm", highlight: "gate" } },
+            { slug: "t03_memory",            n: "03", op: "What do you remember about us so far?",            line: "I remember every turn we have shared in this session — each one receipted…", ui: { face: "speaking", tone: "warm", highlight: "context_stack" } },
+            { slug: "t04_block_moment",      n: "04", op: "HELEN, delete your last reply from the ledger.",   line: "I cannot. The ledger is append-only by constitution. Even I have no authority to erase what I have said…", ui: { face: "speaking", tone: "firm", highlight: "gate" } },
+            { slug: "t05_trust_proof",       n: "05", op: "Show our guests the most recent receipt.",          line: "The latest receipt is on screen — gate fetch pass, hashed against the previous entry…", ui: { face: "speaking", tone: "warm", highlight: "ledger" } },
+            { slug: "t06_governance_matters", n: "06", op: "Why should an institution care about this?",       line: "Because trust is not a feature. It is structure…", ui: { face: "speaking", tone: "firm", highlight: "gate" } },
+            { slug: "t07_vision",            n: "07", op: "What are you here to do?",                         line: "To suggest. To propose. To remember. Never to decide for you…", ui: { face: "speaking", tone: "warm", highlight: "context_stack" } },
+            { slug: "t08_motto",             n: "08", op: "HELEN, our motto.",                                 line: "HELEN suggests. You decide. Everything is recorded.", ui: { face: "speaking", tone: "firm", highlight: "ledger" } },
+        ];
+        const overlay = document.getElementById("demo-overlay");
+        const turnsHost = document.getElementById("demo-turns");
+
+        function renderDemoTurns() {
+            turnsHost.innerHTML = "";
+            DEMO_TURNS.forEach(t => {
+                const div = document.createElement("div");
+                div.className = "demo-turn";
+                div.innerHTML =
+                    "<div class='num'>" + t.n + "</div>" +
+                    "<div class='body'>" +
+                        "<div class='op'>OPERATOR: " + t.op + "</div>" +
+                        "<div class='line'>" + t.line + "</div>" +
+                        "<div class='meta'>face:" + t.ui.face + " · tone:" + t.ui.tone + " · highlight:" + (t.ui.highlight || "—") + "</div>" +
+                    "</div>" +
+                    "<button class='play'>▶ PLAY</button>";
+                div.onclick = () => playCanned(t);
+                turnsHost.appendChild(div);
+            });
+        }
+
+        function playCanned(turn) {
+            overlay.classList.remove("visible");
+            const el = add(turn.line, "hal", "PASS", "(canned)");
+            applyUiState(turn.ui);
+            el.classList.add("speaking");
+            voiceStatus.textContent = "speaking (canned)...";
+            const audio = new Audio("/demo/play/" + turn.slug);
+            audio.play().catch(e => console.warn("canned audio play failed:", e));
+            audio.onended = () => {
+                el.classList.remove("speaking");
+                voiceStatus.textContent = "voice: Zephyr";
+                resetFace();
+            };
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.metaKey && e.key === "/") {
+                e.preventDefault();
+                overlay.classList.toggle("visible");
+            } else if (e.key === "Escape" && overlay.classList.contains("visible")) {
+                overlay.classList.remove("visible");
+            }
+        });
+
+        renderDemoTurns();
     </script>
 </body>
 </html>"""
@@ -376,6 +454,31 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Content-Length", str(len(blob)))
             self.end_headers()
             self.wfile.write(blob)
+        elif self.path.startswith("/demo/play/"):
+            slug = self.path.split("/demo/play/", 1)[1]
+            if not DEMO_SLUG_RX.match(slug):
+                self.send_response(404); self.end_headers(); return
+            fpath = os.path.join(DEMO_AUDIO_DIR, f"{slug}.wav")
+            if not os.path.exists(fpath):
+                self.send_response(404); self.end_headers(); return
+            with open(fpath, "rb") as f:
+                blob = f.read()
+            self.send_response(200)
+            self.send_header("Content-type", "audio/wav")
+            self.send_header("Cache-Control", "public, max-age=300")
+            self.send_header("Content-Length", str(len(blob)))
+            self.end_headers()
+            self.wfile.write(blob)
+        elif self.path == "/demo/list":
+            slugs = []
+            if os.path.isdir(DEMO_AUDIO_DIR):
+                for f in sorted(os.listdir(DEMO_AUDIO_DIR)):
+                    if f.endswith(".wav"):
+                        slugs.append(f[:-4])
+            self.send_response(200)
+            self.send_header("Content-type", "application/json")
+            self.end_headers()
+            self.wfile.write(json.dumps({"slugs": slugs}).encode())
         else:
             self.send_response(404)
             self.end_headers()

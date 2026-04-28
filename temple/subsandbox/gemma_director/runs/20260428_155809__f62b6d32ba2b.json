@@ -1,0 +1,119 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T13:58:09.631585Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, an amazing stunning breathtaking incredible portrait that revolutionizes cinematic AI.",
+  "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 14452263625,
+    "eval_count": 399,
+    "raw_response_preview": "[\n  \"Haunted by a past life, blue-grey eyes catching a corner store light, freckles visible with wet, copper-red hair; shot on a vintage 6mm film camera, parisian feel, moody vibe.\",\n  \"A rugged, unknown stranger with copper-red hair, blue-grey eyes, freckles, and a mysterious smile, shot with a gra",
+    "raw_response_len": 1294
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A rugged, unknown stranger with copper-red hair, blue-grey eyes, freckles, and a mysterious smile, shot with a grainy lens on a cobblestone street, western feel, epic vibe.",
+        "concept_sha256": "028d24edfca733b6b6e773fa7d60cbb021aeec15c0526b4f126932d54009a288",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Haunted by a past life, blue-grey eyes catching a corner store light, freckles visible with wet, copper-red hair; shot on a vintage 6mm film camera, parisian feel, moody vibe.",
+        "concept_sha256": "3df1b50119e59bff4cd634f968ee90e3125056bf539db885da56bdd179305f9c",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Helen wears a space-age silver suit, blue-grey eyes streaked with glitter, copper-red hair up in a bun, freckles over perfect makeup, feels like a superstar, dramatic vibe.",
+        "concept_sha256": "a446f23adab1bb6d94461d59bfc53e8654f126e15bb5a03e01d767fab3bf73f9",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A simple portrait of a woman with a flower crown, freckles, blue-grey eyes, copper-red hair, painted with natural light, rustic feel, bliss vibe.",
+        "concept_sha256": "a9b901fa720a7165f845ae04cc5182db9b609e27dc4c6e15741071d3f32c28f8",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Helen laughing with a sea-horse on a cliff, blue-grey eyes, freckles, copper-red hair, dramatic sky, polaroid photo, moody vibe.",
+        "concept_sha256": "c0e021dc548b0a34bb3058559af1f330c3a2d0c1bab906ef8fe596c9351f7e41",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

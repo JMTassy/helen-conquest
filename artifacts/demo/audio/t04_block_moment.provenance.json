@@ -1,0 +1,13 @@
+{
+  "schema": "AUDIO_PROVENANCE_V1",
+  "timestamp_utc": "2026-04-28T12:19:17.436962Z",
+  "model": "gemini-2.5-flash-preview-tts",
+  "voice": "Zephyr",
+  "sample_rate": 24000,
+  "text_sha256": "f313a9c63f906db7a211f8c5ac66d5cea59504fc08c278d289505990667393b3",
+  "audio_sha256": "e2b50286303e5d6ed4d82d98bb2571fb04ece143466ab1f183e5804a1441212e",
+  "audio_file": "2026-04-28_141917__zephyr.wav",
+  "text_length": 181,
+  "audio_bytes": 605326,
+  "payload_hash": "fa2d821668434e3661d89898a0a4e890be6809212c5844fa8bcac7b9980b30e0"
+}

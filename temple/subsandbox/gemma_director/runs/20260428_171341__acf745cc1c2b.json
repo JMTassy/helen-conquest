@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:13:41.028650Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, neutral background.",
+  "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 271920449834,
+    "eval_count": 4397,
+    "raw_response_preview": "[\n  \"HELEN stands against a seamless grey backdrop in a classic black and white portrait style, her copper-red wavy hair falling over one shoulder. The 35mm lens captures the sharp focus of her blue-grey eyes, creating a timeless and neutral mood.\",\n  \"In a moody, dimly lit studio, HELEN is framed i",
+    "raw_response_len": 1930
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a moody, dimly lit studio, HELEN is framed in a medium shot with a locked tripod, emphasizing the stillness of her freckled fair skin. The cinematic grain adds a textured feel to the neutral background as she gazes forward.",
+        "concept_sha256": "08dbc554769574f0b969549f71c36c8d9938cf4ecb8d6393d729b03766113aca",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A high-contrast 35mm render places HELEN in the center of the frame, with the neutral background ensuring no distractions from her identity. The locked tripod provides a static shot that highlights her intense blue-grey eyes and fair complexion.",
+        "concept_sha256": "c64b3e1e6f8cd2b12284b1fc0b3ce356c00271cfa2ef8436a63f9437f885ea39",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands against a seamless grey backdrop in a classic black and white portrait style, her copper-red wavy hair falling over one shoulder. The 35mm lens captures the sharp focus of her blue-grey eyes, creating a timeless and neutral mood.",
+        "concept_sha256": "4bc48d3a040fdb3b965d1081cf6c66069078a97135dd100c268d37391fef4fc1",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

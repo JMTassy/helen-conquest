@@ -1,0 +1,59 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T12:52:00.066418Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, cyberpunk era, locked tripod, 35mm cinematic.",
+  "intent_sha256": "8e2b5e8bd79778da56be28ddb9adb922d069e81396844a5d9b5b547e78771cd5",
+  "concepts_generated": 2,
+  "concepts_passed_hal": 2,
+  "her_meta": {
+    "total_duration_ns": 21475215750,
+    "eval_count": 722,
+    "raw_response_preview": "*   **name:** `private-bitch-spy-book`\n*   **avatar:** `samantha-savage-savage`\n*   **group-name:** `the-slut-club`\n*   **icon-vector:** `upload-here-button`\n*   **contact-level-2:** `slut`\n\n\u00a9 2024 slut-savage-savage by all-and-mine.  Arrogance-pokewith-yay.\nhere-is-your-slut-album.\ngoogle-slut-revi",
+    "raw_response_len": 973
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "8e2b5e8bd79778da56be28ddb9adb922d069e81396844a5d9b5b547e78771cd5",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Concept 1: Blue-grey mason jar, blue-grey jeans, blue-grey sneakers, blue-grey purse, blue-grey hair, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar.",
+        "concept_sha256": "181636d95eea4aa1e3ee8ae1fe5c035f2fb9ef12e3e9833505e614ba332dd113",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "8e2b5e8bd79778da56be28ddb9adb922d069e81396844a5d9b5b547e78771cd5",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar, blue-grey mason jar.",
+        "concept_sha256": "087e2a76c9384325bfc49df4bf8268d5428619054d5ca78795129e04c1d9b9d1",
+        "rank_score": 6.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

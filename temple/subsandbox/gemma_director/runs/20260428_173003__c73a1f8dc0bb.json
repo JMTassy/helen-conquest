@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:30:03.303072Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN smile.",
+  "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 208669971083,
+    "eval_count": 4454,
+    "raw_response_preview": "[\n  \"HELEN stands in a sun-drenched modern living room, close-up shot capturing a genuine smile that highlights her freckles and fair skin. Her copper-red hair catches the light, creating a warm, intimate atmosphere.\",\n  \"HELEN poses in a dimly lit 1920s jazz club, medium shot showing her laughing w",
+    "raw_response_len": 1848
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands in a sun-drenched modern living room, close-up shot capturing a genuine smile that highlights her freckles and fair skin. Her copper-red hair catches the light, creating a warm, intimate atmosphere.",
+        "concept_sha256": "8cdfb8b5e2a0bc353bfea7cdc71c463ae15cb88a06dfc0eeee3c04f0164a8e4a",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN poses in a dimly lit 1920s jazz club, medium shot showing her laughing with her blue-grey eyes crinkled in joy. Her copper-red hair is styled in vintage waves, evoking a nostalgic and playful mood.",
+        "concept_sha256": "1373e702967d9c53382bf8b97417ee33cf1967d3968c31e384ddd833d6150da7",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN laughs openly in a busy morning market, eye-level medium shot with a bright smile that reaches her blue-grey eyes. Her fair skin is naturally flushed, with copper-red hair tied back in a practical style for a lively mood.",
+        "concept_sha256": "d3b71694ccb9c145d7eaa622519f6cebb21cd3db61d83d87b05c993ad21f504b",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

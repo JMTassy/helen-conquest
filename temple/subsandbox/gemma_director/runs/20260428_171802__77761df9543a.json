@@ -1,0 +1,86 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T15:18:02.759325Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: a person, urban setting, evening, 35mm.",
+  "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 7,
+  "her_meta": {
+    "total_duration_ns": 261572544375,
+    "eval_count": 4160,
+    "raw_response_preview": "[\n  \"Helen stands on a neon-lit rooftop at dusk, with the low angle highlighting her copper-red hair against the smog-choked city skyline. A medium close-up captures her blue-grey eyes reflecting the city lights.\",\n  \"Rain-slicked pavement reflects the glow of streetlamps in a noir atmosphere as she",
+    "raw_response_len": 1604
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "She peeks around a corner in an alleyway between towering brick buildings in the evening, fair skin glowing under the flickering neon sign. Medium shot shows her blue-grey eyes scanning the shadows.",
+        "concept_sha256": "039ae22e771378dfb83ad2b92ab7287e2206ab4b1874feb755e4785a78e9ee18",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Her reflection in the glass shows her copper-red hair and blue-grey eyes while overlooking the rain at night from a coffee shop window. Wide shot captures the isolation of the figure against the urban backdrop.",
+        "concept_sha256": "a06184d12b548bac83b92184d92fa9599bd5fc825ffad37dd510572a81993ccb",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Helen stands on a neon-lit rooftop at dusk, with the low angle highlighting her copper-red hair against the smog-choked city skyline. A medium close-up captures her blue-grey eyes reflecting the city lights.",
+        "concept_sha256": "98d5e6766ca969e3de9d45909c61b299af100f628be62f9752d440faacd5e133",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "Helen walks towards the camera on a street corner during a heavy downpour at night. Full body shot captures the movement of her silhouette in the 35mm rain streaks.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    }
+  ]
+}

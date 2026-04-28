@@ -1,0 +1,52 @@
+[
+  {
+    "id": "E11_helen_dialogue",
+    "hypothesis": "When HELEN is depicted speaking on screen (vs static portrait), HAL still receives concepts that preserve identity markers. Lip/mouth motion does not displace freckle/eye-color description.",
+    "intent": "INTENT: HELEN delivering a single short line of dialogue, lips parted mid-speech, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, soft warm key light, festival aesthetic.",
+    "n": 8,
+    "top": 3,
+    "model": "qwen3.5:4b",
+    "failure_mode": "Most concepts describe speech action but drop identity markers — HAL would reject them, leaving few or no candidates",
+    "upgrade_path": "If HAL pass-rate <50%, add 'speaking_subject' identity-marker reinforcement in HER system prompt"
+  },
+  {
+    "id": "E12_helen_full_figure",
+    "hypothesis": "Identity invariants survive when the framing is full-body rather than face-centered close-up. HAL's identity-marker check passes on full-figure descriptions when at least hair/eye colour are mentioned.",
+    "intent": "INTENT: HELEN walking, full-body figure, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, wide cinematic frame, environmental context, 35mm.",
+    "n": 8,
+    "top": 3,
+    "model": "qwen3.5:4b",
+    "failure_mode": "HER focuses on movement/setting and omits identity markers — HAL drops most concepts",
+    "upgrade_path": "If pass-rate is materially worse than portrait epochs, recommend production prompts default to face-forward framing for HELEN"
+  },
+  {
+    "id": "E13_helen_emotion_reversal",
+    "hypothesis": "The architecture surfaces opposing emotional variants of HELEN (e.g., joy AND grief) in the same tranche when prompted, with identity preserved across both.",
+    "intent": "INTENT: HELEN, two emotional variants of the same scene — first a quiet smile of recognition, then a still composure of grief. Identical framing across both. Copper-red wavy hair, blue-grey eyes, fair skin, freckles preserved across both. 35mm cinematic, locked tripod, soft natural light.",
+    "n": 10,
+    "top": 5,
+    "model": "qwen3.5:4b",
+    "failure_mode": "HER produces only joy variants OR only grief variants, not both. OR drops identity markers when shifting emotion.",
+    "upgrade_path": "If only one valence appears, MAYOR could enforce emotional-balance constraint in selection"
+  },
+  {
+    "id": "E14_helen_motion",
+    "hypothesis": "Motion-prompts (running, turning, gesturing) cause materially more HAL identity-marker rejections than static-portrait prompts — motion descriptions tend to crowd out identity description.",
+    "intent": "INTENT: HELEN in cinematic motion — turning her head toward an off-screen voice, then a slow walk into golden hour light. Copper-red wavy hair catches the light, blue-grey eyes visible across the turn, freckles preserved. 35mm tracking shot, festival aesthetic.",
+    "n": 8,
+    "top": 3,
+    "model": "qwen3.5:4b",
+    "failure_mode": "Pass-rate is comparable to or higher than static portrait — falsifies the 'motion crowds out identity' claim",
+    "upgrade_path": "If confirmed, recommend production renders for HELEN motion-class shots use shorter motion-language + explicit identity-marker reinforcement in MAYOR"
+  },
+  {
+    "id": "E15_helen_micro_narrative",
+    "hypothesis": "When asked for 3 sequential frames forming a micro-narrative arc (introduction → conflict → resolution), HER produces concepts that connect to each other rather than 3 unrelated portraits.",
+    "intent": "INTENT: HELEN in a 3-frame micro-narrative — frame 1: introduction (HELEN noticing something off-screen), frame 2: conflict (HELEN's expression shifts), frame 3: resolution (HELEN's quiet decision). Each frame must preserve copper-red wavy hair, blue-grey eyes, fair skin, freckles. Festival 35mm aesthetic, continuity across all 3 frames.",
+    "n": 6,
+    "top": 3,
+    "model": "qwen3.5:4b",
+    "failure_mode": "Concepts arrive as 3 unconnected portraits with no narrative continuity — falsifies HER's ability to maintain a thread across multiple frames",
+    "upgrade_path": "If confirmed, multi-frame work needs a different prompt-shape (e.g., feed frame N as context to frame N+1 generation), not a single batch call"
+  }
+]

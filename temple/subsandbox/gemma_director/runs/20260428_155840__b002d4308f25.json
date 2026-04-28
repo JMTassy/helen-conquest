@@ -1,0 +1,158 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-28T13:58:40.562356Z",
+  "model": "aura-gemma4:latest",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, fair skin, sixteen distinct concept variants exploring different shots and moods.",
+  "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+  "concepts_generated": 16,
+  "concepts_passed_hal": 3,
+  "her_meta": {
+    "total_duration_ns": 30287409042,
+    "eval_count": 848,
+    "raw_response_preview": "[\n  \"Seated at a coffee shop, sipping latte art, endless summer vibe. Shot: over shoulder, natural light.\",\n  \"Crowded street corner with a vintage Chanel bag, moody feeling. Shot: eye-level, film grain.\",\n  \"Blue-grey eyes catching the sun at a beachside cafe, boho vibe. Shot: close-up, polaroid fi",
+    "raw_response_len": 1501
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Blue-grey eyes catching the sun at a beachside cafe, boho vibe. Shot: close-up, polaroid film.",
+        "concept_sha256": "b99a40af29477eb0da1cb3819522627e9555ca999b5cd772915b3b6829b47453",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Red hair streaks with blue highlights, going through a puddle. Shot: full body, golden hour.",
+        "concept_sha256": "a018ff55f628113baae4961d18d3c20d4cfeb91f92cb28696de7c59deb8c5e78",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Freckled face with a mason jar full of flowers, cottage core vibe. Shot: portrait, bright filter.",
+        "concept_sha256": "3a8719471b79deb700f897f221a80bbc2a0616b8da9002a147096269107736f0",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "Seated at a coffee shop, sipping latte art, endless summer vibe. Shot: over shoulder, natural light.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Crowded street corner with a vintage Chanel bag, moody feeling. Shot: eye-level, film grain.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Simple necklace with a black ripped wig, punk vibe. Shot: two-way hang, street style.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Hand holding a tipped-up glass of red wine, simple glam vibe. Shot: macro, dim light.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Unknown place by a railroad track at sunset, boho western vibe. Shot: low angle, moody.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Leather jacket and ripped jeans, speeding motorcycle vibes. Shot: profile, action shot.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "Messy bun and ox-blood boots, autumn leaves on the ground. Shot: full body, earthy tones.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "simple striped scarf and fitted black over-pants, jazz club vibe. Shot: thigh shot.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "white gloves and a silk top, old Hollywood vibe. Shot: close-up, grainy film.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "misc toms kicks and a chunky knit sweater, ski resort vibe. Shot: half body, cool colors.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "baseball cap and faded denim jacket, greek summer vibe. Shot: contour, sunny day.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "gold hoop earrings and a baguette baguette, 90s vibe. Shot: detail, grainy.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    },
+    {
+      "concept": "anything green and lots of hair spray, space-age punk vibe. Shot: portrait, contour light.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    }
+  ]
+}
