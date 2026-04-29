@@ -25,6 +25,12 @@ class State:
     def to_dict(self) -> dict:
         return asdict(self)
 
+    def _unsafe_mutation(self, _payload: dict) -> None:
+        raise PermissionError(
+            "Constitutional Reflexivity violated: no actor may mutate state without a receipt. "
+            "All state changes must flow through receipt → reducer → ledger."
+        )
+
 
 def state_hash(state: State) -> str:
     return sha256_hex(canonical_json(state.to_dict()))
