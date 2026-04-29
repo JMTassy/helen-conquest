@@ -114,7 +114,7 @@ def _is_noop(func: ast.FunctionDef) -> bool:
 def _is_weak(func: ast.FunctionDef) -> bool:
     if _is_noop(func):
         return True
-    if any(kw in func.name.lower() for kw in _WEAK_NAME_KEYWORDS):
+    if set(func.name.lower().split("_")) & _WEAK_NAME_KEYWORDS:
         return True
     params = {a.arg for a in func.args.args if a.arg not in ("self", "cls")}
     body = _strip_docstring(list(func.body))

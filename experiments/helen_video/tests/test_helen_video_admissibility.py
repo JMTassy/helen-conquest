@@ -11,6 +11,7 @@ import pytest
 
 from helen_video.admissibility_gate import (
     evaluate, verify_receipt_binding, VISUAL_COHERENCE_MIN, PIPELINE_SALT,
+    HysteresisGate, HysteresisState, KEEP_FLOOR, REJECT_CEIL, PENALTY_STEP, PENALTY_CAP,
 )
 from helen_video.ralph_generator import generate_candidate, extract_receipt
 from helen_video.video_ledger import VideoLedger
@@ -171,3 +172,103 @@ def test_tampered_entry_fails_chain(tmp_path):
 def test_empty_ledger_chain_is_valid(tmp_path):
     ledger = VideoLedger(tmp_path / "v.ndjson")
     assert ledger.verify_chain() is True
+
+
+# ── hysteresis gate ────────────────────────────────────────────────────────────
+
+def _hysteresis_receipt(vc=0.85, ta=0.75, content_hash="abc123"):
+    ph = hashlib.sha256((content_hash + PIPELINE_SALT).encode()).hexdigest()
+    return {"content_hash": content_hash, "pipeline_hash": ph,
+            "visual_coherence": vc, "temporal_alignment": ta}
+
+
+_GOOD_CANDIDATE = {"character": "HELEN", "scene": "oracle", "duration": 5, "style": "cinematic"}
+
+
+def test_hysteresis_state_default_floor():
+    s = HysteresisState()
+    assert s.effective_keep_floor() == KEEP_FLOOR
+
+
+def test_hysteresis_state_penalty_accumulates():
+    s = HysteresisState(reject_count=2)
+    assert abs(s.effective_keep_floor() - (KEEP_FLOOR + 2 * PENALTY_STEP)) < 1e-9
+
+
+def test_hysteresis_state_penalty_capped():
+    s = HysteresisState(reject_count=100)
+    assert s.effective_keep_floor() == KEEP_FLOOR + PENALTY_CAP
+
+
+def test_combined_score_both_present():
+    g = HysteresisGate()
+    r = _hysteresis_receipt(vc=0.9, ta=0.7)
+    assert abs(g.combined_score(r) - 0.8) < 1e-9
+
+
+def test_combined_score_missing_returns_none():
+    g = HysteresisGate()
+    assert g.combined_score({"visual_coherence": 0.9}) is None
+    assert g.combined_score({}) is None
+
+
+def test_hysteresis_clean_accept_above_floor():
+    """Score well above KEEP_FLOOR → ACCEPT, no penalty."""
+    g = HysteresisGate()
+    r = _hysteresis_receipt(vc=0.95, ta=0.95)
+    v = g.evaluate(_GOOD_CANDIDATE, r, clip_id="c1")
+    assert v.decision == "ACCEPT"
+
+
+def test_hysteresis_borderline_below_floor_is_pending():
+    """vc=0.75, ta=0.65 → combined=0.70 < KEEP_FLOOR(0.80) → PENDING."""
+    g = HysteresisGate()
+    r = _hysteresis_receipt(vc=0.75, ta=0.65)
+    v = g.evaluate(_GOOD_CANDIDATE, r, clip_id="c2")
+    assert v.decision == "PENDING"
+    assert "effective keep floor" in v.reason
+
+
+def test_hysteresis_reject_increments_penalty():
+    """A structural REJECT (no receipt) raises reject_count."""
+    g = HysteresisGate()
+    g.evaluate(_GOOD_CANDIDATE, None, clip_id="c3")
+    assert g._memory["c3"].reject_count == 1
+
+
+def test_hysteresis_penalty_raises_floor_after_rejects():
+    """After 4 rejects, effective floor = KEEP_FLOOR + PENALTY_CAP."""
+    g = HysteresisGate()
+    for _ in range(4):
+        g.evaluate(_GOOD_CANDIDATE, None, clip_id="c4")
+    s = g._memory["c4"]
+    assert s.effective_keep_floor() == KEEP_FLOOR + PENALTY_CAP
+
+
+def test_hysteresis_accept_clears_penalty_memory():
+    """A clean ACCEPT resets the clip's rejection memory.
+
+    reject_count=3 → effective_floor=0.95; use vc=ta=0.99 (sc=0.99) to clear safely.
+    """
+    g = HysteresisGate()
+    g._memory["c5"] = HysteresisState(reject_count=3)
+    r = _hysteresis_receipt(vc=0.99, ta=0.99)
+    v = g.evaluate(_GOOD_CANDIDATE, r, clip_id="c5")
+    assert v.decision == "ACCEPT"
+    assert "c5" not in g._memory
+
+
+def test_hysteresis_no_clip_id_is_stateless():
+    """clip_id=None → no state written, no error."""
+    g = HysteresisGate()
+    g.evaluate(_GOOD_CANDIDATE, None, clip_id=None)
+    assert g._memory == {}
+
+
+def test_hysteresis_pending_from_structural_gate_propagates():
+    """Missing metrics → PENDING from structural gate propagates unchanged."""
+    g = HysteresisGate()
+    ph = hashlib.sha256(("abc123" + PIPELINE_SALT).encode()).hexdigest()
+    r = {"content_hash": "abc123", "pipeline_hash": ph}  # no vc/ta
+    v = g.evaluate(_GOOD_CANDIDATE, r, clip_id="c6")
+    assert v.decision == "PENDING"

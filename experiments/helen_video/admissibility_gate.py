@@ -148,3 +148,92 @@ def evaluate(
         reason="all receipt checks passed",
         receipt=receipt,
     )
+
+
+# ── hysteresis ────────────────────────────────────────────────────────────────
+
+KEEP_FLOOR   = 0.80   # combined score must reach this to ACCEPT
+REJECT_CEIL  = 0.50   # below this always REJECTs (same as TEMPORAL_ALIGNMENT_MIN)
+PENALTY_STEP = 0.05   # each consecutive REJECT raises effective KEEP_FLOOR
+PENALTY_CAP  = 0.20   # max additional floor (caps at 4 consecutive rejects)
+
+
+@dataclass
+class HysteresisState:
+    """Per-clip penalty memory. Tracks consecutive rejects for one clip_id."""
+    reject_count: int = 0
+
+    def effective_keep_floor(self) -> float:
+        return KEEP_FLOOR + min(PENALTY_CAP, self.reject_count * PENALTY_STEP)
+
+
+class HysteresisGate:
+    """Dual-threshold admissibility gate with penalty memory.
+
+    Wraps the functional evaluate() with per-clip state so that borderline
+    clips accumulate rejection history. Each consecutive REJECT raises the
+    effective KEEP_FLOOR, preventing oscillation at the boundary.
+
+    State is keyed by clip_id (str). Pass clip_id=None for stateless use.
+    """
+
+    def __init__(self) -> None:
+        self._memory: dict[str, HysteresisState] = {}
+
+    def _get_state(self, clip_id: str | None) -> HysteresisState:
+        return self._memory.get(clip_id or "", HysteresisState())
+
+    @staticmethod
+    def combined_score(receipt: dict) -> float | None:
+        """0.5·vc + 0.5·ta. Returns None if either metric is absent."""
+        vc = receipt.get("visual_coherence")
+        ta = receipt.get("temporal_alignment")
+        if vc is None or ta is None:
+            return None
+        return 0.5 * float(vc) + 0.5 * float(ta)
+
+    def evaluate(
+        self,
+        candidate: dict,
+        receipt: dict | None,
+        prev_clip: dict | None = None,
+        clip_id: str | None = None,
+    ) -> GateVerdict:
+        """Evaluate with hysteresis: structural gate + dual-threshold + penalty memory.
+
+        A structurally-ACCEPT verdict is re-checked against the effective
+        KEEP_FLOOR (KEEP_FLOOR + penalty). If the combined score falls in
+        the review band [REJECT_CEIL, effective_keep_floor), the verdict is
+        downgraded to PENDING and the reject_count is incremented.
+        On a clean ACCEPT the penalty memory for clip_id is cleared.
+        """
+        verdict = evaluate(candidate, receipt, prev_clip)
+
+        if verdict.decision == "REJECT":
+            if clip_id is not None:
+                s = self._get_state(clip_id)
+                self._memory[clip_id] = HysteresisState(s.reject_count + 1)
+            return verdict
+
+        if verdict.decision == "ACCEPT":
+            sc = self.combined_score(receipt or {})
+            if sc is not None:
+                s = self._get_state(clip_id)
+                floor = s.effective_keep_floor()
+                if sc < floor:
+                    if clip_id is not None:
+                        self._memory[clip_id] = HysteresisState(s.reject_count + 1)
+                    return GateVerdict(
+                        decision="PENDING",
+                        reason=(
+                            f"combined score {sc:.3f} below effective keep floor "
+                            f"{floor:.2f} (penalty rejects={s.reject_count})"
+                        ),
+                        receipt=receipt,
+                    )
+            if clip_id is not None:
+                self._memory.pop(clip_id, None)
+            return verdict
+
+        # PENDING from structural gate — propagate unchanged
+        return verdict
