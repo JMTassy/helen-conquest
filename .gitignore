@@ -12,3 +12,11 @@ helen_os/knowledge/embeddings/
 helen_os/knowledge/corpus.json
 helen_os/knowledge/tag_graph.json
 helen_os/knowledge/access_log.ndjson
+
+# Runtime artifacts (generated outputs — not control-plane)
+artifacts/audio/
+artifacts/*.mp4
+artifacts/*.wav
+artifacts/*.png
+artifacts/*.json
+helen_os/helen_memory.db
