@@ -1,0 +1,115 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "helen_dan_prd_v0",
+  "title": "HELEN_DAN PRD",
+  "description": "Product requirements document for one DAN_GOBLIN project. One story per epoch.",
+  "authority": "NON_SOVEREIGN",
+  "canon": "NO_SHIP",
+  "lifecycle": "PROPOSAL",
+  "type": "object",
+  "required": [
+    "branchName",
+    "project",
+    "authority",
+    "canon",
+    "userStories"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "branchName": {
+      "type": "string",
+      "description": "Git branch DAN_GOBLIN works on. Must not be main/master unless MAYOR authorised."
+    },
+    "project": {
+      "type": "string",
+      "description": "Short project identifier, e.g. HELEN_VIDEO_OS."
+    },
+    "authority": {
+      "type": "string",
+      "const": "NON_SOVEREIGN"
+    },
+    "canon": {
+      "type": "string",
+      "const": "NO_SHIP"
+    },
+    "userStories": {
+      "type": "array",
+      "description": "Ordered list of stories. DAN picks lowest priority number with status=todo.",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "title",
+          "priority",
+          "status",
+          "allowed_paths",
+          "forbidden_paths",
+          "required_receipts",
+          "acceptanceCriteria"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^HD-[0-9]{3,}$",
+            "description": "Story identifier. Format: HD-NNN."
+          },
+          "title": {
+            "type": "string",
+            "minLength": 4,
+            "maxLength": 120
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "1 = highest. DAN picks lowest number among status=todo stories."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["todo", "in_progress", "done", "failed"],
+            "description": "done/failed are epoch-local. Reducer decides canon admission."
+          },
+          "epoch_owner": {
+            "type": ["string", "null"],
+            "description": "Epoch ID currently executing this story. Null when idle."
+          },
+          "allowed_paths": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "DAN may only write under these prefixes this epoch."
+          },
+          "forbidden_paths": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "DAN must never touch these paths."
+          },
+          "required_receipts": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "test_report",
+                "artifact_manifest",
+                "failure_receipt",
+                "hal_verdict",
+                "screenshot",
+                "quality_check"
+              ]
+            },
+            "minItems": 1
+          },
+          "acceptanceCriteria": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "Literal verifiable statements. HAL checks each one. No vague phrases."
+          },
+          "notes": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

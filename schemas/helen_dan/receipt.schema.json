@@ -1,0 +1,121 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "helen_dan_receipt_v0",
+  "title": "DAN_GOBLIN Epoch Receipt",
+  "description": "Bound record of one DAN_GOBLIN epoch. Required on close regardless of outcome. NO RECEIPT = NO CLAIM.",
+  "authority": "NON_SOVEREIGN",
+  "canon": "NO_SHIP",
+  "lifecycle": "PROPOSAL",
+  "type": "object",
+  "required": [
+    "receipt_id",
+    "story_id",
+    "epoch",
+    "actor",
+    "authority",
+    "canon",
+    "status",
+    "artifact_manifest",
+    "tests_run",
+    "timestamp"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "description": "sha256[:16] of (story_id + epoch + timestamp + actor)."
+    },
+    "story_id": {
+      "type": "string",
+      "pattern": "^HD-[0-9]{3,}$"
+    },
+    "epoch": {
+      "type": "string",
+      "description": "Epoch identifier — sha256[:12] of (story_id + timestamp + session_salt)."
+    },
+    "actor": {
+      "type": "string",
+      "description": "Always DAN_GOBLIN. Never REDUCER, MAYOR, or LEDGER."
+    },
+    "authority": {
+      "type": "string",
+      "const": "NON_SOVEREIGN"
+    },
+    "canon": {
+      "type": "string",
+      "const": "NO_SHIP"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["GREEN", "FAILED"],
+      "description": "GREEN = all criteria pass + required receipts present. FAILED = anything else."
+    },
+    "failure_type": {
+      "type": ["string", "null"],
+      "enum": [
+        "TEST_FAILURE",
+        "SCOPE_DRIFT",
+        "RECEIPT_MISSING",
+        "NONLOCAL_MUTATION",
+        "REPEATED_FAILURE",
+        "SCREENSHOT_MISSING",
+        "QUALITY_CHECK_FAILED",
+        null
+      ],
+      "description": "Required when status=FAILED. Null when GREEN."
+    },
+    "files_changed": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Relative paths of files written or modified this epoch."
+    },
+    "tests_run": {
+      "type": "object",
+      "required": ["passed", "failed", "total"],
+      "additionalProperties": false,
+      "properties": {
+        "passed":      { "type": "integer", "minimum": 0 },
+        "failed":      { "type": "integer", "minimum": 0 },
+        "total":       { "type": "integer", "minimum": 0 },
+        "command":     { "type": "string" },
+        "stdout_tail": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "screenshots": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to screenshot files produced this epoch. Required when story has required_receipt=screenshot."
+    },
+    "artifact_manifest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "path":   { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      }
+    },
+    "commit_hash": {
+      "type": ["string", "null"],
+      "pattern": "^[0-9a-f]{40}$|^null$",
+      "description": "Git commit hash if status=GREEN and commit was made. Null if FAILED or no commit."
+    },
+    "notes": {
+      "type": "string",
+      "maxLength": 4000,
+      "description": "HAL findings, learnings, failure analysis. Plain text, no claims."
+    },
+    "reducer_decision": {
+      "type": ["string", "null"],
+      "enum": ["ADMIT", "REJECT", "PENDING", null],
+      "description": "Written by Reducer only. DAN_GOBLIN must leave this null."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    }
+  }
+}
