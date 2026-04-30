@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T21:52:54.909602Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: a person, urban setting, evening, 35mm.",
+  "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 190418488833,
+    "eval_count": 4212,
+    "raw_response_preview": "[\n  \"A low-angle shot captures HELEN with copper-red hair walking down a wet city street at night. The 35mm film captures the neon reflection in puddles, highlighting her freckles under the soft streetlamp glow. The mood is lonely but hopeful.\",\n  \"A medium close-up of HELEN in a dimly lit diner boo",
+    "raw_response_len": 1798
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A wide shot of HELEN with fair skin standing on a rooftop overlooking a city skyline at dusk. The 35mm film stock adds warmth to the cool ambient light. The perspective evokes a sense of isolation and contemplation.",
+        "concept_sha256": "19694f3c03704fd8cb289b47af4ee2b97be0c64faa6dbc0e9d6af2715e2e47dd",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A low-angle shot captures HELEN with copper-red hair walking down a wet city street at night. The 35mm film captures the neon reflection in puddles, highlighting her freckles under the soft streetlamp glow. The mood is lonely but hopeful.",
+        "concept_sha256": "0f9eb052bf03d9e93c1cdf200253ac8265d21a7735e7c9b433d4eebf34ae0be5",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A medium close-up of HELEN in a dimly lit diner booth, her blue-grey eyes reflecting the flickering neon sign. Evening grain emphasizes the quiet solitude of the urban night. A moody and introspective atmosphere fills the frame.",
+        "concept_sha256": "742f9c15caf6f85879c1241205afbac01d697437e02a13df7b0fd3afef816a0c",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

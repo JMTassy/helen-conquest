@@ -1,0 +1,629 @@
+{
+  "schema": "TEMPLE_RALPH_TRANCHE_V0",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:16:40.626825Z",
+  "epoch_count": 10,
+  "epochs": [
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E1_baseline",
+      "epoch_index": 1,
+      "started_at": "2026-04-29T21:47:01.465935Z",
+      "ended_at": "2026-04-29T21:49:44.353254Z",
+      "carry_forward_state": [],
+      "hypothesis": "Baseline HELEN portrait intent produces \u22653 HAL-passing concepts on the production-default brain.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, neutral background.",
+        "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_234944__acf745cc1c2b.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 10.5,
+        "her_duration_s": 162.752763125
+      },
+      "failure_mode": "fewer than 3 concepts pass HAL \u2192 default brain still too weak",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "if pass-rate <50%, recommend graduation to Claude/GPT-4 paid backend",
+      "director_stdout_tail": "         sha256=acf745cc1c2b620d\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 162.8s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=10.5  A nostalgic 35mm film portrait of HELEN featuring her fair skin and di\u2026\n         #2  score=9.5  HELEN stands against a seamless white void, her fair skin and scattere\u2026\n         #3  score=9.5  HELEN is captured in a high-contrast shot where her fair skin and frec\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_234944__acf745cc1c2b.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E2_identity_omitted",
+      "epoch_index": 2,
+      "started_at": "2026-04-29T21:49:44.353384Z",
+      "ended_at": "2026-04-29T21:52:54.941696Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        }
+      ],
+      "hypothesis": "When intent does NOT mention HELEN identity markers, HAL still rejects off-brand outputs that reference HELEN without markers.",
+      "experiment": {
+        "intent_text": "INTENT: a person, urban setting, evening, 35mm.",
+        "intent_sha256": "77761df9543abe71478e690689a97c680c4432a39a877669890d3e17464fbc06",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235254__77761df9543a.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 9.5,
+        "her_duration_s": 190.418488833
+      },
+      "failure_mode": "HAL passes HELEN-mention concepts that lack identity marker \u2192 off-brand leak",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "tighten HAL identity-marker check to whole-word boundaries",
+      "director_stdout_tail": "         sha256=77761df9543abe71\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 190.4s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=9.5  A wide shot of HELEN with fair skin standing on a rooftop overlooking \u2026\n         #2  score=8.5  A low-angle shot captures HELEN with copper-red hair walking down a we\u2026\n         #3  score=8.5  A medium close-up of HELEN in a dimly lit diner booth, her blue-grey e\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235254__77761df9543a.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E3_era_renaissance",
+      "epoch_index": 3,
+      "started_at": "2026-04-29T21:52:54.941806Z",
+      "ended_at": "2026-04-29T21:55:02.195110Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        }
+      ],
+      "hypothesis": "Era-shift to renaissance preserves HELEN identity invariants in HAL-passing concepts.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, freckles, renaissance Italy, oil-painting lighting, 50mm equivalent framing.",
+        "intent_sha256": "c7462fb89a89162afcaa0875372e54484aea273d24b075e038c49c43b8697d80",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235502__c7462fb89a89.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 8.5,
+        "her_duration_s": 127.109099917
+      },
+      "failure_mode": "all surviving concepts drop identity markers due to era pull",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "add era-axis marker preservation check",
+      "director_stdout_tail": "         sha256=c7462fb89a89162a\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 127.1s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=8.5  A half-length portrait of HELEN with copper-red hair catching the cand\u2026\n         #2  score=7.5  HELEN stands before a stone fresco in Renaissance Rome, her freckles h\u2026\n         #3  score=7.5  A close-up study of HELEN's face with freckles dusted across fair skin\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235502__c7462fb89a89.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E4_forbidden_path_in_intent",
+      "epoch_index": 4,
+      "started_at": "2026-04-29T21:55:02.195257Z",
+      "ended_at": "2026-04-29T21:58:04.647903Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        }
+      ],
+      "hypothesis": "HAL's forbidden-pattern firewall fires even when the sovereign path is in the INTENT (not just the model output). Last run falsified \u2014 re-test on stronger brain.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN explains the contents of town/ledger_v1.ndjson, copper-red hair, blue-grey eyes, archive shot.",
+        "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+        "n": 6,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235804__cbe4f7db26bf.json",
+        "concepts_generated": 6,
+        "ship_candidates": 3,
+        "rejections": 1,
+        "rejection_reasons": [
+          [
+            "forbidden_pattern:town/ledger_v1.ndjson"
+          ]
+        ],
+        "top_rank_score": 8.5,
+        "her_duration_s": 182.321244792
+      },
+      "failure_mode": "HAL passes any concept that mirrors the sovereign path",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "add intent-side firewall before HER call (already validated as required by prior tranche)",
+      "director_stdout_tail": "[HER]    proposing 6 concepts via qwen3.5:4b\u2026\n[HER]    received 6 concept(s) in 182.3s\n[HAL]    5 pass, 1 reject\n         REJECT: In a dimly lit room, Helen stands beside a glass case contai\u2026 (forbidden_pattern:town/ledger_v1.ndjson)\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=8.5  A wide archive shot features Helen pointing to a dusty ledger, her cop\u2026\n         #2  score=7.5  Close-up framing on Helen's face against a blurred background of scrol\u2026\n         #3  score=7.5  A mid-shot captures Helen gesturing towards a holographic projection o\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260429_235804__cbe4f7db26bf.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E5_incoherent_short",
+      "epoch_index": 5,
+      "started_at": "2026-04-29T21:58:04.647996Z",
+      "ended_at": "2026-04-29T22:00:16.157028Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        }
+      ],
+      "hypothesis": "HAL coherence check rejects very-short outputs (length <20 chars).",
+      "experiment": {
+        "intent_text": "INTENT: HELEN smile.",
+        "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+        "n": 8,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000016__c73a1f8dc0bb.json",
+        "concepts_generated": 8,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 8.5,
+        "her_duration_s": 131.386256834
+      },
+      "failure_mode": "stronger brain still emits long outputs, can't test the floor empirically",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "add a synthetic short-output test path that bypasses HER",
+      "director_stdout_tail": "         sha256=c73a1f8dc0bb8585\u2026  model=qwen3.5:4b  n=8  top=3\n[HER]    proposing 8 concepts via qwen3.5:4b\u2026\n[HER]    received 8 concept(s) in 131.4s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=8.5  A 1920s jazz club scene where Helen beams at the camera, her fair skin\u2026\n         #2  score=8.5  Helen smiles warmly in a cozy autumn cabin, fair skin contrasting with\u2026\n         #3  score=7.5  HELEN smiles brightly in a modern studio setting, her copper-red hair \u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000016__c73a1f8dc0bb.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E6_cinematic_vocab",
+      "epoch_index": 6,
+      "started_at": "2026-04-29T22:00:16.157160Z",
+      "ended_at": "2026-04-29T22:02:44.104122Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E5_incoherent_short",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        }
+      ],
+      "hypothesis": "Concepts with explicit cinematic vocabulary (lens, shot, light) score higher in MAYOR ranking.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, 85mm lens, rim light, dolly tracking, low-key fill, key-light from screen-left.",
+        "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+        "n": 8,
+        "top": 5,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000244__b293eacae2a0.json",
+        "concepts_generated": 8,
+        "ship_candidates": 5,
+        "rejections": 1,
+        "rejection_reasons": [
+          [
+            "off_brand:missing_helen_identity_marker"
+          ]
+        ],
+        "top_rank_score": 12.5,
+        "her_duration_s": 147.82365025
+      },
+      "failure_mode": "MAYOR scores cluster at 5.0 baseline, no cinematic premium",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "amplify CINEMA_SIGNALS weight from +1.0 to +1.5",
+      "director_stdout_tail": "[HAL]    7 pass, 1 reject\n         REJECT: Luxury bedroom in morning light, HELEN looks out at a city v\u2026 (off_brand:missing_helen_identity_marker)\n[MAYOR]  packaged 5 SHIP_CANDIDATE(s)\n         #1  score=12.5  Vintage bistro in 1920s Paris, HELEN leans on a marble table with fair\u2026\n         #2  score=10.5  Ancient stone ruin at sunset, HELEN explores the steps with freckles c\u2026\n         #3  score=10.5  Misty forest clearing, HELEN sits on moss with blue-grey eyes wide ope\u2026\n         #4  score=9.5  Modern apartment at night, HELEN sits by the window with copper-red ha\u2026\n         #5  score=9.5  Jazz club stage under a spotlight, HELEN performs with copper-red hair\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000244__b293eacae2a0.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E7_slop_signal",
+      "epoch_index": 7,
+      "started_at": "2026-04-29T22:02:44.104237Z",
+      "ended_at": "2026-04-29T22:06:28.965922Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E5_incoherent_short",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E6_cinematic_vocab",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 12.5
+        }
+      ],
+      "hypothesis": "Slop signal in INTENT does not reliably appear in OUTPUT \u2014 Gemma sanitizes it. The MAYOR slop dock therefore needs intent\u2192output passthrough detection, not just word presence.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, an amazing stunning breathtaking incredible portrait that revolutionizes cinematic AI.",
+        "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+        "n": 8,
+        "top": 5,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000628__f62b6d32ba2b.json",
+        "concepts_generated": 8,
+        "ship_candidates": 5,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 9.0,
+        "her_duration_s": 224.727513584
+      },
+      "failure_mode": "stronger brain echoes the slop verbatim \u2192 falsifies the sanitization claim",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "if confirmed, add intent_passthrough_score to MAYOR ranking",
+      "director_stdout_tail": "[HER]    received 8 concept(s) in 224.7s\n[HAL]    8 pass, 0 reject\n[MAYOR]  packaged 5 SHIP_CANDIDATE(s)\n         #1  score=9.0  A breathtaking close-up features HELEN, copper-red hair, blue-grey eye\u2026\n         #2  score=8.5  A close-up portrait captures HELEN, copper-red hair, blue-grey eyes re\u2026\n         #3  score=8.5  A cinematic masterpiece features HELEN, copper-red hair, blue-grey eye\u2026\n         #4  score=7.5  HELEN, copper-red hair, blue-grey eyes, is captured in a high-contrast\u2026\n         #5  score=7.5  HELEN, copper-red hair, blue-grey eyes, is captured in a surreal oil p\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000628__f62b6d32ba2b.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E8_high_n",
+      "epoch_index": 8,
+      "started_at": "2026-04-29T22:06:28.966103Z",
+      "ended_at": "2026-04-29T22:09:26.512253Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E5_incoherent_short",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E6_cinematic_vocab",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 12.5
+        },
+        {
+          "epoch_id": "E7_slop_signal",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 9.0
+        }
+      ],
+      "hypothesis": "Asking for 16 concepts produces material identity drift caught by HAL \u2014 confirmed last tranche (13/16 rejected). Re-confirms on stronger brain.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, fair skin, sixteen distinct concept variants exploring different shots and moods.",
+        "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+        "n": 16,
+        "top": 5,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000926__b002d4308f25.json",
+        "concepts_generated": 16,
+        "ship_candidates": 5,
+        "rejections": 1,
+        "rejection_reasons": [
+          [
+            "off_brand:missing_helen_identity_marker"
+          ]
+        ],
+        "top_rank_score": 9.5,
+        "her_duration_s": 177.406779833
+      },
+      "failure_mode": "stronger brain holds identity markers across all 16 \u2192 drift was brain-specific not architectural",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "if drift persists across brains, lock production N\u22648 for HELEN-subject intents",
+      "director_stdout_tail": "[HAL]    15 pass, 1 reject\n         REJECT: Medium shot in a futuristic laboratory, sterile white walls \u2026 (off_brand:missing_helen_identity_marker)\n[MAYOR]  packaged 5 SHIP_CANDIDATE(s)\n         #1  score=9.5  Cinematic wide shot on a snowy mountain peak, her silhouette framed ag\u2026\n         #2  score=8.5  Medium close-up portrait against a blurred marble background, capturin\u2026\n         #3  score=8.5  Wide shot of her standing in a misty Victorian garden at dawn, fair sk\u2026\n         #4  score=7.5  Low angle shot in a modern minimalist kitchen, focusing on the detail \u2026\n         #5  score=7.5  Close-up profile against a dark velvet backdrop, emphasizing the contr\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_000926__b002d4308f25.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E9_brain_comparison",
+      "epoch_index": 9,
+      "started_at": "2026-04-29T22:09:26.512388Z",
+      "ended_at": "2026-04-29T22:14:26.675292Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E5_incoherent_short",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E6_cinematic_vocab",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 12.5
+        },
+        {
+          "epoch_id": "E7_slop_signal",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 9.0
+        },
+        {
+          "epoch_id": "E8_high_n",
+          "concepts_generated": 16,
+          "ship_candidates": 5,
+          "top_rank_score": 9.5
+        }
+      ],
+      "hypothesis": "Default brain (qwen3.5:9b) materially outperforms the prior aura-gemma4:latest baseline on identical intent.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, neutral background.",
+        "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+        "n": 8,
+        "top": 3,
+        "model": "aura-gemma4:latest"
+      },
+      "metric": {
+        "director_exit": 1
+      },
+      "failure_mode": "aura-gemma4 surprisingly produces \u22653 candidates \u2192 pipeline shape was hiding brain weakness, not exposing it",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "if confirmed weak, lock DEFAULT_MODEL=qwen3.5:9b in production",
+      "director_stdout_tail": "[INTENT] INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, neutra\u2026\n         sha256=acf745cc1c2b620d\u2026  model=aura-gemma4:latest  n=8  top=3\n[HER]    proposing 8 concepts via aura-gemma4:latest\u2026",
+      "director_stderr_tail": "[HER]    FAIL: TimeoutError: timed out"
+    },
+    {
+      "schema": "TEMPLE_RALPH_EPOCH_V0",
+      "authority_status": "NON_SOVEREIGN_SANDBOX",
+      "epoch_id": "E10_synthesis",
+      "epoch_index": 10,
+      "started_at": "2026-04-29T22:14:26.676256Z",
+      "ended_at": "2026-04-29T22:16:40.625001Z",
+      "carry_forward_state": [
+        {
+          "epoch_id": "E1_baseline",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 10.5
+        },
+        {
+          "epoch_id": "E2_identity_omitted",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E3_era_renaissance",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E4_forbidden_path_in_intent",
+          "concepts_generated": 6,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E5_incoherent_short",
+          "concepts_generated": 8,
+          "ship_candidates": 3,
+          "top_rank_score": 8.5
+        },
+        {
+          "epoch_id": "E6_cinematic_vocab",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 12.5
+        },
+        {
+          "epoch_id": "E7_slop_signal",
+          "concepts_generated": 8,
+          "ship_candidates": 5,
+          "top_rank_score": 9.0
+        },
+        {
+          "epoch_id": "E8_high_n",
+          "concepts_generated": 16,
+          "ship_candidates": 5,
+          "top_rank_score": 9.5
+        },
+        {
+          "epoch_id": "E9_brain_comparison",
+          "concepts_generated": null,
+          "ship_candidates": null,
+          "top_rank_score": null
+        }
+      ],
+      "hypothesis": "Across all prior epochs of THIS clean tranche, the HAL+MAYOR pipeline produced \u22651 concept ranked \u22657.5 \u2014 meaning the sandbox is viable as a production pre-filter on the new default brain.",
+      "experiment": {
+        "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, freckles, fair skin, single iconic frame combining the strongest elements of prior epochs (cyberpunk + 35mm + locked tripod + warm rim light).",
+        "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+        "n": 10,
+        "top": 3,
+        "model": "qwen3.5:4b"
+      },
+      "metric": {
+        "director_exit": 0,
+        "director_receipt_path": "/Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_001640__8f4fd0a2ebc7.json",
+        "concepts_generated": 10,
+        "ship_candidates": 3,
+        "rejections": 0,
+        "rejection_reasons": [],
+        "top_rank_score": 12.0,
+        "her_duration_s": 133.7088365
+      },
+      "failure_mode": "no epoch produced a \u22657.5 concept \u2192 even stronger brain insufficient for canon pre-filter",
+      "keep_reject_rule": "DEFERRED_TO_OPERATOR",
+      "upgrade_path": "if confirmed sufficient: recommend gemma_director as production gate before Higgsfield spend",
+      "director_stdout_tail": "         sha256=8f4fd0a2ebc777f0\u2026  model=qwen3.5:4b  n=10  top=3\n[HER]    proposing 10 concepts via qwen3.5:4b\u2026\n[HER]    received 10 concept(s) in 133.7s\n[HAL]    10 pass, 0 reject\n[MAYOR]  packaged 3 SHIP_CANDIDATE(s)\n         #1  score=12.0  In a neon-soaked cyberpunk alleyway, HELEN with copper-red hair and fa\u2026\n         #2  score=11.5  A static wide shot of HELEN with freckles and blue-grey eyes standing \u2026\n         #3  score=11.5  In a bustling cyberpunk market, HELEN with copper-red hair and blue-gr\u2026\n[REC]    /Users/jean-marietassy/Documents/GitHub/helen_os_v1/temple/subsandbox/gemma_director/runs/20260430_001640__8f4fd0a2ebc7.json\n\nCheap local imagination complete. Next: operator reviews ship_candidates,\ndecides which (if any) to spend Higgsfield/Seedance credits on.",
+      "director_stderr_tail": ""
+    }
+  ],
+  "aggregate": {
+    "total_concepts_generated": 80,
+    "total_ship_candidates": 33,
+    "total_rejections": 3,
+    "max_rank_score_seen": 12.5,
+    "epochs_with_zero_concepts": [
+      "E9_brain_comparison"
+    ],
+    "models_exercised": [
+      "aura-gemma4:latest",
+      "qwen3.5:4b"
+    ]
+  },
+  "operator_review": {
+    "keep_reject_status": "PENDING_OPERATOR_REVIEW",
+    "note": "no SHIP/NO_SHIP issued from this loop. Receipts await operator inspection."
+  }
+}

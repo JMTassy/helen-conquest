@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:00:16.130722Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN smile.",
+  "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 131386256834,
+    "eval_count": 2854,
+    "raw_response_preview": "[\n  \"HELEN smiles brightly in a modern studio setting, her copper-red hair cascading over her shoulders. The framing is a medium close-up capturing her blue-grey eyes crinkling with genuine warmth.\",\n  \"A 1920s jazz club scene where Helen beams at the camera, her fair skin glowing under the neon lig",
+    "raw_response_len": 1426
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A 1920s jazz club scene where Helen beams at the camera, her fair skin glowing under the neon lights. The shot is a wide angle capturing her silhouette in a vintage gown.",
+        "concept_sha256": "7ee091fd35f55b0486cf59e39fb25346304da9fd042f368e5e6060dc97419c75",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Helen smiles warmly in a cozy autumn cabin, fair skin contrasting with the rich orange wallpaper. The framing is a 3/4 bust shot with shallow depth of field.",
+        "concept_sha256": "64ac30b77ea26bdc14e6c04def982b9ff4f5dd941b2e2c6475ba62b7dc7edad0",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "c73a1f8dc0bb858574319514813842556c1d046d0388441fe82f9b618c17740b",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN smiles brightly in a modern studio setting, her copper-red hair cascading over her shoulders. The framing is a medium close-up capturing her blue-grey eyes crinkling with genuine warmth.",
+        "concept_sha256": "65fcce86a174cca6c51e83f79eef821aa65a93f8a041d042859708fe1aa77583",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

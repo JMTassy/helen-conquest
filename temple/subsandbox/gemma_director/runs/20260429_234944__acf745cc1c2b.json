@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T21:49:44.318122Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN portrait, copper-red wavy hair, blue-grey eyes, fair skin, freckles, locked tripod, 35mm cinematic, neutral background.",
+  "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 162752763125,
+    "eval_count": 3456,
+    "raw_response_preview": "[\n  \"HELEN stands against a seamless white void, her fair skin and scattered freckles illuminated by soft studio light. The locked tripod captures her copper-red wavy hair and piercing blue-grey eyes in a classic, timeless medium shot.\",\n  \"A moody 35mm portrait of HELEN with her copper-red wavy hai",
+    "raw_response_len": 1812
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A nostalgic 35mm film portrait of HELEN featuring her fair skin and distinct freckles against a neutral studio backdrop. The shot focuses on her copper-red wavy hair and blue-grey eyes, maintaining a locked tripod stability throughout the frame.",
+        "concept_sha256": "9a6d7bb72a733880856b4cd0d68ec1d5c74bb6797c81b875f3f33c15428958cd",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands against a seamless white void, her fair skin and scattered freckles illuminated by soft studio light. The locked tripod captures her copper-red wavy hair and piercing blue-grey eyes in a classic, timeless medium shot.",
+        "concept_sha256": "c10e99597a2f5b193280271b28a056282ae27b86fab0884af702feb12f9f1fa9",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN is captured in a high-contrast shot where her fair skin and freckles stand out against a charcoal neutral backdrop. The static tripod frame emphasizes her copper-red wavy hair and the calm depth of her blue-grey eyes.",
+        "concept_sha256": "15a63bfab9e25ece83e18f47bca0bf76fe1d1241b284feeba9fe3faa4b6cc239",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

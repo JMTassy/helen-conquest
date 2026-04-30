@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T21:55:02.160979Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, freckles, renaissance Italy, oil-painting lighting, 50mm equivalent framing.",
+  "intent_sha256": "c7462fb89a89162afcaa0875372e54484aea273d24b075e038c49c43b8697d80",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 127109099917,
+    "eval_count": 2880,
+    "raw_response_preview": "[\n  \"A half-length portrait of HELEN with copper-red hair catching the candlelight in a dimly lit Florentine chapel, her blue-grey eyes reflecting the shadows against fair skin, captured in a 50mm medium close-up with soft oil-painting chiaroscuro.\",\n  \"HELEN stands before a stone fresco in Renaissa",
+    "raw_response_len": 1564
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "c7462fb89a89162afcaa0875372e54484aea273d24b075e038c49c43b8697d80",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A half-length portrait of HELEN with copper-red hair catching the candlelight in a dimly lit Florentine chapel, her blue-grey eyes reflecting the shadows against fair skin, captured in a 50mm medium close-up with soft oil-painting chiaroscuro.",
+        "concept_sha256": "54b28d11e7442466aa35c372952ff7d4d9e409d4cc73091068171443ffe42fb1",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "c7462fb89a89162afcaa0875372e54484aea273d24b075e038c49c43b8697d80",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN stands before a stone fresco in Renaissance Rome, her freckles highlighted by warm oil-lamp glow, 50mm framing focusing on her direct gaze, evoking a sense of timeless intrigue.",
+        "concept_sha256": "342270d0fdd7bc3a89912e40caec4bc345661b88a6e1acd5aec50dabb5dbde94",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "c7462fb89a89162afcaa0875372e54484aea273d24b075e038c49c43b8697d80",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A close-up study of HELEN's face with freckles dusted across fair skin, illuminated by golden-hour oil painting techniques in a quiet Bologna street, emphasizing texture and depth.",
+        "concept_sha256": "6cee2b3eb4fe473eb19044cd6637c7736de1f8bacd2223f4fe8635aee835a70a",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

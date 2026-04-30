@@ -1,0 +1,126 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:09:26.477402Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, fair skin, sixteen distinct concept variants exploring different shots and moods.",
+  "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+  "concepts_generated": 16,
+  "concepts_passed_hal": 15,
+  "her_meta": {
+    "total_duration_ns": 177406779833,
+    "eval_count": 3926,
+    "raw_response_preview": "[\n  \"Medium close-up portrait against a blurred marble background, capturing her copper-red hair illuminated by soft candlelight, with blue-grey eyes gazing directly into the lens.\",\n  \"Wide shot of her standing in a misty Victorian garden at dawn, fair skin glowing against the grey foliage, hair lo",
+    "raw_response_len": 2236
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Cinematic wide shot on a snowy mountain peak, her silhouette framed against the white, fair skin visible as she looks out over the landscape.",
+        "concept_sha256": "3ea2515a03d6aaf8aca032d88daa026762e91ab0b3f89cfff3d31620595dc6f3",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Medium close-up portrait against a blurred marble background, capturing her copper-red hair illuminated by soft candlelight, with blue-grey eyes gazing directly into the lens.",
+        "concept_sha256": "2c408458719420b099f044cdf7bf7059fe4d45997148ec64ac1c16a3fe76bfa6",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Wide shot of her standing in a misty Victorian garden at dawn, fair skin glowing against the grey foliage, hair loose and wind-swept.",
+        "concept_sha256": "fd1ece0a0ccd7c1fc4dd61d3d37525abfca6555a7aa093c20a7765ff557900f6",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Low angle shot in a modern minimalist kitchen, focusing on the detail of her freckles against fair skin while holding a porcelain cup.",
+        "concept_sha256": "752aa12171cbf9b4441c5b081c0cf4a2a90365df896ae88b0235c0e19dd3fe97",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "b002d4308f25d6932dcf95585135b4c200203e55af2d57b75d60b3057c99584a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Close-up profile against a dark velvet backdrop, emphasizing the contrast between her copper-red hair and pale skin, eyes distant and melancholic.",
+        "concept_sha256": "6084167b1a4210ca97690aaf101d66463d711aebc8cd85ece874e7c50c686f03",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "Medium shot in a futuristic laboratory, sterile white walls contrasting with her earthy hair color, focused expression amidst equipment.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    }
+  ]
+}

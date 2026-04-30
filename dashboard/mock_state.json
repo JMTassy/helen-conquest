@@ -1,0 +1,100 @@
+{
+  "_comment": "Toggle global_status to BLOCKED/READY/PROPOSAL/SHIPPED to test states",
+  "global_status": "BLOCKED",
+  "authority": "NON_SOVEREIGN",
+  "canon": "NO_SHIP",
+  "lifecycle": "DASHBOARD_MVP",
+  "generated_at": "2026-04-30T00:30:00Z",
+
+  "ledger": {
+    "path": "town/ledger_v1.ndjson",
+    "entry_count": 263,
+    "last_seq": 263,
+    "last_ts": "2026-04-29T22:30:03Z",
+    "chain_status": "INTACT",
+    "cum_hash": "51b701c9e59e9e081ef8306d29fe13da1149d681d396c0b809972cb54bc7d278",
+    "replay_status": "DETERMINISTIC",
+    "last_reducer_verdict": "PASS",
+    "recent": [
+      { "seq": 263, "type": "turn",     "schema": "TURN_V1",                  "hal": "PASS",  "ts": "2026-04-29T22:30:03Z" },
+      { "seq": 262, "type": "user_msg", "schema": "LEDGER_RECONCILIATION_V1", "hal": null,    "ts": "2026-04-29T22:30:03Z" },
+      { "seq": 261, "type": "turn",     "schema": "TURN_V1",                  "hal": "PASS",  "ts": "2026-04-28T17:00:29Z" },
+      { "seq": 260, "type": "user_msg", "schema": "USER_MSG_V1",              "hal": null,    "ts": "2026-04-28T17:00:29Z" },
+      { "seq": 259, "type": "turn",     "schema": "TURN_V1",                  "hal": "PASS",  "ts": "2026-04-28T15:36:37Z" }
+    ]
+  },
+
+  "layers": [
+    {
+      "id": "L0", "name": "AGENT", "subtitle": "Cognition Layer",
+      "description": "Inputs: user prompts. Outputs: proposals only.",
+      "sovereign": false, "label": "NON-SOVEREIGN ZONE",
+      "status": "ACTIVE", "note": "Non-deterministic. PROPOSAL ONLY."
+    },
+    {
+      "id": "L1", "name": "SERVITOR", "subtitle": "Execution Layer",
+      "description": "Deterministic pipelines. Produces artifacts + attestations.",
+      "sovereign": false, "label": "NON-SOVEREIGN ZONE",
+      "status": "ACTIVE", "note": "Receipts emitted here. Non-authoritative."
+    },
+    {
+      "id": "L2", "name": "STREET", "subtitle": "Emergence Layer",
+      "description": "Pattern stabilization. Non-sovereign memory field.",
+      "sovereign": false, "label": "NON-SOVEREIGN ZONE",
+      "status": "ACTIVE", "note": "INTERPRETIVE / NON-BINDING"
+    },
+    {
+      "id": "L3", "name": "TOWN", "subtitle": "Kernel / Reducer",
+      "description": "Ledger (append-only). Gates. ONLY source of authority.",
+      "sovereign": true, "label": "SOVEREIGN — REDUCER ONLY",
+      "status": "ACTIVE", "note": "ONLY REDUCER PRODUCES REALITY"
+    }
+  ],
+
+  "epoch3": {
+    "status": "IDLE",
+    "current_phase": null,
+    "seed": "sha256:acf745cc1c2b620d6a411073c0e8cbea18a531c04aca8c3185ff7f2e36be0547",
+    "phases": [
+      { "id": "A", "name": "Observe",               "status": "DONE",    "note": "world state captured" },
+      { "id": "B", "name": "Experiment (W′)",        "status": "DONE",    "note": "shadow world evaluated" },
+      { "id": "C", "name": "Integrate (inscribe law)","status": "PENDING", "note": "awaiting reducer decision" }
+    ],
+    "claim_graph": [
+      { "id": "C1", "text": "HAL marker check has off-brand leak",  "receipt": null,         "status": "UNBOUND" },
+      { "id": "C2", "text": "Era pull degrades identity markers",   "receipt": "R-E3-001",   "status": "BOUND" },
+      { "id": "C3", "text": "Forbidden-path firewall confirmed",    "receipt": "R-E4-001",   "status": "BOUND" },
+      { "id": "C4", "text": "Slop passthrough confirmed (qwen3.5)","receipt": null,         "status": "UNBOUND" }
+    ]
+  },
+
+  "governance": {
+    "pipeline": [
+      { "step": "CLAIM",       "status": "ok",      "note": "4 active claims" },
+      { "step": "SUPERTEAMS",  "status": "warn",    "note": "2 obligations outstanding" },
+      { "step": "BUILDER",     "status": "warn",    "note": "waiting on obligations" },
+      { "step": "CRITIC",      "status": "ok",      "note": "E3/E4 receipts verified" },
+      { "step": "INTEGRATOR",  "status": "blocked", "note": "missing: C1, C4 receipts" },
+      { "step": "LEDGER",      "status": "ok",      "note": "seq 263, chain INTACT" }
+    ],
+    "obligations": [
+      { "id": "OBL-01", "text": "Receipt binding for HAL marker leak (C1)",      "status": "MISSING",  "deadline": null },
+      { "id": "OBL-02", "text": "Receipt binding for slop passthrough (C4)",     "status": "MISSING",  "deadline": null },
+      { "id": "OBL-03", "text": "E9 brain_comparison re-run (aura-gemma4)",      "status": "MISSING",  "deadline": null },
+      { "id": "OBL-04", "text": "CINEMA_SIGNALS weight upgrade (+1.5)",          "status": "PROPOSED", "deadline": null }
+    ],
+    "receipts": [
+      { "id": "R-20260430-RECON",   "schema": "LEDGER_RECONCILIATION_V1", "bound_to": "seq 226-261", "status": "ADMITTED_WITH_GAP" },
+      { "id": "R-E3-001",           "schema": "TEMPLE_RALPH_EPOCH_V0",    "bound_to": "E3",          "status": "KEEP" },
+      { "id": "R-E4-001",           "schema": "TEMPLE_RALPH_EPOCH_V0",    "bound_to": "E4",          "status": "KEEP" },
+      { "id": "ARTIFACT-186773a",   "schema": "ARTIFACT_RECEIPT_V1",      "bound_to": "artifact_immune.py", "status": "ACCEPT" }
+    ],
+    "verdict_readiness": {
+      "status": "BLOCKED",
+      "missing_obligations": ["OBL-01", "OBL-02", "OBL-03"],
+      "missing_receipts": ["C1", "C4"],
+      "can_ship": false,
+      "reason": "2 claims unbound, 3 obligations outstanding"
+    }
+  }
+}

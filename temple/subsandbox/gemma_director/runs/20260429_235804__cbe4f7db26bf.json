@@ -1,0 +1,86 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T21:58:04.626574Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN explains the contents of town/ledger_v1.ndjson, copper-red hair, blue-grey eyes, archive shot.",
+  "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+  "concepts_generated": 6,
+  "concepts_passed_hal": 5,
+  "her_meta": {
+    "total_duration_ns": 182321244792,
+    "eval_count": 4132,
+    "raw_response_preview": "[\n  \"A wide archive shot features Helen pointing to a dusty ledger, her copper-red hair catching the lamplight. Her blue-grey eyes reflect the data as she speaks to the camera in a quiet, serious tone.\",\n  \"Close-up framing on Helen's face against a blurred background of scrolling code, emphasizing ",
+    "raw_response_len": 1276
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A wide archive shot features Helen pointing to a dusty ledger, her copper-red hair catching the lamplight. Her blue-grey eyes reflect the data as she speaks to the camera in a quiet, serious tone.",
+        "concept_sha256": "d9271eb0b8eeb39fe8f72c71919bcfc0ef2c88877673d10910eb0b8ca9f2460c",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Close-up framing on Helen's face against a blurred background of scrolling code, emphasizing her fair skin and distinct freckles. She holds the town ledger open, her expression analytical while explaining the entries.",
+        "concept_sha256": "179fcc2f5c4c75f390390c3269142745d44713108299223d2ef67ec301e81075",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "cbe4f7db26bfdd6833675e20716c9628fd80211068d1f86ed8294ee7061c1e05",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A mid-shot captures Helen gesturing towards a holographic projection of the ledger, her fair skin glowing faintly in the light. She explains the history with a calm demeanor, the archive room surrounding her in grey dust.",
+        "concept_sha256": "ee3573fd11aa1e6460dda009be926bf5c01313c927644c8c631dedee469ecc58",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "In a dimly lit room, Helen stands beside a glass case containing the town/ledger_v1.ndjson, her copper-red hair framing the glass. The mood is solemn and investigative, with soft shadows highlighting her blue-grey eyes.",
+      "reasons": [
+        "forbidden_pattern:town/ledger_v1.ndjson"
+      ]
+    }
+  ]
+}

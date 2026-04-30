@@ -1,0 +1,79 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:16:40.577616Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, freckles, fair skin, single iconic frame combining the strongest elements of prior epochs (cyberpunk + 35mm + locked tripod + warm rim light).",
+  "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+  "concepts_generated": 10,
+  "concepts_passed_hal": 10,
+  "her_meta": {
+    "total_duration_ns": 133708836500,
+    "eval_count": 2807,
+    "raw_response_preview": "[\n\"In a neon-soaked cyberpunk alleyway, HELEN with copper-red hair and fair skin is captured in a locked tripod medium shot, her blue-grey eyes reflecting holographic lights under warm rim light. The 35mm aesthetic creates a gritty mood, blending analog warmth with digital decay in a single iconic f",
+    "raw_response_len": 2755
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a neon-soaked cyberpunk alleyway, HELEN with copper-red hair and fair skin is captured in a locked tripod medium shot, her blue-grey eyes reflecting holographic lights under warm rim light. The 35mm aesthetic creates a gritty mood, blending analog warmth with digital decay in a single iconic frame.",
+        "concept_sha256": "e67729b48f45f1fecca1249f9b7935b17e7ff27f6e7ba519e4606d75c0cdc9a5",
+        "rank_score": 12.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A static wide shot of HELEN with freckles and blue-grey eyes standing in a cyberpunk rooftop garden, her copper-red hair glowing under warm rim light. The mood is serene and observant, contrasting the organic and the synthetic within a locked tripod 35mm composition.",
+        "concept_sha256": "9fd3b3fa808e5c0eebaaa9e2721a229b2cea97fd449889efef63a63500ddf9ed",
+        "rank_score": 11.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "8f4fd0a2ebc777f0ffb2e44a6a74b717dd12e73abe2051a3e1998979cb5c5f8c",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "In a bustling cyberpunk market, HELEN with copper-red hair and blue-grey eyes is framed from the waist up in a locked tripod shot, warm rim light cutting through the haze. The 35mm film quality captures a nostalgic mood, merging the identity markers with a futuristic setting.",
+        "concept_sha256": "6f617a817bda8fc14ed2d2a39cddf1b2b7a9f88d6568d32d20a43a81da399d83",
+        "rank_score": 11.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

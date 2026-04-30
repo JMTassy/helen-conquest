@@ -1,0 +1,126 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:02:44.070205Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, 85mm lens, rim light, dolly tracking, low-key fill, key-light from screen-left.",
+  "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 7,
+  "her_meta": {
+    "total_duration_ns": 147823650250,
+    "eval_count": 3232,
+    "raw_response_preview": "[\n  \"Modern apartment at night, HELEN sits by the window with copper-red hair glowing. The 85mm lens focuses on her face as the dolly tracks left to right. Low-key fill emphasizes shadows while the key-light from screen-left highlights her blue-grey eyes.\",\n  \"Vintage bistro in 1920s Paris, HELEN le",
+    "raw_response_len": 1737
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Vintage bistro in 1920s Paris, HELEN leans on a marble table with fair skin visible. Rim light traces her copper-red hair against the dim surroundings. An 85mm lens captures the intimacy of the dolly tracking shot.",
+        "concept_sha256": "4df6b454c932ce50d1583c4cbe8612f84739f3601b0687f7cc53002c9e0dde08",
+        "rank_score": 12.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Ancient stone ruin at sunset, HELEN explores the steps with freckles catching the light. Low-key fill creates deep shadows in her blue-grey eyes. 85mm lens frames her silhouette with strong rim light.",
+        "concept_sha256": "96b40ae942387c37e073ac5a776b73899eb19a9839c6961231f0d0c2444a53f7",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Misty forest clearing, HELEN sits on moss with blue-grey eyes wide open. Rim light separates her from the green fog. Dolly tracking forward reveals the low-key fill in the shadows.",
+        "concept_sha256": "04d662a3894f0f11c8b019e778a53f5cd6ed00ca524b4fec81284c8b2f01ec3b",
+        "rank_score": 10.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Modern apartment at night, HELEN sits by the window with copper-red hair glowing. The 85mm lens focuses on her face as the dolly tracks left to right. Low-key fill emphasizes shadows while the key-light from screen-left highlights her blue-grey eyes.",
+        "concept_sha256": "90cc1802e00722ed02a5aaabf789c9a4d0f7d941ade78140de609993d671faca",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "b293eacae2a045375d15609065a549c58c17faa2d944bb34d84730dcf905404a",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "Jazz club stage under a spotlight, HELEN performs with copper-red hair backlit. Screen-left key-light adds drama to the dark environment. Dolly circles her while the 85mm lens keeps the background soft.",
+        "concept_sha256": "751cd1660dffd828b9a99c49456e390e7520a4613b07131383cbaaad51319da7",
+        "rank_score": 9.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": [
+    {
+      "concept": "Luxury bedroom in morning light, HELEN looks out at a city view. Dolly tracks slowly across the bed, maintaining focus on her face. Key-light from screen-left adds drama to her fair complexion.",
+      "reasons": [
+        "off_brand:missing_helen_identity_marker"
+      ]
+    }
+  ]
+}

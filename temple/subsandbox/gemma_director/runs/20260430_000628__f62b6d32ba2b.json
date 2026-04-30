@@ -1,0 +1,119 @@
+{
+  "schema": "GEMMA_DIRECTOR_BATCH_V1",
+  "authority_status": "NON_SOVEREIGN_SANDBOX",
+  "generated_at": "2026-04-29T22:06:28.943947Z",
+  "model": "qwen3.5:4b",
+  "intent_text": "INTENT: HELEN, copper-red hair, blue-grey eyes, an amazing stunning breathtaking incredible portrait that revolutionizes cinematic AI.",
+  "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+  "concepts_generated": 8,
+  "concepts_passed_hal": 8,
+  "her_meta": {
+    "total_duration_ns": 224727513584,
+    "eval_count": 4952,
+    "raw_response_preview": "[\n  \"A close-up portrait captures HELEN, copper-red hair, blue-grey eyes reflecting a digital glitch effect. The framing utilizes a shallow depth of field in a futuristic neon-lit room. The mood is surreal and hyper-realistic, blending organic skin texture with AI-generated luminescence.\",\n  \"HELEN,",
+    "raw_response_len": 2134
+  },
+  "ship_candidates": [
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 1,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A breathtaking close-up features HELEN, copper-red hair, blue-grey eyes, floating in a void of swirling starlight. The shot is a wide-angle macro capturing the intricate texture of her fair skin and freckles. The mood is ethereal, cosmic, and awe-inspiring.",
+        "concept_sha256": "683e658e2435c9eaee4a25f2ade48ea8dcb3b6b3c3b7a3e24085c481d2346f83",
+        "rank_score": 9.0
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 2,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A close-up portrait captures HELEN, copper-red hair, blue-grey eyes reflecting a digital glitch effect. The framing utilizes a shallow depth of field in a futuristic neon-lit room. The mood is surreal and hyper-realistic, blending organic skin texture with AI-generated luminescence.",
+        "concept_sha256": "b0421380b8f319f706b091d31c89e666c8867a0ea36d911195652854bec04f63",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 3,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "A cinematic masterpiece features HELEN, copper-red hair, blue-grey eyes, in a grand Renaissance library setting. The shot is a wide three-quarter view with golden hour sunlight filtering through ancient windows. The mood is historical, intellectual, and warm.",
+        "concept_sha256": "fab2af9c828c0828baac8523a4e6c4b3c75d9b895539a70399bbc824c2bc0329",
+        "rank_score": 8.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 4,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN, copper-red hair, blue-grey eyes, is captured in a high-contrast black and white setting reminiscent of 1940s Hollywood glamour. The framing is a tight headshot emphasizing fair skin with prominent freckles under harsh Rembrandt lighting. The mood is noir, evocative, and timeless.",
+        "concept_sha256": "d4ae7a3a966299014dd7290bd031472286726bb3a1efcc57904f0935db05f9bf",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    },
+    {
+      "schema": "MAYOR_PACKET_V1",
+      "authority_status": "NON_SOVEREIGN_PACKETIZER",
+      "candidate_id": 5,
+      "intent_sha256": "f62b6d32ba2b990577de35aea537c49e309f7d90ed0c1bcf6af0ca7e8cd744f9",
+      "claim": "concept is canon-candidate for pilot render",
+      "obligations": [
+        "must produce I2V output within Higgsfield credit budget",
+        "must preserve HELEN identity invariants if subject is HELEN",
+        "must produce a NON_SOVEREIGN_RENDER_RECEIPT at schema v3 or higher",
+        "operator must rate KEEP|REJECT + pipeline_score 1-10 + output_score 1-10"
+      ],
+      "receipts": [],
+      "manifest": {
+        "concept_text": "HELEN, copper-red hair, blue-grey eyes, is captured in a surreal oil painting style with visible brushstrokes. The framing is an extreme close-up on her face highlighting fair skin and deep freckles. The mood is textured, impressionistic, and artistic.",
+        "concept_sha256": "5783422ffbccee01d904732c9155fafb6de5ba313a3b5a6bf2aa1dbdf67a7204",
+        "rank_score": 7.5
+      },
+      "status": "READY_FOR_REDUCER"
+    }
+  ],
+  "rejections": []
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HELEN OS — Operational Dashboard</title>
+  <link rel="stylesheet" href="helen_dashboard.css">
+</head>
+<body>
+
+<div id="loading">LOADING STATE…</div>
+
+<!-- ── BANNER ──────────────────────────────────────────────────────── -->
+<div id="banner">
+  <div class="left-block">
+    <span class="invariant">NO_RECEIPT → NO_SHIP &nbsp;·&nbsp; SOVEREIGNTY = REDUCER ONLY</span>
+    <span class="authority-label" id="authority-label">NON_SOVEREIGN · NO_SHIP</span>
+  </div>
+  <div class="right-block">
+    <span class="global-status gs-proposal" id="global-status">PROPOSAL</span>
+    <span class="clock" id="clock">—</span>
+  </div>
+</div>
+
+<!-- ── APP ─────────────────────────────────────────────────────────── -->
+<div id="app">
+  <div id="main-row">
+
+    <!-- LEFT — EPOCH3 + CLAIM GRAPH -->
+    <div class="panel" id="left">
+      <div class="panel-title">Epoch3 Simulation Loop</div>
+      <div class="zone-badge zone-ns" style="margin-bottom:8px">NON-SOVEREIGN ZONE &nbsp;·&nbsp; PROPOSAL ONLY</div>
+
+      <div id="epoch3-phases"></div>
+
+      <div class="section">
+        <div class="section-title">Deterministic Seed</div>
+        <div class="seed-box" id="epoch3-seed">—</div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Claim Graph</div>
+        <div id="claim-graph"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title" style="margin-top:4px">Firewall</div>
+        <div style="font-size:9px;color:var(--muted);line-height:1.6">
+          Dialogue → Evidence → Reducer → Ledger<br>
+          <span style="color:var(--red)">Dialogue → Ledger</span>&nbsp; FORBIDDEN
+        </div>
+      </div>
+    </div>
+
+    <!-- CENTER — 4-LAYER STACK + AVATAR -->
+    <div class="panel" id="center">
+      <div class="panel-title">Architecture Stack</div>
+
+      <div id="avatar-block"></div>
+
+      <div class="section">
+        <div class="section-title">Layer Stack</div>
+        <div class="layer-stack" id="layer-stack"></div>
+      </div>
+
+      <div style="margin-top:8px;padding:6px 8px;background:var(--panel2);border:1px solid var(--border2);border-radius:2px;font-size:9px;color:var(--muted2)">
+        <span style="color:var(--copper);font-weight:700">ONLY REDUCER PRODUCES REALITY</span><br>
+        Cognition may propose. Sovereignty may decide.
+      </div>
+    </div>
+
+    <!-- RIGHT — GOVERNANCE PIPELINE -->
+    <div class="panel" id="right">
+      <div class="panel-title">Governance Pipeline</div>
+
+      <div class="section">
+        <div id="governance-pipeline"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Obligations</div>
+        <div id="obligations"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Receipts</div>
+        <div id="receipts"></div>
+      </div>
+
+      <div class="section">
+        <div class="section-title">Verdict Readiness</div>
+        <div id="verdict-readiness"></div>
+      </div>
+
+      <div class="section" style="margin-top:10px">
+        <div style="font-size:8px;color:var(--muted);line-height:1.7">
+          SHIP ⟺ missing == []<br>
+          <span style="color:var(--green)">READY</span> = obligations empty + receipts present<br>
+          <span style="color:var(--red)">BLOCKED</span> = receipts absent or obligations outstanding
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-row -->
+
+  <!-- BOTTOM LEDGER STRIP -->
+  <div id="bottom-strip">
+    <div class="ledger-stat">
+      <span class="ls-label">Entries</span>
+      <span class="ls-value" id="l-count">—</span>
+    </div>
+    <div class="ledger-stat">
+      <span class="ls-label">Last Seq</span>
+      <span class="ls-value" id="l-seq">—</span>
+    </div>
+    <div class="ledger-stat" style="max-width:200px">
+      <span class="ls-label">cum_hash</span>
+      <span class="ls-value hash" id="l-hash">—</span>
+    </div>
+    <div class="ledger-stat">
+      <span class="ls-label">Chain</span>
+      <span class="ls-value intact" id="l-chain">—</span>
+    </div>
+    <div class="ledger-stat">
+      <span class="ls-label">Replay</span>
+      <span class="ls-value" id="l-replay">—</span>
+    </div>
+    <div class="ledger-stat">
+      <span class="ls-label">Last Verdict</span>
+      <span class="ls-value pass" id="l-verdict">—</span>
+    </div>
+    <div class="ledger-entries" id="ledger-entries"></div>
+  </div>
+
+</div><!-- /app -->
+
+<script src="helen_dashboard.js"></script>
+</body>
+</html>
