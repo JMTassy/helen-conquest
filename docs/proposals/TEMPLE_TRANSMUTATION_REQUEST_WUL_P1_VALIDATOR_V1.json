@@ -1,0 +1,72 @@
+{
+  "request_id": "TRANS_WUL_P1_VALIDATOR_001",
+  "schema_version": "TEMPLE_TRANSMUTATION_REQUEST_V1",
+  "doctrine_hash": "sha256:current_canonical_doctrine_v1.1",
+  "law_surface_hash": "sha256:storage_semantics_v1.0",
+  "source_exploration_hash": "sha256:TEMPLE_200_WUL_PENDING_HASH",
+  "proposal_kind": "ARTIFACT_SKETCH",
+  "requires_second_witness": true,
+  "bridge_status": "PENDING_MAYOR_REVIEW",
+  "authority": "NONE",
+  "provenance": {
+    "source": "TEMPLE",
+    "bridge_version": "temple_bridge_v1",
+    "verified": false,
+    "temple_session_id": "TEMPLE_200_WUL"
+  },
+  "content": {
+    "her_threads_count": 20,
+    "hal_frictions_count": 20,
+    "tensions_count": 8,
+    "sketches_count": 5,
+    "open_risks": [
+      {
+        "risk_id": "WUL_RISK_001",
+        "severity": "HIGH",
+        "description": "WUL glyphs may become decorative ritual if not parsed into typed packets and tested against behavior change."
+      },
+      {
+        "risk_id": "WUL_RISK_002",
+        "severity": "HIGH",
+        "description": "Kernel-adjacent packets must never mutate governed state directly; compile-time validator must fail closed."
+      },
+      {
+        "risk_id": "WUL_RISK_003",
+        "severity": "MEDIUM",
+        "description": "Confidence, stance, urgency, and impact fields are self-reported and require calibration or HAL verification."
+      }
+    ],
+    "extracted_claims": [],
+    "proposed_artifacts": [
+      "docs/specs/WUL_PACKET_SPEC_V0_1.md",
+      "src/wul_packet_validator.py",
+      "tests/test_wul_packet_validator.py"
+    ],
+    "p1_scope": {
+      "name": "compile-time WUL packet validator",
+      "allowed_effect": "validate symbolic packets before any action layer sees them",
+      "forbidden_effect": "kernel mutation, canon mutation, ledger append, sovereign permission grant",
+      "success_condition": "invalid packets fail closed in tests"
+    },
+    "minimum_viable_packet": [
+      "ROLE",
+      "INTENT",
+      "CONF",
+      "IMPACT",
+      "WUL"
+    ],
+    "packet_tiers": {
+      "ACK": ["ROLE", "WUL"],
+      "PRODUCTION": ["ROLE", "INTENT", "CONF", "IMPACT", "TASK", "TRACE", "DIALECT", "WUL"],
+      "KERNEL_ADJACENT": ["ROLE", "INTENT", "CONF", "IMPACT", "TASK", "TRACE", "DIALECT", "PERM", "ESCALATE", "WUL"]
+    },
+    "kernel_safe_rules": [
+      "WUL may describe kernel state but may not write kernel state.",
+      "WUL must compile to typed packet before any action.",
+      "HAL must validate typed packet before execution.",
+      "Kernel-adjacent packets require WUL glyph \u23ac.",
+      "Kernel-adjacent packets require ESCALATE::OPERATOR.",
+      "PERM::WRITE_SOVEREIGN is rejected unconditionally."
+    ]
+  }
+}
