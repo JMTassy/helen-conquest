@@ -1,0 +1,101 @@
+{
+  "branchName": "main",
+  "project": "HELEN_VIDEO_OS",
+  "authority": "NON_SOVEREIGN",
+  "canon": "NO_SHIP",
+  "userStories": [
+    {
+      "id": "HD-001",
+      "title": "Add complexity_extractor.py",
+      "priority": 1,
+      "status": "done",
+      "epoch_owner": null,
+      "allowed_paths": [
+        "experiments/helen_video/",
+        "experiments/helen_video/tests/",
+        "docs/proposals/"
+      ],
+      "forbidden_paths": [
+        "oracle_town/kernel/",
+        "helen_os/governance/",
+        "helen_os/schemas/",
+        "town/ledger_v1*.ndjson",
+        "mayor_*.json",
+        "GOVERNANCE/CLOSURES/",
+        "GOVERNANCE/TRANCHE_RECEIPTS/"
+      ],
+      "required_receipts": [
+        "test_report",
+        "artifact_manifest"
+      ],
+      "acceptanceCriteria": [
+        "Counts overlay nodes in ffmpeg filter_complex graphs",
+        "Counts distinct stream references",
+        "Computes symbol_density score",
+        "Flags overcomplexity when thresholds are exceeded",
+        "Includes unit tests",
+        "Does not mutate ledger or canon"
+      ]
+    },
+    {
+      "id": "HD-002",
+      "title": "Integrate complexity extractor into aura_score.py",
+      "priority": 2,
+      "status": "todo",
+      "epoch_owner": null,
+      "allowed_paths": [
+        "experiments/helen_video/",
+        "experiments/helen_video/tests/"
+      ],
+      "forbidden_paths": [
+        "oracle_town/kernel/",
+        "helen_os/governance/",
+        "helen_os/schemas/",
+        "town/ledger_v1*.ndjson",
+        "mayor_*.json",
+        "GOVERNANCE/CLOSURES/",
+        "GOVERNANCE/TRANCHE_RECEIPTS/"
+      ],
+      "required_receipts": [
+        "test_report",
+        "artifact_manifest"
+      ],
+      "acceptanceCriteria": [
+        "AuraMetrics can consume clutter and overcomplexity_flag",
+        "Existing tests remain green",
+        "Regression test covers overbuilt composite graph",
+        "No canon or reducer mutation"
+      ]
+    },
+    {
+      "id": "HD-003",
+      "title": "Add failure-memory consultation to aura_evaluate",
+      "priority": 3,
+      "status": "todo",
+      "epoch_owner": null,
+      "allowed_paths": [
+        "experiments/helen_video/",
+        "experiments/helen_video/tests/"
+      ],
+      "forbidden_paths": [
+        "oracle_town/kernel/",
+        "helen_os/governance/",
+        "helen_os/schemas/",
+        "town/ledger_v1*.ndjson",
+        "mayor_*.json",
+        "GOVERNANCE/CLOSURES/",
+        "GOVERNANCE/TRANCHE_RECEIPTS/"
+      ],
+      "required_receipts": [
+        "test_report",
+        "artifact_manifest"
+      ],
+      "acceptanceCriteria": [
+        "Prior FailureRecord entries can be read",
+        "Repeated metric fingerprints produce REPEATED_FAILURE",
+        "No auto-rejection without receipt trail",
+        "Tests cover repeated composite failure"
+      ]
+    }
+  ]
+}

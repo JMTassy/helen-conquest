@@ -1,0 +1,83 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "helen_dan_prd_v0",
+  "title": "HELEN_DAN PRD Story",
+  "description": "One bounded story for DAN_GOBLIN to execute in one epoch. No batch. No multi-story drift.",
+  "type": "object",
+  "required": [
+    "id",
+    "title",
+    "priority",
+    "status",
+    "allowed_paths",
+    "forbidden_paths",
+    "required_receipts",
+    "acceptanceCriteria"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^HD-[0-9]{3,}$",
+      "description": "Story identifier. Format: HD-NNN."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 4,
+      "maxLength": 120
+    },
+    "priority": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "1 = highest. DAN picks the lowest number with status=todo."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["todo", "in_progress", "done", "failed"],
+      "description": "Only Reducer may promote to canon. done/failed are epoch-local."
+    },
+    "epoch_owner": {
+      "type": ["string", "null"],
+      "description": "Session ID of the DAN_GOBLIN epoch currently executing this story. Null when idle."
+    },
+    "allowed_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "DAN may only write under these path prefixes. Glob patterns allowed."
+    },
+    "forbidden_paths": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "DAN must never touch these paths even if task appears to require it.",
+      "default": [
+        "oracle_town/kernel/",
+        "helen_os/governance/",
+        "helen_os/schemas/",
+        "town/ledger_v1*.ndjson",
+        "mayor_*.json",
+        "GOVERNANCE/CLOSURES/",
+        "GOVERNANCE/TRANCHE_RECEIPTS/"
+      ]
+    },
+    "required_receipts": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["test_report", "artifact_manifest", "failure_receipt", "hal_verdict"]
+      },
+      "minItems": 1,
+      "description": "Receipt types DAN must produce before epoch can close."
+    },
+    "acceptanceCriteria": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Literal verifiable statements. HAL checks each one. No vague phrases."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional context. Not a completion claim."
+    }
+  }
+}

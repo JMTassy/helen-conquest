@@ -1,0 +1,36 @@
+{
+  "receipt_id": "2f3471b8cb7e46d9",
+  "story_id": "HD-001",
+  "epoch": "96b7c1bf5631",
+  "actor": "DAN_GOBLIN",
+  "authority": "NON_SOVEREIGN",
+  "canon": "NO_SHIP",
+  "status": "GREEN",
+  "failure_type": null,
+  "files_changed": [
+    "experiments/helen_video/complexity_extractor.py",
+    "experiments/helen_video/tests/test_complexity_extractor.py"
+  ],
+  "tests_run": {
+    "passed": 18,
+    "failed": 0,
+    "total": 18,
+    "command": "pytest experiments/helen_video/tests/test_complexity_extractor.py -q --tb=no",
+    "stdout_tail": "18 passed in 0.02s"
+  },
+  "screenshots": [],
+  "artifact_manifest": [
+    {
+      "path": "experiments/helen_video/complexity_extractor.py",
+      "sha256": "9c509c7f1aae3886df0757e44f11b3c048c35e0fda6a796a9359ae4e11b9f476"
+    },
+    {
+      "path": "experiments/helen_video/tests/test_complexity_extractor.py",
+      "sha256": "e1bc59cfe71f574936c87730871196438755360b4af9793a1f53e09785961bf0"
+    }
+  ],
+  "commit_hash": "d8adb50b46ccd1d19db361b7d9d60c4c8b392117",
+  "notes": "HD-001 complexity_extractor.py: 18/18 tests green. AST-level filter_complex parser. clutter + overcomplexity metrics. Operator-veto flag calibrated from abyme session 2026-04-30.",
+  "reducer_decision": null,
+  "timestamp": "2026-04-30T13:56:22Z"
+}

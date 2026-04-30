@@ -1,0 +1,98 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "helen_dan_receipt_v0",
+  "title": "HELEN_DAN Epoch Receipt",
+  "description": "Bound record of one DAN_GOBLIN epoch. Written on epoch close regardless of outcome. No receipt = no claim.",
+  "type": "object",
+  "required": [
+    "schema",
+    "story_id",
+    "epoch_id",
+    "timestamp_utc",
+    "outcome",
+    "artifact_manifest",
+    "hal_verdict",
+    "content_hash"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "DAN_GOBLIN_RECEIPT_V0"
+    },
+    "story_id": {
+      "type": "string",
+      "pattern": "^HD-[0-9]{3,}$"
+    },
+    "epoch_id": {
+      "type": "string",
+      "description": "sha256[:12] of (story_id + timestamp_utc + session_salt)"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "outcome": {
+      "type": "string",
+      "enum": ["GREEN", "FAILED"],
+      "description": "GREEN = all acceptance criteria passed + required receipts present. FAILED = anything else."
+    },
+    "failure_type": {
+      "type": ["string", "null"],
+      "enum": [
+        "TEST_FAILURE",
+        "SCOPE_DRIFT",
+        "RECEIPT_MISSING",
+        "NONLOCAL_MUTATION",
+        "REPEATED_FAILURE",
+        null
+      ],
+      "description": "Required when outcome=FAILED. Null when GREEN."
+    },
+    "artifact_manifest": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+        }
+      },
+      "description": "Every file written or modified this epoch with its SHA256. Empty list if outcome=FAILED with no artifacts."
+    },
+    "test_report": {
+      "type": "object",
+      "required": ["passed", "failed", "total"],
+      "additionalProperties": false,
+      "properties": {
+        "passed":  { "type": "integer", "minimum": 0 },
+        "failed":  { "type": "integer", "minimum": 0 },
+        "total":   { "type": "integer", "minimum": 0 },
+        "command": { "type": "string" },
+        "stdout_tail": { "type": "string", "maxLength": 2000 }
+      }
+    },
+    "hal_verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "DEFERRED"],
+      "description": "HAL's literal verdict after checking acceptanceCriteria. Not DAN's self-assessment."
+    },
+    "hal_notes": {
+      "type": "string",
+      "maxLength": 2000,
+      "description": "HAL's per-criterion findings. Optional but encouraged."
+    },
+    "reducer_decision": {
+      "type": ["string", "null"],
+      "enum": ["ADMIT", "REJECT", "PENDING", null],
+      "description": "Filled by Reducer after HAL verdict. DAN never writes this field."
+    },
+    "content_hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "sha256(canonical_json(all fields except content_hash itself))"
+    }
+  }
+}
