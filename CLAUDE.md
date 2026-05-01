@@ -6,6 +6,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 HELEN OS is a five-layer constitutional AI companion with an append-only governance kernel. The system is built on a single invariant: **NO RECEIPT = NO CLAIM**.
 
+## Agent Role
+
+This repo binds Claude to the `CLAUDE_HAL_CODEX` role defined in `AGENTS.md`. Read it before non-trivial changes. Highlights:
+
+- **Current coding lane:** HELEN Director / render pipeline (receipt sidecars, operator rating enforcement, heuristic filtering, seed selection).
+- **Forbidden without explicit approval:** scaling render generation, memory mutation, canon promotion, ledger writes, broad refactors.
+- Prefer `NO_SHIP` over unsafe success. Make small, reviewable patches. Report exact files changed and tests run.
+
 ## Two Trees — Disambiguation
 
 Two top-level Python trees with confusingly similar names:
@@ -57,7 +65,7 @@ If a task appears to require an off-limits write, stop and report — route thro
 - `oracle_town/skills/feynman/` — peer_review, intent_action_audit, session_notes (fused 2026-04-16)
 - `oracle_town/skills/voice/gemini_tts/` — Zephyr voice, Gemini 2.5 Flash TTS (LIVE)
 - `oracle_town/skills/video/hyperframes/` — HyperFrames video renderer (DECLARED)
-- `oracle_town/skills/video/helen-director/` — Montage Engine + STORYBOARD_V1 + ASSET_ENGINE_V1 + 30s candidate runner; parallel Seedance pipeline
+- `oracle_town/skills/video/helen-director/` — Montage Engine + STORYBOARD_V1 + ASSET_ENGINE_V1 + 30s candidate runner; parallel Seedance pipeline. **Has its own `CLAUDE.md` + `SKILL.md` doctrine (§1–§16) — read both before editing the director pipeline.** Non-sovereign; artifacts go to `/tmp/helen_temple/` only.
 - `oracle_town/skills/video/library/` — curated frame asset pool (refs/canonical/, era axis)
 - `helen_os/render/math_to_face.py` + `math_to_face/SKILL.md` — sovereign white-box render pipeline (φ-SDE + H/G/E/H⁻¹ bidirectional compiler math ↔ latent ↔ image), parallel to `helen-director` rental; **SCAFFOLD** status, Phase 0–9 roadmap in `math_to_face/SKILL.md` §6
 - `tools/helen_telegram.py` — two-way Telegram bot with voice
@@ -137,6 +145,11 @@ Commands:
 
 Prefer `.venv/bin/python` for runtime commands so imports resolve consistently with `make test`.
 
+**First-time bootstrap** (if `.venv/` doesn't exist):
+```bash
+python3 -m venv .venv && .venv/bin/pip install --upgrade pip && .venv/bin/pip install -r requirements.txt
+```
+
 ```bash
 # Start kernel daemon (background)
 .venv/bin/python oracle_town/kernel/kernel_daemon.py &
@@ -176,6 +189,18 @@ make test
 bash tools/kernel_guard.sh
 ```
 
+### Director (current coding lane)
+
+```bash
+# Dry run — prints plan + estimated credit burn, no API calls
+.venv/bin/python oracle_town/skills/video/helen-director/run_30s_v1.py
+
+# Live — requires explicit credit guard
+.venv/bin/python oracle_town/skills/video/helen-director/run_30s_v1.py --live --spend-ok 90
+```
+
+Credentials load from `~/.helen_env` (mode 600). No test suite — validation is operator-rated 1–10 on Telegram delivery.
+
 ### Packaging note
 `pyproject.toml` declares the project as `oracle-town` v1.0.0 with `dependencies = []` — it is not the dependency source of truth. Use `requirements.txt` / `requirements-ci.txt` when installing.
 
@@ -194,25 +219,20 @@ Multiple chat entry points exist; they are **not interchangeable**.
 
 **`--ledger :memory:` gotcha** — when the configured ledger is a sealed sovereign file (e.g. `storage/ledger_epoch*_work.ndjson`), `helen talk --reply` writes the receipt **before** the LLM call and crashes with `LNSA_ERROR: Sovereign ledger is SEALED. No further mutations allowed.` Pass `--ledger :memory:` for ephemeral chat or `--ledger storage/chat_dev.ndjson` for persistent dev. See `HELEN_CHAT_MODES.md`.
 
+## LNSA — Session Discipline Protocol
+
+`LNSA.py` + `LNSA_SKILL.md` are a self-contained working-memory tool, distinct from the sovereign ledger. Runs in-process and produces a session JSON, not `town/ledger_v1.ndjson`.
+
+- **Activation:** `python3 LNSA.py`, or `/lnsa` / `hi helen` inside a Claude session.
+- **Five phases:** Exploration → Tension → Drafting → Editorial → Termination.
+- **Termination contract:** every session ends `SHIP` (artifact + location + impact named) or `ABORT` (failure mode named). Open-ended pauses are forbidden by design — this is the "Termination is sacred" invariant in operator form.
+- **What it records:** claims (R/C/T/W/M tagged), contradictions (both versions kept), challenges, revisions, final decision.
+- **Naming collision:** `LNSA_ERROR` strings in `tools/helen_say.py` refer to the sovereign ledger seal, not to `LNSA.py`. Don't conflate them.
+
 ## Operational Notes
 
 - `town/ledger_v1.ndjson` may show as dirty in `git status` due to live kernel daemon writes. Do not stash, do not commit, do not edit — sovereign firewall path.
 - `artifacts/k8_*.json`, `artifacts/k8_trace.ndjson`, `artifacts/k_tau_*.json` are live gate-trace outputs and routinely show dirty after lint runs. They are not stash-eligible; let the gate scripts manage them.
-
-## Current State (2026-04-27)
-
-- **AUTORESEARCH**: E11 LEGORACLE + E12 replay gate shipped. Two parallel sessions diverged; **reconciliation in flight, not yet ruled**. Reconciliation hypothesis at `docs/proposals/AUTORESEARCH_E11_E12_RECONCILIATION.md` (commit `0d06b33`); §3 read-only SHA-diff experiment executed and reports landed at `docs/reports/AUTORESEARCH_E11_E12_*` (commit `d43ec64`). Headline finding: **H₁ partially falsified** — three artifact-level STRUCTURAL_CHANGE rows (test + fixtures), but the falsifier-specific check is **negative** (LEGORACLE gate logic and replay determinism logic unaffected; `legoracle_v13rc.py` SHA matches). Recommendation candidates for MAYOR: REQUEST_MORE_EVIDENCE (SHA_DIFF report) or REVOKE_AND_RERUN (RECONCILIATION_REPORT_V0). **Awaiting fresh-context peer-review (Rule 3) → operator countersignature → MAYOR ruling**. E13 remains blocked. Kernel daemon currently down.
-- **Knowledge corpus**: T4 (source-provenance floor) + T6 (intensity floor) landed for symbolic-knowledge ingestion. Symbolic sources collected in `helen_os/knowledge/symbolic_sources/` (DRAFT classifications).
-- **SKILL_REGISTRY_V1**: 75 skills audited (51 canonical, 3 legacy, 3 duplicate, 18 external)
-- **Voice**: Zephyr (Gemini TTS) — LIVE
-- **Video**: HyperFrames — DECLARED (npm allowlist pending); `helen-director` skill + Montage Engine + `STORYBOARD_V1` + `ASSET_ENGINE_V1` + 30s candidate runner shipped. `video/library/` promotes 11 hero stills to `refs/canonical/` with locked era axis (cyberpunk / medieval / renaissance / modern / ww2 / french_revolution / pyramids).
-- **HELEN character**: `HELEN_CHARACTER_V2` + `HELEN_DESIGN.md` + `HELEN_PRIMER.md` shipped — character-consistency method validated
-- **TEMPLE/AURA**: First raw terminal sample captured (`temple/subsandbox/aura/`); grimoire path now exists. Non-sovereign, never auto-promoted.
-- **Telegram**: Two-way bot with voice — LIVE (not daemonized)
-- **Schema Authority**: Governance decision SHIPPED (Actions 1-5 partial, 6-9 open)
-- **Doctrine Admission**: `DOCTRINE_ADMISSION_PROTOCOL_V1` gate — DRAFT; §4 fixtures + harness landed
-- **Experiments**: minimal MVP terminal kernel landed in `experiments/` (NON_SOVEREIGN, NO_SHIP — sandbox only)
-- **HELEN OS v2 UX**: PROPOSAL-class four-file suite shipped to `docs/proposals/` (commit `442f5ee`). Two-mode top-level toggle (`FOCUS | WITNESS`) + Four-Mode Product Map (FOCUS / WITNESS / ORACLE / TEMPLE). Locked phrases: product tagline `"HELEN suggests. You decide. Everything is recorded."`, constitution phrase `"HELEN sees. HELEN proposes. The gate authorizes…"`, UX canon `"HELEN n'est pas un cockpit…"`. LEGORACLE idle = `Gate Clear · No Active Claim`; SHIP_FORBIDDEN never permanent ambient. CONTEXT STACK is technical default (8 layers); AURA confined to Oracle/Temple as non-authoritative metaphor. Brand rule: Apple-like calm, never macOS chrome clone. Files: `HELEN_OS_V2_USER_CENTRIC_UX.md`, `FOCUS_MODE_TERMINAL_SPEC.md`, `TEMPLE_MODE_VISUAL_BRIEF.md`, `HELEN_OS_V2_VISUAL_CANON_LOCK.md`. Status: PROPOSAL / NON_SOVEREIGN / NO_SHIP — not promoted to canon.
 
 ## Open Frontiers
 
