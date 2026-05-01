@@ -30,11 +30,14 @@ echo
 cyan "[1/6] Testing bridge to Windows Ollama..."
 
 OLLAMA_URL=""
-if curl -fsS --max-time 3 http://host.docker.internal:11434/api/tags >/dev/null 2>&1; then
+if curl -fsS --max-time 3 http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
+    OLLAMA_URL="http://127.0.0.1:11434"
+    green "  OK via 127.0.0.1 (mirrored networking or localhost forwarding)"
+elif curl -fsS --max-time 3 http://host.docker.internal:11434/api/tags >/dev/null 2>&1; then
     OLLAMA_URL="http://host.docker.internal:11434"
     green "  OK via host.docker.internal"
 else
-    yellow "  host.docker.internal unreachable, trying host IP..."
+    yellow "  127.0.0.1 and host.docker.internal unreachable, trying default-route gateway..."
     HOST_IP=$(ip route show | awk '/default/ {print $3}' | head -1)
     if [ -n "$HOST_IP" ] && curl -fsS --max-time 3 "http://${HOST_IP}:11434/api/tags" >/dev/null 2>&1; then
         OLLAMA_URL="http://${HOST_IP}:11434"
