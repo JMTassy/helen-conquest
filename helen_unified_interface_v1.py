@@ -159,11 +159,22 @@ class HELENMultiModel:
                     temperature,
                 )
             else:
+                # Pass per-model metadata (Ollama-specific: real model name + think + num_ctx)
+                meta = decision.model_config.metadata or {}
+                extra: Dict[str, Any] = {}
+                if decision.model_config.provider.value == "ollama":
+                    if "ollama_model" in meta:
+                        extra["model"] = meta["ollama_model"]
+                    if "think" in meta:
+                        extra["think"] = meta["think"]
+                    if "num_ctx" in meta:
+                        extra["num_ctx"] = meta["num_ctx"]
                 response_text = client.query(
                     prompt,
                     max_tokens=max_tokens,
                     temperature=temperature,
                     stream=False,
+                    **extra,
                 )
 
             # Record response
