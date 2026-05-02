@@ -1,0 +1,122 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen-conquest/schemas/helen_dan/prd.schema.json",
+  "title": "HELEN_DAN PRD",
+  "description": "Proposal-only schema for HELEN_DAN_RALPH_V0 task backlogs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "branchName",
+    "project",
+    "authority",
+    "canon",
+    "userStories"
+  ],
+  "properties": {
+    "branchName": {
+      "type": "string",
+      "minLength": 1
+    },
+    "project": {
+      "type": "string",
+      "const": "HELEN_DAN"
+    },
+    "authority": {
+      "type": "string",
+      "const": "NON_SOVEREIGN"
+    },
+    "canon": {
+      "type": "string",
+      "const": "NO_SHIP"
+    },
+    "userStories": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/definitions/userStory"
+      }
+    }
+  },
+  "definitions": {
+    "userStory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "priority",
+        "status",
+        "epoch_owner",
+        "allowed_paths",
+        "forbidden_paths",
+        "required_receipts",
+        "acceptanceCriteria"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^HD-[0-9]{3}$"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "todo",
+            "done"
+          ]
+        },
+        "epoch_owner": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "allowed_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "forbidden_paths": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "required_receipts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "enum": [
+              "test_report",
+              "artifact_manifest"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "acceptanceCriteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  }
+}
