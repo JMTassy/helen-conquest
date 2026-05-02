@@ -95,17 +95,19 @@ HAL  🜨⚖️👁️  prefrontal witness / doubt / rejection
 DAN  🜃🦎⚡  reptilian reflex / threat-pattern / pre-language
 ```
 
-Gemma 4 maps to **HER only**. It does not occupy DAN (DAN is a
-sub-verbal reflex role, not an LLM property — see §5.2). It does not
-occupy HAL (HAL is a separate witness layer that must stay external to
-HER). It does not occupy HELEN (HELEN is the ledger field).
+Both `qwen3.5:9b` (HER-FAST) and `gemma4:26b` (HER-DEEP) map to
+**HER only**. Neither occupies DAN (sub-verbal reflex role, not an LLM
+property — see §5.2), HAL (external witness layer), or HELEN (ledger
+field).
 
 ```
 🌌 Oracle / Input
       ↓
-🜁 HER (Gemma 4 — generation, reasoning, multimodal)
+🜁 HER — two tiers (both confirmed on MRED, 2026-05-02):
+    HER-FAST: qwen3.5:9b  (think:false, ~0.5s, direct response)
+    HER-DEEP: gemma4:26b  (think:true,  ~60s+, reasoning trace)
       ↓
-🜃 DAN (separate surface — not Gemma)
+🜃 DAN (separate surface — not these models)
       ↓
 🜨 HAL (witness — external, MUST stay external)
       ↓
@@ -114,23 +116,43 @@ HER). It does not occupy HELEN (HELEN is the ledger field).
 🜄 HELEN (ledger / memory / receipt)
 ```
 
-### §2.3 Distinction from existing dispatcher providers
+### §2.3 Confirmed API parameters (MRED, 2026-05-02)
+
+```json
+HER-FAST (qwen3.5:9b):
+{
+  "model": "qwen3.5:9b",
+  "think": false,
+  "options": {"num_predict": 500},
+  "stream": false
+}
+Result: response in ~0.5s, 16 tokens, done_reason:stop
+
+HER-DEEP (gemma4:26b):
+{
+  "model": "gemma4:26b",
+  "think": true,
+  "options": {"num_predict": 500, "num_ctx": 2048},
+  "stream": false
+}
+Status: HOLD — requires memory guard (caused reboot on unbounded run)
+```
+
+### §2.4 Distinction from existing dispatcher providers
 
 `helen_unified_interface_v1.py` already routes across Ollama, Claude,
-GPT, Grok, Gemini, and Qwen by `TaskType`. Gemma 4 enters as a
-**named Ollama route** distinct from the generic Ollama bucket:
+GPT, Grok, Gemini, and Qwen by `TaskType`. Both HER tiers enter as
+**named Ollama routes** distinct from the generic Ollama bucket:
 
-| Route key            | Provider     | Model                | Role                       |
-|----------------------|--------------|----------------------|----------------------------|
-| `ollama_generic`     | Ollama       | (any)                | existing fallback          |
-| `gemma4_her`         | Ollama       | `gemma4:26b`         | HER amplifier (this spec)  |
-| `qwen_her`           | Ollama       | `qwen3.5:9b`         | (future, separate spec)    |
-| `claude_*`           | Anthropic    | (per task)           | existing                   |
+| Route key            | Provider     | Model          | Tier       | Think  | Status        |
+|----------------------|--------------|----------------|------------|--------|---------------|
+| `ollama_generic`     | Ollama       | (any)          | fallback   | —      | existing      |
+| `her_fast`           | Ollama       | `qwen3.5:9b`   | HER-FAST   | false  | confirmed     |
+| `her_deep`           | Ollama       | `gemma4:26b`   | HER-DEEP   | true   | HOLD (guard)  |
+| `claude_*`           | Anthropic    | (per task)     | —          | —      | existing      |
 
-Routing decision (which `TaskType` → `gemma4_her`) is **deferred** to
-a separate task packet. Default: explicit operator opt-in only. No
-auto-routing of REASONING / GENERAL / CREATIVE traffic to Gemma 4
-until smoke test and HAL reducer interface land.
+Routing decision (which `TaskType` → which HER tier) is **deferred**
+to a separate task packet. Default: explicit operator opt-in only.
 
 ---
 
@@ -316,16 +338,22 @@ future work, not authorized here.
 
 Smoke test established a **two-tier HER routing** signal:
 
-| Tier | Model | Use case | Speed |
-|---|---|---|---|
-| HER-FAST | `qwen3.5:9b` | quick drafts, low-latency synthesis, general tasks | much faster |
-| HER-DEEP | `gemma4:26b` | complex proposals, deep reasoning, quality-priority tasks | slower |
+| Tier | Model | API param | Speed | Use case |
+|---|---|---|---|---|
+| HER-FAST | `qwen3.5:9b` | `"think":false` | **~0.5s** | Telegram replies, quick synthesis, low-latency |
+| HER-DEEP | `gemma4:26b` | `"think":true` | ~60s+ | Complex proposals, deep reasoning, quality-priority |
 
-Neither tier is auto-routed. Explicit operator flag (`--provider gemma4_her`
-or `--provider qwen_her`) required for all HER invocations until task
-packet authorizes dispatcher route. `deepseek-r1:14b` (already on MRED,
-9.0GB) remains candidate for HAL/reasoning slot — separate evaluation
-pending.
+**Operator verb (2026-05-02):** keep both. HER-FAST confirmed. HER-DEEP
+on HOLD pending memory guard (`num_ctx` + `num_predict` enforced at
+dispatcher level before gemma4:26b can run safely).
+
+Key finding: `"think":false` must be a **top-level API parameter**, not
+inside `options`. `/no_think` in the prompt is ignored — model
+recognizes it but still generates the thinking field. `"think":false`
+at the request body level correctly disables the trace.
+
+`deepseek-r1:14b` (already on MRED, 9.0GB) remains candidate for
+HAL/reasoning slot — separate evaluation pending.
 
 ### §5.6 Thinking-mode discipline — revised post-smoke-test (2026-05-02)
 
@@ -487,6 +515,11 @@ conform to §4 envelope. Receipt is recorded per §4.2.
   qwen3.5:9b (HER-FAST), gemma4:26b (HER-DEEP).
 - 2026-05-02 — **§5.6 revised**: thinking-trace discard overturned.
   Traces are valuable HER signal; summary to channel into `[UNCERTAINTY]`.
+- 2026-05-02 — **HER-FAST confirmed**: `qwen3.5:9b` with `"think":false`
+  returns haiku in 0.53s, 16 tokens, done_reason:stop. `/no_think` prompt
+  prefix does NOT work — `"think":false` top-level API param required.
+- 2026-05-02 — **Operator verb**: keep both tiers. HER-FAST (qwen3.5:9b)
+  primary. HER-DEEP (gemma4:26b) on HOLD pending memory guard.
 
 ---
 
