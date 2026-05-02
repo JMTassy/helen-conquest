@@ -1,0 +1,123 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://helen-conquest/schemas/helen_dan/receipt.schema.json",
+  "title": "HELEN_DAN Receipt",
+  "description": "Proposal-only schema for DAN-emitted receipts. DAN-emitted receipts live under `helen/dan_goblin/receipts/`. The Reducer may admit a subset to `helen/ledger/receipts/`.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "receipt_id",
+    "story_id",
+    "epoch",
+    "actor",
+    "authority",
+    "canon",
+    "status",
+    "files_changed",
+    "tests_run",
+    "screenshots",
+    "artifact_manifest",
+    "timestamp",
+    "notes"
+  ],
+  "properties": {
+    "receipt_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "story_id": {
+      "type": "string",
+      "pattern": "^HD-[0-9]{3}$"
+    },
+    "epoch": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "actor": {
+      "type": "string",
+      "const": "DAN_GOBLIN"
+    },
+    "authority": {
+      "type": "string",
+      "const": "NON_SOVEREIGN"
+    },
+    "canon": {
+      "type": "string",
+      "const": "NO_SHIP"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "SUCCESS",
+        "FAILURE"
+      ]
+    },
+    "failure_type": {
+      "type": "string",
+      "enum": [
+        "TEST_FAILURE",
+        "SCOPE_DRIFT",
+        "RECEIPT_MISSING",
+        "NONLOCAL_MUTATION",
+        "REPEATED_FAILURE",
+        "SCREENSHOT_MISSING",
+        "QUALITY_CHECK_FAILED"
+      ]
+    },
+    "files_changed": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tests_run": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "screenshots": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "artifact_manifest": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "commit_hash": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "notes": {
+      "type": "string"
+    },
+    "timestamp": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "FAILURE"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "failure_type"
+        ]
+      }
+    }
+  ]
+}
