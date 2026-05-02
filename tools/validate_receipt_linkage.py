@@ -77,6 +77,12 @@ def _build_verdict_map(events: list) -> dict:
       - payload.schema == "VERDICT_PAYLOAD_V1"
 
     Legacy VERDICT events (other schemas) are skipped silently.
+
+    Defense-in-depth (PAYLOAD_HASH_V1 enforcement): recomputes the verdict's
+    payload_hash from its payload via canon_json_bytes and rejects the event
+    if the envelope payload_hash does not match. This catches envelope
+    tampering even if validate_hash_chain.py is skipped — leg-0 of the
+    triple binding is "the envelope itself is honest about what's in it."
     """
     verdict_map = {}
     for line_num, obj in events:
@@ -88,8 +94,24 @@ def _build_verdict_map(events: list) -> dict:
         verdict_id = payload.get("verdict_id", "")
         if not verdict_id:
             continue
+
+        # Leg 0 — verdict envelope payload_hash must match canon(payload).
+        # Without this, a tampered envelope could fool the linkage validator
+        # by binding a receipt to a fake payload_hash that nothing else
+        # recomputes against the actual payload.
+        envelope_ph = obj.get("payload_hash", "")
+        recomputed_ph = sha256_hex(canon_json_bytes(payload))
+        if envelope_ph != recomputed_ph:
+            raise ValueError(
+                f"Line {line_num}: VERDICT triple-binding FAIL [leg 0 — "
+                f"verdict envelope payload_hash]: "
+                f"envelope payload_hash='{envelope_ph}' "
+                f"!= recomputed sha256(canon_json(payload))='{recomputed_ph}' "
+                f"(verdict_id='{verdict_id}')"
+            )
+
         verdict_map[verdict_id] = {
-            "payload_hash": obj.get("payload_hash", ""),
+            "payload_hash": envelope_ph,
             "cum_hash": obj.get("cum_hash", ""),
             "seq": obj.get("seq", -1),
             "verdict_kind": payload.get("verdict_kind", ""),
