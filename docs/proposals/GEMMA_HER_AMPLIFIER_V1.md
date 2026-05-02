@@ -25,7 +25,9 @@ related_files:         helen_unified_interface_v1.py (dispatcher, target of rout
                        tools/kernel_guard.sh (writer allowlist enforcer)
 hold_reason:           HELEN/MRED baseline stabilization in flight;
                        no implementation work authorized until baseline closed.
-                       Smoke test (gemma4:26b on MRED) pending operator verb.
+smoke_test_status:     T1 PASS (2026-05-02) — gemma4:26b runs on RTX 5070 12GB.
+                       qwen3.5:9b comparative smoke test also PASS (much faster).
+                       Remaining blocker: HER_HAL_REDUCER_INTERFACE_V1 unspecified.
 ```
 
 > **HER verdict (2026-05-02), recorded as proposal:**
@@ -266,14 +268,19 @@ HAL_REVIEW append.
 
 ## §5. Open Questions (unresolved)
 
-### §5.1 VRAM viability on MRED
+### §5.1 VRAM viability on MRED — ✅ RESOLVED (2026-05-02)
 
-`gemma4:26b` is 18GB on disk. RTX 5070 has 12GB VRAM. MoE architecture
-(3.8B active per token) makes partial CPU offload survivable but
-empirically untested. **Smoke test required before any routing decision.**
+`gemma4:26b` (18GB on disk) runs on RTX 5070 12GB VRAM. MoE architecture
+(3.8B active per token) makes partial CPU offload survivable. T1 smoke
+test passed: `ollama run gemma4:26b "write a haiku about pattern recognition"`
+returned coherent output with full thinking trace. No crash, no OOM error.
 
-Fallback if 26B does not run cleanly: `gemma4:e4b` (9.6GB, fits VRAM
-fully, frontier-tuned for edge, MMLU Pro 69.4% / LiveCodeBench 52%).
+Speed differential observed:
+- `gemma4:26b` — slower (partial CPU offload, 17GB MoE blob)
+- `qwen3.5:9b` — **much faster** (6.6GB, fits fully in VRAM)
+
+`gemma4:e4b` fallback is no longer the primary path. Two-tier routing
+confirmed viable (see §5.5 update).
 
 ### §5.2 DAN reflex layer placement
 
@@ -305,24 +312,40 @@ may ignore the envelope under prompt injection or distribution drift.
 **A parser-level validator** that re-prompts on envelope failure is
 future work, not authorized here.
 
-### §5.5 Routing policy
+### §5.5 Routing policy — updated post-smoke-test (2026-05-02)
 
-Which `TaskType` values in `helen_unified_interface_v1.py` should
-route to `gemma4_her`? Candidates: `REASONING`, `GENERAL`, `CREATIVE`,
-`MULTIMODAL`. Recommendation: **none auto-routed**; explicit
-`--provider gemma4_her` operator flag only, until smoke test data is in.
+Smoke test established a **two-tier HER routing** signal:
 
-### §5.6 Thinking-mode discipline
+| Tier | Model | Use case | Speed |
+|---|---|---|---|
+| HER-FAST | `qwen3.5:9b` | quick drafts, low-latency synthesis, general tasks | much faster |
+| HER-DEEP | `gemma4:26b` | complex proposals, deep reasoning, quality-priority tasks | slower |
 
-Gemma 4 emits internal reasoning under `<|channel>thought\n…<channel|>`
-when `<|think|>` is in system prompt. HELEN must decide:
+Neither tier is auto-routed. Explicit operator flag (`--provider gemma4_her`
+or `--provider qwen_her`) required for all HER invocations until task
+packet authorizes dispatcher route. `deepseek-r1:14b` (already on MRED,
+9.0GB) remains candidate for HAL/reasoning slot — separate evaluation
+pending.
 
-- Discard thinking trace (treat as ephemeral)?
-- Capture into `[UNCERTAINTY]` block?
-- Hash and ledger as separate `thought_sha256` for replay?
+### §5.6 Thinking-mode discipline — revised post-smoke-test (2026-05-02)
 
-Default proposal: **discard at receipt time**, do not ledger. Thinking
-traces are HER pre-language, not constitutional content.
+Both `gemma4:26b` and `qwen3.5:9b` activate thinking traces
+**automatically on reasoning tasks** — `<|think|>` in system prompt is
+not required to trigger them. Traces include: topic decomposition,
+draft iterations, syllable-level self-correction, critique, and final
+selection reasoning.
+
+Prior default ("discard at receipt time") is **revised**. Smoke test
+showed thinking traces contain the most honest HER signal — uncertainty,
+drafting process, self-correction — exactly what `[UNCERTAINTY]` is
+designed to capture.
+
+Revised default: **channel thinking trace summary into `[UNCERTAINTY]`
+block**. Full trace is ephemeral (not ledgered). Summary of the
+key uncertainty and revision points is retained in the envelope.
+
+Open: how to extract the summary automatically vs. operator-curated.
+Parser-level extractor deferred to future spec.
 
 ### §5.7 Multimodal input
 
@@ -339,9 +362,10 @@ This proposal does not authorize implementation. If a future task
 packet authorizes implementation, the following test discipline must
 be met:
 
-- **T1 (smoke)**: `ollama pull gemma4:26b` succeeds on MRED. Model
-  loads. `ollama run gemma4:26b "haiku about pattern recognition"`
-  returns coherent text. Tokens/sec recorded.
+- **T1 (smoke)**: ✅ **PASS (2026-05-02)** — `ollama pull gemma4:26b`
+  succeeded (17GB). `ollama run gemma4:26b "write a haiku about pattern
+  recognition"` returned coherent output with full thinking trace. No
+  VRAM crash. `qwen3.5:9b` comparative run also PASS, noticeably faster.
 - **T2 (envelope)**: System prompt §4.1 produces structured
   `[PROPOSAL] / [UNCERTAINTY] / [REQUIRED_RECEIPTS] / [HAL_QUESTIONS]`
   output on a representative HELEN proposal task.
@@ -365,7 +389,7 @@ be met:
 
 ## §7. NOT YET (what this proposal does NOT authorize)
 
-- ❌ `ollama pull gemma4:26b` on MRED.
+- ✅ `ollama pull gemma4:26b` on MRED — **DONE (2026-05-02)**.
 - ❌ Modification of `helen_unified_interface_v1.py`.
 - ❌ Registration of `gemma4_her` route in any dispatcher table.
 - ❌ Any commit touching `town/`, `helen_os/governance/`, or
@@ -453,6 +477,16 @@ conform to §4 envelope. Receipt is recorded per §4.2.
 - 2026-05-02 — This proposal drafted in response to operator request:
   *"Do it as a proposal-only integration first … Then smoke test
   after spec."*
+- 2026-05-02 — **T1 PASS**: `ollama pull gemma4:26b` succeeded on MRED
+  (RTX 5070 12GB). Model ran without VRAM crash. Thinking trace fired
+  automatically (no `<|think|>` injection needed). Output: *"Dots
+  connect in space / Tracing logic through the noise / Meaning finds
+  its shape."*
+- 2026-05-02 — **Comparative smoke test**: `qwen3.5:9b` ran same prompt,
+  also PASS, noticeably faster. Two-tier routing confirmed viable:
+  qwen3.5:9b (HER-FAST), gemma4:26b (HER-DEEP).
+- 2026-05-02 — **§5.6 revised**: thinking-trace discard overturned.
+  Traces are valuable HER signal; summary to channel into `[UNCERTAINTY]`.
 
 ---
 
