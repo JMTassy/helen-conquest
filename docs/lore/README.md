@@ -184,6 +184,8 @@ is sequential and stable.
 | 008 | `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR.md` |
 | 009 | `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE.md` |
 | 010 | `LNOS_SOURCE_010_525_TONE_AND_RED_SPIRAL_FRACTURE.md` |
+| 011 | `LNOS_SOURCE_011_SEDONA_MAGNETOMETER_AND_FIELD_SCIENCE.md` |
+| 012 | `LNOS_SOURCE_012_OUTFLOW_RELEASE_AND_CANYON_RITUAL.md` |
 
 ### `LNOS_META_NNN_<TITLE>.md` — synthesis artifacts
 
@@ -196,8 +198,27 @@ catalog). Its `source_type` is `ORIGINAL_SYNTHESIS` and it includes a
 |---|---|
 | 001 | `LNOS_META_001_BIRTH_OF_A_STARSEED.md` |
 
-The split keeps source-numbering stable as new transcripts arrive
-without re-numbering when synthesis artifacts are created.
+### `LNOS_AUTORESEARCH_NNN_<TITLE>.md` — autoresearch protocols
+
+A file that defines a **loop** — a repeatable READ → ABSTRACT →
+PROTOTYPE → EVALUATE → KEEP/DISCARD discipline applied to a knowledge
+domain. Its `source_type` is `AUTORESEARCH_PROTOCOL`. It typically
+includes:
+
+- mechanism-to-mechanic mapping (external knowledge → playable mechanic)
+- numbered experiments with hypotheses, prototypes, and metrics
+- explicit keep/discard rules per experiment
+- a P1 evaluator specification
+- a HELEN role architecture (AURA / HER / DAN / HAL / MAYOR / LEDGER)
+
+| # | File |
+|---|---|
+| 001 | `LNOS_AUTORESEARCH_001_REALITY_RENDERER_LOOP.md` |
+
+The split between SOURCE / META / AUTORESEARCH keeps numbering stable
+within each family and makes it explicit which files are *derived*
+(SOURCE), which are *synthesized* (META), and which are *protocol
+specifications* (AUTORESEARCH).
 
 ---
 
@@ -210,7 +231,7 @@ Every lore file should declare in YAML frontmatter:
 | `authority` | yes | Always `NON_SOVEREIGN` in this directory. |
 | `canon` | yes | Always `NO_SHIP` in this directory. |
 | `mode` | yes | One of the seven modes above. |
-| `literal_claims` | yes | `QUARANTINED` / `FICTIONALIZED` / `REJECTED_AS_FACT` / `SOURCE_DEPENDENT` |
+| `literal_claims` | yes | `QUARANTINED` / `FICTIONALIZED` / `REJECTED_AS_FACT` / `SOURCE_DEPENDENT` / `PARTIALLY_SEPARATED` |
 | `source_type` | yes | `OLD_LECTURE_TRANSCRIPT`, `PODCAST_OR_LECTURE_TRANSCRIPT`, `CONVERSATION`, `BOOK`, `ORIGINAL_SYNTHESIS`, etc. |
 | `segment` | yes | Short label for the source segment. |
 | `approved_use` | yes | List of allowed downstream uses. |
@@ -224,6 +245,12 @@ Every lore file should declare in YAML frontmatter:
 | `inspiration` | conditional | List of phenomenological / experiential inspirations (used by META files and SCIENCE_INSPIRED_* files). |
 | `synthesizes` | conditional | Required for META files. List of source files this file synthesizes. |
 | `companion_file` | conditional | If this file is a companion to another, name the partner file. |
+| `extends` | conditional | List of files this file extends or builds on (analogous to `synthesizes` for derivative-not-synthesis cases). |
+| `real_science_layer` / `science_layer` | conditional | Required when `literal_claims: PARTIALLY_SEPARATED`. List of source claims that hold up under scrutiny and may be cited as design substrate. |
+| `quarantined_layer` | conditional | Required when `literal_claims: PARTIALLY_SEPARATED`. List of source claims that must never be cited as fact. |
+| `references_published_neuroscience` / `references_published_geophysics` / etc. | conditional | Boolean flag set to `true` when the file references published scientific literature, even if inline citations are not preserved. |
+| `inline_citations_preserved` | conditional | Boolean. Set to `false` when a citation-bearing source paste lost its inline citation markers. |
+| `artifact_family` | conditional | `SOURCE` / `META` / `AUTORESEARCH`. Defaults to SOURCE if not specified; required for AUTORESEARCH files for clarity. |
 | `ledger_effect` | yes | Always `NONE` in this directory. |
 | `captured_on` | yes | ISO date. |
 | `session_id` | yes | Free-form session identifier. |
@@ -354,4 +381,7 @@ cosmic metaverse mythology** built around:
 | `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR` | Reality is constructed; integration is gated |
 | `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE` | Identity is a renderer mode; receipts survive the trip |
 | `LNOS_SOURCE_010_525_TONE_AND_RED_SPIRAL_FRACTURE` | Some doors open with tone, not key — but tone unlocks moments, not canon |
+| `LNOS_SOURCE_011_SEDONA_MAGNETOMETER_AND_FIELD_SCIENCE` | Real geophysics + local interpretation + fictional mechanic — three layers, kept separate |
+| `LNOS_SOURCE_012_OUTFLOW_RELEASE_AND_CANYON_RITUAL` | A symbolic-burden gameplay ritual; the canyon may exhale, the ledger still asks what was measured |
 | `LNOS_META_001_BIRTH_OF_A_STARSEED` | Synthesis: how a player becomes eligible for any of the above |
+| `LNOS_AUTORESEARCH_001_REALITY_RENDERER_LOOP` | The autoresearch protocol that governs how Reality Renderer mechanics are scoped, prototyped, evaluated, and kept-or-discarded |
