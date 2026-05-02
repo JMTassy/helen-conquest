@@ -423,6 +423,24 @@ Examples:
             print(f"   Reason: {decision.reason}")
             print(f"   Confidence: {decision.confidence:.0%}\n")
 
+            helen_node_context = (
+                "SYSTEM CONTEXT - HELEN LOCAL NODE\n"
+                "You are operating inside the user's local HELEN OS node.\n"
+                "Architecture:\n"
+                "- Windows host runs Ollama with NVIDIA RTX 5070 GPU acceleration.\n"
+                "- WSL2 Ubuntu runs the HELEN repository and Python interface.\n"
+                "- Active interface: helen_unified_interface_v1.\n"
+                "- Active backend: Ollama HTTP API at http://127.0.0.1:11434.\n"
+                "- Active local model: gemma3:12b.\n"
+                "- Repository path: ~/helen-conquest.\n"
+                "- Mode: local-first, private, zero cloud cost unless external API keys added.\n"
+                "Behavior:\n"
+                "- Do not claim to be a generic remote HELEN network node.\n"
+                "- When asked about this HELEN node, refer to the local MRED/WSL2/Ollama/Gemma/RTX setup.\n"
+                "- Be precise, operational, and concise. Do not ask the user for logs you already have above.\n"
+            )
+            prompt = helen_node_context + "\nUSER REQUEST:\n" + prompt
+
             response = self.helen.query(prompt, task_type=task_type, stream=True)
         except Exception as e:
             print(f"❌ Query failed: {e}")
