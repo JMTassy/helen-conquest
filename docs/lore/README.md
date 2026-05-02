@@ -137,6 +137,28 @@ reframed as "the chair has opinions").
   underlying conditions or substances.
 - **Example:** `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE.md`
 
+### `FUNNY_MYTH_SENSORY_DESIGN`
+
+`FUNNY_MYTH` specialized for sources that make **physics-style claims**
+about sensory phenomena (specific frequencies, vortexes, geomagnetic
+sites, healing tones, etc.). The mechanic is designed as **gameplay
+sensory input**, not as physics or medicine.
+
+- **Literal claims:** `FICTIONALIZED` — the source's claimed frequency
+  / location / effect becomes a fictional in-game calibration target
+  with no physical or therapeutic claim.
+- **Use when:** the source asserts that a specific Hz value, a specific
+  location, or a specific sensory ritual produces a specific
+  physical/spiritual result. These claims drift easily into
+  pseudoscience (frequency-healing marketing, vortex tourism,
+  paranormal-proof claims) and the mode forbids that drift explicitly.
+- **Recommended `risk:` value:** `frequency_claim_drift` (or analogous
+  for non-frequency sources).
+- **Required mitigations:** an explicit "HELEN Boundary" section
+  declaring that the sensory mechanic *triggers gameplay, does not
+  prove physics, does not heal by doctrine, does not bypass receipts.*
+- **Example:** `LNOS_SOURCE_010_525_TONE_AND_RED_SPIRAL_FRACTURE.md`
+
 ---
 
 ## File-Naming Convention — `LNOS_SOURCE_NNN` vs `LNOS_META_NNN`
@@ -161,6 +183,7 @@ is sequential and stable.
 | 007 | `LNOS_SOURCE_007_MISSING_YEARS_PATH.md` |
 | 008 | `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR.md` |
 | 009 | `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE.md` |
+| 010 | `LNOS_SOURCE_010_525_TONE_AND_RED_SPIRAL_FRACTURE.md` |
 
 ### `LNOS_META_NNN_<TITLE>.md` — synthesis artifacts
 
@@ -186,7 +209,7 @@ Every lore file should declare in YAML frontmatter:
 |---|---|---|
 | `authority` | yes | Always `NON_SOVEREIGN` in this directory. |
 | `canon` | yes | Always `NO_SHIP` in this directory. |
-| `mode` | yes | One of the six modes above. |
+| `mode` | yes | One of the seven modes above. |
 | `literal_claims` | yes | `QUARANTINED` / `FICTIONALIZED` / `REJECTED_AS_FACT` / `SOURCE_DEPENDENT` |
 | `source_type` | yes | `OLD_LECTURE_TRANSCRIPT`, `PODCAST_OR_LECTURE_TRANSCRIPT`, `CONVERSATION`, `BOOK`, `ORIGINAL_SYNTHESIS`, etc. |
 | `segment` | yes | Short label for the source segment. |
@@ -330,4 +353,5 @@ cosmic metaverse mythology** built around:
 | `LNOS_SOURCE_007_MISSING_YEARS_PATH` | Knowledge must be trained before being used |
 | `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR` | Reality is constructed; integration is gated |
 | `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE` | Identity is a renderer mode; receipts survive the trip |
+| `LNOS_SOURCE_010_525_TONE_AND_RED_SPIRAL_FRACTURE` | Some doors open with tone, not key — but tone unlocks moments, not canon |
 | `LNOS_META_001_BIRTH_OF_A_STARSEED` | Synthesis: how a player becomes eligible for any of the above |
