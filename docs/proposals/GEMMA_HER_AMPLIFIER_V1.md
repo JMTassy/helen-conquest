@@ -290,19 +290,62 @@ HAL_REVIEW append.
 
 ## §5. Open Questions (unresolved)
 
-### §5.1 VRAM viability on MRED — ✅ RESOLVED (2026-05-02)
+### §5.1 VRAM viability on MRED — ⚠️ PARTIAL (guard required)
 
-`gemma4:26b` (18GB on disk) runs on RTX 5070 12GB VRAM. MoE architecture
-(3.8B active per token) makes partial CPU offload survivable. T1 smoke
-test passed: `ollama run gemma4:26b "write a haiku about pattern recognition"`
-returned coherent output with full thinking trace. No crash, no OOM error.
+`gemma4:26b` (18GB on disk) runs on RTX 5070 12GB VRAM under bounded
+conditions. MoE architecture (3.8B active per token) makes partial CPU
+offload survivable for short, capped generations.
 
-Speed differential observed:
-- `gemma4:26b` — slower (partial CPU offload, 17GB MoE blob)
-- `qwen3.5:9b` — **much faster** (6.6GB, fits fully in VRAM)
+**Crash sequence observed (2026-05-02):**
 
-`gemma4:e4b` fallback is no longer the primary path. Two-tier routing
-confirmed viable (see §5.5 update).
+1. `ollama run gemma4:26b` (unbounded) → repetition loop triggered
+2. Each repeated token extended the KV cache → VRAM + system RAM grew
+   without bound
+3. GPU driver crashed or Windows BSOD → **machine rebooted**
+
+Root cause: no generation ceiling. `ollama run` CLI has no `--num-predict`
+flag. The model's MoE VRAM sharing means inactive expert weights are
+swapped in/out — repetition loop forces continuous swapping until
+memory is exhausted.
+
+**Required memory guard (must be enforced at dispatcher level):**
+
+```json
+{
+  "model": "gemma4:26b",
+  "think": true,
+  "options": {
+    "num_ctx": 2048,
+    "num_predict": 1500
+  },
+  "stream": false
+}
+```
+
+| Guard | Value | Reason |
+|---|---|---|
+| `num_ctx` | 2048 | Caps KV cache; prevents unbounded RAM growth |
+| `num_predict` | 1500 | Allows thinking trace (~1000 tokens) + response (~500 tokens) |
+| `stream` | false | Prevents partial output from entering HELEN pipeline |
+
+These parameters are **mandatory, non-configurable at call time** — the
+dispatcher must inject them for every `gemma4:26b` invocation. Operator
+cannot override to a higher value without a separate HAL pass.
+
+**HOLD condition:** `gemma4:26b` remains on HOLD until the dispatcher
+enforces these guards in code and T1 (bounded) passes without reboot.
+T1 (unbounded) result: **CRASH** — supersedes the earlier "PASS" status.
+
+**Lift condition:**
+- Dispatcher code enforces `num_ctx:2048` + `num_predict:1500` for all
+  `gemma4:26b` invocations
+- One clean bounded run on MRED: response returned, no crash, no reboot
+- Receipt recorded with `done_reason:stop` or `done_reason:length`
+  (not timeout, not crash)
+
+Speed differential (before crash):
+- `gemma4:26b` — slow, partial CPU offload, MoE swap overhead
+- `qwen3.5:9b` — **0.5s** with `think:false` (confirmed operational)
 
 ### §5.2 DAN reflex layer placement
 
