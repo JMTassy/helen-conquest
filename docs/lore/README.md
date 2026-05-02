@@ -69,6 +69,113 @@ refuses to encode under any framing.
   list is required.
 - **Example:** `LNOS_SOURCE_006_HOUSE_RAKHAM_SHIELD_ACCOUNTANTS.md`
 
+### `FUNNY_MYTH_WITH_REVERENCE`
+
+`FUNNY_MYTH` plus explicit respect for living religious or spiritual
+traditions referenced by the source.
+
+- **Literal claims:** `FICTIONALIZED` — but the comedic reframing must
+  land on the *archetype* (the Lost Student's ego deflation, résumé
+  inflation, donkey-vs-golden-horse), **never on the real traditions
+  themselves.**
+- **Use when:** the source touches Jesus / Buddha / Indigenous practice
+  / Reiki / Qigong / Tibetan or Indian mysticism / etc. — living
+  traditions that belong to real communities and deserve respect, not
+  rejection.
+- **Distinction from REDLINE:** REDLINE is for source material that is
+  itself bigoted or conspiratorial (the source is the problem); REVERENCE
+  is for source material that touches real traditions in a way that
+  could be appropriative if not handled carefully (the *handling* is the
+  problem).
+- **Required field:** `religious_risk` and/or `cultural_religious_risk`
+  set to `HIGH`.
+- **Example:** `LNOS_SOURCE_007_MISSING_YEARS_PATH.md`,
+  `LNOS_META_001_BIRTH_OF_A_STARSEED.md`
+
+### `SCIENCE_INSPIRED_MYTH_DESIGN`
+
+Used when the source is a working scientist or peer-reviewed paper
+describing real phenomena. The scientific framing is preserved as
+**design inspiration** for game mechanics; the source's clinical or
+pharmacological framing is **not** treated as actionable advice.
+
+- **Literal claims:** `SOURCE_DEPENDENT` — neuroscience/biology claims
+  attributed to a credentialed source are credible *as that domain*, but
+  not as metaphysics, treatment protocol, or recommendation.
+- **Use when:** designing metaverse mechanics inspired by real science
+  (perception research, neuropharmacology, etc.) where the temptation
+  is to overreach into "this proves my mythology" or "this justifies
+  self-treatment."
+- **Required field:** `medical_safety_risk` set to `HIGH` if the source
+  describes substances, treatments, or clinical phenomena.
+- **Forbidden uses always include:** medical advice, drug recommendation,
+  psychiatric protocol, "psychedelics reveal objective metaphysical
+  truth" claims.
+- **Core boundary:** *Hyper-real does not mean verified. Intensity does
+  not mean truth.*
+- **Example:** `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR.md`
+
+### `SCIENCE_INSPIRED_FUNNY_MYTH`
+
+Hybrid of `SCIENCE_INSPIRED_MYTH_DESIGN` and `FUNNY_MYTH`. Use when the
+source is scientific *and* the safest reframing layers comedic distance
+on top of the science (e.g. neuropharmacology of identity dissolution
+reframed as "the chair has opinions").
+
+- **Literal claims:** `SOURCE_DEPENDENT` (same as the science-inspired
+  base mode).
+- **Use when:** the underlying science describes phenomena strange enough
+  that a straight scientific reframing would still risk being read as
+  endorsement or instruction. Comedy keeps the player at the right
+  distance.
+- **Required fields:** same as `SCIENCE_INSPIRED_MYTH_DESIGN`
+  (`medical_safety_risk: HIGH` when applicable) plus the same comedic
+  guarantee as `FUNNY_MYTH` (the absurdity is the firewall against
+  literalism).
+- **Core boundary:** the comedy lands on the **player's relationship to
+  the experience**, never on the people who actually live with the
+  underlying conditions or substances.
+- **Example:** `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE.md`
+
+---
+
+## File-Naming Convention — `LNOS_SOURCE_NNN` vs `LNOS_META_NNN`
+
+Two artifact families live in this directory:
+
+### `LNOS_SOURCE_NNN_<TITLE>.md` — source-derived files
+
+A file generated from external source material (lecture transcripts,
+podcasts, books, conversations). Its `source_type` is something like
+`OLD_LECTURE_TRANSCRIPT` or `PODCAST_OR_LECTURE_TRANSCRIPT`. Numbering
+is sequential and stable.
+
+| # | File |
+|---|---|
+| 001 | `LNOS_COLLAPSE_MYTH_SOURCE_001.md` |
+| 002 | `LNOS_SOURCE_002_ANGEL_FLEETS_AND_SPHINX_VAULT.md` |
+| 003 | `LNOS_SOURCE_003_BIRDLINE_AND_SERPENT_DISTRACTION.md` |
+| 004 | `LNOS_SOURCE_004_FEATHER_ANTENNA_AND_SILENT_COORDINATION.md` |
+| 005 | `LNOS_SOURCE_005_SHUTU_STONE_COMPUTERS_AND_PYRAMID_WARS.md` |
+| 006 | `LNOS_SOURCE_006_HOUSE_RAKHAM_SHIELD_ACCOUNTANTS.md` |
+| 007 | `LNOS_SOURCE_007_MISSING_YEARS_PATH.md` |
+| 008 | `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR.md` |
+| 009 | `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE.md` |
+
+### `LNOS_META_NNN_<TITLE>.md` — synthesis artifacts
+
+A file that synthesizes existing source files into something larger
+(origin myth, onboarding cinematic, story bible, character archetype
+catalog). Its `source_type` is `ORIGINAL_SYNTHESIS` and it includes a
+`synthesizes:` array listing the source files it draws from.
+
+| # | File |
+|---|---|
+| 001 | `LNOS_META_001_BIRTH_OF_A_STARSEED.md` |
+
+The split keeps source-numbering stable as new transcripts arrive
+without re-numbering when synthesis artifacts are created.
+
 ---
 
 ## Frontmatter Conventions
@@ -79,15 +186,21 @@ Every lore file should declare in YAML frontmatter:
 |---|---|---|
 | `authority` | yes | Always `NON_SOVEREIGN` in this directory. |
 | `canon` | yes | Always `NO_SHIP` in this directory. |
-| `mode` | yes | One of the three modes above. |
-| `literal_claims` | yes | `QUARANTINED` / `FICTIONALIZED` / `REJECTED_AS_FACT` |
-| `source_type` | yes | `OLD_LECTURE_TRANSCRIPT`, `CONVERSATION`, `BOOK`, etc. |
+| `mode` | yes | One of the six modes above. |
+| `literal_claims` | yes | `QUARANTINED` / `FICTIONALIZED` / `REJECTED_AS_FACT` / `SOURCE_DEPENDENT` |
+| `source_type` | yes | `OLD_LECTURE_TRANSCRIPT`, `PODCAST_OR_LECTURE_TRANSCRIPT`, `CONVERSATION`, `BOOK`, `ORIGINAL_SYNTHESIS`, etc. |
 | `segment` | yes | Short label for the source segment. |
 | `approved_use` | yes | List of allowed downstream uses. |
 | `forbidden_use` | yes | List of disallowed downstream uses. Machine-actionable. |
 | `redline` | conditional | Required for `FUNNY_MYTH_WITH_REDLINE`. List of real-world tropes the file refuses to encode. |
 | `cultural_risk` | conditional | Set to `HIGH` if the source touches a real living culture. |
+| `religious_risk` | conditional | Set to `HIGH` for `FUNNY_MYTH_WITH_REVERENCE` files touching real religious traditions. |
+| `cultural_religious_risk` | conditional | Set to `HIGH` for files touching both cultural and religious traditions of a real community. |
+| `medical_safety_risk` | conditional | Set to `HIGH` for files in either `SCIENCE_INSPIRED_*` mode that describe substances, treatments, or clinical phenomena. |
 | `risk` | conditional | Free-form risk tag (e.g. `conspiracy_drift_possible`). |
+| `inspiration` | conditional | List of phenomenological / experiential inspirations (used by META files and SCIENCE_INSPIRED_* files). |
+| `synthesizes` | conditional | Required for META files. List of source files this file synthesizes. |
+| `companion_file` | conditional | If this file is a companion to another, name the partner file. |
 | `ledger_effect` | yes | Always `NONE` in this directory. |
 | `captured_on` | yes | ISO date. |
 | `session_id` | yes | Free-form session identifier. |
@@ -149,3 +262,72 @@ e.g.:
 > real HAL is the Layer-1 kernel gate. Don't confuse them.)*
 
 This prevents the failure mode where governance becomes vibes.
+
+---
+
+## Story Bible Direction
+
+The lore stack in this directory is converging on a coherent **comic
+cosmic metaverse mythology** built around:
+
+- **Collapse overlap** — the world isn't ending, it's becoming visible at
+  more than one layer at once
+- **Sky fleets** — what religion remembered as angels were once
+  patrol/transmission architectures
+- **Stone computers** — pyramids as multifunctional servers; the Shutu
+  guild as ancient backend engineers
+- **Birdline sensors** — birds and feathers as living grid-state
+  indicators
+- **False-signal traps** — the Serpent Halls glittering with partial truth
+- **Archive descent** — three-receipt vault gates, lawful-access
+  bureaucracy, House Rakham
+- **Reality renderer** — perception as constructed model; the Akashic
+  Atrium as the place where players learn this directly
+- **Receipt-based truth** — no claim without a receipt; no canon without
+  integration
+
+### Tone
+
+- cosmic funny myth
+- mystical but self-aware
+- grand but governance-bounded
+- weird but playable
+- symbolic but honest
+
+### Core rule
+
+> **The myth may be funny.**
+> **The system must remain honest.**
+
+### Best current tagline
+
+> **No receipt, no pyramid.**
+
+### Synthesis tagline (from META_001)
+
+> **Born of stars.**
+> **Bound by receipts.**
+
+### Working title options
+
+- *LNOS: The Collapse Has a Queue*
+- *LNOS: Stone Servers of the Birdline*
+- *LNOS: No Receipt, No Pyramid*
+- *LNOS: The Shield Accountants*
+- *LNOS: Compile the Mountain*
+- *LNOS: The Feather Has Bad Wi-Fi*
+
+### How the source files fit together
+
+| File | What it teaches |
+|---|---|
+| `LNOS_COLLAPSE_MYTH_SOURCE_001` | Knowledge becomes visible during overlap |
+| `LNOS_SOURCE_002_ANGEL_FLEETS_AND_SPHINX_VAULT` | Knowledge misremembered as rescue |
+| `LNOS_SOURCE_003_BIRDLINE_AND_SERPENT_DISTRACTION` | Knowledge read from nature, distinguished from spectacle |
+| `LNOS_SOURCE_004_FEATHER_ANTENNA_AND_SILENT_COORDINATION` | Knowledge shared via signs, not orders |
+| `LNOS_SOURCE_005_SHUTU_STONE_COMPUTERS_AND_PYRAMID_WARS` | Knowledge stored in architecture |
+| `LNOS_SOURCE_006_HOUSE_RAKHAM_SHIELD_ACCOUNTANTS` | Knowledge blocked by bureaucracy |
+| `LNOS_SOURCE_007_MISSING_YEARS_PATH` | Knowledge must be trained before being used |
+| `LNOS_SOURCE_008_REALITY_RENDERER_AND_AKASHIC_MIRROR` | Reality is constructed; integration is gated |
+| `LNOS_SOURCE_009_CLAUSTRUM_GATE_AND_OBJECTHOOD_COLLAPSE` | Identity is a renderer mode; receipts survive the trip |
+| `LNOS_META_001_BIRTH_OF_A_STARSEED` | Synthesis: how a player becomes eligible for any of the above |
