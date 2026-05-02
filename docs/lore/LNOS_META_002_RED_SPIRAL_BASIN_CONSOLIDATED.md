@@ -202,7 +202,7 @@ effect → real) provides the *shape* of the design, not the
 | Surface | fracture | output port |
 
 **Gameplay:**
-- scan layer sequence with the Magnetometer Probe
+- scan layer sequence with the Goblin Magnetometer Mk.I (§5.5)
 - align tone, pressure, and glyph
 - open temporary archive port
 - prevent overload
@@ -213,6 +213,82 @@ Shutu (`#005`) called the mountain a terrain transistor for the same
 reason an engineer might call a complicated procedure a "pipeline":
 because the layered structure echoes a familiar abstraction, not
 because the mountain is literally a circuit.
+
+---
+
+## 5.5 Item — Goblin Magnetometer Mk.I
+
+**The flagship field instrument of the Red Spiral Basin.** Friendly
+canonical name for the Magnetometer Probe item introduced abstractly
+in `#011`. The "Mk.I" suffix leaves room for upgrades in future lore.
+
+**Description:** *a ridiculous but functional field instrument built
+from a white sensing probe, copper coil, op-amps, an ADC, and too
+much hope.*
+
+**Functions:**
+- detects anomaly spikes
+- maps field gradients
+- stabilizes Tone-Locked Fractures
+- reveals Terrain Transistor output ports
+- converts "vortex vibes" into inspectable signal traces
+
+**Failure modes:**
+- noise mistaken for message
+- amplifier saturation
+- false spiral detection
+- House Rakham certification fee
+- DAN licking the probe for "calibration"
+
+### Field Probe Signal Chain (mechanic)
+
+The seven-step gameplay loop that the Mk.I drives:
+
+| # | Stage | What it does |
+|---|---|---|
+| 1 | **Coil Probe** | detects local changing magnetic flux |
+| 2 | **Copper Winding** | converts field variation into tiny voltage (Faraday induction) |
+| 3 | **Amplifier Stack** | boosts weak signal — 1–8 gain levels visible in UI |
+| 4 | **Analog-to-Digital Converter** | turns voltage into readable data |
+| 5 | **Signal Screen** | displays waveform, spikes, drift, spiral patterns |
+| 6 | **HAL Classifier** | separates: measured signal / symbolic interpretation / unsupported claim |
+| 7 | **Receipt Writer** | stores scan result as `FIELD_SCAN_RECEIPT` |
+
+The chain is the gameplay-readable form of META_002 §9's HAL overlay:
+DATA at stage 5, MYTH at stage 6 (interpretive layer), CLAIM is what
+the Receipt Writer **does not** issue.
+
+### Six signal types
+
+Every scan classifies its signal into one of:
+
+| Type | Source | Meaning |
+|---|---|---|
+| `FIELD_NOISE` | ambient | nothing actionable; baseline noise |
+| `FRACTURE_PULSE` | nearby Tone-Locked Fracture | proceed to tone-tuning loop |
+| `STONE_SERVER_HANDSHAKE` | buried Shutu structure | dig site nearby |
+| `BIRDLINE_ECHO` | migration anomaly | route signal worth following |
+| `AKASHIC_BLEED` | Layer-2/3 leakage (`#008`) | grounding may be needed (Inflow Stone) |
+| `HOUSE_RAKHAM_FAKE_SIGNAL` | bureaucratic interference | a permit issue, not a real anomaly |
+
+The taxonomy is the **vocabulary of measurement** in the Basin. Every
+scan returns one of these labels — never "the universe answered."
+
+### Akashic Receiver (mode of operation)
+
+The Mk.I, set to receive mode, is the Akashic Receiver.
+
+**The player cannot "talk to the universe."**
+
+The player **can** scan terrain signals and ask:
+- What pattern is present?
+- Is it repeatable?
+- Does it correlate with tone, color, birdline, or fracture behavior?
+- Can it produce an archive clue?
+
+Patterns that satisfy all four become `ARCHIVE_CLUE` candidates. Patterns
+that satisfy fewer remain measurements without canon status. Patterns
+that satisfy *zero* fall into `FIELD_NOISE`.
 
 ---
 
@@ -294,14 +370,16 @@ DAN            →  turns it into buttons
 
 ---
 
-## 8. Quest Prototype — The Mountain Has Bad Wiring
+## 8. Quest Prototypes
+
+### 8.1 The Mountain Has Bad Wiring
 
 **Premise:** House Rakham has issued a laminated certificate declaring
 the Red Spiral Basin a "Certified Emotional Shower." HAL objects.
 
 **Objectives:**
 1. Scan the quartz layer rumor.
-2. Measure anomaly points with the Magnetometer Probe.
+2. Measure anomaly points with the Goblin Magnetometer Mk.I.
 3. Find the Terrain Transistor output port.
 4. Use the Burden Shower ritual on one symbolic token at the Outflow
    Point.
@@ -319,6 +397,33 @@ the Red Spiral Basin a "Certified Emotional Shower." HAL objects.
 The whole quest pivots on Step 6: the player must consciously
 distinguish what was measured from what was felt. That moment is the
 gameplay equivalent of HAL discipline.
+
+### 8.2 The Rock Has a Microphone
+
+**Premise:** a local mystic claims the canyon can transmit messages
+across dimensions. **HAL says:** *"Claim blocked. Instrument test
+allowed."*
+
+**Objectives:**
+1. Assemble the Goblin Magnetometer Mk.I (per §5.5 signal chain).
+2. Place the coil probe near the Outflow Point.
+3. Record baseline noise.
+4. Move to the Inflow Stone and repeat.
+5. Amplify the signal without saturating the meter.
+6. Convert analog signal to digital trace.
+7. Compare trace against tone-fracture response (`#010`).
+8. Submit `FIELD_SCAN_RECEIPT`.
+9. **Classify any "message" as `SYMBOLIC` unless independently
+   verified.**
+
+**Reward:** `FIELD_PROBE_SIGNAL_CHAIN` unlocked.
+
+The two quests are complementary: 8.1 attacks the **healing-claim**
+failure mode (House Rakham selling the basin as therapy); 8.2 attacks
+the **paranormal-comms** failure mode (the mystic selling the basin
+as an interdimensional radio). Both fail modes are quarantined; both
+quests teach the player to use measurement and classification as the
+defense.
 
 ---
 
@@ -344,6 +449,36 @@ The four panels make every claim layer **simultaneously visible** to
 the player. The player cannot accidentally collapse "what I felt" into
 "what was measured" because they're sitting next to each other on
 screen.
+
+### 9.1 HAL Allowed / Blocked Phrasing (canonical word list)
+
+When HAL emits in-game text near a Basin scan or ritual, it draws from
+a **fixed allowed-list** and a **fixed blocked-list**. This keeps HAL's
+voice consistent and prevents in-fiction drift from the file's
+boundary.
+
+**Allowed (always safe to say):**
+
+> *Signal recorded.*
+> *Pattern repeated.*
+> *Anomaly detected.*
+> *Tone correlation observed in-game.*
+> *Subjective release recorded. No physical or medical claim admitted.*
+> *Geology-inspired metaphor. Do not promote to physics.*
+
+**Blocked (must never appear in HAL's voice in-game):**
+
+> *The universe answered.*
+> *Interdimensional communication proven.*
+> *The vortex transmitted intelligence.*
+> *The field heals or upgrades consciousness.*
+> *Sedona is a real paranormal site.*
+> *This frequency will heal you.*
+
+The blocked list is **not** decorative. If a future writer is tempted
+to put any of these phrases in HAL's mouth for tone, they have stepped
+outside the file's boundary. HAL is the boundary; HAL does not narrate
+through it.
 
 ---
 
@@ -584,6 +719,21 @@ Sharper:
 Doctrinal:
 > **Measure the rock. Mythologize the release. Do not sell the
 > mountain as medicine.**
+
+Receiver-mode tagline (from §5.5 Akashic Receiver):
+> **The universe may whisper.**
+> **The coil only records voltage.**
+
+Self-aware comic line:
+> *The canyon may be a transmitter.*
+> *But first, please check whether DAN set the amplifier to "maximum
+> goblin" again.*
+
+Strong doctrine (signal vs message):
+> A signal is not a message.
+> A pattern is not a prophecy.
+> A waveform is not a witness.
+> **A receipt is where interpretation begins.**
 
 Closing line of this file:
 > **The canyon may breathe. The ledger still checks.**
