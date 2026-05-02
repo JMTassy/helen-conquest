@@ -11,11 +11,21 @@ real_science_layer:
   - magnetic anomalies are real geophysical measurements
   - USGS publishes magnetic anomaly and geologic maps for the Sedona quadrangle and broader North American continent
   - induction magnetometers are real field instruments
+  - quartz exhibits a real piezoelectric effect under mechanical stress
+  - Fe2O3 (iron oxide / hematite) is the mineral that gives "red rock" formations their color
+  - basalt, limestone, and quartz are real rock layers commonly found in stratified geology
+  - Faraday's law of induction (magnetic flux through a coil induces a voltage) is real physics and is how induction magnetometers detect field variation
+  - operational amplifier IC chips and analog-to-digital converters are standard signal-chain components for low-frequency magnetic measurement
 quarantined_layer:
   - Sedona vortex as paranormal proof
   - "Mother Earth speaks" as factual claim
   - 525 tone opens/stabilizes a dimensional fracture
   - "off the charts" as proof without measured citation
+  - "magnetic flow cleanses the mind" / "magnetic shower" as therapeutic claim
+  - "vortexes amplify and bring trauma to the surface" as a treatment mechanism
+  - the specific quartz / basalt / iron-oxide stack at Sedona functions as a literal natural transistor producing emotionally-active magnetic emissions
+  - the natural transistor enables interdimensional or universe-wide communication
+  - the natural transistor functions as an amplifier for receiving information from elsewhere
 approved_use:
   - magnetic anomaly zone design
   - tone/fracture gameplay
@@ -135,6 +145,31 @@ as such.
 4. tune stabilizing tone
 5. record fracture state
 6. submit field receipt
+
+### Engineering specs (real-world physics for in-game flavor)
+
+The in-game Magnetometer Probe is modeled on a real induction
+magnetometer signal chain (per source fragment 4). This is preserved
+as **flavor / design-language**, not as instruction for building one:
+
+- **Sensing element:** copper-wound coil. Magnetic flux passing
+  through the coil induces a voltage in the wire (Faraday's law of
+  induction). This is real physics.
+- **Amplification:** the induced voltage is small and is amplified
+  by a chain of operational amplifier IC chips (the source describes
+  eight stages). Op-amps are standard analog signal-conditioning
+  components.
+- **Digitization:** the amplified low-frequency AC/DC signal feeds
+  an analog-to-digital converter (ADC), which produces a digital
+  stream the in-game computer logs and visualizes.
+
+This signal chain is **scientifically accurate** as a description of
+how induction magnetometers work in general. **What is not supported**
+is any claim that the readings produced by such an instrument at
+Sedona constitute proof of vortex phenomena, paranormal effects, or
+emotional/therapeutic activity. The instrument measures field
+variation. Interpretation of that variation as anything beyond field
+variation is interpretation, not measurement.
 
 The Magnetometer Probe is **the bridge** between the FUNNY_MYTH sensory
 mechanic of `#010` and the field-science layer of `#011`. It gives the
@@ -338,4 +373,133 @@ filed separately as `LNOS_SOURCE_012_OUTFLOW_RELEASE_AND_CANYON_RITUAL.md`,
 which also carries the explicit "no medical, no healing, no health claim"
 boundary required by USGS guidance.
 
+### Source fragment 3 — "Natural transistor" geology and repeated healing claim
+
+Continuation of the same Sedona segment. This fragment **repeats** the
+trauma-release / "magnetic shower for the mind" claim already in
+fragment 2 — the repetition does not strengthen the claim, and the file
+continues to quarantine it. It also adds **legitimately interesting
+geological substrate**: a layered stack of quartz (under pressure), an
+insulating layer of basalt and limestone, and a Fe2O3 / iron-oxide
+"red rock" cap, framed by the speaker as analogous to a transistor.
+
+The geology itself is real:
+- Quartz piezoelectricity under mechanical stress is well-documented
+  physics.
+- Fe2O3 (hematite) does give red-rock formations their color.
+- Layered sedimentary stacks of these rocks exist.
+
+What is **not** supported by this fragment:
+- That this specific Sedona stack functions as a literal natural
+  transistor producing emotionally-active emissions.
+- That the resulting field acts as a "shower for the mind."
+- That trauma is "amplified and brought to the surface" by the field.
+
+LNOS uses the **transistor analogy** (semiconductor-under-pressure +
+insulator + conductor) as **design language** for the Red Spiral
+Basin's terrain — see Section 13 below — without endorsing the
+emotional/therapeutic claims layered on top.
+
+> So, it's a good place if you come here with trauma or something
+> negative, get in an outflow, sit there, and take everything that's
+> bad, it'll come to the surface because it gets amplified and brought
+> out. Put it out and look at it and release it, get rid of it. So
+> just like taking a shower to remove dirt, being in a magnetic flow
+> from a vortex is like taking a shower to clean your mind. Deep below
+> all these red rocks is a layer of quartz, and those quartz crystals
+> are emitting their own magnetic field, as well as the Earth's
+> natural magnetic field that flows through the quartz is being
+> distorted and twisted. Now above the quartz is a rock layer of
+> basalt and limestone, and eventually all these red rocks, which is
+> Fe2O3 iron oxide, rust. That's what gives the color of Sedona's
+> rocks red. So you have the magnetic energy natural flowing from the
+> center of the planet, it's flowing up through the quartz crystals,
+> it's being accented and augmented by the magnetic energy being given
+> off by the quartz, and that is being focused and concentrated and
+> aligned by the red iron oxide in the rocks. And eventually when it
+> reaches the surface and emits out of the surface, it's in a
+> spiraling like action. All that red rock is squeezing the quartz
+> crystals, so they're under pressure. So very, very more than likely,
+> as those crystals are getting squeezed under tons and tons of rock,
+> they're emitting a piezoelectric effect. You have the quartz down
+> below, then you have an insulator, and then you have iron as the
+> conductor up on top. **That's a transistor.**
+
 `(NO CLAIM — TEMPLE — SCIENCE INSPIRED MYTH DESIGN — DAN GOBLIN SESSION — PART 11)`
+
+---
+
+## 13. The "Natural Transistor" Stack (Geological Design Language)
+
+Based on the geological substrate in fragment 3, the Red Spiral Basin
+gains a more specific terrain spec — a **three-layer stack** that LNOS
+uses as **design vocabulary**, not as physics claim:
+
+| Layer | Mineral | LNOS role |
+|---|---|---|
+| Bottom | quartz under pressure | the *signal source* — emits the in-game anomaly when stressed |
+| Middle | basalt + limestone | the *insulator* — stores potential between layers |
+| Top | Fe2O3 (iron oxide / red rock) | the *conductor / lens* — focuses and shapes the surface emission into the visible spiraling pattern |
+
+The speaker's "that's a transistor" framing is preserved as a
+**creative analogy** for terrain design. LNOS does not assert that the
+Sedona stack functions as an actual transistor producing emotionally-
+active emissions; it uses the *layered semiconductor / insulator /
+conductor analogy* as a way of giving the Red Spiral Basin terrain a
+coherent visual and acoustic logic.
+
+**Gameplay implications:**
+- Magnetometer Probe scans return *gradient* readings that visibly
+  match the layered-stack model when the player digs or descends.
+- Tone-Locked Fractures tend to appear where the three layers are
+  most cleanly stacked — high quartz pressure + thin insulator +
+  intact iron-oxide cap.
+- Outflow Points (per `#012`) also correlate with the cleanest stack
+  geometry; this gives the player a *terrain-readable* signal for
+  where to look.
+
+The geology is the **shape** of the gameplay, not the *justification*
+for any health claim. The transistor is a metaphor.
+
+---
+
+### Source fragment 4 — Interdimensional-comms claim and induction magnetometer engineering
+
+Continuation of the same Sedona segment. Two distinct contributions:
+
+1. **A new quarantined claim:** that the natural transistor "could
+   potentially" be used for interdimensional / universe-wide
+   communication, both for transmission and for reception
+   amplification. This is added to `quarantined_layer:` in the
+   frontmatter. LNOS does not encode this as a real possibility.
+2. **A real engineering description** of the induction magnetometer's
+   signal chain: copper coil sensing element (Faraday induction) →
+   eight-stage operational-amplifier amplification → analog-to-digital
+   converter → computer recording. This is real physics and is
+   incorporated as flavor for the Magnetometer Probe item (Section 3,
+   "Engineering specs" subsection).
+
+The split here demonstrates the file's containment doing its job:
+the engineering description **enriches** the in-game item; the
+interdimensional-comms claim **does not enter** the game as a
+working mechanic.
+
+> So if you want to come up here and use the natural transistor to
+> talk to someone else, be it interdimensionally, be it elsewhere
+> through the universe, that potentially could happen. And then the
+> same token, it could be an amplifier for receiving information.
+> Hey, in terms of the equipment that you use to measure the
+> energies of the Vortex sites here at Sedona, you've created these
+> yourself. Can you describe them and tell us how exactly they work?
+> Okay, I can do my best to try to keep it simple. That white sensing
+> probe over there, that's called an induction magnometer. And what
+> that means by induction is, when magnetic energy leaves the ground
+> and passes over and through that coil, it induces a voltage into
+> the copper wiring that's wound into the coil. That voltage is fed
+> up this cable and it gets amplified by what's called operational
+> amplifiers. They're little IC chips and there's eight of them
+> inside of here. So it amplifies, amplifies, amplifies, amplifies,
+> amplifies, and that goes into what's called an analog-to-digital
+> converter. It takes the amplified DC voltage in here, or AC, low
+> frequency, converts it to a digital signal, and feeds the computer
+> so I can record the magnetic activity on the screen here.
