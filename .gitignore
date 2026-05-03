@@ -24,3 +24,4 @@ helen_os/helen_memory.db
 # TEMPLE/subsandbox runtime outputs (non-sovereign, regenerable from source)
 temple/subsandbox/renders/
 temple/subsandbox/research/
+temple/subsandbox/director/
