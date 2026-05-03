@@ -26,9 +26,10 @@ from __future__ import annotations
 import datetime
 import hashlib
 import json
+import math
 import sys
 from pathlib import Path
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Tuple
 
 HERE = Path(__file__).resolve().parent
 if str(HERE) not in sys.path:
@@ -376,6 +377,162 @@ def run_replay(brief_path: Path, n: int = 3) -> Dict[str, Any]:
         "replay_check_hashes": {k: receipts[0][k] for k in keys},
         "status": "PASS" if consistent else "DIRECTOR_HASH_DRIFT_BLOCK",
     }
+
+
+# --- HELEN_VIDEO_OS bridge ---
+
+_BEAT_PURPOSES = {
+    "intro":       "Introduce the system",
+    "development": "Reveal the governance logic",
+    "payoff":      "Close with receipt-bound proof",
+}
+
+_VIDEO_OS_NEGATIVES = [
+    "identity drift",
+    "wrong hair color",
+    "text glitches",
+    "distorted face",
+    "extra fingers",
+    "unreadable symbols",
+]
+
+
+def _intake_to_brief(intake: Dict[str, Any]) -> Dict[str, Any]:
+    """Convert HELEN_VIDEO_OS intake schema -> Director brief schema.
+
+    n_shots is derived from duration with the original VIDEO_OS formula
+    (ceil(T/8) beats * ceil(beat_duration/4) shots) so the bridge does
+    not silently change shot density.
+    """
+    duration = int(intake["duration_seconds"])
+    beat_count = max(1, math.ceil(duration / 8))
+    beat_duration = duration / beat_count
+    shots_per_beat = max(1, math.ceil(beat_duration / 4))
+    n_shots = beat_count * shots_per_beat
+
+    return {
+        "project_id": intake["project_id"],
+        "title": intake["title"],
+        "duration_seconds": duration,
+        "n_shots": n_shots,
+        "aspect_ratio": intake["aspect_ratio"],
+        "character_id": intake["main_character"],
+        "style_vector": intake["style_canon"],
+        "theme": intake["title"],
+        "seed": intake["seed"],
+    }
+
+
+def _shot_table_with_time(shot_table: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Add cumulative time_range [start, end] to each shot, rounded to 3 dp."""
+    out = []
+    cum = 0.0
+    for s in shot_table:
+        start = round(cum, 3)
+        end = round(cum + float(s["duration"]), 3)
+        out.append({**s, "time_range": [start, end]})
+        cum = end
+    return out
+
+
+def _derive_beats(
+    shots_with_time: List[Dict[str, Any]],
+    intake: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    """Group consecutive shots by continuity_role -> STORYBOARD_V1 beats."""
+    beats: List[Dict[str, Any]] = []
+    current_role = None
+    current_start = 0.0
+    current_end = 0.0
+    beat_counter = 0
+
+    visual_intent = (
+        f"{intake['main_character']} inside a luminous "
+        "governed video operating interface."
+    )
+
+    def _flush(role: str, start: float, end: float, idx: int) -> Dict[str, Any]:
+        return {
+            "beat_id": f"B{idx:03d}",
+            "time_range": [round(start, 3), round(end, 3)],
+            "purpose": _BEAT_PURPOSES.get(role, "Show the production packet"),
+            "narration": "HELEN sees. HELEN proposes. The gate authorizes.",
+            "visual_intent": visual_intent,
+        }
+
+    for s in shots_with_time:
+        role = s["math_constraints"]["continuity_role"]
+        start, end = s["time_range"]
+        if role != current_role:
+            if current_role is not None:
+                beats.append(_flush(current_role, current_start, current_end, beat_counter))
+            beat_counter += 1
+            current_role = role
+            current_start = start
+        current_end = end
+
+    if current_role is not None:
+        beats.append(_flush(current_role, current_start, current_end, beat_counter))
+    return beats
+
+
+def _shots_to_video_os_shape(
+    shots_with_time: List[Dict[str, Any]],
+    beats: List[Dict[str, Any]],
+    intake: Dict[str, Any],
+) -> List[Dict[str, Any]]:
+    out = []
+    for s in shots_with_time:
+        start, end = s["time_range"]
+        beat_id = next(
+            (b["beat_id"] for b in beats
+             if b["time_range"][0] <= start and end <= b["time_range"][1]),
+            beats[0]["beat_id"],
+        )
+        out.append({
+            "shot_id": s["shot_id"],
+            "beat_id": beat_id,
+            "time_range": [start, end],
+            "duration": s["duration"],
+            "camera": s["camera"]["name"],
+            "subject": s["subject"],
+            "environment": s["environment"],
+            "action": s["action"],
+            "style": intake["style_canon"],
+            "negative": list(_VIDEO_OS_NEGATIVES),
+            "math_constraints": s["math_constraints"],
+        })
+    return out
+
+
+def run_director(intake: Dict[str, Any]) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """Director invocation for HELEN_VIDEO_OS.
+
+    Takes a VIDEO_OS intake (style_canon, main_character, ...) and returns
+    (STORYBOARD_V1, SHOTLIST_V1) in VIDEO_OS shape. Internally bridges to
+    the Director's brief schema, runs make_packet (phi-pacing + 12-camera
+    library + prime-rhythm), and converts the output back.
+
+    Determinism: same intake -> same (storyboard, shotlist).
+    """
+    brief = _intake_to_brief(intake)
+    packet = make_packet(brief)
+    shots_with_time = _shot_table_with_time(packet["shot_table"])
+    beats = _derive_beats(shots_with_time, intake)
+    shots_out = _shots_to_video_os_shape(shots_with_time, beats, intake)
+
+    storyboard = {
+        "schema": "STORYBOARD_V1",
+        "project_id": intake["project_id"],
+        "title": intake["title"],
+        "beats": beats,
+    }
+    shotlist = {
+        "schema": "SHOTLIST_V1",
+        "project_id": intake["project_id"],
+        "shots": shots_out,
+    }
+    return storyboard, shotlist
 
 
 def main() -> int:

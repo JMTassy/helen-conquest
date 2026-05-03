@@ -19,8 +19,18 @@ import argparse
 import hashlib
 import json
 import math
+import sys
 from pathlib import Path
 from typing import Any, Dict, List
+
+# Bridge to the helen-director skill — replaces internal storyboard/shotlist
+# builders so the system has ONE decision engine, not two.
+HERE = Path(__file__).resolve().parent
+SKILL_DIR = HERE.parent / "skills" / "helen-director"
+if str(SKILL_DIR) not in sys.path:
+    sys.path.insert(0, str(SKILL_DIR))
+
+from director import run_director  # noqa: E402
 
 
 def canonical(obj: Any) -> str:
@@ -63,115 +73,10 @@ def append_ledger(events: List[Dict[str, Any]], receipt: Dict[str, Any]) -> List
     return events
 
 
-def build_storyboard(intake: Dict[str, Any]) -> Dict[str, Any]:
-    duration = int(intake["duration_seconds"])
-    beat_count = max(1, math.ceil(duration / 8))
-    beat_duration = duration / beat_count
-
-    purposes = [
-        "Introduce the system",
-        "Reveal the governance logic",
-        "Show the production packet",
-        "Close with receipt-bound proof",
-    ]
-
-    beats: List[Dict[str, Any]] = []
-    for i in range(beat_count):
-        start = round(i * beat_duration, 3)
-        end = round((i + 1) * beat_duration, 3)
-        beats.append({
-            "beat_id": f"B{i+1:03d}",
-            "time_range": [start, end],
-            "purpose": purposes[min(i, len(purposes) - 1)],
-            "narration": "HELEN sees. HELEN proposes. The gate authorizes.",
-            "visual_intent": (
-                f"{intake['main_character']} inside a luminous "
-                "governed video operating interface."
-            ),
-        })
-
-    return {
-        "schema": "STORYBOARD_V1",
-        "project_id": intake["project_id"],
-        "title": intake["title"],
-        "beats": beats,
-    }
-
-
-CAMERAS: List[str] = [
-    "slow push-in",
-    "wide establishing shot",
-    "medium frontal shot",
-    "over-the-shoulder interface shot",
-    "close-up portrait",
-    "insert object shot",
-    "slow orbit",
-    "vertical reveal",
-]
-
-PRIME_TURNS = {2, 3, 5, 7, 11, 13}
-
-
-def build_shotlist(intake: Dict[str, Any], storyboard: Dict[str, Any]) -> Dict[str, Any]:
-    shots: List[Dict[str, Any]] = []
-    seed = int(intake["seed"])
-
-    for beat_index, beat in enumerate(storyboard["beats"]):
-        start, end = beat["time_range"]
-        beat_len = end - start
-        shots_per_beat = max(1, math.ceil(beat_len / 4))
-        shot_len = beat_len / shots_per_beat
-
-        for j in range(shots_per_beat):
-            shot_index = len(shots) + 1
-            prime_turn = shot_index in PRIME_TURNS
-            camera = CAMERAS[(seed + shot_index + beat_index) % len(CAMERAS)]
-            s0 = round(start + j * shot_len, 3)
-            s1 = round(start + (j + 1) * shot_len, 3)
-
-            shots.append({
-                "shot_id": f"S{shot_index:03d}",
-                "beat_id": beat["beat_id"],
-                "time_range": [s0, s1],
-                "duration": round(s1 - s0, 3),
-                "camera": camera,
-                "subject": intake["main_character"],
-                "environment": "blue-gold receipt ledger interface",
-                "action": beat["visual_intent"],
-                "style": intake["style_canon"],
-                "negative": [
-                    "identity drift",
-                    "wrong hair color",
-                    "text glitches",
-                    "distorted face",
-                    "extra fingers",
-                    "unreadable symbols",
-                ],
-                "math_constraints": {
-                    "phi_timing": True,
-                    "prime_turn": prime_turn,
-                    "continuity_role": "prime_turn" if prime_turn else "support",
-                    "perception_constraints": {
-                        "identity": f"{intake['main_character']}_CANON",
-                        "style_vector": intake["style_canon"],
-                        "scene_topology": "ledger_interface",
-                        "motion_curve": camera,
-                    },
-                    "braid_strands": [
-                        "face_identity",
-                        "pose_motion",
-                        "ledger_object",
-                        "light_interface",
-                        "camera_axis",
-                    ],
-                },
-            })
-
-    return {
-        "schema": "SHOTLIST_V1",
-        "project_id": intake["project_id"],
-        "shots": shots,
-    }
+# build_storyboard / build_shotlist / CAMERAS / PRIME_TURNS removed in this
+# upgrade. The Director (skills/helen-director/director.py) is now the
+# single decision engine producing both. This file stays a thin pipeline
+# orchestrator: intake -> Director -> prompts -> dry render -> receipts -> ledger.
 
 
 def compile_prompts(intake: Dict[str, Any], shotlist: Dict[str, Any]) -> Dict[str, Any]:
@@ -242,8 +147,8 @@ def run(intake_path: str, out_dir: str) -> str:
     if intake.get("mode") != "DRY_RUN":
         raise SystemExit("Phase 0 only supports mode=DRY_RUN")
 
-    storyboard = build_storyboard(intake)
-    shotlist = build_shotlist(intake, storyboard)
+    # Director call replaces the old internal builders.
+    storyboard, shotlist = run_director(intake)
     prompts = compile_prompts(intake, shotlist)
     renders = dry_render(prompts)
 
@@ -256,6 +161,13 @@ def run(intake_path: str, out_dir: str) -> str:
     receipts: List[Dict[str, Any]] = []
     receipts.append(make_receipt("INTAKE_RECEIPT_V1", project_id, {
         "intake_hash": sha256_obj(intake),
+    }))
+    receipts.append(make_receipt("DIRECTOR_RECEIPT_V1", project_id, {
+        "intake_hash": sha256_obj(intake),
+        "storyboard_hash": sha256_obj(storyboard),
+        "shotlist_hash": sha256_obj(shotlist),
+        "seed": intake["seed"],
+        "deterministic": True,
     }))
     receipts.append(make_receipt("STORYBOARD_RECEIPT_V1", project_id, {
         "input_hash": sha256_obj(intake),
