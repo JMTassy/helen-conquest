@@ -1,0 +1,109 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "experiments/helen_mvp_kernel/schemas/higgsfield_call_receipt_v1.json",
+  "title": "HIGGSFIELD_CALL_RECEIPT_V1",
+  "description": "Per-shot receipt emitted when the higgsfield_seedance skill calls the Higgsfield API. NON_SOVEREIGN. TEMPLE/subsandbox only. Never admitted to town/ledger_v1.ndjson. Proposal-class draft staged in experiments/ pending MAYOR admission to helen_os/schemas/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "task_id",
+    "shot_n",
+    "ref_image_sha256",
+    "prompt",
+    "prompt_hash",
+    "seed",
+    "duration_s",
+    "returned_url",
+    "mp4_sha256",
+    "timestamp_utc",
+    "scope",
+    "sovereign_admitted"
+  ],
+  "properties": {
+    "schema": {
+      "type": "string",
+      "const": "HIGGSFIELD_CALL_RECEIPT_V1"
+    },
+    "task_id": {
+      "type": "string",
+      "description": "Originating storyboard task_id (e.g. STORYBOARD_V1_HELEN_MV_60S_2026-05-02).",
+      "minLength": 1
+    },
+    "shot_n": {
+      "type": "integer",
+      "description": "Shot index within the storyboard (1-based).",
+      "minimum": 1
+    },
+    "ref_image_sha256": {
+      "type": "string",
+      "description": "SHA-256 of the canonical character reference image bound to this shot.",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "prompt": {
+      "type": "string",
+      "description": "Text prompt sent to Higgsfield Seedance2 for this shot.",
+      "minLength": 1
+    },
+    "prompt_hash": {
+      "type": "string",
+      "description": "SHA-256 of canonical-encoded prompt for determinism tracking.",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "seed": {
+      "type": "integer",
+      "description": "Deterministic seed sent to the API. Per-shot, per storyboard.",
+      "minimum": 0
+    },
+    "duration_s": {
+      "type": "number",
+      "description": "Requested clip duration in seconds.",
+      "exclusiveMinimum": 0,
+      "maximum": 60
+    },
+    "returned_url": {
+      "type": "string",
+      "description": "URL where Higgsfield returned the rendered mp4. Empty in DRY_RUN mode.",
+      "format": "uri-reference"
+    },
+    "mp4_sha256": {
+      "type": "string",
+      "description": "SHA-256 of the downloaded mp4. Empty in DRY_RUN mode.",
+      "oneOf": [
+        { "pattern": "^[0-9a-f]{64}$" },
+        { "const": "" }
+      ]
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp of the API call (or DRY_RUN simulation)."
+    },
+    "scope": {
+      "type": "string",
+      "enum": ["TEMPLE_SUBSANDBOX"],
+      "description": "Locked: this receipt class can only be emitted in TEMPLE/subsandbox scope. Sovereign chat surfaces must not produce it."
+    },
+    "sovereign_admitted": {
+      "type": "boolean",
+      "const": false,
+      "description": "Locked false. This receipt is never sovereign-admitted. If a future surface needs sovereign admission, declare a separate schema."
+    },
+    "mode": {
+      "type": "string",
+      "enum": ["DRY_RUN", "LIVE"],
+      "description": "Optional: DRY_RUN if the call was mocked (offline test), LIVE if the real Higgsfield API was hit. Absent = LIVE for backward-compat."
+    },
+    "error": {
+      "type": "object",
+      "description": "Optional: present only on failed calls. Recorded for debugging; failed calls still emit a receipt.",
+      "additionalProperties": false,
+      "properties": {
+        "code": { "type": "string" },
+        "message": { "type": "string" },
+        "retry_after_s": { "type": "number", "minimum": 0 }
+      },
+      "required": ["code", "message"]
+    }
+  }
+}
