@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "experiments/helen_mvp_kernel/schemas/research_run_receipt_v1.json",
+  "title": "RESEARCH_RUN_RECEIPT_V1",
+  "description": "Run-level wrapper receipt. Binds the H_N spectral receipt and φ-SDE trace receipt under a single replay-verified run. NON_SOVEREIGN. RESEARCH_SUBSANDBOX only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "loop",
+    "problem_id",
+    "spectral_receipt_hash",
+    "sde_receipt_hash",
+    "replay_n",
+    "replay_consistent",
+    "replay_check_hashes",
+    "scope",
+    "sovereign_admitted",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "schema": { "type": "string", "const": "RESEARCH_RUN_RECEIPT_V1" },
+    "loop": { "type": "string", "minLength": 1 },
+    "problem_id": { "type": "string", "minLength": 1 },
+    "spectral_receipt_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "sde_receipt_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "replay_n": { "type": "integer", "minimum": 2 },
+    "replay_consistent": { "type": "boolean" },
+    "replay_check_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operator_hash",
+        "eigenvalues_hash",
+        "trace_hash",
+        "z_T_hash",
+        "spectral_receipt_hash",
+        "sde_receipt_hash"
+      ],
+      "properties": {
+        "operator_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "eigenvalues_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "trace_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "z_T_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "spectral_receipt_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+        "sde_receipt_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+      }
+    },
+    "scope": { "type": "string", "enum": ["RESEARCH_SUBSANDBOX"] },
+    "sovereign_admitted": { "type": "boolean", "const": false },
+    "timestamp_utc": { "type": "string", "format": "date-time" }
+  }
+}

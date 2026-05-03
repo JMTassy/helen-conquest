@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "experiments/helen_mvp_kernel/schemas/h_n_spectral_receipt_v1.json",
+  "title": "H_N_SPECTRAL_RECEIPT_V1",
+  "description": "Receipt for H_N construction + spectral diagnostics. NON_SOVEREIGN. RESEARCH_SUBSANDBOX only. Proposal-class draft pending MAYOR admission to helen_os/schemas/.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "problem_id",
+    "N",
+    "primes",
+    "epsilon",
+    "c",
+    "fractal_kernel",
+    "primes_hash",
+    "operator_hash",
+    "eigenvalues_hash",
+    "spectral_summary",
+    "decimal_precision",
+    "scope",
+    "sovereign_admitted",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "schema": { "type": "string", "const": "H_N_SPECTRAL_RECEIPT_V1" },
+    "problem_id": { "type": "string", "minLength": 1 },
+    "N": { "type": "integer", "minimum": 1, "maximum": 64 },
+    "primes": {
+      "type": "array",
+      "items": { "type": "integer", "minimum": 2 },
+      "minItems": 1
+    },
+    "epsilon": { "type": "number" },
+    "c": { "type": "number" },
+    "fractal_kernel": {
+      "type": "string",
+      "enum": ["exp_neg_abs"]
+    },
+    "primes_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "operator_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "eigenvalues_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "spectral_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lambda_min", "lambda_max", "trace", "frobenius_norm"],
+      "properties": {
+        "lambda_min": { "type": "string" },
+        "lambda_max": { "type": "string" },
+        "trace": { "type": "string" },
+        "frobenius_norm": { "type": "string" }
+      }
+    },
+    "decimal_precision": { "type": "integer", "const": 12 },
+    "scope": { "type": "string", "enum": ["RESEARCH_SUBSANDBOX"] },
+    "sovereign_admitted": { "type": "boolean", "const": false },
+    "timestamp_utc": { "type": "string", "format": "date-time" }
+  }
+}

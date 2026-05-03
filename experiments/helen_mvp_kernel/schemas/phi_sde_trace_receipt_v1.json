@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "experiments/helen_mvp_kernel/schemas/phi_sde_trace_receipt_v1.json",
+  "title": "PHI_SDE_TRACE_RECEIPT_V1",
+  "description": "Receipt for one φ-SDE integration trace. Phase 0: ZERO_NOISE + zero projection. NON_SOVEREIGN. RESEARCH_SUBSANDBOX only.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "problem_id",
+    "z0_hash",
+    "T",
+    "dt",
+    "n_steps",
+    "gamma",
+    "noise_seed",
+    "noise_mode",
+    "qam_projection",
+    "trace_hash",
+    "z_T_hash",
+    "decimal_precision",
+    "scope",
+    "sovereign_admitted",
+    "timestamp_utc"
+  ],
+  "properties": {
+    "schema": { "type": "string", "const": "PHI_SDE_TRACE_RECEIPT_V1" },
+    "problem_id": { "type": "string", "minLength": 1 },
+    "z0_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "T": { "type": "number", "exclusiveMinimum": 0 },
+    "dt": { "type": "number", "exclusiveMinimum": 0 },
+    "n_steps": { "type": "integer", "minimum": 1 },
+    "gamma": { "type": "number", "minimum": 0 },
+    "noise_seed": { "type": "integer" },
+    "noise_mode": { "type": "string", "enum": ["ZERO_NOISE", "SEEDED"] },
+    "qam_projection": { "type": "string", "enum": ["zero", "identity"] },
+    "trace_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "z_T_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "z_T_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["norm", "first_8", "min", "max"],
+      "properties": {
+        "norm": { "type": "string" },
+        "first_8": { "type": "array", "items": { "type": "string" } },
+        "min": { "type": "string" },
+        "max": { "type": "string" }
+      }
+    },
+    "decimal_precision": { "type": "integer", "const": 12 },
+    "scope": { "type": "string", "enum": ["RESEARCH_SUBSANDBOX"] },
+    "sovereign_admitted": { "type": "boolean", "const": false },
+    "timestamp_utc": { "type": "string", "format": "date-time" }
+  }
+}
