@@ -8,6 +8,7 @@ __pycache__/
 node_modules/
 .DS_Store
 .helen/ralph/
+.helen/verify/
 helen_os/knowledge/index.json
 helen_os/knowledge/embeddings/
 helen_os/knowledge/corpus.json
