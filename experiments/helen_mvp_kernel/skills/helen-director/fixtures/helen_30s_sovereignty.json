@@ -1,0 +1,11 @@
+{
+  "project_id": "helen_30s_sovereignty",
+  "title": "HELEN explains sovereignty",
+  "duration_seconds": 30,
+  "n_shots": 6,
+  "aspect_ratio": "9:16",
+  "character_id": "HELEN_CANON",
+  "style_vector": "HELEN_MANGA",
+  "theme": "sovereignty",
+  "seed": 777
+}
