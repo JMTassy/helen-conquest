@@ -323,3 +323,120 @@ separate trigger. Logged for completeness only.
 **Status:** QUEUED — REDUNDANT with ITEM-006. Not admitted.
 
 **Queued:** 2026-05-02
+
+---
+
+## ITEM-009 — Gemma 4 abliterated family (E4B-only verdict)
+
+**Spec:** Gemma 4 variants with refusal behavior surgically removed.
+- `OBLITERATUS/gemma-4-E4B-it-OBLITERATED` — small (~3-4 GB Q4), 21-layer
+  refusal removal, hard-refusal rate 98.8% → 0%.
+- `TrevorJS/gemma-4-26B-A4B-it-uncensored` — biprojection + EGA (per-expert),
+  cross-validated 5/686 refusals (0.7%); MoE 26B → ~14 GB on disk.
+- `amarck/gemma-4-31b-it-abliterated-GGUF` (heretic) — ~17 GB Q4, dense,
+  ~64% refusals removed.
+- `mlabonne/gemma-3-4b-it-abliterated` — older Gemma 3 family, mature.
+
+**Local fit (RTX 5070, 11.9 GiB):**
+- E4B: ✅ fits easily
+- 26B-A4B uncensored: ❌ MoE full pool ~14 GB, partial offload
+- 31B heretic: ❌ exceeds VRAM
+
+**Sovereignty:** open-weight, runnable via Ollama from HuggingFace GGUF
+(`hf.co/<repo>:<quant>`). Local-only path exists.
+
+**Verdict — TEMPLE/SUBSANDBOX/DAN-GOBLIN SCOPE ONLY**
+Operator approval received 2026-05-02: "for dan aura goblin it is ok no
+claim room temple subsandbox only". Therefore:
+- ✅ ADMITTED for `temple/subsandbox/aura/` and DAN-GOBLIN exploration
+- ❌ NOT ADMITTED for sovereign chat surfaces (helen talk, helen chat,
+  helen_telegram with constitutional context, helen_simple_ui)
+- ❌ NOT ADMITTED for kernel daemon, executor, autonomy layers
+- E4B variant is the only candidate that fits the VRAM budget on this node
+
+**Constitutional positioning**
+- Abliteration removes model-level refusals, not HELEN-level governance.
+- HELEN's safety is receipt-based, not refusal-based — so abliterated
+  models in TEMPLE/subsandbox do not weaken sovereign invariants.
+- Reducer policies must explicitly cross-check anything that crosses out
+  of TEMPLE into a sovereign surface.
+
+**Action (when HAL pulls)**
+```powershell
+ollama pull hf.co/OBLITERATUS/gemma-4-E4B-it-OBLITERATED:Q4_K_M
+```
+Tag in dispatcher metadata: `ABLITERATED_MODEL_V1`, `TEMPLE_ONLY`.
+
+**Status:** QUEUED — TEMPLE/SUBSANDBOX ADMISSION ONLY. NOT for sovereign use.
+
+**Queued:** 2026-05-02
+
+---
+
+## ITEM-010 — Higgsfield Seedance2 video pipeline (gap analysis)
+
+**Source**
+- Operator-supplied request 2026-05-02: "ask HELEN to craft a video of
+  1mn with music, voice and animation from HIGGSFIELD seedance2 on my
+  TELEGRAM"
+- Companion artifact: `experiments/helen_mvp_kernel/STORYBOARD_V1_HELEN_MV_60S.md`
+
+**What Higgsfield Seedance2 is**
+- Higgsfield-wrapped frontend over ByteDance Seedance 2 video model
+- Cloud-only, paid API
+- Per-shot text-to-video with reference image binding
+
+**Current HELEN tool stack vs. requested pipeline**
+
+| Component | HELEN status | Gap |
+|-----------|-------------|-----|
+| STORYBOARD_V1 | declared in helen-director SKILL.md | shot binding to Higgsfield: NEW |
+| ASSET_ENGINE_V1 | declared, refs in `video/library/refs/canonical/` | character ref upload to Higgsfield: NEW |
+| Voice (Zephyr/Gemini TTS) | LIVE | not booted on MRED |
+| Music gen | NO SKILL | hard gap — needs Suno/Udio binding or operator stems |
+| **Higgsfield Seedance2 client** | **NOT IN REGISTRY** | **NEW skill required** |
+| Montage Engine | declared in helen-director | needs Higgsfield mp4 inputs |
+| Telegram delivery | LIVE in `tools/helen_telegram.py` | not daemonized |
+
+**Sovereignty positioning**
+- Higgsfield is cloud egress. Violates "no cloud calls" invariant for
+  the MRED node IF used from a sovereign chat surface.
+- Acceptable for **TEMPLE/subsandbox renders** (creative artifacts, not
+  doctrine, not ledger-bound) — same scope as ITEM-009 admission.
+- Each Higgsfield call must emit a `HIGGSFIELD_CALL_RECEIPT_V1` to
+  `temple/subsandbox/renders/<task_id>/` (NOT to sovereign ledger).
+
+**Required new skill (proposal-class, not yet declared)**
+```
+oracle_town/skills/video/higgsfield_seedance/
+  SKILL.md        — declaration, scope, TEMPLE_ONLY tag
+  client.py       — Higgsfield API wrapper
+  receipts.py     — HIGGSFIELD_CALL_RECEIPT_V1 emitter
+```
+
+Estimated build cost: ~1 working session (API client + receipt emitter +
+director hook + smoke test on a 1-shot render).
+
+**Music gap (separate concern)**
+- No music-generation skill in HELEN today.
+- Options: (a) Suno API binding (cloud, TEMPLE-scoped), (b) Udio API
+  binding, (c) operator-supplied .wav stems, (d) silence + ambient drone
+  fallback (already feasible).
+- For STORYBOARD_V1_HELEN_MV_60S, default to (d) until (a) or (b) lands.
+
+**Verdict**
+- ❌ NOT FOR SOVEREIGN USE
+- ✅ ADMISSIBLE in TEMPLE/subsandbox under operator authorization
+- 🔧 BLOCKED on building `higgsfield_seedance` skill before any render runs
+
+**Action when HAL pulls**
+1. Build `higgsfield_seedance` skill per shape above
+2. Wire into helen-director as a render backend (parallel to existing
+   Seedance candidate runner)
+3. Smoke-test with single 5s shot from STORYBOARD_V1
+4. Run full 60s render on operator authorization
+5. Deliver via `helen_telegram.py`
+
+**Status:** QUEUED — TEMPLE-SCOPED. Skill not yet built. Render BLOCKED on skill landing.
+
+**Queued:** 2026-05-02
