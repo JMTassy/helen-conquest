@@ -1,0 +1,17 @@
+{
+  "project_id": "helen_video_001",
+  "title": "HELEN OS Awakening",
+  "mode": "DRY_RUN",
+  "duration_seconds": 30,
+  "aspect_ratio": "9:16",
+  "style_canon": "HELEN_MANGA",
+  "main_character": "HELEN",
+  "objective": "Create a short cinematic video explaining HELEN OS.",
+  "constraints": [
+    "No consciousness claims",
+    "No unverified factual claims",
+    "Maintain HELEN visual identity",
+    "Every shot must have a receipt"
+  ],
+  "seed": 777
+}

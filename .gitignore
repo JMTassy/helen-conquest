@@ -25,3 +25,6 @@ helen_os/helen_memory.db
 temple/subsandbox/renders/
 temple/subsandbox/research/
 temple/subsandbox/director/
+
+# HELEN VIDEO OS runtime runs (regenerable from intake + script)
+experiments/helen_mvp_kernel/HELEN_VIDEO_OS/09_runs/
