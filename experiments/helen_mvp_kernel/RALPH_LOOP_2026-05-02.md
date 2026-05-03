@@ -153,4 +153,231 @@ hal_verdict:         CONTINUE
 
 ---
 
-(more epochs appended below as they execute)
+### Epoch 4 — scaffold subsandbox skill skeleton
+
+```yaml
+epoch:               4
+carry_forward_state: epoch 3 left a typed precursor packet pending MAYOR
+hypothesis:          a subsandbox scaffold under experiments/.../higgsfield_seedance/
+                     can host the skill code without touching oracle_town/
+                     (which requires sovereign admission)
+experiment:          created __init__.py + SKILL.md + tests/__init__.py
+metric:              package importable from experiments/.../higgsfield_seedance,
+                     SKILL.md declares scope=TEMPLE_SUBSANDBOX explicitly,
+                     no writes outside experiments/
+failure_mode:        a write into oracle_town/skills/video/ would have
+                     required MAYOR — staying in experiments/ avoids it
+keep_reject_rule:    KEEP if subsequent epochs (5,6,7) can build on top
+                     without modifying constitutional paths
+upgrade_path:        epoch 5 fills client.py
+hal_verdict:         CONTINUE
+```
+
+---
+
+### Epoch 5 — build offline-mock client.py
+
+```yaml
+epoch:               5
+carry_forward_state: skill skeleton present
+hypothesis:          a client with both DRY_RUN (offline) and LIVE branches
+                     can be tested without network and without MAYOR-admission;
+                     LIVE branch returns SKILL_NOT_ADMITTED until promotion
+experiment:          wrote client.py with render_shot(), DRY_RUN fully
+                     deterministic, LIVE returns NO_API_KEY or SKILL_NOT_ADMITTED
+                     as appropriate; ref_image hashing falls back gracefully
+                     for missing files in DRY_RUN
+metric:              function returns a dict matching HIGGSFIELD_CALL_RECEIPT_V1
+                     fields, deterministic given same inputs
+failure_mode:        accidentally hitting the network in DRY_RUN — guarded
+                     by branch separation
+keep_reject_rule:    KEEP if smoke test (E7) confirms determinism
+upgrade_path:        epoch 6 wires receipt emission + validation
+hal_verdict:         CONTINUE
+```
+
+---
+
+### Epoch 6 — build receipts emitter
+
+```yaml
+epoch:               6
+carry_forward_state: client emits receipt-shaped dicts
+hypothesis:          a receipts module can validate against the JSON Schema
+                     draft AND refuse sovereign writes via FORBIDDEN_TARGETS,
+                     keeping all output in temple/subsandbox/renders/
+experiment:          wrote receipts.py with validate_receipt() and
+                     emit_receipt(); jsonschema is optional (manual checks
+                     fallback); SovereignWriteRefused exception guards the
+                     boundary
+metric:              writes only under temple/subsandbox/renders/<task_id>/;
+                     locks enforced (scope, sovereign_admitted)
+failure_mode:        path-resolution attack writing into town/ledger_v1.ndjson —
+                     guarded by FORBIDDEN_TARGETS + scope check
+keep_reject_rule:    KEEP if smoke test confirms TEMPLE-only writes
+upgrade_path:        epoch 7 builds the smoke test
+hal_verdict:         CONTINUE
+```
+
+---
+
+### Epoch 7 — build smoke test (offline mode)
+
+```yaml
+epoch:               7
+carry_forward_state: client + receipts modules in place
+hypothesis:          a stdlib-only smoke test can validate the full
+                     non-sovereign behavior surface (DRY_RUN determinism,
+                     locks, validation rejections, LIVE refusal paths)
+experiment:          wrote tests/test_smoke.py with 7 test cases plus a
+                     gated LIVE placeholder; tests use tmp_path + monkeypatch
+                     so the repo state is never mutated
+metric:              7 cases cover DRY_RUN happy path, determinism,
+                     subsandbox-only emission, lock enforcement (×2),
+                     LIVE NO_API_KEY, LIVE SKILL_NOT_ADMITTED
+failure_mode:        a real network call slipping through LIVE — gated
+                     behind explicit opt-in env vars
+keep_reject_rule:    KEEP if all 7 cases pass under stdlib-only execution
+upgrade_path:        epoch 8 actually runs the tests and emits a receipt
+hal_verdict:         CONTINUE
+```
+
+---
+
+### Epoch 8 — run smoke test, capture receipt
+
+```yaml
+epoch:               8
+carry_forward_state: tests written but not yet executed
+hypothesis:          all 7 smoke tests pass under stdlib-only Python on
+                     this Claude Code node (pytest unavailable)
+experiment:          executed test cases inline via python3 heredoc;
+                     emitted SMOKE_TEST_RECEIPT_V0 to
+                     temple/subsandbox/renders/SMOKE_E8/smoke_test_receipt.json
+metric:              7/7 PASS, exit_code 0
+failure_mode:        any FAIL would have halted the loop and reported up
+keep_reject_rule:    KEEP — all assertions held
+upgrade_path:        epoch 9 closes the music gap with silence fallback
+hal_verdict:         CONTINUE
+result:              7/7 PASS
+```
+
+---
+
+### Epoch 9 — music-gen stub (silence fallback)
+
+```yaml
+epoch:               9
+carry_forward_state: render path proven; music gap still open per ITEM-010
+hypothesis:          a deterministic silence WAV via stdlib `wave` is
+                     sufficient to unblock end-to-end orchestration without
+                     introducing a cloud-music dependency
+experiment:          wrote music_stub.py with write_silence_wav() and
+                     music_for_storyboard(); produces 44.1 kHz mono 16-bit
+                     PCM silence of arbitrary duration with stable SHA-256
+metric:              60s output is exactly 5,292,044 bytes (60 * 44100 * 2
+                     + 44 byte WAV header) — deterministic
+failure_mode:        nondeterministic timestamp in WAV header — `wave` does
+                     not emit one, so safe
+keep_reject_rule:    KEEP — silence is honest about the gap; no fake
+                     "music" pretending to be a real generation
+upgrade_path:        epoch 10 ties everything to the actual storyboard
+hal_verdict:         CONTINUE
+```
+
+---
+
+### Epoch 10 — DRY_RUN orchestrator consuming STORYBOARD_V1
+
+```yaml
+epoch:               10
+carry_forward_state: client, receipts, music stub, smoke-tested scaffold
+hypothesis:          the existing STORYBOARD_V1_HELEN_MV_60S.md packet
+                     can flow through render_shot + emit_receipt +
+                     music_for_storyboard end-to-end in DRY_RUN, producing
+                     a manifest that the operator can inspect to verify
+                     what a LIVE run WOULD send
+experiment:          wrote dry_run.py that parses STORYBOARD_V1, extracts
+                     shot table via regex, builds per-shot prompts, calls
+                     render_shot(mode=DRY_RUN) for each, emits receipts,
+                     produces a 60s silence track, writes manifest.json
+                     summarizing the run + listing the 5 prerequisites
+                     for switching to LIVE
+metric:              executed against the real packet:
+                       - task_id: STORYBOARD_V1_HELEN_MV_60S_2026-05-02
+                       - 12 shots parsed (matches camera sheet)
+                       - 60.0s total (matches storyboard spec)
+                       - seeds 2026050201..2026050212 (deterministic)
+                       - 12 receipts in receipts.ndjson
+                       - music silence wav 5,292,044 bytes
+                       - manifest.json written
+failure_mode:        regex parse drift if STORYBOARD_V1 format changes —
+                     manageable; the parser raises on missing task_id
+keep_reject_rule:    KEEP — goal satisfied: DRY_RUN end-to-end stub runs
+upgrade_path:        when MAYOR admits both precursor packets and the
+                     skill migrates to oracle_town/, switching mode=LIVE
+                     in dry_run.py orchestrator wires the cloud render
+hal_verdict:         DONE  (goal satisfied at epoch 10)
+```
+
+---
+
+## Loop summary
+
+```yaml
+loop:           RALPH_LOOP_2026-05-02
+epochs_used:    10 / 10
+budget_status:  exact-fit (no halt-early, no overrun)
+goal_status:    SATISFIED — DRY_RUN end-to-end stub built, smoke-tested,
+                exercised against real STORYBOARD_V1 packet
+artifacts:
+  - experiments/helen_mvp_kernel/RALPH_LOOP_2026-05-02.md           (this file)
+  - experiments/helen_mvp_kernel/schemas/higgsfield_call_receipt_v1.json
+  - experiments/helen_mvp_kernel/MAYOR_TASK_PACKET_HIGGSFIELD_SCHEMA.md
+  - experiments/helen_mvp_kernel/higgsfield_seedance/__init__.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/SKILL.md
+  - experiments/helen_mvp_kernel/higgsfield_seedance/client.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/receipts.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/tests/__init__.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/tests/test_smoke.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/music_stub.py
+  - experiments/helen_mvp_kernel/higgsfield_seedance/dry_run.py
+runtime_outputs (TEMPLE/subsandbox, NOT committed):
+  - temple/subsandbox/renders/SMOKE_E8/smoke_test_receipt.json
+  - temple/subsandbox/renders/STORYBOARD_V1_HELEN_MV_60S_2026-05-02/manifest.json
+  - temple/subsandbox/renders/STORYBOARD_V1_HELEN_MV_60S_2026-05-02/receipts.ndjson
+  - temple/subsandbox/renders/STORYBOARD_V1_HELEN_MV_60S_2026-05-02/music_*.wav
+sovereign_writes:    0
+forbidden_path_hits: 0
+ledger_admissions:   0  (kernel daemon down on this node; admissions deferred to MRED)
+hal_final_verdict:   DONE
+```
+
+## Boundary reached
+
+The loop honored its constitutional bounds:
+
+- HAL only PROPOSED. No sovereign decisions.
+- Reducer was never invoked (kernel daemon down; admissions deferred).
+- Ledger received zero entries from this loop.
+- All 11 committed artifacts live under `experiments/helen_mvp_kernel/`.
+- All 4 runtime outputs live under `temple/subsandbox/renders/`.
+- Forbidden paths untouched.
+
+## Next sovereign moves (operator-only, not in this loop's scope)
+
+1. Boot kernel daemon on MRED.
+2. Route `MAYOR_TASK_PACKET_HIGGSFIELD_SCHEMA.md` (precursor) via
+   `tools/helen_say.py`.
+3. Route `MAYOR_TASK_PACKET_HIGGSFIELD_SKILL.md` (main) via `tools/helen_say.py`.
+4. After both PASS, migrate the subsandbox scaffold to
+   `oracle_town/skills/video/higgsfield_seedance/`.
+5. Set `HIGGSFIELD_API_KEY` + `TELEGRAM_BOT_TOKEN` + `GEMINI_API_KEY`.
+6. Issue a LIVE STORYBOARD_V1 task packet.
+7. helen-director + Higgsfield + Telegram bot deliver the 60s mp4.
+
+## Closing line
+
+> HAL proposed. Reducer waits. Ledger is silent.
+> The skill exists in subsandbox, smoke-tested, ready.
+> The boundary holds.
