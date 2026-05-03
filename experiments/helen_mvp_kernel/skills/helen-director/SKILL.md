@@ -76,3 +76,38 @@ Math constraints applied per LaTeX spec:
 The skill above (the prose protocol) is the meta-decision Director.
 The implementation below is the production-packet Director.
 They are the same skill at different scales.
+
+## The button (decision runner)
+
+For the meta-decision case (free-prose brief, "what do I do next?"), use:
+
+- `director_runner.py` — minimal decision runner
+
+CLI:
+
+```bash
+python director_runner.py \
+  --brief test_director_prompt.txt \
+  --seed 777 \
+  --out temple/subsandbox/director/<run_id>
+```
+
+Outputs:
+
+- `DIRECTOR_PACKET.md` — human-readable decision
+- `DIRECTOR_PACKET.json` — structured decision
+- `DIRECTOR_DECISION_RECEIPT_V1.json` — replay-bound receipt
+
+Acceptance:
+
+    same brief + same seed = same receipt_hash
+
+(verified: byte-identical receipts across two runs.)
+
+## Two scales, one skill
+
+```
+director_runner.py    decision-class:    free prose -> 1-decision packet
+director.py           production-class:  brief.json -> 5-artifact video packet
+SKILL.md              prose protocol:    when to invoke either
+```
