@@ -3,6 +3,11 @@ import html
 from collections import Counter
 from wul_data import LAWS, VIB
 
+import sys
+sys.path.insert(0, "../../helen_os/kernel/constitution")
+sys.path.insert(0, "../../helen_os/gates/effect_gate")
+import wulmath_verifier as WV
+
 E = lambda s: html.escape(s, quote=True)
 by_vib = {v: [l for l in LAWS if l[3] == v] for v in VIB}
 counts = Counter(l[3] for l in LAWS)
@@ -31,6 +36,7 @@ def stratum(v):
           <span class="law-i">{i:03d}</span>
           <span class="law-body">
             <span class="law-math">{E(math)}</span>
+            <span class="law-gamma">Γ {E(", ".join(WV.THEORIES.get(nm, ())) or "—")}</span>
             <span class="law-name">{E(nm)}</span>
           </span>
         </li>''' for i, nm, math, _ in by_vib[v])
@@ -326,6 +332,15 @@ h1 em {{ font-style: italic; color: var(--ink-2); }}
   padding-bottom: 2px;
   scrollbar-width: thin;
 }}
+.law-gamma {{
+  display: block;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--c);
+  margin-top: 4px;
+  opacity: .85;
+  word-break: break-word;
+}}
 .law-name {{
   display: block;
   font-family: var(--mono);
@@ -412,6 +427,10 @@ h1 em {{ font-style: italic; color: var(--ink-2); }}
         <span class="ax-v">□(¬illegal mutation) ∧ ◇(critical reachable obligation ⇒ resolution)</span>
       </div>
       <div class="ax">
+        <span class="ax-k">Bound form</span>
+        <span class="ax-v">Γ ∪ {{A}} ⊬_R B &nbsp;·&nbsp; a non-entailment with no theory and no named relation is not a proposition</span>
+      </div>
+      <div class="ax">
         <span class="ax-k">Chain rule</span>
         <span class="ax-v">⊬ is NOT transitive · a ⊬ b ⊬ c means (a⊬b) ∧ (b⊬c) and never (a⊬c) · ⊊ and ⊋ chains ARE transitive</span>
       </div>
@@ -428,6 +447,8 @@ h1 em {{ font-style: italic; color: var(--ink-2); }}
       <div class="cell"><span class="cell-n">{REFUSALS}</span><span class="cell-l">refusal codes</span></div>
       <div class="cell hi"><span class="cell-n">{PROBES}</span><span class="cell-l">probes held</span></div>
       <div class="cell hi"><span class="cell-n">{RATIO:.0f}:1</span><span class="cell-l">LOC per law</span></div>
+      <div class="cell hi"><span class="cell-n">108/108</span><span class="cell-l">theory-bound</span></div>
+      <div class="cell"><span class="cell-n">62</span><span class="cell-l">theories Γ</span></div>
     </div>
   </header>
 
@@ -447,9 +468,13 @@ h1 em {{ font-style: italic; color: var(--ink-2); }}
       <dt>Gate receipt</dt><dd>{RECEIPT}</dd>
       <dt>Source</dt><dd>helen_os/kernel/constitution/verify.py · names extracted verbatim from _probes()</dd>
       <dt>Standing</dt><dd>authority = false · canon = false · ledger_effect = none · (dP, dA, dE) = (0, 0, 0)</dd>
+      <dt>Theory binding</dt><dd>108/108 ALL_LINES_THEORY_BOUND · Γ derived from verify.py by AST, never asserted · verifier mutation-sensitive on 8 sacrificial counterexamples</dd>
       <dt>Non-delta</dt><dd>2 pre-existing failures in helen_os/tests/test_surface_grammar.py, unrelated to this plate and not fixed</dd>
     </dl>
-    <p class="caveat">This page is a representation. It compresses the constitution; it does not hold it —
+    <p class="caveat"><strong style="color:var(--gold);font-weight:600">No compression without a theory of decompression.</strong>
+    Each line below its formula names Γ — the constitutional modules its
+    probe actually touches, read out of the source rather than declared.
+    This page is a representation. It compresses the constitution; it does not hold it —
     the holding is done by the probes, in the gate, on each run. A compression that could not be
     re-derived from the source would be a seal without an admission, and the last of the 108 laws is
     exactly the rule that a control which cannot fail reports nothing when it passes.</p>

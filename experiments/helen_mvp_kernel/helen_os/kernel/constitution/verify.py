@@ -2549,6 +2549,65 @@ def _probes():
              "reports nothing when it reports zero.",
              _non_vacuity))
 
+    import wulmath_verifier as wmv
+
+    def _theory_bound():
+        st = wmv.status()
+        m = wmv.mutation_probe()
+        # Γ is DERIVED from this file by AST, never asserted
+        gam = wmv.THEORIES
+        # the two levels stay apart
+        formula = wmv.parse_line("¬CanRise(c) ⇒ Info(c = 0) = 0")
+        chained = wmv.parse_line("Retain ⊬ Admit ⊬ Authorize")
+        conj = wmv.parse_line("Retain ⊬ Admit · Retain ⊬ Authorize")
+        # the capability in its native formalism
+        lc = wmv.LinearContext()
+        lc.mint("k")
+        lc.consume("k")
+        again = lc.consume("k")
+        # negative facts alone derive nothing
+        barren = wmv.derive(set(), {("a", "c"), ("c", "e")})
+        return (len(gam) >= 108 and all(gam.values()) and
+                len(gam) == len(P) + 1 and
+                gam["vendor_corpus_maps_completely"] ==
+                ("welding_1918",) and
+                formula["ok"] is False and
+                formula["reason"] == "E_FORMULA_WITHOUT_JUDGMENT" and
+                chained["ok"] is False and
+                chained["reason"] ==
+                "E_CHAINED_INTRANSITIVE_RELATION" and
+                conj["ok"] is True and conj["count"] == 2 and
+                again["ok"] is False and
+                again["reason"] ==
+                "E_NO_DERIVATION_FOR_SECOND_CONSUMPTION" and
+                barren == set() and
+                m["positive_control"]["verdict"] == "BOUND" and
+                m["every_mutation_refused"] is True and
+                m["every_mutation_caught_by_its_own_reason"] is True and
+                m["mutation_sensitive"] is True and
+                all(st["obligations"].values()) and
+                st["authority"] is False)
+    A(_probe("no_compression_without_a_theory_of_decompression",
+             "A ⊬ B with no theory and no named inference relation is "
+             "not a proposition — it is a performative whose meaning "
+             "lives in the author's head. Γ is DERIVED from this file "
+             "by AST so a renamed probe changes its own theory; the "
+             "judgment level (⊢, ⊬) is kept apart from the formula "
+             "level (⇒, ⟺, =, ≤), so a formula asserted with no "
+             "turnstile is refused for never saying whether it is "
+             "derivable or denied; ⊬ may not be chained and `·` is a "
+             "conjunction separator, not a chain link; the capability "
+             "is an affine judgment whose second consumption has no "
+             "derivation rather than a counter; negative facts alone "
+             "derive nothing, both sound rules consuming a positive "
+             "premise; hue stays orthogonal to the effect bits and a "
+             "rendering claiming ε ≠ 0 is refused. And the verifier "
+             "itself is mutation-sensitive: eight sacrificial "
+             "counterexamples, each refused by ITS OWN reason, "
+             "because one that cannot fail reports nothing when it "
+             "passes",
+             _theory_bound))
+
     return P
 
 
