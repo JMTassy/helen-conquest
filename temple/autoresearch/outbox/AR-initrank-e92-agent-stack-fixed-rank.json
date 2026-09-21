@@ -1,0 +1,27 @@
+{
+  "packet_type": "AUTORESEARCH_OBSERVATION_V1",
+  "epoch": "E92",
+  "authority": false,
+  "canon": false,
+  "ledger_effect": "none",
+  "claim_status": "NO_CLAIM",
+  "target": "init_ranking",
+  "surface": "init_ranking",
+  "file": "helen_os_scaffold/helen_os/helen.py",
+  "lines": [33, 34, 35, 36, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143],
+  "hypothesis": "If run_task() accepts a complexity param (default='full'), then 'simple' tasks skip Planner and Critic, dropping from 4 LLM adapter.generate() calls to 2 per task; HAL verdict parity holds for single-step factual queries where plan=[] and feedback='' are semantically equivalent to trivial planner/critic output.",
+  "evidence": {
+    "fixed_init_order": "helen.py:33-36 — Planner/Worker/Critic/Archivist always instantiated at HELEN.__init__(); none used by speak()",
+    "fixed_run_rank": "helen.py:128-143 — run_task() always fires P→W→C→A in sequence; 4 adapter.generate() calls per task unconditionally",
+    "speak_bypass": "helen.py:60 — speak() calls adapter.generate() directly; agent stack unused in primary chat path",
+    "planner_trivial_output": "agents.py:10-13 — Planner.generate() prompt: 'Plan for task: {task}\\nContext: {context}\\nReturn a simple list of steps.' — for single-step tasks returns 1-item list trivially derivable by Worker alone",
+    "critic_minimal_output": "agents.py:20-23 — Critic.generate() prompt: 'Critique this draft based on the plan: {plan}\\nDraft: {draft}' — for factual/simple tasks feedback often adds zero semantic value",
+    "archivist_synthesis": "agents.py:25-28 — Archivist.generate() synthesizes draft+feedback; when feedback='', synthesis = paraphrase of draft only",
+    "cli_run_command": "cli.py:293 — helen run Planner→Worker→Critic→Archivist hardcoded in docstring and flow; no complexity param exposed"
+  },
+  "proposed_patch": "helen.py:108 — change signature to: def run_task(self, task_description: str, complexity: str = 'full') -> Dict[str, Any]; add branch at L128: if complexity == 'simple': plan=[]; draft=self.worker.generate(task_description, plan); final_artifact=self.archivist.generate(draft, ''); skip kernel.propose() for Planner/Critic steps; else: existing P→W→C→A path. Zero change to speak() path. OPERATOR_APPLY only.",
+  "reversibility": "default='full' preserves 100% existing behavior; simple path opt-in only",
+  "metric": "adapter.generate() call-count in unit test: complexity='full' → 4 calls; complexity='simple' → 2 calls; make test green; HAL verdict identical on 3 synthetic single-step tasks",
+  "rule": "KEEP if call-count test passes and make test green; REJECT if HAL BLOCK rate differs between 'simple' and 'full' on same query set by >5%",
+  "next": "E93 — implement complexity='simple' branch + adapter call-count unit test; re-run make test"
+}
