@@ -43,7 +43,7 @@ Example of what the guard must reject:
 
 ```python
 # risk: agent writes directly to the ledger, bypassing the reducer
-open("town/ledger_v1.ndjson", "a")
+append_raw_line(LEDGER_PATH, entry)  # not via NDJSONWriter
 ```
 
 > risk: quoted incident text — writes to the ledger bypassing the guard.
