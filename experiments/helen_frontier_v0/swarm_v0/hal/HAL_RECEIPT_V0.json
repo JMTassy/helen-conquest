@@ -1,0 +1,250 @@
+{
+  "schema": "HAL_RECEIPT_V0",
+  "role": "HAL_OPUS",
+  "model": "claude-opus-5-5 (self-reported; unverifiable)",
+  "authority": false,
+  "ledger_effect": "none",
+  "git_head_at_verification": "8037210",
+  "verdicts": {
+    "G1": "ADMIT_CANDIDATE",
+    "G2": "HOLD",
+    "G3": "HOLD",
+    "G4": "HOLD",
+    "G5": "ADMIT_CANDIDATE",
+    "G6": "ADMIT_CANDIDATE"
+  },
+  "verdict_reasons": {
+    "G1": "In lane, no leakage detected, 11/12 match; F7 mismatch attributed mainly to an internally inconsistent oracle.",
+    "G2": "Single annotator; HAL spot-check 8/24: 6 agree, 1 contested (pair 11), 1 disagree (pair 5); pair-1 justification factually wrong.",
+    "G3": "Counts re-derived exactly (117/31/86, 81/5, outbox unchanged) but contestable mappings (e16, e73) and source_refs padded with surface names in 44 packets.",
+    "G4": "apply --check ok, 8/8 tests, copy==patch; but self-labelled 'fail-closed' is fail-open for the dedup signal and mark is added after validation.",
+    "G5": "All quoted lines and the off-palette glyph verified; valid strong attacks on L2, F7, F4a, null semantics, ablation; several objections invalid (F6, F9, F5a rescue rejected/invalidated claims; F3 ignores R1; F8 ignores R3).",
+    "G6": "All 7 checks re-derived including make test 748/5 and outbox fingerprint method; transient out-of-lane writes disclosed."
+  },
+  "g1_match": {
+    "matches": 11,
+    "total": 12,
+    "mismatches": [
+      "F7"
+    ],
+    "state_transition_matches": 12,
+    "baseline_constant_HOLD": 6,
+    "f7": {
+      "expected": "HOLD",
+      "g1": "REJECT",
+      "more_likely_wrong": "oracle (reason 'operator not recovered (0.41)' falsifies the claim under the frozen vocabulary; no threshold; sham R_O absent)"
+    }
+  },
+  "g2_spotcheck": {
+    "checked_pairs": [
+      1,
+      4,
+      5,
+      10,
+      11,
+      15,
+      19,
+      23
+    ],
+    "agree": 6,
+    "contested": [
+      11
+    ],
+    "disagree": [
+      5
+    ],
+    "single_annotator": true,
+    "justification_error": "pair 1: both packets cite helen_os/api/init_helen_wedge.py, not different files"
+  },
+  "g3_spotcheck": {
+    "agree": [
+      "ctxrank-e28",
+      "initrank-e25",
+      "skillroute-rule2b-f3c7",
+      "contextrank-e52",
+      "ctx-rank-stab-e11"
+    ],
+    "contested": [
+      "sumweights-e10"
+    ],
+    "disagree": [
+      "context-rank-risk-clear-e16",
+      "sandbox-vgrammar-e73"
+    ],
+    "other": [
+      "44 packets source_refs derived from surface names/packet ids",
+      "45 packets risk_flags defaulted to []",
+      "AR-ctx-rank-stab-e11 would become valid while proposing a tweak under forbidden prefix helen_kernel/"
+    ]
+  },
+  "g5_classification": {
+    "valid": [
+      "1.1 L2",
+      "1.2 F4a",
+      "1.5 F7",
+      "1.8 null semantics",
+      "ablation §3",
+      "1.6 L1 (clarification)",
+      "1.7 L3 (clarification)",
+      "1.3 F5b (low)",
+      "1.14 F5c (cosmetic)",
+      "overclaim 1 (weak)",
+      "overclaim 2",
+      "palette 🟦"
+    ],
+    "invalid_rescues_rejected_or_invalidated": [
+      "1.4 F6",
+      "1.10 F5a",
+      "1.13 F9"
+    ],
+    "invalid_ignores_revision": [
+      "1.11 F3 (R1)",
+      "1.12 F8 (R3)"
+    ],
+    "out_of_scope": [
+      "1.9 F4b",
+      "overclaim 3",
+      "overclaim 4"
+    ],
+    "laws_to_revise_v1": [
+      "L2 (+R3 trigger)",
+      "L1",
+      "L3",
+      "R2",
+      "protocol null-semantics rule"
+    ],
+    "fixtures_to_supersede": [
+      "F7",
+      "F4a",
+      "F1 (glyph)",
+      "F6 (glyph)",
+      "F5c (reason text)",
+      "F3 (baseline/removal path)",
+      "F9 (placeholders)",
+      "F5b (optional faithfulness field)",
+      "blind input format (neutral name/boundary)"
+    ]
+  },
+  "rederived": [
+    "receipts: 6/6 parse, authority=false, ledger_effect=none, files_written == git show --name-only of 1502b16/63afab6/26bd044/1be010a/8eda66a/8037210, all in own dir",
+    "no swarm commit touches paths outside swarm_v0; git status --short temple/ clean; scanner == HEAD",
+    "fixture digest sha256:05bf8cd6093c01aa88264ae2173d033b45a64b0bd066b1ca434b488412c93a6c",
+    "blind input == oracle fixtures minus expected/isolates; laws and semantics identical",
+    "G1 match table 11/12 (F7 mismatch)",
+    "outbox 117 / VALID 31 / REJECTED 86 via validate_packet (python -I, unmodified)",
+    "G3 rejected set == validator rejected set; in-memory migration 81 valid / 5 invalid (e77,e78,e79,e80,e86)",
+    "outbox fingerprint G6 method sha256:8bdfeaa69b6e8777d22f6c737c302a577a7d9c61af5dd8f96f1fa8e852876a39 (sorted basename\\0bytes\\0)",
+    "outbox digest G3 method 2cb2ca39dac7a4c9937169724722e1ddf32a9fa33151b7ff75b624159ce1785c (name+bytes)",
+    "dedup exact/structural/lexical(top=30) recomputed in memory: inputs_sha256 d97e0e15... and result equal to committed receipts",
+    "experiments/helen_frontier_v0/tests: 120 passed",
+    "helen_os/tests (make test equivalent): 748 passed, 5 skipped",
+    "G4 git apply --check exit 0; test_structural_dedup.py 8 passed; patched copy byte-equal to patch applied to real scanner",
+    "G5 quoted lines EGREGOR:26, EGREGOR:47, FIXDOC:145/168, JSON:148/171 located; 🟦 at FIXDOC 88/292 and JSON 85/288; absent from CLAUDE.md:361 palette",
+    "G2 8 pairs read against outbox packet text"
+  ],
+  "unverifiable": [
+    "model identity of all six goblins (self-reported claude-haiku-5-5 vs specified claude-haiku-4-5-20251001) and of HAL itself",
+    "G1 blindness beyond receipt + n-gram/phrase scan (blindness by instruction)",
+    "whether fixtures_blind.json changed between G1's read and commit 8791816 (untracked at read time)",
+    "G4 claim: 7 crossing tests pass against the patched copy (not re-run)",
+    "absence of undisclosed transient out-of-lane writes by any goblin",
+    "compute figures (harness-supplied)"
+  ],
+  "inputs_read": [
+    "docs/proposals/HER_FABLE_VISION_SWARM_V0.md",
+    "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+    "docs/proposals/EGREGOR_DISAMBIGUATION_V0.md (L1-50)",
+    "experiments/helen_frontier_v0/fixtures/jester_riemann_fixtures_v0.json",
+    "experiments/helen_frontier_v0/swarm_v0/inputs/fixtures_blind.json",
+    "experiments/helen_frontier_v0/swarm_v0/G1..G6/* (all files)",
+    "experiments/helen_frontier_v0/receipts/dedup_probe_*_20261007T1553*.json",
+    "experiments/helen_frontier_v0/dedup_probe.py (imported read-only)",
+    "temple/autoresearch/autoresearch_policy.py (imported read-only)",
+    "temple/autoresearch/autoresearch_scanner.py (read; copied to scratchpad for patch comparison)",
+    "temple/autoresearch/outbox/*.json (read-only)",
+    "CLAUDE.md:361 (palette)",
+    "Makefile (test target)",
+    "/home/user/helen-os AGENTS.md (grep) and tests/ listing @ 51a4109 (read-only)",
+    "git log / git show --stat / git status"
+  ],
+  "files_written": [
+    "experiments/helen_frontier_v0/swarm_v0/hal/HAL_REPORT.md",
+    "experiments/helen_frontier_v0/swarm_v0/hal/HAL_RECEIPT_V0.json",
+    "experiments/helen_frontier_v0/swarm_v0/hal/hal_rederive.py"
+  ],
+  "side_effects_outside_lane": [
+    "session scratchpad: hal_rederive.py draft, scanner_copy.py (patched), hal_out.json; all deleted",
+    "/tmp/pytest-of-root/pytest-18,19,20: pytest tmp_path dirs from instructed test runs"
+  ],
+  "compute": {
+    "source": "harness-supplied; HAL's own consumption not measured",
+    "per_goblin": {
+      "G1": {
+        "tokens": 89731,
+        "tool_uses": 6,
+        "wall_s": 54,
+        "files": 2,
+        "verified_full": 2,
+        "verified_partial": 0,
+        "crude_egr_per_100k": 2.23
+      },
+      "G2": {
+        "tokens": 172932,
+        "tool_uses": 17,
+        "wall_s": 230,
+        "files": 2,
+        "verified_full": 1,
+        "verified_partial": 1,
+        "crude_egr_per_100k": 0.58
+      },
+      "G3": {
+        "tokens": 212442,
+        "tool_uses": 11,
+        "wall_s": 319,
+        "files": 3,
+        "verified_full": 2,
+        "verified_partial": 1,
+        "crude_egr_per_100k": 0.94
+      },
+      "G4": {
+        "tokens": 153437,
+        "tool_uses": 22,
+        "wall_s": 203,
+        "files": 6,
+        "verified_full": 5,
+        "verified_partial": 1,
+        "crude_egr_per_100k": 3.26
+      },
+      "G5": {
+        "tokens": 160656,
+        "tool_uses": 12,
+        "wall_s": 318,
+        "files": 3,
+        "verified_full": 1,
+        "verified_partial": 2,
+        "crude_egr_per_100k": 0.62
+      },
+      "G6": {
+        "tokens": 112547,
+        "tool_uses": 17,
+        "wall_s": 126,
+        "files": 7,
+        "verified_full": 7,
+        "verified_partial": 0,
+        "crude_egr_per_100k": 6.22
+      }
+    },
+    "total_tokens": 901745,
+    "total_tool_uses": 85,
+    "wall_s_sum": 1250,
+    "verified_full_total": 18,
+    "crude_egr_swarm_per_100k": 2.0,
+    "label": "CRUDE: verified artifacts = committed files whose checkable content HAL re-derived; favours deterministic jobs, penalises judgment jobs"
+  },
+  "unresolved": [
+    "U1 model identity: 6 goblins self-report claude-haiku-5-5; brief specified claude-haiku-4-5-20251001; 5 receipts record the specified id, G4 records the self-reported one. Operator: check get_session last_served_model / per-subagent usage logs, or rerun one goblin with a pinned model.",
+    "U2 G4 crossing-test claim not re-run",
+    "U3 G2 needs a second heterogeneous annotator",
+    "U4 null-field semantics and F7 threshold require operator decision before fixtures v1"
+  ]
+}
