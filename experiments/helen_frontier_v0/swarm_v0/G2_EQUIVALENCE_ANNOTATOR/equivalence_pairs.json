@@ -1,0 +1,202 @@
+{
+  "schema": "EQUIVALENCE_PAIRS_V0",
+  "authority": false,
+  "annotator": "G2_EQUIVALENCE_ANNOTATOR",
+  "model": "claude-haiku-4-5-20251001",
+  "single_annotator": true,
+  "free_form_packets_read": 91,
+  "pairs": [
+    {
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-contextrank-e54-e28-recency-live",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 ...",
+      "b_snippet": "E54 confirms E28 live: _top_threads() silently drops last_updated at line 114. Two equal-salience/status threads produce insertion-order output, not ...",
+      "justification": "Both name the same defect: _top_threads() score (is_unresolved*1000+salience) drops last_updated, so equal-salience threads fall back to insertion order; e54 is the live confirmation of e28."
+    },
+    {
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-init-rank-d9c2",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 ...",
+      "b_snippet": "init_helen_wedge.py:_top_threads() collects last_updated per thread (line 104) but the score formula (line 112) is (is_unresolved*1000)+salience only. ...",
+      "justification": "Same recency-tiebreak defect in _top_threads(), both citing lines 104 and 112: last_updated is read but absent from the score (judgement call: the packets cite different files for the same function)."
+    },
+    {
+      "a": "AR-context-rank-companion-drop-e14",
+      "b": "AR-context-rank-companion-fix-e15",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "boot_loader.py loads 5 context fields (person_profile, last_session, epoch_state, companion_state, live_context). all 5 influence any_loaded ...",
+      "b_snippet": "E14 data_loss confirmed on fresh checkout (2026-07-25). companion_state and live_context are loaded by boot_loader (any_loaded check) but silently dropped ...",
+      "justification": "Both report companion_state and live_context loaded by boot_loader but dropped from the prior_context dict in _check_memory_source(); e15 proposes the two-line fix for that same drop."
+    },
+    {
+      "a": "AR-promptcomp-e36-admitted-lesson-dropped",
+      "b": "AR-promptcomp-e44-admitted-lesson-missing-append",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "run_self_improve_loop appends rejection history to feedback_lines (lines 423, 426) but silently drops admission history. Line 418 computes lesson = ...",
+      "b_snippet": "E36 found that admitted_skill lessons are not appended to feedback_lines. E44 live-confirms via direct read: self_improve_loop_v1.py:418 computes lesson = ...",
+      "justification": "Both report that the admitted-skill lesson at self_improve_loop_v1.py:418 is never appended to feedback_lines, so the next cycle gets no admission signal."
+    },
+    {
+      "a": "AR-promptcomp-fieldmismatch-e9",
+      "b": "AR-contextrank-e90-history-format-void",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "E9 observation: memory.py NDJSON entries use actor+value schema; adapters.py context reader expects metadata.role+content. Field mismatch silently injects ...",
+      "b_snippet": "E90: context_ranking — memory.get_history() returns unbounded NDJSON fact entries (schema: event_id/key/value/status/actor/timestamp). These are injected ...",
+      "justification": "Both report memory NDJSON entries not matching adapters.py's metadata.role/content reader, so history becomes empty user messages and the LLM sees no chat history."
+    },
+    {
+      "a": "AR-summ-weights-e29-fallback-bias",
+      "b": "AR-summ-weights-e38-register-divergence",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "ENGINE.py SOURCE_WEIGHT fallback is 1.0 — the maximum weight (equal to 'plugins'). Any unit with source_id='' (default), 'symbolic_sources', or any ...",
+      "b_snippet": "register_source() in sources.py updates SOURCES dict but has no coupling to SOURCE_WEIGHT in engine.py. Any dynamically-registered corpus (e.g. ...",
+      "justification": "Both report the SOURCE_WEIGHT fallback of 1.0 for any source id not in the table, so unregistered or dynamically registered corpora outrank helen_os at 0.9 (judgement call: e38 frames it as registry divergence)."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e31-live-shipped-collision",
+      "b": "AR-sandbox-vgrammar-e69-cockpit-live-grn-teal",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "cockpit_v4.html renders 'shipped' (governance ADMITTED) and 'live' (process running) in identical green (#00ff88). CSS at L64 and L67 both use var(--grn). ...",
+      "b_snippet": "cockpit_v4.html assigns --grn:#00ff88 to both .si-state.shipped (L64) and .si-state.live (L67). JS color map (L234) confirms: shipped:'#00ff88' and ...",
+      "justification": "Both report cockpit_v4.html .si-state.shipped (L64) and .si-state.live (L67) sharing the identical hex #00ff88, collapsing ADMITTED and runtime-live meaning."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e77-skill-active-pur-collapse",
+      "b": "AR-sandbox-vgrammar-e79-skill-active-pur-css-confirmed",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "TYPE_COLOR.skill='#bb88ff'=--pur = .si-state.active=--pur: TYPE/STATE color collapse on sk1+sk2. Systemic: 7/14 nodes, 4 pairs collapse.",
+      "b_snippet": "TYPE.skill=--pur (#bb88ff) == CSS .si-state.active=var(--pur) at sk1. CSS layer collision confirmed (L71). 5/12 nodes collide in current state. Proposed: ...",
+      "justification": "Both report TYPE_COLOR.skill (#bb88ff, --pur) identical to .si-state.active on the same skill nodes; e79 adds the CSS L71 confirmation and the #9966cc split."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e70-sbdot-liveness-teal",
+      "b": "AR-sandbox-vgrammar-e85-sbdot-wh-resolution",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "cockpit_v4.html L38: .sb-dot{background:var(--grn);animation:blink 2s step-end infinite} — the always-blinking green heartbeat dot at L157 signals SYSTEM ...",
+      "b_snippet": "E85: sb-dot (L38) uses --grn for blinking liveness/heartbeat dot. E84 blocked on E69 --teal contingency (--teal not in :root). New path: --wh ...",
+      "justification": "Both name cockpit_v4.html L38 .sb-dot, a blinking heartbeat painted in the admitted --grn; e85 proposes the --wh resolution for that same dot."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e33-gonogo-go-green-collision",
+      "b": "AR-sandbox-vgrammar-e62-station-verdict-blue",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "The Go/No-Go panel (L1056-1064) is a pre-admission review gate — 'All stations must be GO before SHIP is authorized' (L1059). HER=GO (L1060, 'Proposal ...",
+      "b_snippet": ".station-verdict.go (L299) assigns color:var(--green) to the 'GO' verdict label in the Go/No-Go pre-SHIP gate panel (#gonogo). The panel subtitle reads ...",
+      "justification": "Both report the Go/No-Go GO verdict label (.station-verdict.go, L299) painted in ADMITTED green for a pre-admission station clearance; e62 adds the --blue reassignment."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e42-liveness-green-residual",
+      "b": "AR-sandbox-vgrammar-e43-focus-helen2027-presence-green",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "Final sweep of the three unswept surfaces. dream_of_conquest.html: CLEAN — painterly parchment palette (rgba earth/cream tones, single #181210 ink), zero ...",
+      "b_snippet": "Two surface files share an identical E31-class liveness-green collision that E40/E42 logged but did not fix. focus.html L41-42 and helen2027.html L45-46 ...",
+      "justification": "Both report focus.html's 'Online' presence badge using var(--ok) #16a34a (the ADMITTED green) for a runtime presence state; e43 extends the same finding to helen2027.html."
+    },
+    {
+      "a": "AR-promptcomp-e3a1",
+      "b": "AR-f7ec3779a583",
+      "label": "EQUIVALENT_DISTINCTION",
+      "a_snippet": "Prior packet AR-f7ec3779a583 proposed tail=20 at helen.py:speak() only. New evidence: server.py:59 has identical gap — full NDJSON read, Python slice at ...",
+      "b_snippet": "Unbounded history in helen.py:speak() — no tail limit before LLM call",
+      "justification": "Both report full-history load before the LLM call with no tail limit; e3a1 finds the identical missing limit at server.py:59 as a second call site (judgement call: different file and site)."
+    },
+    {
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-contextrank-e50-propose-action-contradiction",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 ...",
+      "b_snippet": "E28 found _top_threads() drops last_updated from its sort key (line 112, unfixed). E50 finds a second, distinct defect: _propose_action() (line 184-208) ...",
+      "justification": "e28 = recency tiebreak dropped from the _top_threads score; e50 = _propose_action tension branch ignores salience, so top_3_threads and next_act contradict. Same function family, different defect."
+    },
+    {
+      "a": "AR-context-rank-companion-drop-e14",
+      "b": "AR-context-rank-risk-clear-e16",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "boot_loader.py loads 5 context fields (person_profile, last_session, epoch_state, companion_state, live_context). all 5 influence any_loaded ...",
+      "b_snippet": "E15 medium semantic risk flag cleared. E15 flagged: 'if any consumer explicitly asserts prior_context keys == 4, will break'. Full codebase grep for ...",
+      "justification": "e14 = companion_state and live_context silently dropped (data loss); e16 only clears a risk that consumers assert exactly 4 prior_context keys, making no data-loss claim."
+    },
+    {
+      "a": "AR-promptcomp-e22-admitted-skills-id-only",
+      "b": "AR-promptcomp-e23-bootstrap-description-gap",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "In run_self_improve_loop() (line 281), admitted_skills is built as list(skill_library['active_skills'].keys()) — ID strings only. Line 284 passes this ...",
+      "b_snippet": "E22 proposed changing admitted_skills at line 281 from ID-list to {sid: {description, gap}} dict. E22 fix not yet applied (line 281 still uses .keys()). ...",
+      "justification": "e22 = admitted_skills passed as ID-only at line 281; e23 = BOOTSTRAP_SKILL_LIBRARY_STATE lacks description and gap fields, so the E22 dict fix would still be empty for the bootstrap skill."
+    },
+    {
+      "a": "AR-f7ec3779a583",
+      "b": "AR-halctx-e30-6c84165362c2",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "Unbounded history in helen.py:speak() — no tail limit before LLM call",
+      "b_snippet": "helen.py:63 calls hal.review(proposal, context) where context = [system_msg] + full_history (O(history) tokens). hal.review() passes context unchanged to ...",
+      "justification": "f7ec = no tail limit on history read for the LLM call in speak(); halctx-e30 = full history forwarded to hal.review(), which never inspects it; fix is context=[] at HAL call sites, not a tail cap."
+    },
+    {
+      "a": "AR-skillroute-e34-ok-quarantined-class",
+      "b": "AR-skillroute-e49-inference-rejected-missing",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "E27 added 6 ERR_* codes to failure_to_class (skill_discovery_v1.py:162-174) but missed 'OK_QUARANTINED'. QUARANTINED ledger entries pass the ...",
+      "b_snippet": "E34 found OK_QUARANTINED missing from failure_to_class (skill_discovery_v1.py:162-174). E49 live-probe finds two additional pre-reducer outcome codes also ...",
+      "justification": "e34 = OK_QUARANTINED missing from failure_to_class (defaults to TRANSFORM, should be VALIDATE); e49's distinct claim is that INFERENCE_FAILED and REJECTED are also mis-mapped to TRANSFORM."
+    },
+    {
+      "a": "AR-skill-route-d1f7",
+      "b": "AR-skillroute-rule2b-dead-f3c7",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "Dead comment: _compute_route() Rule 9 says 'or SKILL if multi-step intent' but no NLU detection exists. All USER_QUERY text routes to AGENT regardless of ...",
+      "b_snippet": "Rule 2b (line 285-291) is unreachable. _classify_input() returns THINK_PREPARATION for any input with think=True (line 165), so input_type is never ...",
+      "justification": "d1f7 = Rule 9 comment promises multi-step SKILL routing that no NLU detection implements; f3c7 = Rule 2b conjunction is unreachable because think=True always yields THINK_PREPARATION."
+    },
+    {
+      "a": "AR-contextrank-e35-template-idempotent",
+      "b": "AR-initrank-e37-phantom-tweak-template",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "context_ranking wins cold-start (19.2) on every clean run but its experiment template (two_stage_loop.py:97-102) is idempotent: it fires twice (2026-07-21, ...",
+      "b_snippet": "two_stage_loop.py:92 experiment template for init_ranking_weights contains a phantom tweak: 'Increase weight of context_ranking by 0.05 in ...",
+      "justification": "e35 = the context_ranking experiment template is idempotent (identical repeated reports, undefined metric); e37 = the init_ranking_weights template names a phantom tweak path that does not exist."
+    },
+    {
+      "a": "AR-initrank-e47-len-tiebreaker",
+      "b": "AR-initrank-e48-refs-tiebreaker",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "E46 confirmed w_noise=1.0 as binary separator (score=0.9267, OrderScore=0.6333). E47 finds that adding w_len=0.1 (length penalty for longer summaries) ...",
+      "b_snippet": "E47 (w_noise=1.0 + w_len=0.1) left 6/20 cases with incorrect ordering: eee30b (test_gap, refs=4, sev=2, len=224) ranked after 1f936 (test_gap, refs=2, ...",
+      "justification": "e47 = w_len=0.1 length tiebreaker lifts OrderScore to 0.80; e48 = w_refs=0.028 refs tiebreaker resolves the six length-induced misorderings. Different weight and mechanism, same evaluator."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e31-live-shipped-collision",
+      "b": "AR-sandbox-vgrammar-e39-shipped-chainok-collision",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "cockpit_v4.html renders 'shipped' (governance ADMITTED) and 'live' (process running) in identical green (#00ff88). CSS at L64 and L67 both use var(--grn). ...",
+      "b_snippet": "starship.html ledger source panel (L557–L593) renders eight values in .lv.g (CSS L55: .lv.g{color:var(--g)}; L11: --g:#00ff41). Three are governance ...",
+      "justification": "e31 = cockpit_v4 shipped and live share #00ff88; e39 = starship.html .lv.g paints SHIPPED verdicts and 'chain OK' hash rows in admitted green. Shared shipped/green vocabulary, different file and element."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e59-live-teal",
+      "b": "AR-sandbox-vgrammar-e43-focus-helen2027-presence-green",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "L91/.live-pulse, L123/.mrow-dot.live, L133/.badge.live all use --green (#3dd68c) for runtime liveness (ACTIVE/ONLINE/LIVE). SA doctrine assigns --green ...",
+      "b_snippet": "Two surface files share an identical E31-class liveness-green collision that E40/E42 logged but did not fix. focus.html L41-42 and helen2027.html L45-46 ...",
+      "justification": "e59 = index.html live-pulse, mrow-dot.live and badge.live (L91/123/133) use --green for liveness; e43 = focus.html and helen2027.html presence badge uses --ok. Same category, different files and tokens."
+    },
+    {
+      "a": "AR-cecf4c5b553f",
+      "b": "AR-e8d1841c6d2f",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "Three CI gates are red on main at HEAD dace8b02 (Kernel Guard: 3 stale CONSUMER_ALLOWLIST NDJSONWriter imports incl. kernel_daemon.py admission handlers; ...",
+      "b_snippet": "Oracle Town Verification CI is structurally unable to pass: VERIFY_ALL.sh steps 3-4 require oracle_town/runs/ (create_adversarial_runs.py + runA/B/C frozen ...",
+      "justification": "cecf = three CI gates red on main with pushes still landing (governance normalization of red gates); e8d1 = Oracle Town Verification cannot pass because oracle_town/runs was never committed and the script prints a hardcoded success banner."
+    },
+    {
+      "a": "AR-sandbox-vgrammar-e74-silive-grn-pur",
+      "b": "AR-sandbox-vgrammar-e81-source-live-compound-green",
+      "label": "DIFFERENT_DISTINCTION",
+      "a_snippet": "E73 flagged .si-state.live (L67) → --grn for audit: is 'LIVE' an admission event or runtime observation? Audit confirms semantic collision. Two ...",
+      "b_snippet": "Nodes s2 (temple.html, source/live) and s3 (focus.html, source/live) emit THREE independent --grn signals simultaneously: (1) orbital canvas dot via ...",
+      "justification": "e74 = the .si-state.live text label (L67) is admitted-green on temple/focus source nodes; e81 = the same two nodes emit three green signals, adding the TYPE_COLOR.source canvas and sidebar dots (L347/L459)."
+    }
+  ]
+}

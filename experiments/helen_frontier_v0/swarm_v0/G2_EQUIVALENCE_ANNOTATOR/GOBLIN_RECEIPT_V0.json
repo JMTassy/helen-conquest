@@ -1,0 +1,31 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G2_EQUIVALENCE_ANNOTATOR",
+  "model": "claude-haiku-4-5-20251001",
+  "authority": false,
+  "ledger_effect": "none",
+  "inputs_read": [
+    "/home/user/helen-conquest/temple/autoresearch/outbox/*.json (117 packets read as JSON via python -I; 26 template-shaped packets skipped by 'Scanner findings in' summary prefix; 91 free-form packets read)"
+  ],
+  "files_written": [
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G2_EQUIVALENCE_ANNOTATOR/equivalence_pairs.json",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G2_EQUIVALENCE_ANNOTATOR/GOBLIN_RECEIPT_V0.json"
+  ],
+  "result_summary": "Annotated 24 pairs from 91 free-form packets: 12 EQUIVALENT_DISTINCTION, 12 DIFFERENT_DISTINCTION (hard negatives sharing vocabulary, file or function). Text priority: summary, else hypothesis, else title, else finding (4 packets, e77-e80, carry only 'finding'). Single-annotator, unreviewed ground-truth candidate; no similarity tool output was consulted and no outbox script was executed. Nothing was staged, committed, or pushed.",
+  "unresolved": [
+    "Conflict between packets: AR-sandbox-vgrammar-e75 says STATE_COLOR (cockpit_v4.html L233-238) is dead code with zero references, while e31 and e69 treat the L234 STATE_COLOR map as live. Not resolved; no pair depends on it directly.",
+    "Packets e86, e87 and e88 disagree on the misuse and doctrine-correct counts (e87 corrects e86 from 6 to 7). No pair uses those counts.",
+    "Judgement-call EQUIVALENT pairs: AR-ctxrank-e28 vs AR-init-rank-d9c2 (same function, different cited files); AR-summ-weights-e29 vs e38 (fallback-1.0 defect framed differently); AR-promptcomp-e3a1 vs AR-f7ec3779a583 (second call site of one defect). A second annotator should review these first.",
+    "Near-candidate not included: AR-sumweights-a8f2 vs AR-sumweights-e10 (both say the 0.5 threshold admits noop proposals). Left out to keep the set unambiguous; a reviewer may want it as EQUIVALENT.",
+    "Task estimated about 87 free-form packets; the outbox actually holds 91 free-form plus 26 template-shaped (117 total).",
+    "Four free-form packets (AR-sandbox-vgrammar-e77, e78, e79, e80) have no summary, hypothesis or title; their text comes from the 'finding' field, which is outside the stated priority order."
+  ],
+  "self_reported_limits": [
+    "Single annotator, no inter-annotator agreement, and no review. Labels are judgement and must not be treated as verified ground truth.",
+    "Model field follows the task specification (claude-haiku-4-5-20251001). The runtime identity reported to this session is Haiku 5.5 (claude-haiku-5-5); the mismatch is recorded here, not silently corrected.",
+    "15 free-form packets have no packet_id field; the filename stem was used as the id, which matches packet_id wherever packet_id is present.",
+    "Equivalence was judged from the text fields only (summary, hypothesis, finding), not from the full evidence arrays or the source code the packets cite. Line numbers were not re-verified against the repository.",
+    "Snippets are the first 160 characters of the text field, cut at a word boundary with ' ...' appended when truncated.",
+    "Only pairs were annotated, not the full pairwise set. The 24 pairs are a sample chosen for coverage of near-duplicate clusters and hard negatives, so they do not estimate prevalence."
+  ]
+}
