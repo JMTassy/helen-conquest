@@ -1,0 +1,34 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G3_OUTBOX_MIGRATION_PROPOSER",
+  "model": "claude-haiku-4-5-20251001",
+  "authority": false,
+  "ledger_effect": "none",
+  "inputs_read": [
+    "temple/autoresearch/autoresearch_policy.py (validate_packet, REQUIRED_PACKET_FIELDS, VALID_FINDING_TYPES; read and imported with python -I, not modified)",
+    "docs/proposals/AUTORESEARCH_OUTBOX_POLICY_AUDIT_2026_10_07.md (cross-check of VALID/REJECTED sets and reason families)",
+    "temple/autoresearch/outbox/*.json (117 files, read-only via json.load; sha256 digest taken before and after)"
+  ],
+  "files_written": [
+    "experiments/helen_frontier_v0/swarm_v0/G3_OUTBOX_MIGRATION_PROPOSER/migration_proposal.json",
+    "experiments/helen_frontier_v0/swarm_v0/G3_OUTBOX_MIGRATION_PROPOSER/migration_proposal.md",
+    "experiments/helen_frontier_v0/swarm_v0/G3_OUTBOX_MIGRATION_PROPOSER/GOBLIN_RECEIPT_V0.json"
+  ],
+  "result_summary": "Validator baseline: 117 packets, 31 VALID, 86 REJECTED (matches audit). Proposed migration with in-memory revalidation: would_become_valid=81, still_invalid=5. Finding_type: 38 distinct free values (absent key counted once) mapped to the 6-value enum. No outbox file modified (digest unchanged: True).",
+  "unresolved": [
+    "5 packets carry OPERATOR_INPUT_REQUIRED and are not in would_become_valid: AR-sandbox-vgrammar-e77-skill-active-pur-collapse.json, AR-sandbox-vgrammar-e78-memory-canon-cy-dual-use.json, AR-sandbox-vgrammar-e79-skill-active-pur-css-confirmed.json, AR-sandbox-vgrammar-e80-task-waiting-amber-triple.json, AR-sandbox-vgrammar-e86-wh-compound-verification.json",
+    "finding_type mapping is a heuristic proposal; all 86 migrated packets need operator confirmation",
+    "0 packets had source_refs defaulted to an empty list",
+    "22 packets had recommended_action set to ROUTE_TO_OPERATOR_FOR_REVIEW by convention",
+    "13 packets had summary copied verbatim from hypothesis/finding/key_insight",
+    "6 packets had dict evidence serialised into a list",
+    "no migrated -M1 file was written; placement and admission are operator decisions"
+  ],
+  "self_reported_limits": [
+    "validate_packet checks shape and a few phrases only; passing it does not show the finding is correct.",
+    "finding_type mapping is keyword-and-judgement based, one enum per free value, with per-packet rationale for the 11 absent-key packets. It is a proposal.",
+    "model field uses the value given in the task spec (claude-haiku-4-5-20251001). This session reports itself as claude-haiku-5-5; the operator should reconcile.",
+    "Rationales are built from each packet's summary/hypothesis text (truncated excerpt), not a full read of every evidence list.",
+    "Outputs were produced with python -I reading from stdin; no helper script was written to the directory."
+  ]
+}
