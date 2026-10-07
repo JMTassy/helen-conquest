@@ -1,0 +1,41 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G4_SCANNER_PATCH_PROPOSER",
+  "model": "claude-haiku-5-5",
+  "authority": false,
+  "ledger_effect": "none",
+  "applied": false,
+  "inputs_read": [
+    "/home/user/helen-conquest/temple/autoresearch/autoresearch_scanner.py (read and copied; not modified)",
+    "/home/user/helen-conquest/temple/autoresearch/autoresearch_policy.py (read; imported read-only by the copy)",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/dedup_probe.py (SCANNER_TEMPLATE, tier_structural)",
+    "/home/user/helen-conquest/tests/test_scanner_crossing.py (style and usage; copied with changed imports for a temporary regression run)",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/receipts/DEDUP_PROBE_REVIEW_2026_10_07.md",
+    "/home/user/helen-conquest/temple/autoresearch/outbox/*.json (117 files, read-only analysis)"
+  ],
+  "files_written": [
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/autoresearch_scanner_patched_copy.py",
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/scanner_structural_dedup.patch",
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/test_structural_dedup.py",
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/test_output.txt",
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/PATCH_NOTE.md",
+    "experiments/helen_frontier_v0/swarm_v0/G4_SCANNER_PATCH_PROPOSER/GOBLIN_RECEIPT_V0.json"
+  ],
+  "result_summary": "Patched copy adds structural same-path marking in write_packet via three helpers (+41/-0). A new packet whose single source path matches an existing outbox packet gets duplicate_of=<existing packet_id> and duplicate_check=structural_same_path, and is still written. Fail-closed: unreadable outbox means no mark and no exception. git apply --check passes from repo root (patch not applied). test_structural_dedup.py: 8 passed. Existing crossing tests: 7 passed against the copy. temple/ untouched.",
+  "unresolved": [
+    "Patch is not applied; operator must review and run git apply on go.",
+    "Matching covers any outbox packet with a single source path, so 5 same-path groups among legacy hand-written packets would be marked if a scanner packet later targets those files. Operator may want scanner-origin-only matching, which needs a reliable origin marker.",
+    "The reference SCANNER_TEMPLATE regex in dedup_probe.py matches only the retired V1 summary; the current V2 summary does not match. The patch keys on source_refs instead.",
+    "Check-then-write is not under a lock; concurrent scanner runs can still produce an unmarked twin (NDJSONWriter-style flock would close this; not included).",
+    "test_structural_dedup.py imports the patched copy, not the real module; repointing it after apply is an operator decision.",
+    "Marks are written only on the write path; dry-run output does not show them."
+  ],
+  "self_reported_limits": [
+    "The copy's run() default repo_root resolves from the G4 directory, not the repo; tests pass repo_root explicitly.",
+    "The stipulated model ID was claude-haiku-4-5-20251001, but the running model is claude-haiku-5-5; this receipt records the actual model.",
+    "A scratch file was written to /tmp by mistake (tee /tmp/_g4_unused) and removed immediately; this breached the G4-only write rule for that one command.",
+    "Verification of the real file is by git apply --check and by the regression run of existing tests against the copy only; the real module was not executed or modified.",
+    "The outbox analysis is a point-in-time snapshot of 117 files.",
+    "pytest was run with the repo .venv (Python 3.11.15, pytest 9.1.1) with PYTHONDONTWRITEBYTECODE=1 and -p no:cacheprovider; no git add, commit, or push was run."
+  ]
+}

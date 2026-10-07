@@ -1,0 +1,18 @@
+============================= test session starts ==============================
+platform linux -- Python 3.11.15, pytest-9.1.1, pluggy-1.6.0 -- /home/user/helen-conquest/.venv/bin/python
+rootdir: /home/user/helen-conquest
+configfile: pyproject.toml
+plugins: platformdirs-4.12.3, asyncio-1.4.0, anyio-4.15.1, cov-7.1.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collecting ... collected 8 items
+
+test_structural_dedup.py::test_same_path_twice_second_is_marked PASSED   [ 12%]
+test_structural_dedup.py::test_different_paths_neither_marked PASSED     [ 25%]
+test_structural_dedup.py::test_unreadable_outbox_no_mark_no_exception PASSED [ 37%]
+test_structural_dedup.py::test_outbox_listing_error_no_mark_no_exception PASSED [ 50%]
+test_structural_dedup.py::test_missing_outbox_dir_first_write_unmarked PASSED [ 62%]
+test_structural_dedup.py::test_rescan_same_packet_id_is_not_a_twin PASSED [ 75%]
+test_structural_dedup.py::test_run_end_to_end_second_scan_marked PASSED  [ 87%]
+test_structural_dedup.py::test_run_with_corrupt_outbox_completes_unmarked PASSED [100%]
+
+============================== 8 passed in 0.10s ===============================

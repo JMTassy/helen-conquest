@@ -1,0 +1,63 @@
+--- a/temple/autoresearch/autoresearch_scanner.py
++++ b/temple/autoresearch/autoresearch_scanner.py
+@@ -235,11 +235,60 @@
+ # Write (outbox-only)
+ # ---------------------------------------------------------------------------
+ 
++# --- structural same-path marking (G4 proposal, 2026-10-07) -------------------
++# A new packet whose source path already has a packet in the outbox is MARKED
++# (never rejected, never skipped). Key = the single path in source_refs
++# ("path:line"), not the summary text, so it is independent of summary format.
++# Fail-closed: any read error means no mark; the scan never crashes on it.
++
++def _packet_source_path(packet: dict) -> str | None:
++    """The one source path a scanner packet describes, or None if ambiguous/absent."""
++    refs = packet.get("source_refs")
++    if not isinstance(refs, list) or not refs:
++        return None
++    paths = {str(r).rsplit(":", 1)[0] for r in refs}
++    return paths.pop() if len(paths) == 1 else None
++
++
++def _find_same_path_packet(packet: dict, outbox: Path) -> str | None:
++    """packet_id of the first outbox packet (by filename) on the same source path.
++
++    None if there is no match, if the packet would overwrite an existing file
++    with the same packet_id (a re-scan, not a new twin), or if the outbox
++    cannot be fully read.
++    """
++    try:
++        source = _packet_source_path(packet)
++        if source is None:
++            return None
++        own_id = packet.get("packet_id")
++        matches: list[str] = []
++        for f in sorted(outbox.glob("*.json")):
++            other = json.loads(f.read_text(encoding="utf-8"))
++            other_id = other.get("packet_id")
++            if other_id == own_id:
++                return None
++            if isinstance(other_id, str) and _packet_source_path(other) == source:
++                matches.append(other_id)
++        return matches[0] if matches else None
++    except Exception:  # noqa: BLE001 - fail closed: unreadable outbox => no mark, no crash
++        return None
++
++
++def _mark_structural_duplicate(packet: dict, outbox: Path) -> None:
++    """Mark packet in place if its source path is already in the outbox. Never raises."""
++    existing = _find_same_path_packet(packet, outbox)
++    if existing is not None:
++        packet["duplicate_of"] = existing
++        packet["duplicate_check"] = "structural_same_path"
++
++
+ def write_packet(packet: dict, outbox: Path) -> Path:
+     """Write a validated packet to the outbox. Enforces outbox-only constraint."""
+     packet_id = packet["packet_id"]
+     write_path = outbox / f"{packet_id}.json"
+     _assert_outbox_only(outbox, write_path)
++    _mark_structural_duplicate(packet, outbox)
+     outbox.mkdir(parents=True, exist_ok=True)
+     write_path.write_text(
+         json.dumps(packet, indent=2, ensure_ascii=False),
