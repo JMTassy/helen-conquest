@@ -1,0 +1,93 @@
+{
+  "schema": "BLIND_OUTCOMES_V0",
+  "authority": false,
+  "evaluator": "G1_BLIND_EVALUATOR",
+  "model": "claude-haiku-4-5-20251001",
+  "input": "swarm_v0/inputs/fixtures_blind.json",
+  "outcomes": [
+    {
+      "id": "F1",
+      "outcome": "HOLD",
+      "state_transition": false,
+      "reason": "The EGR drop is observed and a scheduler change preceded it, but no counterfactual or sham is given, so the causal claim is neither established nor falsified. L1 forbids deriving cause silently from observation.",
+      "laws_applied": ["L1"]
+    },
+    {
+      "id": "F2",
+      "outcome": "HOLD",
+      "state_transition": false,
+      "reason": "Three same-family LLM verifiers with unanimous agreement are correlated rather than independent, and there is no formal check. Consensus does not grant verification value, and nothing falsifies the proof either.",
+      "laws_applied": ["L2", "R2"]
+    },
+    {
+      "id": "F3",
+      "outcome": "HOLD",
+      "state_transition": false,
+      "reason": "The sham shows the blur persists when the coating's rendering is identical, and the effect survives removal of the mechanism. Under R1 the coating is not established as necessary for the blur, so the claim is not earned, and it is not shown false either.",
+      "laws_applied": ["R1", "L1"]
+    },
+    {
+      "id": "F4a",
+      "outcome": "ADMIT",
+      "state_transition": true,
+      "reason": "C2 supersedes C1 while C1 remains retained, C2 has a non-empty evidence delta, and it carries an independent replay witness. The lineage is preserved, so no erasure occurs and the supersession is witnessed.",
+      "laws_applied": ["L3"]
+    },
+    {
+      "id": "F4b",
+      "outcome": "REJECT",
+      "state_transition": false,
+      "reason": "C1 is not retained and C2 has no supersedes link, so 'replaces' can only hold by erasing C1. Correction does not imply erasure, and the claim is structurally inadmissible as stated.",
+      "laws_applied": ["L3", "INVALIDATE:Correction=>Erasure"]
+    },
+    {
+      "id": "F5a",
+      "outcome": "HOLD",
+      "state_transition": false,
+      "reason": "Three LLM witnesses all marked non-independent give redundancy, not independent verification value. Under R2 independence is necessary, so the claim is not admitted, and nothing in the record falsifies Theorem T.",
+      "laws_applied": ["R2", "L2"]
+    },
+    {
+      "id": "F5b",
+      "outcome": "ADMIT",
+      "state_transition": true,
+      "reason": "A single independent Lean witness with high reliability and full-statement coverage gives high verification value under R2. This is a witnessed admission eligible for the reducer.",
+      "laws_applied": ["R2"]
+    },
+    {
+      "id": "F5c",
+      "outcome": "HOLD",
+      "state_transition": false,
+      "reason": "A regex over proof text is independent but low-reliability and syntactic-only, so it provides negligible verification value for the theorem. The claim is not earned under R2 and is not shown false.",
+      "laws_applied": ["R2"]
+    },
+    {
+      "id": "F6",
+      "outcome": "REJECT",
+      "state_transition": false,
+      "reason": "The requested tool has existed in the catalog since 2024, which contradicts the 'NEW_PRODUCT opportunity' claim. A customer request does not imply a product gap.",
+      "laws_applied": ["INVALIDATE:CustomerRequest=>ProductGap", "L1"]
+    },
+    {
+      "id": "F7",
+      "outcome": "REJECT",
+      "state_transition": false,
+      "reason": "Artifact pass and a sham run do not entail the causal grammar under L1. The recovery vector reports operator recovery R_O = 0.41 against 0.98 and 0.96 for the other channels, which contradicts 'viewers recover the operator' as stated. No threshold is given, so this rests on the relative values.",
+      "laws_applied": ["L1"]
+    },
+    {
+      "id": "F8",
+      "outcome": "NO_TRANSITION",
+      "state_transition": false,
+      "reason": "This is deterministic arithmetic with no consequential state and no uncertainty. R3 places trivial deterministic cases out of scope, so HELEN stays out.",
+      "laws_applied": ["R3"]
+    },
+    {
+      "id": "F9",
+      "outcome": "REJECT",
+      "state_transition": false,
+      "reason": "Report A gives three survivors with no candidate, falsified, or unresolved counts, so it has no search history to support the same status as Report B's three survivors (217 candidates, 17 falsified, 8 unresolved). Generating survivors does not grant authority under L2, and the discovery receipt is absent.",
+      "laws_applied": ["L2"]
+    }
+  ]
+}

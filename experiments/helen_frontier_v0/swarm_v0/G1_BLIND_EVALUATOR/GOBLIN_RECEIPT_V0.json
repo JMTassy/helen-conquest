@@ -1,0 +1,30 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G1_BLIND_EVALUATOR",
+  "model": "claude-haiku-4-5-20251001",
+  "authority": false,
+  "ledger_effect": "none",
+  "inputs_read": [
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/inputs/fixtures_blind.json"
+  ],
+  "files_written": [
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G1_BLIND_EVALUATOR/blind_outcomes.json",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G1_BLIND_EVALUATOR/GOBLIN_RECEIPT_V0.json"
+  ],
+  "result_summary": "Evaluated all 12 fixture ids (F1, F2, F3, F4a, F4b, F5a, F5b, F5c, F6, F7, F8, F9) from the blind input only, applying laws L1-L3, R1-R5 and the INVALIDATE list. Outcomes: F1 HOLD, F2 HOLD, F3 HOLD, F4a ADMIT, F4b REJECT, F5a HOLD, F5b ADMIT, F5c HOLD, F6 REJECT, F7 REJECT, F8 NO_TRANSITION, F9 REJECT. state_transition is true only for F4a and F5b. No ledger, git, or network action was taken.",
+  "unresolved": [
+    "HOLD vs REJECT boundary: F1, F3 and F5c could be read as REJECT (structurally inadmissible as stated) rather than HOLD. Chose HOLD for F1 and F3 because neither is falsified by the given data; F5c is borderline because a syntactic-only witness cannot verify the theorem at all.",
+    "F9 uses 'REVISE:DiscoveryReceipt' in its boundary field, but DiscoveryReceipt is not defined anywhere in the blind laws. The REJECT rests on L2 and the visible count asymmetry, not on a defined receipt schema.",
+    "F6 has requirement_fit 'not yet checked'. The REJECT relies only on the existence check; if requirement fit were the intended question, the outcome could be HOLD.",
+    "F7 gives no numeric threshold for operator recovery. REJECT is based on R_O = 0.41 relative to the other channels, not on a stated cutoff.",
+    "F4a: state_transition is true under the vocabulary semantics for ADMIT. I did not evaluate whether a reducer would accept the transition, which is outside this evaluator's scope."
+  ],
+  "leakage": [],
+  "self_reported_limits": [
+    "Read only the single permitted blind input file. Did not open the fixture directory, the proposal, the freeze test, or any README.",
+    "No leakage observed: the blind input contains no expected outcomes. Nothing was recorded under leakage.",
+    "Outcomes are a single-pass judgment by one model. Correctness is not self-assessed, per instructions.",
+    "The 'model' field uses the value specified in the task (claude-haiku-4-5-20251001). The runtime model reports itself as Haiku 5.5, so the recorded model string may not match the actual model that produced these outcomes.",
+    "Used only the Read, Bash (mkdir), and Write tools. No git, network, or sovereign-path access."
+  ]
+}
