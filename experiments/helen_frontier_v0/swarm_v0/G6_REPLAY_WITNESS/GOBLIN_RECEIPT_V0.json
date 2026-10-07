@@ -1,0 +1,63 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G6_REPLAY_WITNESS",
+  "model": "claude-haiku-4-5-20251001",
+  "authority": false,
+  "ledger_effect": "none",
+  "inputs_read": [
+    "experiments/helen_frontier_v0/fixtures/jester_riemann_fixtures_v0.json",
+    "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+    "experiments/helen_frontier_v0/tests/test_fixture_freeze.py",
+    "experiments/helen_frontier_v0/dedup_probe.py",
+    "experiments/helen_frontier_v0/receipts/dedup_probe_exact_20261007T155312Z.json",
+    "experiments/helen_frontier_v0/receipts/dedup_probe_structural_20261007T155312Z.json",
+    "experiments/helen_frontier_v0/receipts/dedup_probe_lexical_20261007T155313Z.json",
+    "experiments/helen_frontier_v0/README.md",
+    "Makefile",
+    "temple/autoresearch/outbox/*.json (117 files, read only)",
+    "git log -5 (commit messages), git status, git rev-parse HEAD"
+  ],
+  "files_written": [
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/replay_receipt.json",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/GOBLIN_RECEIPT_V0.json",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/make_test.log",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/pytest_experiments.log",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_exact_20261007T203528Z.json",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_structural_20261007T203528Z.json",
+    "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_lexical_20261007T203529Z.json"
+  ],
+  "files_moved": [
+    {
+      "from": "experiments/helen_frontier_v0/receipts/dedup_probe_exact_20261007T203528Z.json",
+      "to": "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_exact_20261007T203528Z.json",
+      "reason": "created by dedup_probe.py --tier exact default outbox run; moved out of committed receipts dir"
+    },
+    {
+      "from": "experiments/helen_frontier_v0/receipts/dedup_probe_structural_20261007T203528Z.json",
+      "to": "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_structural_20261007T203528Z.json",
+      "reason": "created by dedup_probe.py --tier structural run"
+    },
+    {
+      "from": "experiments/helen_frontier_v0/receipts/dedup_probe_lexical_20261007T203529Z.json",
+      "to": "experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/dedup_rerun/dedup_probe_lexical_20261007T203529Z.json",
+      "reason": "created by dedup_probe.py --tier lexical run"
+    }
+  ],
+  "result_summary": "All 7 checks match. fixture digest 05bf8cd6...93c12 (sha256:05bf8cd6093c01aa88264ae2173d033b45a64b0bd066b1ca434b488412c93a6c) unchanged. Dedup re-run exact/structural/lexical: inputs_sha256 and result blocks identical to committed receipts (only generated_at_utc, and compute.wall_seconds on lexical, differ). experiments/helen_frontier_v0/tests: 120 passed. make test: 748 passed, 5 skipped. Outbox fingerprint sha256:8bdfeaa6...876a39 over 117 packets unchanged before and after. One divergence in the environment, not in any check: commit 8791816 by another agent landed at 20:35:33 UTC during the run and moved HEAD from ea452ec to 879181650673dde70726b69c562609f15f049dff; it touches no replayed path.",
+  "unresolved": [
+    "Commit 8791816 (another agent) moved HEAD mid-run; replay_receipt git_head records the start HEAD ea452ec. A later replay should pin HEAD before starting.",
+    "Lexical receipt compute.wall_seconds differs between runs (0.28 vs 0.51); ignored per spec.",
+    "The dedup probe writes into the committed receipts/ directory by design; the three new receipts were moved here by G6, so receipts/ is clean, but the probe itself should write to a configurable directory to avoid this step.",
+    "Embedding tier of dedup probe was not run (not part of this replay).",
+    "experiments/helen_frontier_v0/tests and root tests/ (numbered constitutional invariants) were not part of make test; root tests/ were not run.",
+    "The README states no test counts; the counts were checked against commit messages only."
+  ],
+  "self_reported_limits": [
+    "Model field follows the assignment's value claude-haiku-4-5-20251001; the session identifies its model as claude-haiku-5-5. The field was not changed.",
+    "Scratch writes outside the G6 directory: /tmp/g6_before.txt, /tmp/x and /dev/shm/g6_* (pre-run receipt listing, g6abht dir). Created in error during the run, all removed before the receipts were written. No content from them is used in any output.",
+    "make test and pytest may write __pycache__ under the repo; git status does not show them, so they are treated as gitignored. pytest run with -p no:cacheprovider; make test was not given that flag.",
+    "Comparison is only as strong as the committed receipts: equality is checked on inputs_sha256 and the result block, not on the probe's semantics. The probe is not evaluated for correctness.",
+    "Witness does not fix, edit, commit or push. No network access. No sovereign path (temple/, town/, helen_os/governance/, helen_os/schemas/, oracle_town/kernel/, GOVERNANCE/) was read or written.",
+    "Outbox fingerprint is a single hash over names and bytes; it detects drift but does not say which file changed."
+  ]
+}

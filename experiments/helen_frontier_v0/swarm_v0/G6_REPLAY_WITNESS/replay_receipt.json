@@ -1,0 +1,123 @@
+{
+  "schema": "REPLAY_RECEIPT_V0",
+  "authority": false,
+  "witness": "G6_REPLAY_WITNESS",
+  "model": "claude-haiku-4-5-20251001",
+  "git_head": "ea452ecabc2c1881065a4a85315bbf7a7266149c",
+  "checks": [
+    {
+      "name": "fixture_digest",
+      "expected": "sha256:05bf8cd6093c01aa88264ae2173d033b45a64b0bd066b1ca434b488412c93a6c",
+      "observed": "sha256:05bf8cd6093c01aa88264ae2173d033b45a64b0bd066b1ca434b488412c93a6c",
+      "match": true,
+      "note": "canonical JSON digest; equals doc frontmatter fixture_digest and FROZEN_DIGEST in tests/test_fixture_freeze.py"
+    },
+    {
+      "name": "dedup_exact",
+      "expected": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=05ff19bb8b8e9b022899ba6cb32139b193ec042e10382cf9d77d41ec94a49b78",
+      "observed": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=05ff19bb8b8e9b022899ba6cb32139b193ec042e10382cf9d77d41ec94a49b78",
+      "match": true,
+      "keys_compared": {
+        "inputs_sha256": true,
+        "result": true
+      },
+      "ignored_keys": [
+        "generated_at_utc",
+        "compute",
+        "filename"
+      ],
+      "expected_receipt": "dedup_probe_exact_20261007T155312Z.json",
+      "observed_receipt": "dedup_probe_exact_20261007T203528Z.json"
+    },
+    {
+      "name": "dedup_structural",
+      "expected": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=81cacc42ba4863b801bc8f459bb3c149c6331d03931489bcaaa268ab3b7ed12c",
+      "observed": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=81cacc42ba4863b801bc8f459bb3c149c6331d03931489bcaaa268ab3b7ed12c",
+      "match": true,
+      "keys_compared": {
+        "inputs_sha256": true,
+        "result": true
+      },
+      "ignored_keys": [
+        "generated_at_utc",
+        "compute",
+        "filename"
+      ],
+      "expected_receipt": "dedup_probe_structural_20261007T155312Z.json",
+      "observed_receipt": "dedup_probe_structural_20261007T203528Z.json"
+    },
+    {
+      "name": "dedup_lexical",
+      "expected": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=361a781bc173dd1da6d99c45a84ff956e5a339874ad5ade8c2ae04043ca8228f",
+      "observed": "inputs_sha256=d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8 result_sha256=361a781bc173dd1da6d99c45a84ff956e5a339874ad5ade8c2ae04043ca8228f",
+      "match": true,
+      "keys_compared": {
+        "inputs_sha256": true,
+        "result": true
+      },
+      "ignored_keys": [
+        "generated_at_utc",
+        "compute",
+        "filename"
+      ],
+      "expected_receipt": "dedup_probe_lexical_20261007T155313Z.json",
+      "observed_receipt": "dedup_probe_lexical_20261007T203529Z.json"
+    },
+    {
+      "name": "experiments_tests",
+      "expected": "120 passed (commit e89d0c8, latest stated count)",
+      "observed": "120 passed in 1.30s",
+      "match": true,
+      "note": "README states no counts; older commits 731669b (104) and df93c30 (112) are superseded by e89d0c8"
+    },
+    {
+      "name": "make_test",
+      "expected": "748 passed, 5 skipped (commits df93c30, 731669b, 3056868)",
+      "observed": "748 passed, 5 skipped in 8.74s",
+      "match": true,
+      "note": "make test runs helen_os/tests/ only; root tests/ and experiments/ not included"
+    },
+    {
+      "name": "outbox_fingerprint",
+      "expected": "sha256:8bdfeaa69b6e8777d22f6c737c302a577a7d9c61af5dd8f96f1fa8e852876a39 (baseline taken before probe and tests)",
+      "observed": "sha256:8bdfeaa69b6e8777d22f6c737c302a577a7d9c61af5dd8f96f1fa8e852876a39 (count=117, taken after probe and tests)",
+      "match": true,
+      "note": "sha256 over sorted basenames + bytes of temple/autoresearch/outbox/*.json; read-only"
+    }
+  ],
+  "divergences": [
+    {
+      "name": "git_head_during_run",
+      "expected": "ea452ecabc2c1881065a4a85315bbf7a7266149c",
+      "observed": "879181650673dde70726b69c562609f15f049dff",
+      "match": false,
+      "note": "a commit by another agent (8791816, 20:35:33 UTC, 'frontier(swarm v0): HER-FABLE vision + HAL_OPUS supervision contract + blind fixture inputs') landed during the run; it touches only docs/proposals/HER_FABLE_VISION_SWARM_V0.md and experiments/helen_frontier_v0/swarm_v0/inputs/fixtures_blind.json. No replayed path is affected, so the check results stand. git_head records the HEAD at start."
+    },
+    {
+      "name": "git_status_untracked_before_vs_after",
+      "expected": "?? docs/proposals/HER_FABLE_VISION_SWARM_V0.md; ?? experiments/helen_frontier_v0/swarm_v0/",
+      "observed": "?? experiments/helen_frontier_v0/swarm_v0/G1_BLIND_EVALUATOR/; ?? experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/",
+      "match": false,
+      "note": "HER_FABLE doc was committed by the 8791816 commit above; G1_BLIND_EVALUATOR appeared (not written by G6)."
+    }
+  ],
+  "environment": {
+    "python": "3.11.15",
+    "python_executable": "/home/user/helen-conquest/.venv/bin/python",
+    "cpu_count": 4,
+    "platform": "Linux-6.18.44-fc-v77-x86_64-with-glibc2.39",
+    "git_head_start": "ea452ecabc2c1881065a4a85315bbf7a7266149c",
+    "git_head_end": "879181650673dde70726b69c562609f15f049dff",
+    "git_status_before": [
+      "?? docs/proposals/HER_FABLE_VISION_SWARM_V0.md",
+      "?? experiments/helen_frontier_v0/swarm_v0/"
+    ],
+    "git_status_after_run": [
+      "?? experiments/helen_frontier_v0/swarm_v0/G1_BLIND_EVALUATOR/",
+      "?? experiments/helen_frontier_v0/swarm_v0/G6_REPLAY_WITNESS/"
+    ],
+    "pytest_flags": "-q -p no:cacheprovider",
+    "make_test": "make test (repo root)"
+  },
+  "all_checks_match": true
+}

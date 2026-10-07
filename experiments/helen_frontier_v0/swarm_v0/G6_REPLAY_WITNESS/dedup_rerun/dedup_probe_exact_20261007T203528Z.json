@@ -1,0 +1,621 @@
+{
+  "schema": "DEDUP_PROBE_RECEIPT_V0",
+  "authority": false,
+  "sovereign": false,
+  "canon": false,
+  "ledger_effect": "none",
+  "meaning": "Scores are candidate duplicates (interpretation). No packet was modified or rejected.",
+  "tier": "exact",
+  "generated_at_utc": "20261007T203528Z",
+  "outbox": "temple/autoresearch/outbox",
+  "packets_total": 117,
+  "packets_with_text": 113,
+  "packets_without_text": [
+    "AR-sandbox-vgrammar-e77-skill-active-pur-collapse",
+    "AR-sandbox-vgrammar-e78-memory-canon-cy-dual-use",
+    "AR-sandbox-vgrammar-e79-skill-active-pur-css-confirmed",
+    "AR-sandbox-vgrammar-e80-task-waiting-amber-triple"
+  ],
+  "text_field_order": [
+    "summary",
+    "hypothesis",
+    "title"
+  ],
+  "inputs_sha256": "d97e0e15d8152ea393bda5d16cd823a36ca0ce2007182faa242c0a3fb74c44d8",
+  "compute": {
+    "wall_seconds": 0.0,
+    "cpu_count": 4,
+    "python": "3.11.15"
+  },
+  "result": {
+    "duplicate_groups": [],
+    "packets_in_groups": 0
+  },
+  "snippets_for_review": {
+    "AR-137a79dbae09": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_DAN_GOBLIN_RECALL_MODE_V0_1.md: signals=['proposal_marker', 'risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-1c394e006626": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/AUTORESEARCH_E11_E12_RECONCILIATION.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-1f936d1bda4b": {
+      "field": "summary",
+      "snippet": "New sandbox agent adapter (tools/helen_sandbox_agent_adapter.py) lacks corresponding unit tests or integration verification.",
+      "finding_type": "test_gap"
+    },
+    "AR-332110575215": {
+      "field": "summary",
+      "snippet": "24 accumulated AUTORESEARCH packets all carry recommended_action=ROUTE_TO_OPERATOR_FOR_REVIEW, but no triage tool or documented operator-review workflow exists ",
+      "finding_type": "risk"
+    },
+    "AR-3521ec730fd4": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/VISIBLE_REASONING_SURFACE_V1.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-39307ac76191": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OSAURUS_ADMISSION_SEAM_V0.md: signals=['gap_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-3b7799cb88a0": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/reports/OPTIMIZATION_PROPOSALS.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-4eedf96f7ace": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/MRGTK_v0.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-5602a344e0d6": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/KERNEL_TO_AGENTIC_OS_DEEP_DIVE_V0.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-575d4b83a114": {
+      "field": "summary",
+      "snippet": "No deduplication, no cap, no ranking on capability_gaps before prompt injection at self_improve_loop_v1.py:266. Caller-order determines what HELEN proposes.",
+      "finding_type": "gap"
+    },
+    "AR-5832a927028e": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/GOBLIN_5_EPOCH_AUTORESEARCH.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-603402e9d1c4": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OS_V2_INTERACTION_GRAMMAR.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-622d76f69257": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_LANGUAGE_V1_BEGINNER.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-671223d898a2": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OS_V2_VISUAL_CANON_LOCK.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-83d2c37481c7": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/MANIFEST_GATE_V1.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-842e7f4922cf": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OBSTRUCTION_V0.md: signals=['gap_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-941d3bbb6333": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/TEMPLE_MODE_VISUAL_BRIEF.md: signals=['proposal_marker', 'risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-944b83d2fa9e": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/specs/HERALDIC_SYMBOL_SET_V0_1.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-9598791758a5": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/EPISTEMIC_SYNTAX_V1.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-9d167217e823": {
+      "field": "summary",
+      "snippet": "Quality score is binary in practice: 0.0 (invalid) or 1.0 (any non-empty effect). Vagueness promised but unimplemented.",
+      "finding_type": "gap"
+    },
+    "AR-a657ef5764d8": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/FOCUS_MODE_TERMINAL_SPEC.md: signals=['proposal_marker', 'risk_marker', 'gap_marker']",
+      "finding_type": "risk"
+    },
+    "AR-b634eae985b4": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/DAN_GOBLIN.md: signals=['gap_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-c1f03861ffdc": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/GOBLIN_JESTER_PROTOCOL_V1.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-c73a8b88fb8d": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/PURE_PREDICTOR_GATE_V1.md: signals=['proposal_marker', 'gap_marker']",
+      "finding_type": "risk"
+    },
+    "AR-c8121dc0789e": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OS_V2_GRAMMAR_AMENDMENT_001.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-cecf4c5b553f": {
+      "field": "summary",
+      "snippet": "Three CI gates are red on main at HEAD dace8b02 (Kernel Guard: 3 stale CONSUMER_ALLOWLIST NDJSONWriter imports incl. kernel_daemon.py admission handlers; Oracle",
+      "finding_type": "risk"
+    },
+    "AR-cfad921197fc": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_DAN_RALPH_V0.md: signals=['gap_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-context-rank-companion-apply-e17": {
+      "field": "summary",
+      "snippet": "E15 fix confirmed by live probe. companion_state absent from prior dict at init_airlock.py:102-107. boot_loader loads both fields into RuntimeBootContext; _chec",
+      "finding_type": "fix_ready"
+    },
+    "AR-context-rank-companion-drop-e14": {
+      "field": "summary",
+      "snippet": "boot_loader.py loads 5 context fields (person_profile, last_session, epoch_state, companion_state, live_context). all 5 influence any_loaded (memory_source='sto",
+      "finding_type": "data_loss"
+    },
+    "AR-context-rank-companion-fix-e15": {
+      "field": "summary",
+      "snippet": "E14 data_loss confirmed on fresh checkout (2026-07-25). companion_state and live_context are loaded by boot_loader (any_loaded check) but silently dropped from ",
+      "finding_type": "fix_proposal"
+    },
+    "AR-context-rank-risk-clear-e16": {
+      "field": "summary",
+      "snippet": "E15 medium semantic risk flag cleared. E15 flagged: 'if any consumer explicitly asserts prior_context keys == 4, will break'. Full codebase grep for key-count a",
+      "finding_type": "risk_clearance"
+    },
+    "AR-contextrank-e35-template-idempotent": {
+      "field": "summary",
+      "snippet": "context_ranking wins cold-start (19.2) on every clean run but its experiment template (two_stage_loop.py:97-102) is idempotent: it fires twice (2026-07-21, 2026",
+      "finding_type": "gap"
+    },
+    "AR-contextrank-e50-propose-action-contradiction": {
+      "field": "summary",
+      "snippet": "E28 found _top_threads() drops last_updated from its sort key (line 112, unfixed). E50 finds a second, distinct defect: _propose_action() (line 184-208) tension",
+      "finding_type": "cross_output_contradiction"
+    },
+    "AR-contextrank-e52-metric-broken": {
+      "field": "summary",
+      "snippet": "E50 proposed a 3-line guard for the _propose_action/top_3_threads contradiction (confirmed live: salience=9 thread vs weight=3 tension yields contradictory boot",
+      "finding_type": "metric_unrunnable"
+    },
+    "AR-contextrank-e53-guard-verified": {
+      "field": "summary",
+      "snippet": "E53 verifies two open questions left by E52: (1) does the E52 corrected_metric actually run in the cloud checkout? (2) does the E50 proposed 3-line guard resolv",
+      "finding_type": "verification"
+    },
+    "AR-contextrank-e54-e28-recency-live": {
+      "field": "summary",
+      "snippet": "E54 confirms E28 live: _top_threads() silently drops last_updated at line 114. Two equal-salience/status threads produce insertion-order output, not recency ord",
+      "finding_type": "live_confirmation + fix_simulation"
+    },
+    "AR-contextrank-e90-history-format-void": {
+      "field": "summary",
+      "snippet": "E90: context_ranking — memory.get_history() returns unbounded NDJSON fact entries (schema: event_id/key/value/status/actor/timestamp). These are injected into L",
+      "finding_type": null
+    },
+    "AR-ctx-rank-stab-e11": {
+      "field": "summary",
+      "snippet": "autoresearch_loop.py:98 calls evaluate() without stability_ranked. Evaluator defaults stab=1.0 when argument is None (line 62). Every logged ExperimentEntry.sta",
+      "finding_type": "phantom_default"
+    },
+    "AR-ctxrank-e24-sortkeys-list-noop": {
+      "field": "summary",
+      "snippet": "At line 284, json.dumps(admitted_skills, sort_keys=True) is called on a list. sort_keys=True only sorts dict object keys — it has no effect on list element orde",
+      "finding_type": "gap"
+    },
+    "AR-ctxrank-e28-last-updated-dropped": {
+      "field": "summary",
+      "snippet": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 — but",
+      "finding_type": "gap"
+    },
+    "AR-d30a1396bd93": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/SAFE_NOETIC_METABOLISM_T9_V0.md: signals=['proposal_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-e8d1841c6d2f": {
+      "field": "summary",
+      "snippet": "Oracle Town Verification CI is structurally unable to pass: VERIFY_ALL.sh steps 3-4 require oracle_town/runs/ (create_adversarial_runs.py + runA/B/C frozen arti",
+      "finding_type": "test_gap"
+    },
+    "AR-ea91f2b2230c": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_SANDBOX_AGENT_ADAPTER_V0.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-ed9bd849fb7e": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/TEMPLE_MODE_EXPERIENCE_SCRIPT.md: signals=['proposal_marker', 'gap_marker']",
+      "finding_type": "proposal"
+    },
+    "AR-eec73bbbf239": {
+      "field": "summary",
+      "snippet": "Scanner findings in docs/proposals/HELEN_OS_V2_USER_CENTRIC_UX.md: signals=['risk_marker']",
+      "finding_type": "risk"
+    },
+    "AR-eee30b74e78d": {
+      "field": "summary",
+      "snippet": "All four temple garden validators are fail-closed but none run in CI; a past 300-epoch sibling run broke validate_avalon.py and was only caught manually days la",
+      "finding_type": "test_gap"
+    },
+    "AR-f7ec3779a583": {
+      "field": "summary",
+      "snippet": "Unbounded history in helen.py:speak() — no tail limit before LLM call",
+      "finding_type": "gap"
+    },
+    "AR-halctx-e30-6c84165362c2": {
+      "field": "summary",
+      "snippet": "helen.py:63 calls hal.review(proposal, context) where context = [system_msg] + full_history (O(history) tokens). hal.review() passes context unchanged to adapte",
+      "finding_type": "gap"
+    },
+    "AR-init-rank-d9c2": {
+      "field": "summary",
+      "snippet": "init_helen_wedge.py:_top_threads() collects last_updated per thread (line 104) but the score formula (line 112) is (is_unresolved*1000)+salience only. Recency i",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e25-docstring-stale": {
+      "field": "summary",
+      "snippet": "surface_ranker.py line 13 claims 'init_ranking_weights scores highest (24.0)' — wrong on both count and winner. After E11 lowered init E from 8→6 (to prevent co",
+      "finding_type": "documentation_mismatch"
+    },
+    "AR-initrank-e37-phantom-tweak-template": {
+      "field": "summary",
+      "snippet": "two_stage_loop.py:92 experiment template for init_ranking_weights contains a phantom tweak: 'Increase weight of context_ranking by 0.05 in init_ranking_weights ",
+      "finding_type": "phantom_reference"
+    },
+    "AR-initrank-e45-flags-sev-zeroed": {
+      "field": "summary",
+      "snippet": "BASELINE dict in autoresearch_init_evaluator_v1.py zeros out w_flags and w_severity (both 0.0), commenting \"mirrors current triage TYPE_PRIORITY intuition\". All",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e46-noise-discriminator": {
+      "field": "summary",
+      "snippet": "E45 proposed w_flags=0.5, w_severity=0.5 and achieved Top3Match=1.0 but OrderScore=0.3333 (score=0.8667). E46 discovers that lexical_noise_kw is a perfect binar",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e47-len-tiebreaker": {
+      "field": "summary",
+      "snippet": "E46 confirmed w_noise=1.0 as binary separator (score=0.9267, OrderScore=0.6333). E47 finds that adding w_len=0.1 (length penalty for longer summaries) lifts Ord",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e48-refs-tiebreaker": {
+      "field": "summary",
+      "snippet": "E47 (w_noise=1.0 + w_len=0.1) left 6/20 cases with incorrect ordering: eee30b (test_gap, refs=4, sev=2, len=224) ranked after 1f936 (test_gap, refs=2, sev=1, le",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e57-analytic-cliff-bounds": {
+      "field": "summary",
+      "snippet": "E48 identified the w_refs safe window [0.026, 0.030] empirically (score=1.0 inside, 0.96 outside). E57 derives it analytically from goldset pair constraints: (1",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e58-prescreen-formula": {
+      "field": "summary",
+      "snippet": "E57 proposed adding analytic_cliff_bounds() to the evaluator. E58 verifies that function returns (0.025000, 0.030833) on the 20-case goldset — exactly matching ",
+      "finding_type": "gap"
+    },
+    "AR-initrank-e92-agent-stack-fixed-rank": {
+      "field": "hypothesis",
+      "snippet": "If run_task() accepts a complexity param (default='full'), then 'simple' tasks skip Planner and Critic, dropping from 4 LLM adapter.generate() calls to 2 per ta",
+      "finding_type": null
+    },
+    "AR-promptcomp-e22-admitted-skills-id-only": {
+      "field": "summary",
+      "snippet": "In run_self_improve_loop() (line 281), admitted_skills is built as list(skill_library['active_skills'].keys()) — ID strings only. Line 284 passes this ID-only l",
+      "finding_type": "gap"
+    },
+    "AR-promptcomp-e23-bootstrap-description-gap": {
+      "field": "summary",
+      "snippet": "E22 proposed changing admitted_skills at line 281 from ID-list to {sid: {description, gap}} dict. E22 fix not yet applied (line 281 still uses .keys()). Deeper ",
+      "finding_type": "gap"
+    },
+    "AR-promptcomp-e36-admitted-lesson-dropped": {
+      "field": "summary",
+      "snippet": "run_self_improve_loop appends rejection history to feedback_lines (lines 423, 426) but silently drops admission history. Line 418 computes lesson = 'Admitted sk",
+      "finding_type": "gap"
+    },
+    "AR-promptcomp-e3a1": {
+      "field": "summary",
+      "snippet": "Prior packet AR-f7ec3779a583 proposed tail=20 at helen.py:speak() only. New evidence: server.py:59 has identical gap — full NDJSON read, Python slice at return.",
+      "finding_type": "gap"
+    },
+    "AR-promptcomp-e44-admitted-lesson-missing-append": {
+      "field": "summary",
+      "snippet": "E36 found that admitted_skill lessons are not appended to feedback_lines. E44 live-confirms via direct read: self_improve_loop_v1.py:418 computes lesson = 'Admi",
+      "finding_type": "missing_append"
+    },
+    "AR-promptcomp-e51-core-prompt-3line-reduction": {
+      "field": "summary",
+      "snippet": "E44 identified the admitted-skill lesson not appended to feedback_lines. E51 targets the two_stage_loop.py CORE_PROMPT directly. Three lines are provably redund",
+      "finding_type": "redundant_instruction_3x"
+    },
+    "AR-promptcomp-e91-weather-unconditional-fetch": {
+      "field": "hypothesis",
+      "snippet": "If WeatherService.get_weather() is gated by keyword relevance on user_message (frozenset of ~9 weather terms), then non-weather speak() calls avoid a live wttr.",
+      "finding_type": null
+    },
+    "AR-promptcomp-fieldmismatch-e9": {
+      "field": "summary",
+      "snippet": "E9 observation: memory.py NDJSON entries use actor+value schema; adapters.py context reader expects metadata.role+content. Field mismatch silently injects empty",
+      "finding_type": "gap"
+    },
+    "AR-sandbox-vgrammar-e31-live-shipped-collision": {
+      "field": "summary",
+      "snippet": "cockpit_v4.html renders 'shipped' (governance ADMITTED) and 'live' (process running) in identical green (#00ff88). CSS at L64 and L67 both use var(--grn). STATE",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e32-committed-admitted-collision": {
+      "field": "summary",
+      "snippet": "index.html receipt rail renders COMMITTED rows (git commits 7703486, a5ab917) in --green (#3dd68c) via .rrow-status.committed (L256) and inline rrow-dot style (",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e33-gonogo-go-green-collision": {
+      "field": "summary",
+      "snippet": "The Go/No-Go panel (L1056-1064) is a pre-admission review gate — 'All stations must be GO before SHIP is authorized' (L1059). HER=GO (L1060, 'Proposal ready') a",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e39-shipped-chainok-collision": {
+      "field": "summary",
+      "snippet": "starship.html ledger source panel (L557–L593) renders eight values in .lv.g (CSS L55: .lv.g{color:var(--g)}; L11: --g:#00ff41). Three are governance verdicts — ",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e40-ring-branding-governance-collision": {
+      "field": "summary",
+      "snippet": "home_v1.html (authority: false · NO_RECEIPT = NO_CLAIM, L151) assigns #00ff88 three meanings: (1) operator-confirm governance action — .btn-c CONFIRM button L84",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e41-temple-orbit-receipt-collision": {
+      "field": "summary",
+      "snippet": "temple.html (authority: false badge, L81) assigns #00ff88 at least five meanings: (1) SKILLS orbit decoration — L240 col:'#00ff88', permanently lit; (2) receipt",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e42-liveness-green-residual": {
+      "field": "summary",
+      "snippet": "Final sweep of the three unswept surfaces. dream_of_conquest.html: CLEAN — painterly parchment palette (rgba earth/cream tones, single #181210 ink), zero govern",
+      "finding_type": "recurrence_residual"
+    },
+    "AR-sandbox-vgrammar-e43-focus-helen2027-presence-green": {
+      "field": "summary",
+      "snippet": "Two surface files share an identical E31-class liveness-green collision that E40/E42 logged but did not fix. focus.html L41-42 and helen2027.html L45-46 both re",
+      "finding_type": "liveness_governance_collision"
+    },
+    "AR-sandbox-vgrammar-e59-live-teal": {
+      "field": "hypothesis",
+      "snippet": "L91/.live-pulse, L123/.mrow-dot.live, L133/.badge.live all use --green (#3dd68c) for runtime liveness (ACTIVE/ONLINE/LIVE). SA doctrine assigns --green exclusiv",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e60-happy-purple": {
+      "field": "hypothesis",
+      "snippet": "body.s-happy (L56) assigns --state-accent:var(--green) and --state-bg:var(--green-bg). --green maps to 🟢 ADMITTED per SA doctrine (CLAUDE.md §Look&Feel; §WULMOJ",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e61-task-check-gold": {
+      "field": "hypothesis",
+      "snippet": ".task-check.done (L195) assigns background/border/color via var(--green) to mark an operator-clicked task checkbox as complete. toggleTask() (L1330-1335) is pur",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e62-station-verdict-blue": {
+      "field": "hypothesis",
+      "snippet": ".station-verdict.go (L299) assigns color:var(--green) to the 'GO' verdict label in the Go/No-Go pre-SHIP gate panel (#gonogo). The panel subtitle reads 'All sta",
+      "finding_type": "semantic_collision"
+    },
+    "AR-sandbox-vgrammar-e63-live-teal-confirmed": {
+      "field": "hypothesis",
+      "snippet": "E62 confirmed station-verdict.go (L299) → --blue ('station cleared pre-condition'). If live-dot cluster (L91/123/133) also reassigns to --blue, then when the go",
+      "finding_type": "semantic_collision_fork_resolution"
+    },
+    "AR-sandbox-vgrammar-e64-shappy-purple-secondary-collision": {
+      "field": "hypothesis",
+      "snippet": "E60 proposed body.s-happy → --state-accent:var(--purple) to fix the s-happy/--green SA-ADMITTED collision. If this lands, --state-accent:var(--purple) floods st",
+      "finding_type": "semantic_collision_cascade"
+    },
+    "AR-sandbox-vgrammar-e65-sexcited-blue-sky": {
+      "field": "hypothesis",
+      "snippet": "body.s-excited (L50) assigns --state-accent:var(--blue). .src-type.nl (L171) uses color:var(--blue) for newsletter-source provenance. Both can render in the sam",
+      "finding_type": "semantic_collision_live"
+    },
+    "AR-sandbox-vgrammar-e66-proud-purple-calm-gold": {
+      "field": "summary",
+      "snippet": "body.s-calm and body.s-proud both assign --state-accent:var(--gold) and --state-bg:var(--gold-bg). Rendering collision is impossible: line 1288 (document.body.c",
+      "finding_type": "semantic_collision_benign_rendering"
+    },
+    "AR-sandbox-vgrammar-e67-scared-red-angry-red": {
+      "field": "summary",
+      "snippet": "body.s-scared (L55) and body.s-angry (L52) both assign --state-accent:var(--red) and --state-bg:var(--red-bg). Rendering collision is IMPOSSIBLE: L1288 (documen",
+      "finding_type": "semantic_collision_benign_rendering_no_existing_slot"
+    },
+    "AR-sandbox-vgrammar-e68-sad-mid-structural-borrow": {
+      "field": "summary",
+      "snippet": "body.s-sad (L53) assigns --state-accent:var(--mid) and --state-bg:var(--ghost). VIOLATION: --mid (L23: rgba(255,255,255,.32)) is a structural dimming/secondary-",
+      "finding_type": "semantic_collision_structural_token_borrowed_for_emotional_state_plus_dim_option_blocked"
+    },
+    "AR-sandbox-vgrammar-e69-cockpit-live-grn-teal": {
+      "field": "summary",
+      "snippet": "cockpit_v4.html assigns --grn:#00ff88 to both .si-state.shipped (L64) and .si-state.live (L67). JS color map (L234) confirms: shipped:'#00ff88' and live:'#00ff8",
+      "finding_type": "semantic_collision_grn_token_dual_use_shipped_and_live_states"
+    },
+    "AR-sandbox-vgrammar-e70-sbdot-liveness-teal": {
+      "field": "summary",
+      "snippet": "cockpit_v4.html L38: .sb-dot{background:var(--grn);animation:blink 2s step-end infinite} — the always-blinking green heartbeat dot at L157 signals SYSTEM LIVENE",
+      "finding_type": "semantic_collision_sb_dot_liveness_vs_sa_admitted"
+    },
+    "AR-sandbox-vgrammar-e71-vrd-pass-wh": {
+      "field": "summary",
+      "snippet": "cockpit_v4.html L97: .vr-v.pass{color:var(--grn)} and L106: .replay-row .ok{color:var(--grn)} — both use --grn for gate/integrity PASS verdicts. SA doctrine: --",
+      "finding_type": "semantic_collision_gate_pass_vs_sa_admitted"
+    },
+    "AR-sandbox-vgrammar-e72-tree-clean-wh": {
+      "field": "summary",
+      "snippet": "cockpit_v4.html L515: inline style color:${dirty?'var(--red)':'var(--grn)'} and L555: .style.color = d.dirty ? 'var(--red)' : 'var(--grn)' both assign --grn to ",
+      "finding_type": "semantic_collision_tree_clean_vs_sa_admitted"
+    },
+    "AR-sandbox-vgrammar-e73-le-st-ok-grn-correct": {
+      "field": "summary",
+      "snippet": "E72 predicted .le-st.ok (L92) as next --wh candidate (hash-valid entry ≈ verification outcome → ⚪ REPLAYABLE). Audit finds this is INCORRECT: the .le-st state m",
+      "finding_type": "grn_usage_confirmed_correct_admission_state_machine"
+    },
+    "AR-sandbox-vgrammar-e74-silive-grn-pur": {
+      "field": "summary",
+      "snippet": "E73 flagged .si-state.live (L67) → --grn for audit: is 'LIVE' an admission event or runtime observation? Audit confirms semantic collision. Two operational-stat",
+      "finding_type": "grn_semantic_collision_live_vs_active_operational_states"
+    },
+    "AR-sandbox-vgrammar-e75-shipped-canon-statecolor-dead": {
+      "field": "summary",
+      "snippet": "E74 asked: do .si-state.shipped and .si-state.canon both use --grn? Audit result: NO. L64: shipped→--grn (CORRECT: SA_ADMITTED, operator-authorized ledger write",
+      "finding_type": "dead_code_state_color_block_plus_shipped_canon_audit"
+    },
+    "AR-sandbox-vgrammar-e77-skill-active-pur-collapse": {
+      "field": "",
+      "snippet": "",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e78-memory-canon-cy-dual-use": {
+      "field": "",
+      "snippet": "",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e79-skill-active-pur-css-confirmed": {
+      "field": "",
+      "snippet": "",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e80-task-waiting-amber-triple": {
+      "field": "",
+      "snippet": "",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e81-source-live-compound-green": {
+      "field": "summary",
+      "snippet": "Nodes s2 (temple.html, source/live) and s3 (focus.html, source/live) emit THREE independent --grn signals simultaneously: (1) orbital canvas dot via TYPE_COLOR.",
+      "finding_type": "compound_triple_green_source_live"
+    },
+    "AR-sandbox-vgrammar-e82-skill-active-pur-type-label-split": {
+      "field": "summary",
+      "snippet": "sk1 (skill/active) and sk2 (skill/active) show TYPE_COLOR.skill='#bb88ff'=--pur for the dot AND .si-state.active=var(--pur)=#bb88ff for the label — identical co",
+      "finding_type": "sk1_sk2_type_dot_vs_state_label_pur_collision"
+    },
+    "AR-sandbox-vgrammar-e83-joint-patch-verify": {
+      "field": "summary",
+      "snippet": "E83: simulated full state after joint patch E74+E76-hex+E79. Result: TYPE_COLOR reaches 0 collisions (5 types, 5 unique hex). No cross-domain (TYPE×STATE) colli",
+      "finding_type": "joint_patch_simulation_safe"
+    },
+    "AR-sandbox-vgrammar-e84-compound-wh-fix": {
+      "field": "summary",
+      "snippet": "E84: 4 independent --grn misuse sites confirmed (vr-v.pass L97, replay-row .ok L106, tree CLEAN L515/L555). Proposal: replace with --wh (all independent of E69 ",
+      "finding_type": "compound_wh_fix_independent"
+    },
+    "AR-sandbox-vgrammar-e85-sbdot-wh-resolution": {
+      "field": "summary",
+      "snippet": "E85: sb-dot (L38) uses --grn for blinking liveness/heartbeat dot. E84 blocked on E69 --teal contingency (--teal not in :root). New path: --wh (rgba(255,255,255,",
+      "finding_type": "sbdot_teal_contingency_resolution"
+    },
+    "AR-sandbox-vgrammar-e86-wh-compound-verification": {
+      "field": "summary",
+      "snippet": "E86: Verification pass on E84+E85 compound patch readiness. Current: 9 var(--grn) sites (grep confirmed). --wh token at L21 (:root, rgba(255,255,255,.88)) decla",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e87-live-reclassification": {
+      "field": "summary",
+      "snippet": "E87: Perceptual audit + L67 reclassification. E84+E85 patch still not applied (--wh=0 uses confirmed). Contrast audit: --wh 16.0:1, --grn 15.7:1 on #000 — both ",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-e88-count-verify": {
+      "field": "summary",
+      "snippet": "E88: Pre-operator-apply count verification. All 8 sites from E87 compound patch confirmed present in current file. Pre-patch: var(--grn)=9, var(--wh)=0. Post-pa",
+      "finding_type": null
+    },
+    "AR-sandbox-vgrammar-f2a9": {
+      "field": "summary",
+      "snippet": "apps/helen-surface/goblin/garden_conquest_avalon.html:639,642 — AVALON epoch ticker renders 🟢 for E06 and E09 to signal story-arc progress. The file header is t",
+      "finding_type": "gap"
+    },
+    "AR-skill-route-d1f7": {
+      "field": "summary",
+      "snippet": "Dead comment: _compute_route() Rule 9 says 'or SKILL if multi-step intent' but no NLU detection exists. All USER_QUERY text routes to AGENT regardless of conten",
+      "finding_type": "gap"
+    },
+    "AR-skillroute-e34-ok-quarantined-class": {
+      "field": "summary",
+      "snippet": "E27 added 6 ERR_* codes to failure_to_class (skill_discovery_v1.py:162-174) but missed 'OK_QUARANTINED'. QUARANTINED ledger entries pass the detect_failure_clus",
+      "finding_type": "gap"
+    },
+    "AR-skillroute-e49-inference-rejected-missing": {
+      "field": "summary",
+      "snippet": "E34 found OK_QUARANTINED missing from failure_to_class (skill_discovery_v1.py:162-174). E49 live-probe finds two additional pre-reducer outcome codes also missi",
+      "finding_type": "gap"
+    },
+    "AR-skillroute-e55-manifest-codes-missing": {
+      "field": "summary",
+      "snippet": "E49 found 3 pre-reducer codes (INFERENCE_FAILED, REJECTED, OK_QUARANTINED) missing from failure_to_class. E55 finds 2 additional REDUCER-emitted codes also abse",
+      "finding_type": "gap"
+    },
+    "AR-skillroute-e56-parse-failed-optimize": {
+      "field": "summary",
+      "snippet": "E49 deferred PARSE_FAILED as 'operator judgment: OPTIMIZE or TRANSFORM?' E56 resolves it from code: _parse_skill_proposal (self_improve_loop_v1.py:676-713) alre",
+      "finding_type": "gap"
+    },
+    "AR-skillroute-e89-hal-model-forbidden": {
+      "field": "summary",
+      "snippet": "E89: HAL model routing violation. tools/hal_driver.py L17 and tools/run_hal_epoch.py L14 both set HAL_MODEL_DEFAULT = 'deepseek-r1:14b'. MODEL_ROUTING_V1.md §7 ",
+      "finding_type": null
+    },
+    "AR-skillroute-rule2b-dead-f3c7": {
+      "field": "summary",
+      "snippet": "Rule 2b (line 285-291) is unreachable. _classify_input() returns THINK_PREPARATION for any input with think=True (line 165), so input_type is never USER_QUERY w",
+      "finding_type": "dead_branch"
+    },
+    "AR-summ-weights-e29-fallback-bias": {
+      "field": "summary",
+      "snippet": "ENGINE.py SOURCE_WEIGHT fallback is 1.0 — the maximum weight (equal to 'plugins'). Any unit with source_id='' (default), 'symbolic_sources', or any unregistered",
+      "finding_type": "gap"
+    },
+    "AR-summ-weights-e38-register-divergence": {
+      "field": "summary",
+      "snippet": "register_source() in sources.py updates SOURCES dict but has no coupling to SOURCE_WEIGHT in engine.py. Any dynamically-registered corpus (e.g. symbolic_sources",
+      "finding_type": "gap"
+    },
+    "AR-summ-weights-e43-symbolic-orphan": {
+      "field": "summary",
+      "snippet": "symbolic_sources/ corpus (6 docs on disk) is fully orphaned from retrieval engine. register_source() has zero callers. SOURCE_WEIGHT and SOURCES both lack 'symb",
+      "finding_type": "gap"
+    },
+    "AR-sumweights-a8f2": {
+      "field": "summary",
+      "snippet": "Four scoring bands (1.0 / 0.75 / 0.5 / 0.0) with threshold at 0.5 mean the 'quality gate' only blocks schema-invalid proposals. Noop proposals pass. Evidence: s",
+      "finding_type": "gap"
+    },
+    "AR-sumweights-e10": {
+      "field": "summary",
+      "snippet": "Test fixtures at helen_os/tests/test_autoresearch_eval_receipt_pipeline.py:84,99 use threshold=0.75 for both PASS and FAIL receipts. The loop constant (self_imp",
+      "finding_type": "constant_drift"
+    },
+    "AR-sumweights-e21-vague-constraint-escape": {
+      "field": "summary",
+      "snippet": "In _has_specific_effects() (line 526), constraint markers (while/without/under/above/below/when) unconditionally override vague-term detection. An effect like '",
+      "finding_type": "gap"
+    }
+  }
+}
