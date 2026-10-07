@@ -1,0 +1,4 @@
+.venv-embed/
+__pycache__/
+*.pyc
+receipts/*.tmp

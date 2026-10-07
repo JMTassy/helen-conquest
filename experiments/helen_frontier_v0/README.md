@@ -14,7 +14,9 @@ repo) and not HELENSH.EGREGOR (routing mesh + coding pipeline, `JMTassy/helen-os
 | `discrimination.py` | Fail-closed structural validator + *declared* grouping by `distinction_id`. |
 | `cost_gate.py` | Strict-boolean evaluation of the five-conjunct cost rule versioned in helen-os AGENTS.md @ 51a4109f. |
 | `fixtures/jester_riemann_fixtures_v0.json` | Machine-readable twin of `docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md`: 3 kept laws, 5 revised, 6 invalidated, 9 fixtures with frozen oracles. |
-| `tests/` | The five properties below, plus T7 against the real reducer. |
+| `dedup_probe.py` | Cheap-rejection tiers of the cost rule measured on the real outbox: exact, structural (template-aware), lexical; optional `embedding` tier (google/embeddinggemma-2, text-only, CPU, float32) once the network policy allows `huggingface.co` + `cdn-lfs.huggingface.co`. Emits `DEDUP_PROBE_RECEIPT_V0` into `receipts/`. |
+| `receipts/` | Probe receipts (authority=false) and the manual-review note. |
+| `tests/` | The six properties below, plus T7 against the real reducer. |
 
 ## What each test proves — and only that
 
@@ -24,6 +26,7 @@ repo) and not HELENSH.EGREGOR (routing mesh + coding pipeline, `JMTassy/helen-os
 | `test_cost_gate.py` | cost predicate | strict booleans, non-empty evidence, fail-closed on malformation | that evidence is true, that a model call was gated, that credits were saved |
 | `test_declared_dedup.py` | declared deduplication · rename invariance | same declared id under three producers → one group; same producers, different ids → distinct groups; bijective renaming → identical signature | semantic equivalence of differently worded distinctions; independence of contributions |
 | `test_fixture_freeze.py` | fixture freeze | canonical digest of the oracle file equals the one frozen at introduction; every oracle in vocabulary; ΔX only on ADMIT | that any oracle is right; nothing is evaluated |
+| `test_dedup_probe.py` | cheap-rejection tiers | exact/structural/lexical behave as specified on synthetic packets; receipts carry authority=false | that any flagged pair is a real duplicate |
 | `test_t7_reducer_reject_isolation.py` | T7 (local) | on the real `reduce_promotion_packet`, REJECTED leaves packet, state, cwd and the sovereign ledger file byte-identical; no new grant | collective intelligence; anything about the daemon path that *applies* decisions |
 
 Run: `.venv/bin/pytest experiments/helen_frontier_v0/tests -q` (not part of `make test`).
