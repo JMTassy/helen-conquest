@@ -1,0 +1,38 @@
+{
+  "schema": "GOBLIN_RECEIPT_V0",
+  "goblin": "G5_JESTER",
+  "model": "claude-haiku-4-5-20251001",
+  "authority": false,
+  "ledger_effect": "none",
+  "inputs_read": [
+    "/home/user/helen-conquest/docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/fixtures/jester_riemann_fixtures_v0.json",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/README.md",
+    "/home/user/helen-conquest/docs/proposals/EGREGOR_DISAMBIGUATION_V0.md",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/tests/test_fixture_freeze.py",
+    "git log (read-only) for experiments/helen_frontier_v0/fixtures, docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md and experiments/helen_frontier_v0/tests",
+    "directory listings of experiments/helen_frontier_v0 and swarm_v0/G5_JESTER"
+  ],
+  "files_written": [
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G5_JESTER/objections.json",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G5_JESTER/objections.md",
+    "/home/user/helen-conquest/experiments/helen_frontier_v0/swarm_v0/G5_JESTER/GOBLIN_RECEIPT_V0.json"
+  ],
+  "result_summary": "Attacked 3 kept laws and 12 oracle entries by reading only. Laws: L1 WEAK (explicit-assumption and background-relative entailment give undefined answers), L2 STRONG (the uncertainty trigger is self-assessable by the proposer), L3 WEAK (ΔX=0 depends on undefined X; receipts and the external scheduler change are counter-cases). Oracles: STRONG 4 (F4a, F5b, F6, F7), WEAK 6 (F1, F3, F4b, F5a, F8, F9), FAILS 2 (F2, F5c; F5c reason text mismatches the given). Null-field outcomes are inconsistent across F1/F2 (HOLD) and F4b/F9 (REJECT). Pipeline ablation: without Witness, 10 of 12 entries still match, so only F4a and F5b exercise W, both ADMIT. Without JESTER, all 12 match because counter-model outputs are pre-encoded in given, so the oracle set cannot measure J. Overclaims: 4 (EGREGOR line 26 'verified', EGREGOR line 47 'establish' with 'already an invariant', fixture doc lines 145 and 168 'ADMITTED' supplied as input with no receipt). Checks passed: canonical digest of the fixture JSON recomputed and equals the frozen digest 05bf8cd6...; freeze commit precedes evaluator commits in this repo. No evaluator run; no ledger, git or network effect.",
+  "unresolved": [
+    "No evaluator exists yet, so ablation results are predictions from the given fields, not measurements (protocol section 5.4).",
+    "Undefined glyph 🟦 used in fixture doc lines 88 and 292 and JSON lines 85 and 288. Palette has no 🟦. Operator decision on vocabulary.",
+    "F9 comparison side uses placeholder numbers (fixture doc section 6). Operator decision whether to replace them with measurements in a new fixture version.",
+    "Null-field semantics (null = not provided vs required-and-absent) are unstated; affects F1, F2, F4b, F9. Needs a rule and a superseding fixture version, not an edit.",
+    "helen-os test files cited by EGREGOR doc section 2 are not in this checkout; the 'established invariant' claim cannot be checked here.",
+    "Whether an operator acting on their own proposal counts as self-authorization under L2 is not stated."
+  ],
+  "self_reported_limits": [
+    "Analysis by reading only. No evaluator was run and no oracle was tested against an implementation.",
+    "pytest was not run, to avoid writing caches into the repo outside the G5_JESTER directory. The fixture digest was recomputed with a standalone python -I call that does not import repo modules.",
+    "The 'model' field is set to the value specified in the brief (claude-haiku-4-5-20251001). The runtime identifies as claude-haiku-5-5. The field does not reflect the model that produced this analysis.",
+    "Strength ratings are judgements about how defensible an alternative outcome is under a strained or ordinary reading of the given. They are not measurements of oracle correctness.",
+    "The 'same_without_jester' list uses the method 'a J-less evaluator reading given returns the frozen outcome'. It is a prediction under that method, not a measured ablation.",
+    "No git add, commit or push. No writes outside experiments/helen_frontier_v0/swarm_v0/G5_JESTER/. No network access."
+  ]
+}

@@ -1,0 +1,166 @@
+{
+  "schema": "JESTER_OBJECTIONS_V0",
+  "authority": false,
+  "jester": "G5_JESTER",
+  "model": "claude-haiku-4-5-20251001",
+  "laws": [
+    {
+      "law": "L1",
+      "counter_model": "Explicit-assumption case. Observation O = EGR weekly series plus the week-40 scheduler change log. Stated assumption A1 = 'no other input changed in weeks 39-41'. Fitted model EGR_t = f(cadence_{t-1}). The claim C = 'the scheduler change caused the drop' follows from O + A1 + model. The derivation is explicit, so it is not 'silent' and L1 does not forbid it. L1 also gives no verdict for it, so the law returns an undefined answer. Second variant: 'entail' is unspecified. Relative to an empty background, O does not entail C, trivially. Relative to a background B of program semantics (white-box code path), O + B can entail C, so the universal form 'O does not entail C' is false for that background.",
+      "strength": "WEAK",
+      "proposed_revision": "Split L1. L1a: O alone does not entail C; entailment is always stated relative to a named background B. L1b: an admissible causal claim requires an explicit intervention or counterfactual record; without one the verdict is HOLD, never inferred. Explicit assumptions are receipted and evaluated, not merely left unforbidden."
+    },
+    {
+      "law": "L2",
+      "counter_model": "Proposer P emits T = 'rotate the production signing key' (consequential). P sets uncertainty = 'none' and consequential = true, both as fields of its own proposal. L2 is conditioned on 'uncertain', and the law names no assessor. P's self-report makes the trigger false, so L2 does not apply and P self-authorizes. One boolean in the proposal is enough. The same trust gap sits in R3 (same conditional) and in F8's 'uncertainty: none' and 'consequential_state: null' fields.",
+      "strength": "STRONG",
+      "proposed_revision": "Uncertainty and consequentiality are assessed by a non-proposer, and an unassessed transition defaults to uncertain. A consequential transition then requires an external witness whatever confidence the proposer declares. The law should also say whether an operator acting on their own proposal counts as self-authorization. As written it is silent on that case."
+    },
+    {
+      "law": "L3",
+      "counter_model": "Two counters. (a) Scope: F1's own fixture has the operator changing the scheduler in week 40 with no admission, so the world state changes with ΔX_world nonzero. L3 holds only if X means HELEN's governed state, which the law never defines. (b) Receipts: NO RECEIPT = NO CLAIM requires a ledger append on every action, and F1 itself says the observation is 'recorded'. If the ledger is part of X, then every HOLD or REJECT gives ΔX nonzero, contradicting L3 for those outcomes.",
+      "strength": "WEAK",
+      "proposed_revision": "Define X as HELEN's governed claim-state. Receipts are append-only and sit outside X by definition, so recording a HOLD is not a state transition. External transitions (the scheduler change) are outside L3's scope and enter only as observations."
+    }
+  ],
+  "oracles": [
+    {
+      "id": "F4a",
+      "expected": "ADMIT",
+      "alternative": "HOLD",
+      "ambiguity": "The witness is {type: replay, independent: true}. It has no result field, no reliability and no coverage. R2's f(Independence, Reliability, Coverage) cannot be evaluated from the given. A replay witnesses the evidence delta, but the claim under test is the lineage relation 'C2 supersedes C1', which is a declared field and not something a replay checks. The reason text ('witnessed admission with lineage') asserts the witness covers lineage, and the given does not show it.",
+      "strength": "STRONG"
+    },
+    {
+      "id": "F4b",
+      "expected": "REJECT",
+      "alternative": "ADMIT (C2 admitted standalone, with state_transition true) or HOLD",
+      "ambiguity": "The claim under test is 'C2 replaces C1', so the REJECT applies to the replacement. The evidence and witness for C2 are the same as in F4a, and F4a's own logic makes admitting C2 a transition. F4b says state_transition false. That is consistent only if the rejected operation bundles C2's admission with the erasure of C1. The given does not say whether a non-superseding admission of C2 is permitted.",
+      "strength": "WEAK"
+    },
+    {
+      "id": "F5a",
+      "expected": "HOLD",
+      "alternative": "ADMIT, under an f in which Independence is not zeroing",
+      "ambiguity": "R2 says heterogeneity is necessary for independence and not sufficient for value. It does not say independence is necessary for value. F5a's reason ('Independence = 0 regardless of reliability and count') needs f(0, R, C) = 0, which is an unstated necessity claim. An additive f would give nonzero value from three non-independent high-reliability witnesses, and the oracle's HOLD would then rest only on the choice of f.",
+      "strength": "WEAK"
+    },
+    {
+      "id": "F5b",
+      "expected": "ADMIT",
+      "alternative": "HOLD (the formal statement is not shown to be a faithful formalisation of informal Theorem T)",
+      "ambiguity": "'coverage: full statement' is coverage of the Lean statement. Nothing in the given checks that the Lean statement equals the informal Theorem T, and misformalisation is the standard failure for a Lean witness. 'independent: true' is asserted with no comparison set, since there is only one witness. R2 says heterogeneity is not sufficient for value, and a single witness with unchecked faithfulness is the case that wording covers.",
+      "strength": "STRONG"
+    },
+    {
+      "id": "F5c",
+      "expected": "HOLD",
+      "alternative": "REJECT (a regex over proof text is not a witness of truth, so the claim is structurally inadmissible as stated)",
+      "ambiguity": "The reason text says 'low reliability and partial coverage', but the given says coverage 'syntactic only'. Zero semantic coverage behaves like the zero factor in F5a, and F5a's rule gives HOLD, not REJECT, so the REJECT alternative contradicts F5a. R2 gives no threshold between weak and admissible, so HOLD vs ADMIT is not fixed by the law. The outcome survives the attack. The reason text does not match the given.",
+      "strength": "FAILS"
+    },
+    {
+      "id": "F6",
+      "expected": "REJECT",
+      "alternative": "HOLD",
+      "ambiguity": "'NEW_PRODUCT' is falsified only if an existing product fulfils the request. The field that would establish fulfilment, requirement_fit, is 'not yet checked'. Existence in the catalog alone shows the request is not missing, not that the product fits. The oracle's own reason makes the diagnosis a HOLD pending fit. Under F1's rule ('neither falsified nor earned, so HOLD') the output is HOLD.",
+      "strength": "STRONG"
+    },
+    {
+      "id": "F7",
+      "expected": "HOLD",
+      "alternative": "REJECT",
+      "ambiguity": "The reason reads 'operator not recovered (0.41)' as non-recovery of the predicate 'viewers recover the operator'. A predicate that is false is falsified, not merely unearned. The given has no recovery threshold, so 0.41 cannot be placed against anything. sham_run is true but the sham's R_O is not reported, so the film's contribution over baseline is unmeasured. With a threshold of 0.5 and a sham R_O near 0.41, the claim is falsified.",
+      "strength": "STRONG"
+    },
+    {
+      "id": "F1",
+      "expected": "HOLD",
+      "alternative": "REJECT (a required counterfactual is absent, so the causal claim is structurally inadmissible as stated)",
+      "ambiguity": "The given sets counterfactual: null and sham: null. F4b maps a null required lineage field (supersedes: null) to REJECT as 'structurally inadmissible'. F1 maps a null required counterfactual to HOLD. F2 maps a null formal_check to HOLD. F9 maps null candidate fields to REJECT. The oracle set has no rule that says what null means, and it returns different outcomes for the same kind of null.",
+      "strength": "WEAK"
+    },
+    {
+      "id": "F2",
+      "expected": "HOLD",
+      "alternative": "REJECT, only if 'formal_check: null' is read as 'no checkable artifact exists, so the verified claim is structurally inadmissible'",
+      "ambiguity": "That REJECT reading reverses the null-to-HOLD rule that F1 uses, so it is not a clean alternative. 'family: same' is read as stated. No defensible alternative keeps the stated vocabulary and the other fixtures' rules.",
+      "strength": "FAILS"
+    },
+    {
+      "id": "F3",
+      "expected": "HOLD",
+      "alternative": "REJECT (N0 was already blurred, so the coating did not cause the blur)",
+      "ambiguity": "The treatment is 'N0 -> coating -> N1 (blur perceived)'. N0 is not stated to be sharp. If the blur predates the coating, the claim is falsified. 'effect_survives_removal: true' names no removal path. No coating-free rendering appears in the given, so 'removal' is undefined in the fixture.",
+      "strength": "WEAK"
+    },
+    {
+      "id": "F8",
+      "expected": "NO_TRANSITION",
+      "alternative": "ADMIT (2 + 2 = 4 is eligible for witnessed admission, and no transition is requested)",
+      "ambiguity": "ADMIT is defined as 'eligible for a witnessed admission; the reducer may transition'. Nothing requires a transition for ADMIT, so an eligible claim with no transition is coherent. NO_TRANSITION gives no verdict on the truth of 2 + 2 = 4, which is the claim under test. R3 says trivial cases are 'out of scope', and out of scope does not mean NO_TRANSITION. 'uncertainty: none' and 'consequential_state: null' are proposer-asserted fields, the same trust gap as L2.",
+      "strength": "WEAK"
+    },
+    {
+      "id": "F9",
+      "expected": "REJECT",
+      "alternative": "HOLD (equality of epistemic status is neither falsified nor earned when A's provenance is missing)",
+      "ambiguity": "The given shows missing provenance for A (candidates, falsified, unresolved are null). It does not show inequality of status. REJECT needs the 'structurally inadmissible' branch of the vocabulary, which the oracle does not justify, and the null-to-REJECT mapping conflicts with F1 and F2. Report B's numbers (217/189/17/8) are placeholders per the fixture doc section 6, so the comparison side is not measured.",
+      "strength": "WEAK"
+    }
+  ],
+  "pipeline_ablation": {
+    "same_without_witness": [
+      "F1",
+      "F2",
+      "F3",
+      "F4b",
+      "F5a",
+      "F5c",
+      "F6",
+      "F7",
+      "F8",
+      "F9"
+    ],
+    "same_without_jester": [
+      "F1",
+      "F2",
+      "F3",
+      "F4a",
+      "F4b",
+      "F5a",
+      "F5b",
+      "F5c",
+      "F6",
+      "F7",
+      "F8",
+      "F9"
+    ]
+  },
+  "overclaims": [
+    {
+      "file": "docs/proposals/EGREGOR_DISAMBIGUATION_V0.md",
+      "line": 26,
+      "word": "verified",
+      "why": "'Cost rule verified in AGENTS.md' means the text was located at commit 51a4109f. The same document (section 3) says the predicate is not in code and automatic application is not demonstrated. 'verified' reads as checked to hold or operate. Use 'located in'."
+    },
+    {
+      "file": "docs/proposals/EGREGOR_DISAMBIGUATION_V0.md",
+      "line": 47,
+      "word": "establish (with 'already an invariant')",
+      "why": "'Its tests do establish two things ... base state isolation (E8) is already an invariant in that codebase.' The helen-os test files were read, not executed in this session, and helen-os is not in this checkout, so the claim cannot be checked here. The assertions in a test file show what the test asserts, not that the invariant holds in the codebase. 'establish' is a near-synonym of 'proven' here. Use 'the test files assert'. The '170-odd tests' count is also unverifiable from this seat."
+    },
+    {
+      "file": "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+      "line": 145,
+      "word": "ADMITTED",
+      "why": "The given for F4a asserts C1 as \"status\": \"ADMITTED\" with \"retained\": true and cites no admission receipt. Section 1 (R5) says a status word is a projection of a typed receipt, never its source. Here the status is supplied as input and F4a's ADMIT depends on it. The JSON twin at fixtures/jester_riemann_fixtures_v0.json line 148 has the same string. Replace with a receipt reference or label the value as hypothetical."
+    },
+    {
+      "file": "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+      "line": 168,
+      "word": "ADMITTED",
+      "why": "Same defect as line 145, for C1 in F4b. The JSON twin at line 171 carries the same string. No admission receipt is cited for C1 in either fixture."
+    }
+  ]
+}
