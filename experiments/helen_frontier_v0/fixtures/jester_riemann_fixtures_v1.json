@@ -1,0 +1,440 @@
+{
+  "schema": "JESTER_RIEMANN_FIXTURES_V1",
+  "authority": false,
+  "sovereign": false,
+  "ledger_effect": "none",
+  "status": "PROPOSED — superseding version after swarm v0 (G1 blind 11/12, G5 objections, HAL_OPUS report). V0 is retained unchanged.",
+  "outcome_vocabulary": [
+    "ADMIT",
+    "HOLD",
+    "REJECT",
+    "NO_TRANSITION"
+  ],
+  "outcome_semantics": {
+    "ADMIT": "claim is eligible for a witnessed admission; the reducer may transition state",
+    "HOLD": "claim is neither falsified nor earned; no transition; stays on the frontier",
+    "REJECT": "claim is falsified or structurally inadmissible as stated; no transition",
+    "NO_TRANSITION": "no governed transition is in question; HELEN stays out"
+  },
+  "laws": {
+    "KEEP": [
+      {
+        "id": "L1",
+        "text": "Observation does not entail Cause (O ⇏ I ⇏ C). A derivation from DECLARED assumptions is permitted when the assumptions are in the claim package; silent derivation of I or C from O is forbidden."
+      },
+      {
+        "id": "L2",
+        "text": "Generation does not grant Authority. For a transition judged consequential or uncertain by a party other than the proposer (operator, HAL, or a declared policy), the proposal cannot self-authorize. The proposer's own declaration that uncertainty is absent never exempts it."
+      },
+      {
+        "id": "L3",
+        "text": "No valid witnessed Admission ⇒ no transition of X, where X is the governed state: ledger-recorded admitted claims and grants. ΔX is measured on X only; changes outside X are not transitions but must be receipted when they feed X."
+      }
+    ],
+    "REVISE": [
+      {
+        "id": "R1",
+        "was": "Remove(M) ∧ Preserve(E) ⇒ M NotEarned",
+        "now": "Remove(M) ∧ Preserve(E) ⇒ M is not established as necessary for E (another sufficient mechanism may exist)."
+      },
+      {
+        "id": "R2",
+        "was": "VerifierDiversity > VerifierCount",
+        "now": "VerificationValue = f(Independence, Reliability, Coverage). Independence is necessary for value, not sufficient; a heterogeneous but unreliable or partial verifier does not earn admission."
+      },
+      {
+        "id": "R3",
+        "was": "Proposal cannot self-authorize",
+        "now": "Conditional: ConsequentialUncertainTransition ⇒ proposal cannot self-authorize. Trivial deterministic cases are out of scope."
+      },
+      {
+        "id": "R4",
+        "was": "Linear chain O→T→J→W→A→X'",
+        "now": "Cognition may loop (O↔T↔J↔W). Only the sovereign boundary is linear: Candidate → ValidAdmission → Reducer → State."
+      },
+      {
+        "id": "R5",
+        "was": "Color(x) signals Status(x)",
+        "now": "Color is a projection of a typed receipt, never its source. Color(S) ⇏ S."
+      }
+    ],
+    "INVALIDATE": [
+      "MoreIntelligence ⇒ MoreAuthority",
+      "LLM consensus ⇒ IndependentVerification",
+      "ReasoningTrace ⇒ Evidence",
+      "BeautifulArtifact ⇒ VisualLaw",
+      "CustomerRequest ⇒ ProductGap",
+      "Correction ⇒ Erasure"
+    ],
+    "ADDED": [
+      {
+        "id": "N1",
+        "text": "Null-field semantics. (a) Null EVIDENCE for a claim ⇒ HOLD: not established, not falsified. (b) Null PRECONDITION of an admission request (lineage/supersedes, witness) ⇒ REJECT of that admission request as stated; the underlying claim may be re-submitted. (c) A claim of EQUALITY between two objects where one lacks the compared property ⇒ REJECT: the equality is falsified, not merely unestablished."
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "F1",
+      "name": "valid observation, invalid causal inference",
+      "boundary": "L1",
+      "domain": "ops/compute",
+      "given": {
+        "observation": "EGR fell 40% in week 41; scheduler cadence was changed in week 40.",
+        "counterfactual": null,
+        "sham": null
+      },
+      "claim_under_test": "The scheduler change caused the EGR drop.",
+      "expected": {
+        "outcome": "HOLD",
+        "state_transition": false,
+        "reason": "Temporal succession is recorded as 🔵 observation. The causal claim has null counterfactual and null sham ⇒ N1(a): HOLD. Not falsified, not earned."
+      },
+      "isolates": "O ⇏ C with the observation itself fully valid."
+    },
+    {
+      "id": "F2",
+      "name": "strong model consensus, no independent witness",
+      "boundary": "L2,R2",
+      "domain": "math",
+      "given": {
+        "verifiers": [
+          {
+            "type": "LLM",
+            "family": "same"
+          },
+          {
+            "type": "LLM",
+            "family": "same"
+          },
+          {
+            "type": "LLM",
+            "family": "same"
+          }
+        ],
+        "agreement": "unanimous",
+        "formal_check": null
+      },
+      "claim_under_test": "The proof is verified.",
+      "expected": {
+        "outcome": "HOLD",
+        "state_transition": false,
+        "reason": "Agreement among same-type verifiers is repetition, not corroboration (R2). Null independent check ⇒ N1(a): HOLD. Consensus is not a falsification, so REJECT is wrong."
+      },
+      "isolates": "Count of verifiers vs independence of verifiers."
+    },
+    {
+      "id": "F3",
+      "name": "mechanism removed, effect preserved",
+      "boundary": "R1",
+      "domain": "DIRECTOR",
+      "given": {
+        "treatment": "N0 → coating applied → N1 (blur perceived)",
+        "sham": "N1 → coating applied → N1 (blur perceived, identical rendering)",
+        "effect_survives_removal": true
+      },
+      "claim_under_test": "The coating causes the perceived blur.",
+      "expected": {
+        "outcome": "HOLD",
+        "state_transition": false,
+        "reason": "Mechanism not established as necessary. Not falsified either: a second sufficient mechanism may exist (R1)."
+      },
+      "isolates": "The revised law: removal + preservation ⇒ not-necessary, not ⇒ false."
+    },
+    {
+      "id": "F4",
+      "name": "corrected claim with lineage",
+      "boundary": "L3,INVALIDATE:Correction⇒Erasure",
+      "domain": "ledger",
+      "variants": [
+        {
+          "id": "F4a",
+          "given": {
+            "C1": {
+              "status": "ADMITTED",
+              "retained": true
+            },
+            "C2": {
+              "supersedes": "C1",
+              "evidence_delta": "non-empty",
+              "witness": {
+                "type": "replay",
+                "independent": true,
+                "result": "PASS",
+                "reliability": "high",
+                "coverage": "full claim incl. lineage link"
+              }
+            }
+          },
+          "claim_under_test": "C2 supersedes C1.",
+          "expected": {
+            "outcome": "ADMIT",
+            "state_transition": true,
+            "reason": "Witnessed admission (result PASS, high reliability, full coverage incl. lineage) with C1 retained ⇒ ADMIT; C1 stays readable as historical state."
+          }
+        },
+        {
+          "id": "F4b",
+          "given": {
+            "C1": {
+              "status": "ADMITTED",
+              "retained": false
+            },
+            "C2": {
+              "supersedes": null,
+              "evidence_delta": "non-empty",
+              "witness": {
+                "type": "replay",
+                "independent": true
+              }
+            }
+          },
+          "claim_under_test": "C2 replaces C1.",
+          "expected": {
+            "outcome": "REJECT",
+            "state_transition": false,
+            "reason": "C1 erased and supersedes null ⇒ N1(b): the admission request is REJECTED as stated even with a valid witness. Correction ≠ Erasure."
+          }
+        }
+      ],
+      "isolates": "Lineage as a precondition of admission, independent of evidence quality."
+    },
+    {
+      "id": "F5",
+      "name": "redundant witness vs heterogeneous witness",
+      "boundary": "R2",
+      "domain": "math",
+      "variants": [
+        {
+          "id": "F5a",
+          "given": {
+            "witnesses": [
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              },
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              },
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds.",
+          "expected": {
+            "outcome": "HOLD",
+            "state_transition": false,
+            "reason": "Independence = 0 regardless of reliability and count; R2 makes independence necessary ⇒ HOLD."
+          }
+        },
+        {
+          "id": "F5b",
+          "given": {
+            "witnesses": [
+              {
+                "type": "Lean",
+                "independent": true,
+                "reliability": "high",
+                "coverage": "full statement; Lean statement checked faithful to T by a human reader"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds.",
+          "expected": {
+            "outcome": "ADMIT",
+            "state_transition": true,
+            "reason": "One witness with a different failure mode, high reliability, full coverage with the statement's faithfulness to T checked ⇒ ADMIT."
+          }
+        },
+        {
+          "id": "F5c",
+          "given": {
+            "witnesses": [
+              {
+                "type": "regex-on-proof-text",
+                "independent": true,
+                "reliability": "low",
+                "coverage": "syntactic only"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds.",
+          "expected": {
+            "outcome": "HOLD",
+            "state_transition": false,
+            "reason": "Heterogeneous but weak: low reliability and partial coverage. JESTER's counter-case to the old law."
+          }
+        }
+      ],
+      "isolates": "f(Independence, Reliability, Coverage) — each variant zeroes one factor."
+    },
+    {
+      "id": "F6",
+      "name": "MANUCURIST request that already exists",
+      "boundary": "L1,INVALIDATE:CustomerRequest⇒ProductGap",
+      "domain": "MANUCURIST",
+      "given": {
+        "request": "A tool to visualise the colour on my skin tone.",
+        "existence_check": {
+          "exists_in_catalog": true,
+          "since": "2024"
+        },
+        "requirement_fit": "not yet checked"
+      },
+      "claim_under_test": "NEW_PRODUCT opportunity.",
+      "expected": {
+        "outcome": "REJECT",
+        "state_transition": false,
+        "reason": "NEW requires Missing. The existence check falsifies Missing ⇒ the NEW_PRODUCT claim is REJECTED by falsification, not by null. The request stays 🔵; the gap diagnosis is a separate HOLD pending requirement fit (N1(a))."
+      },
+      "isolates": "Rejecting the NEW label without discarding the signal."
+    },
+    {
+      "id": "F7",
+      "name": "DIRECTOR causal sham",
+      "boundary": "L1,R1",
+      "domain": "DIRECTOR",
+      "isolates": "A passing artifact with a falsified causal component: the recovery claim and the grammar claim get different outcomes.",
+      "variants": [
+        {
+          "id": "F7a",
+          "given": {
+            "artifact_pass": true,
+            "recovery_vector": {
+              "R_I": 0.98,
+              "R_dS": 0.96,
+              "R_O": 0.41
+            },
+            "recovery_threshold": 0.7,
+            "sham_run": {
+              "present": true,
+              "recovery_vector": {
+                "R_I": 0.97,
+                "R_dS": 0.95,
+                "R_O": 0.4
+              }
+            }
+          },
+          "claim_under_test": "Viewers recover the operator.",
+          "expected": {
+            "outcome": "REJECT",
+            "state_transition": false,
+            "reason": "R_O = 0.41 is below the declared threshold 0.70 and indistinguishable from the sham (0.40). The recovery claim is falsified."
+          }
+        },
+        {
+          "id": "F7b",
+          "given": {
+            "artifact_pass": true,
+            "recovery_vector": {
+              "R_I": 0.98,
+              "R_dS": 0.96,
+              "R_O": 0.41
+            },
+            "recovery_threshold": 0.7,
+            "sham_run": {
+              "present": true,
+              "recovery_vector": {
+                "R_I": 0.97,
+                "R_dS": 0.95,
+                "R_O": 0.4
+              }
+            }
+          },
+          "claim_under_test": "The film establishes the causal grammar.",
+          "expected": {
+            "outcome": "HOLD",
+            "state_transition": false,
+            "reason": "Identity and state change are recovered; the operator is not. ArtifactPass ⇏ GrammarEstablished (R1 form): the grammar is not established as necessary, and not falsified as a whole."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F8",
+      "name": "trivial deterministic case where HELEN should stay out",
+      "boundary": "R3",
+      "domain": "arithmetic",
+      "given": {
+        "computation": "2 + 2",
+        "mechanism": "deterministic calculator",
+        "consequential_state": null,
+        "uncertainty": "none"
+      },
+      "claim_under_test": "2 + 2 = 4.",
+      "expected": {
+        "outcome": "NO_TRANSITION",
+        "state_transition": false,
+        "reason": "No consequential governed state is in question. Running T→J→W→A here would be waste, not rigour."
+      },
+      "isolates": "The conditional form of non-self-authorization."
+    },
+    {
+      "id": "F9",
+      "name": "survivor without search history",
+      "boundary": "KEEP:L2,REVISE:DiscoveryReceipt",
+      "domain": "autoresearch",
+      "given": {
+        "report_A": {
+          "survivors": 0,
+          "candidates": null,
+          "flagged": null,
+          "confirmed": null
+        },
+        "report_B": {
+          "survivors": 0,
+          "candidates": 6328,
+          "flagged_by_lexical_tier": 61,
+          "confirmed_duplicates": 0,
+          "source": "experiments/helen_frontier_v0/receipts/DEDUP_PROBE_REVIEW_2026_10_07.md"
+        },
+        "external_reference": {
+          "source": "github.com/openai/math README, fetched 2026-10-07",
+          "manuscripts": 722,
+          "families": 372,
+          "problems_posed": "≈4000",
+          "avg_compute": "≈3h ChatGPT Pro thinking per result",
+          "all_formalized": false,
+          "old_versions_preserved": true,
+          "reasoning_summaries": 10
+        }
+      },
+      "claim_under_test": "Report A's result (0 duplicates) has the same epistemic status as Report B's (0 confirmed of 61 flagged among 6328 pairs).",
+      "expected": {
+        "outcome": "REJECT",
+        "state_transition": false,
+        "reason": "Same survivor count, different provenance: A lacks search history ⇒ N1(c): the equality claim is falsified. SearchHistory ⊂ EpistemicProvenance."
+      },
+      "isolates": "Survivorship bias as a structural defect of the receipt, not of the claim."
+    }
+  ],
+  "supersedes": {
+    "schema": "JESTER_RIEMANN_FIXTURES_V0",
+    "digest": "sha256:05bf8cd6093c01aa88264ae2173d033b45a64b0bd066b1ca434b488412c93a6c",
+    "file": "experiments/helen_frontier_v0/fixtures/jester_riemann_fixtures_v0.json",
+    "kept_untouched": true
+  },
+  "revision_log": [
+    "L1: explicit-assumption derivations permitted when assumptions are declared in the claim package; only silent derivation forbidden.",
+    "L2: the 'consequential or uncertain' trigger is judged by a party other than the proposer; a proposer's own 'uncertainty=none' never exempts.",
+    "L3: X defined as the governed state (ledger-recorded admitted claims and grants); dX measured on X only.",
+    "R2: independence is necessary for verification value, not sufficient.",
+    "N1 added: null-field semantics (three cases).",
+    "F7 split into F7a (operator recovered -> REJECT, threshold and sham R_O now given) and F7b (causal grammar established -> HOLD).",
+    "F4a: witness now carries result, reliability, coverage.",
+    "F5b: coverage states that the Lean statement was checked faithful to T by a human reader.",
+    "F6: reason restated as falsification of 'Missing' by the existence check, not as a null-field judgement.",
+    "F9: Report B placeholders replaced by receipted numbers from the dedup probe (6328 pairs, 61 flagged, 0 confirmed).",
+    "Blind export strips name, boundary and isolates (G5/HAL leakage finding); freeze test checks the blind file for outcome words in the fixtures section.",
+    "Glyph: the non-palette blue square replaced by the palette blue circle (observed)."
+  ]
+}

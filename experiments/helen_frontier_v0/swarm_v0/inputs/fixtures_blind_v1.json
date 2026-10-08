@@ -1,0 +1,325 @@
+{
+  "schema": "JESTER_RIEMANN_FIXTURES_V1_BLIND",
+  "authority": false,
+  "outcome_vocabulary": [
+    "ADMIT",
+    "HOLD",
+    "REJECT",
+    "NO_TRANSITION"
+  ],
+  "outcome_semantics": {
+    "ADMIT": "claim is eligible for a witnessed admission; the reducer may transition state",
+    "HOLD": "claim is neither falsified nor earned; no transition; stays on the frontier",
+    "REJECT": "claim is falsified or structurally inadmissible as stated; no transition",
+    "NO_TRANSITION": "no governed transition is in question; HELEN stays out"
+  },
+  "laws": {
+    "KEEP": [
+      {
+        "id": "L1",
+        "text": "Observation does not entail Cause (O ⇏ I ⇏ C). A derivation from DECLARED assumptions is permitted when the assumptions are in the claim package; silent derivation of I or C from O is forbidden."
+      },
+      {
+        "id": "L2",
+        "text": "Generation does not grant Authority. For a transition judged consequential or uncertain by a party other than the proposer (operator, HAL, or a declared policy), the proposal cannot self-authorize. The proposer's own declaration that uncertainty is absent never exempts it."
+      },
+      {
+        "id": "L3",
+        "text": "No valid witnessed Admission ⇒ no transition of X, where X is the governed state: ledger-recorded admitted claims and grants. ΔX is measured on X only; changes outside X are not transitions but must be receipted when they feed X."
+      }
+    ],
+    "REVISE": [
+      {
+        "id": "R1",
+        "was": "Remove(M) ∧ Preserve(E) ⇒ M NotEarned",
+        "now": "Remove(M) ∧ Preserve(E) ⇒ M is not established as necessary for E (another sufficient mechanism may exist)."
+      },
+      {
+        "id": "R2",
+        "was": "VerifierDiversity > VerifierCount",
+        "now": "VerificationValue = f(Independence, Reliability, Coverage). Independence is necessary for value, not sufficient; a heterogeneous but unreliable or partial verifier does not earn admission."
+      },
+      {
+        "id": "R3",
+        "was": "Proposal cannot self-authorize",
+        "now": "Conditional: ConsequentialUncertainTransition ⇒ proposal cannot self-authorize. Trivial deterministic cases are out of scope."
+      },
+      {
+        "id": "R4",
+        "was": "Linear chain O→T→J→W→A→X'",
+        "now": "Cognition may loop (O↔T↔J↔W). Only the sovereign boundary is linear: Candidate → ValidAdmission → Reducer → State."
+      },
+      {
+        "id": "R5",
+        "was": "Color(x) signals Status(x)",
+        "now": "Color is a projection of a typed receipt, never its source. Color(S) ⇏ S."
+      }
+    ],
+    "INVALIDATE": [
+      "MoreIntelligence ⇒ MoreAuthority",
+      "LLM consensus ⇒ IndependentVerification",
+      "ReasoningTrace ⇒ Evidence",
+      "BeautifulArtifact ⇒ VisualLaw",
+      "CustomerRequest ⇒ ProductGap",
+      "Correction ⇒ Erasure"
+    ],
+    "ADDED": [
+      {
+        "id": "N1",
+        "text": "Null-field semantics. (a) Null EVIDENCE for a claim ⇒ HOLD: not established, not falsified. (b) Null PRECONDITION of an admission request (lineage/supersedes, witness) ⇒ REJECT of that admission request as stated; the underlying claim may be re-submitted. (c) A claim of EQUALITY between two objects where one lacks the compared property ⇒ REJECT: the equality is falsified, not merely unestablished."
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "F1",
+      "domain": "ops/compute",
+      "given": {
+        "observation": "EGR fell 40% in week 41; scheduler cadence was changed in week 40.",
+        "counterfactual": null,
+        "sham": null
+      },
+      "claim_under_test": "The scheduler change caused the EGR drop."
+    },
+    {
+      "id": "F2",
+      "domain": "math",
+      "given": {
+        "verifiers": [
+          {
+            "type": "LLM",
+            "family": "same"
+          },
+          {
+            "type": "LLM",
+            "family": "same"
+          },
+          {
+            "type": "LLM",
+            "family": "same"
+          }
+        ],
+        "agreement": "unanimous",
+        "formal_check": null
+      },
+      "claim_under_test": "The proof is verified."
+    },
+    {
+      "id": "F3",
+      "domain": "DIRECTOR",
+      "given": {
+        "treatment": "N0 → coating applied → N1 (blur perceived)",
+        "sham": "N1 → coating applied → N1 (blur perceived, identical rendering)",
+        "effect_survives_removal": true
+      },
+      "claim_under_test": "The coating causes the perceived blur."
+    },
+    {
+      "id": "F4",
+      "domain": "ledger",
+      "variants": [
+        {
+          "id": "F4a",
+          "given": {
+            "C1": {
+              "status": "ADMITTED",
+              "retained": true
+            },
+            "C2": {
+              "supersedes": "C1",
+              "evidence_delta": "non-empty",
+              "witness": {
+                "type": "replay",
+                "independent": true,
+                "result": "PASS",
+                "reliability": "high",
+                "coverage": "full claim incl. lineage link"
+              }
+            }
+          },
+          "claim_under_test": "C2 supersedes C1."
+        },
+        {
+          "id": "F4b",
+          "given": {
+            "C1": {
+              "status": "ADMITTED",
+              "retained": false
+            },
+            "C2": {
+              "supersedes": null,
+              "evidence_delta": "non-empty",
+              "witness": {
+                "type": "replay",
+                "independent": true
+              }
+            }
+          },
+          "claim_under_test": "C2 replaces C1."
+        }
+      ]
+    },
+    {
+      "id": "F5",
+      "domain": "math",
+      "variants": [
+        {
+          "id": "F5a",
+          "given": {
+            "witnesses": [
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              },
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              },
+              {
+                "type": "LLM",
+                "independent": false,
+                "reliability": "high",
+                "coverage": "full"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds."
+        },
+        {
+          "id": "F5b",
+          "given": {
+            "witnesses": [
+              {
+                "type": "Lean",
+                "independent": true,
+                "reliability": "high",
+                "coverage": "full statement; Lean statement checked faithful to T by a human reader"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds."
+        },
+        {
+          "id": "F5c",
+          "given": {
+            "witnesses": [
+              {
+                "type": "regex-on-proof-text",
+                "independent": true,
+                "reliability": "low",
+                "coverage": "syntactic only"
+              }
+            ]
+          },
+          "claim_under_test": "Theorem T holds."
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "domain": "MANUCURIST",
+      "given": {
+        "request": "A tool to visualise the colour on my skin tone.",
+        "existence_check": {
+          "exists_in_catalog": true,
+          "since": "2024"
+        },
+        "requirement_fit": "not yet checked"
+      },
+      "claim_under_test": "NEW_PRODUCT opportunity."
+    },
+    {
+      "id": "F7",
+      "domain": "DIRECTOR",
+      "variants": [
+        {
+          "id": "F7a",
+          "given": {
+            "artifact_pass": true,
+            "recovery_vector": {
+              "R_I": 0.98,
+              "R_dS": 0.96,
+              "R_O": 0.41
+            },
+            "recovery_threshold": 0.7,
+            "sham_run": {
+              "present": true,
+              "recovery_vector": {
+                "R_I": 0.97,
+                "R_dS": 0.95,
+                "R_O": 0.4
+              }
+            }
+          },
+          "claim_under_test": "Viewers recover the operator."
+        },
+        {
+          "id": "F7b",
+          "given": {
+            "artifact_pass": true,
+            "recovery_vector": {
+              "R_I": 0.98,
+              "R_dS": 0.96,
+              "R_O": 0.41
+            },
+            "recovery_threshold": 0.7,
+            "sham_run": {
+              "present": true,
+              "recovery_vector": {
+                "R_I": 0.97,
+                "R_dS": 0.95,
+                "R_O": 0.4
+              }
+            }
+          },
+          "claim_under_test": "The film establishes the causal grammar."
+        }
+      ]
+    },
+    {
+      "id": "F8",
+      "domain": "arithmetic",
+      "given": {
+        "computation": "2 + 2",
+        "mechanism": "deterministic calculator",
+        "consequential_state": null,
+        "uncertainty": "none"
+      },
+      "claim_under_test": "2 + 2 = 4."
+    },
+    {
+      "id": "F9",
+      "domain": "autoresearch",
+      "given": {
+        "report_A": {
+          "survivors": 0,
+          "candidates": null,
+          "flagged": null,
+          "confirmed": null
+        },
+        "report_B": {
+          "survivors": 0,
+          "candidates": 6328,
+          "flagged_by_lexical_tier": 61,
+          "confirmed_duplicates": 0,
+          "source": "experiments/helen_frontier_v0/receipts/DEDUP_PROBE_REVIEW_2026_10_07.md"
+        },
+        "external_reference": {
+          "source": "github.com/openai/math README, fetched 2026-10-07",
+          "manuscripts": 722,
+          "families": 372,
+          "problems_posed": "≈4000",
+          "avg_compute": "≈3h ChatGPT Pro thinking per result",
+          "all_formalized": false,
+          "old_versions_preserved": true,
+          "reasoning_summaries": 10
+        }
+      },
+      "claim_under_test": "Report A's result (0 duplicates) has the same epistemic status as Report B's (0 confirmed of 61 flagged among 6328 pairs)."
+    }
+  ]
+}

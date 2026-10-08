@@ -84,3 +84,10 @@ Separate read-only audit of the whole outbox: `docs/proposals/AUTORESEARCH_OUTBO
 ## 6. Decisions left to the operator
 
 PR for `claude/wonderful-cannon-gua790`; whether FRONTIER proceeds past v0; whether the 86 rejected outbox packets are migrated, archived, or left as historical traces.
+
+## Errata — 2026-10-08 (appended, original lines left as written)
+
+Raised by G5_JESTER, confirmed by HAL_OPUS (swarm v0, commit 60fe734):
+
+- §0, "Cost rule **verified** in `AGENTS.md`": overclaim. The text was *located* at `helen-os@51a4109f` L90–110. Its application is not demonstrated anywhere. Read "located", not "verified".
+- §2, "Its tests do **establish** two things … base state isolation (E8) is **already an invariant** in that codebase": overclaim. The three test files were *read*, not run, and `helen-os` is not in this checkout. Read "the test files assert", not "establish".
