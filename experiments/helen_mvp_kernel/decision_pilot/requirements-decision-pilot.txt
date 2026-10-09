@@ -1,0 +1,8 @@
+# Decision pilot (Unsloth FastDecisionModel). Separate venv: these pins conflict with the Qwen-Image eval venv.
+# torch first, CUDA build matching nvidia-smi (the notebook uses 2.8.0), e.g.:
+#   pip install torch==2.8.0 --index-url https://download.pytorch.org/whl/cu128
+unsloth==2026.10.3       # released 2026-10-08; FastDecisionModel / DecisionTrainer present (checked in the wheel)
+unsloth_zoo==2026.10.3
+transformers==5.2.0      # as the notebook; unsloth 2026.10.3 requires <=5.17.0
+trl==0.22.2              # as the notebook; unsloth requires <=1.13.0
+datasets>=3.4.1,<4.0.0
