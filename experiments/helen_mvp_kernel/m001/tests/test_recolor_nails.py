@@ -14,7 +14,7 @@ CORAL = "#E2483B"
 NAILS = [(40, 50, 18, 26), (100, 44, 18, 28)]  # ellipse centre x, centre y, half-width, half-height
 
 
-def synthetic_hand(seed=7):
+def synthetic_hand(seed=7, nail_rgb=(228, 186, 184)):
     rng = np.random.default_rng(seed)
     h, w = 120, 160
     img = np.empty((h, w, 3), dtype=np.float64)
@@ -27,7 +27,7 @@ def synthetic_hand(seed=7):
         truth |= e
         shade = (yy - cy) / ry * 14                               # top-to-bottom shading
         ridges = 5 * np.sin(xx * 1.3)                             # nail ridges (texture to keep)
-        base = np.stack([228 - shade + ridges, 186 - shade + ridges, 184 - shade + ridges], axis=-1)
+        base = np.stack([c - shade + ridges for c in nail_rgb], axis=-1)
         img[e] = base[e]
         spot = ((xx - (cx - 5)) ** 2 + (yy - (cy - 10)) ** 2) <= 9  # specular highlight
         img[spot & e] = (252, 252, 250)
@@ -37,8 +37,8 @@ def synthetic_hand(seed=7):
 
 def run(mask, src, hexv=CORAL):
     tl = rn.hex_to_lab(hexv)
-    out, alpha = rn.recolour(src, mask, tl)
-    return out, rn.measure(src, out, mask, alpha, tl), tl
+    out, alpha, info = rn.recolour(src, mask, tl)
+    return out, {**rn.measure(src, out, mask, alpha, tl), **info}, tl
 
 
 def test_auto_mask_finds_the_nails():
@@ -107,3 +107,29 @@ def test_empty_mask_is_refused():
         assert "empty nail mask" in str(e)
     else:
         raise AssertionError("empty mask accepted")
+
+
+def test_body_texture_chroma_hit_and_gamut():
+    """Section 1.5 of the recap: the pooled texture score drops for coral only because highlights keep their
+    lightness while the body moves; on the body alone texture is kept, the target chroma is hit, nothing clips."""
+    src, _, boxes = synthetic_hand()
+    mask = rn.auto_mask(rn.srgb_to_lab(src), boxes, "lighter")
+    _, m, _ = run(mask, src)
+    assert m["texture_kept_corr_L"] < 0.95                       # pooled: the jump at the highlights
+    assert m["texture_kept_corr_L_body"] > 0.999
+    assert m["mean_chroma_error_nail_body"] < 1
+    assert m["gamut_clipped_px_body"] == 0                       # coral clips slightly in the highlight blend only
+    assert m["feather_ring_pixels_changed"] > 0                  # the ring is edited, and counted apart
+
+
+def test_bare_nail_close_to_skin_is_flagged_for_inspection():
+    """A bare nail barely lighter than the skin (the failure seen on a real still): the mask is flagged."""
+    lab = rn.srgb_to_lab
+    src, _, boxes = synthetic_hand()
+    ok = []
+    rn.auto_mask(lab(src), boxes, "lighter", ok)
+    assert not any(d["inspect"] for d in ok), ok
+    bare, _, boxes = synthetic_hand(nail_rgb=(124, 84, 64))     # nail ~ skin (112, 72, 52)
+    flagged = []
+    rn.auto_mask(lab(bare), boxes, "lighter", flagged)
+    assert all(d["inspect"] for d in flagged), flagged

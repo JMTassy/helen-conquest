@@ -17,13 +17,25 @@ Outputs (PNG, lossless): `mask.png`, `00_original.png`, `NN_<name>.png`, `NN_<na
 `report.json` (source sha256, per variant: pixels changed, changes outside the mask, ΔE76 to target, texture kept).
 
 Read the result:
-- `pixels_changed_outside_mask` must be 0, otherwise the run is invalid.
-- `mask.png` must be checked by eye at 100 %: a wrong mask is the main failure mode.
-- ΔE76 measures the distance to the *parameter* colour, not to a Manucurist product.
+- `mask.png` decides, checked by eye at 100 %. A wrong mask is the main failure mode, and **no number in the report
+  validates the mask**: a mask that bleeds onto skin still gives 0 changes outside it and a small ΔE76. On a real
+  still, an automatic mask on a bare nail was wrong and scored the *better* ΔE76.
+- `mask_diagnostics` (box mode): Otsu separability η and mask area per box; `inspect: true` when η < 0.6 or the area
+  is outside 15–85 % of the box (heuristic flags, printed as INSPECT). Then try `--nail darker` or paint a mask.
+- `pixels_changed_outside_mask` (outside the nail + 1 px feather ring) must be 0; ring changes are counted apart.
+- `mean_chroma_error_nail_body`: did the body reach the target a*, b*. `mean_dE76_to_target_nail_body`: mostly the
+  kept shading, not a target-hit score. `texture_kept_corr_L_body`: texture on the body; the pooled
+  `texture_kept_corr_L` drops when highlights keep their lightness while the body moves (intended).
+- `gamut_clipped_px_body` / `_highlight_blend`: target colours the screen cannot show exactly.
+- ΔE76 and chroma error measure the distance to the *parameter* colour, not to a Manucurist product.
+
+`receipts/synthetic_hand_receipt.json` regenerates the synthetic figures quoted in the session recap
+(`python receipts/synthetic_hand_receipt.py`).
 
 Limits: opaque shades only (a translucent shade such as Active Glow depends on skin and coats and is not simulated);
 target colours are approximate parameters until tied to a sourced product reference; JPEG export of the outputs
 breaks bit-identity. Stills are approved by the operator before any animation; no X-Feed / Seedance spend.
 
 Tests: `python -m pytest tests -q` (synthetic hand: mask IoU, invariance outside the mask, highlight kept,
-texture kept, CLI outputs, deterministic bytes, empty mask refused).
+texture kept, CLI outputs, deterministic bytes, empty mask refused, body-only texture and chroma hit,
+bare nail close to skin flagged for inspection).

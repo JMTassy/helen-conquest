@@ -40,12 +40,17 @@ def srgb_to_lab(rgb):
     return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], axis=-1)
 
 
-def lab_to_srgb(lab):
+def lab_to_linear(lab):
+    """Unclipped linear RGB: values outside [0, 1] are out of the sRGB gamut."""
     fy = (lab[..., 0] + 16) / 116
     fx, fz = fy + lab[..., 1] / 500, fy - lab[..., 2] / 200
     f = np.stack([fx, fy, fz], axis=-1)
     xyz = np.where(f > 6 / 29, f ** 3, 3 * (6 / 29) ** 2 * (f - 4 / 29)) * _WHITE
-    lin = np.clip(xyz @ np.linalg.inv(_M).T, 0, 1)
+    return xyz @ np.linalg.inv(_M).T
+
+
+def lab_to_srgb(lab):
+    lin = np.clip(lab_to_linear(lab), 0, 1)
     c = np.where(lin <= 0.0031308, 12.92 * lin, 1.055 * lin ** (1 / 2.4) - 0.055)
     return np.clip(np.round(c * 255), 0, 255).astype(np.uint8)
 
@@ -113,7 +118,22 @@ def fill_holes(mask):
     return ~outside
 
 
-def auto_mask(lab, boxes, polarity):
+def separability(values, t):
+    """Otsu's eta = between-class variance / total variance, in [0, 1]; low = no clear two-class split."""
+    v = values.ravel()
+    lo, hi = v[v <= t], v[v > t]
+    if lo.size == 0 or hi.size == 0 or v.var() == 0:
+        return 0.0
+    w0 = lo.size / v.size
+    return float(w0 * (1 - w0) * (lo.mean() - hi.mean()) ** 2 / v.var())
+
+
+# Heuristic thresholds for flagging a mask to inspect (not a refusal, not a validation).
+ETA_MIN = 0.6
+AREA_RANGE = (0.15, 0.85)
+
+
+def auto_mask(lab, boxes, polarity, diagnostics=None):
     mask = np.zeros(lab.shape[:2], dtype=bool)
     H, W = mask.shape
     for box in boxes:
@@ -125,7 +145,13 @@ def auto_mask(lab, boxes, polarity):
         L = lab[y:y + h, x:x + w, 0]
         t = otsu(L.ravel())
         sel = L > t if polarity == "lighter" else L < t
-        mask[y:y + h, x:x + w] |= fill_holes(largest_component(sel))
+        part = fill_holes(largest_component(sel))
+        mask[y:y + h, x:x + w] |= part
+        if diagnostics is not None:
+            eta, area = separability(L, t), float(part.mean())
+            diagnostics.append({"box": [x, y, w, h], "otsu_L": round(float(t), 2), "separability_eta": round(eta, 3),
+                                "mask_area_fraction": round(area, 3),
+                                "inspect": bool(eta < ETA_MIN or not AREA_RANGE[0] <= area <= AREA_RANGE[1])})
     return mask
 
 
@@ -166,7 +192,10 @@ def recolour(rgb, mask, target_lab, highlight_pct=97.0, texture_gain=1.0, feathe
     a3 = alpha[..., None]
     out = np.round(a3 * lab_to_srgb(new).astype(np.float64) + (1 - a3) * rgb.astype(np.float64)).astype(np.uint8)
     out[~zone] = rgb[~zone]                                       # bit-identical outside the soft mask
-    return out, alpha
+    lin = lab_to_linear(new)
+    clipped = ((lin < -1e-9) | (lin > 1 + 1e-9)).any(axis=-1) & mask
+    return out, alpha, {"gamut_clipped_px_body": int((clipped & (w_hi == 0)).sum()),
+                        "gamut_clipped_px_highlight_blend": int((clipped & (w_hi > 0)).sum())}
 
 
 def measure(src, out, mask, alpha, target_lab):
@@ -178,11 +207,20 @@ def measure(src, out, mask, alpha, target_lab):
     lab_src, lab_out = srgb_to_lab(src), srgb_to_lab(out)
     body = core & (lab_src[..., 0] < np.percentile(lab_src[..., 0][mask], 97)) if core.any() else core
     de = np.sqrt(((lab_out[body] - target_lab) ** 2).sum(axis=1)) if body.any() else np.array([np.nan])
-    corr = float(np.corrcoef(lab_src[..., 0][core], lab_out[..., 0][core])[0, 1]) if core.sum() > 2 else float("nan")
+
+    def corr(sel):
+        return round(float(np.corrcoef(lab_src[..., 0][sel], lab_out[..., 0][sel])[0, 1]), 4) if sel.sum() > 2 else float("nan")
+
+    chroma_err = float(np.hypot(*(lab_out[..., 1:][body].mean(axis=0) - target_lab[1:]))) if body.any() else float("nan")
+    ring = (alpha > 0) & ~mask
     return {"pixels_changed": int((diff > 0).sum()), "pixels_changed_outside_mask": int((diff[outside] > 0).sum()),
             "max_change_outside_mask": int(diff[outside].max()) if outside.any() else 0,
-            "mask_pixels": int(mask.sum()), "mean_dE76_to_target_nail_body": round(float(np.nanmean(de)), 2),
-            "texture_kept_corr_L": round(corr, 4)}
+            "feather_ring_pixels_changed": int((diff[ring] > 0).sum()),
+            "mask_pixels": int(mask.sum()),
+            "mean_dE76_to_target_nail_body": round(float(np.nanmean(de)), 2),   # kept shading, NOT a target-hit score
+            "mean_chroma_error_nail_body": round(chroma_err, 2),               # target hit on a*, b*
+            "texture_kept_corr_L": corr(core),                                # pooled body + highlights
+            "texture_kept_corr_L_body": corr(body)}                           # body only (highlights excluded)
 
 
 def sheet(images, labels, path, width=360):
@@ -211,10 +249,12 @@ def main(argv=None):
     src_path, out = pathlib.Path(args.image), pathlib.Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     src = np.asarray(Image.open(src_path).convert("RGB"))
+    diagnostics = None
     if args.mask:
         mask = np.asarray(Image.open(args.mask).convert("L")) > 127
     else:
-        mask = auto_mask(srgb_to_lab(src), json.loads(pathlib.Path(args.boxes).read_text()), args.nail)
+        diagnostics = []
+        mask = auto_mask(srgb_to_lab(src), json.loads(pathlib.Path(args.boxes).read_text()), args.nail, diagnostics)
     Image.fromarray((mask * 255).astype(np.uint8)).save(out / "mask.png")
     Image.fromarray(src).save(out / "00_original.png")
     report = {"source": src_path.name, "source_sha256": hashlib.sha256(src_path.read_bytes()).hexdigest()[:16],
@@ -222,23 +262,29 @@ def main(argv=None):
               "mask_source": "painted" if args.mask else f"auto in boxes (nail {args.nail})",
               "limits": ["opaque shades only; translucent shades not simulated",
                          "target colours are parameters, not product references: product fidelity not evaluated",
-                         "invariance holds for the PNG outputs; JPEG export changes every pixel slightly"],
-              "variants": []}
+                         "invariance holds for the PNG outputs; JPEG export changes every pixel slightly",
+                         "no number here validates the mask: a wrong mask still gives 0 changes outside it and a "
+                         "small dE76; only mask.png at 100 % decides"],
+              "mask_diagnostics": diagnostics, "variants": []}
     images, labels = [Image.fromarray(src)], ["original"]
     for i, t in enumerate(args.target, 1):
         name, hexv = t.split("=", 1)
         tl = hex_to_lab(hexv)
-        res, alpha = recolour(src, mask, tl, feather_px=args.feather)
+        res, alpha, info = recolour(src, mask, tl, feather_px=args.feather)
         f = out / f"{i:02d}_{name}.png"
         Image.fromarray(res).save(f)
         diffmap = (np.abs(res.astype(np.int16) - src.astype(np.int16)).max(axis=2) > 0).astype(np.uint8) * 255
         Image.fromarray(diffmap).save(out / f"{i:02d}_{name}_diff.png")
         m = measure(src, res, mask, alpha, tl)
-        report["variants"].append({"name": name, "target_hex": hexv, "file": f.name, **m})
+        report["variants"].append({"name": name, "target_hex": hexv, "file": f.name, **m, **info})
         images += [Image.fromarray(res), Image.fromarray(diffmap).convert("RGB")]
         labels += [name, f"{name}: changed pixels"]
     sheet(images, labels, out / "m001a_sheet.png")
     (out / "report.json").write_text(json.dumps(report, indent=1))
+    for d in diagnostics or []:
+        if d["inspect"]:
+            print(f"INSPECT mask in box {d['box']}: separability {d['separability_eta']}, area {d['mask_area_fraction']} "
+                  f"(heuristic flags; try --nail darker or a painted --mask)")
     for v in report["variants"]:
         ok = v["pixels_changed_outside_mask"] == 0
         print(f"{v['name']}: {v['pixels_changed']} px changed, outside mask {v['pixels_changed_outside_mask']} "

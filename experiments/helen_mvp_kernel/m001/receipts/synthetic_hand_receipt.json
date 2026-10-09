@@ -1,0 +1,62 @@
+{
+ "data": "synthetic hand from tests/test_recolor_nails.py (seed 7, 120x160)",
+ "source_sha256": "ccd54f5eea9f3384",
+ "mask_diagnostics": [
+  {
+   "box": [
+    16,
+    18,
+    49,
+    65
+   ],
+   "otsu_L": 41.13,
+   "separability_eta": 0.982,
+   "mask_area_fraction": 0.457,
+   "inspect": false
+  },
+  {
+   "box": [
+    76,
+    10,
+    49,
+    69
+   ],
+   "otsu_L": 41.13,
+   "separability_eta": 0.982,
+   "mask_area_fraction": 0.466,
+   "inspect": false
+  }
+ ],
+ "variants": {
+  "coral_approx": {
+   "target_hex": "#E2483B",
+   "output_sha256": "041c7e2c4f985e41",
+   "pixels_changed": 3298,
+   "pixels_changed_outside_mask": 0,
+   "max_change_outside_mask": 0,
+   "feather_ring_pixels_changed": 264,
+   "mask_pixels": 3034,
+   "mean_dE76_to_target_nail_body": 2.26,
+   "mean_chroma_error_nail_body": 0.04,
+   "texture_kept_corr_L": 0.936,
+   "texture_kept_corr_L_body": 0.9998,
+   "gamut_clipped_px_body": 0,
+   "gamut_clipped_px_highlight_blend": 58
+  },
+  "pistachio_approx": {
+   "target_hex": "#C8D8A0",
+   "output_sha256": "7ac2a0211a55c3f5",
+   "pixels_changed": 3298,
+   "pixels_changed_outside_mask": 0,
+   "max_change_outside_mask": 0,
+   "feather_ring_pixels_changed": 264,
+   "mask_pixels": 3034,
+   "mean_dE76_to_target_nail_body": 2.25,
+   "mean_chroma_error_nail_body": 0.0,
+   "texture_kept_corr_L": 0.9934,
+   "texture_kept_corr_L_body": 1.0,
+   "gamut_clipped_px_body": 0,
+   "gamut_clipped_px_highlight_blend": 0
+  }
+ }
+}
