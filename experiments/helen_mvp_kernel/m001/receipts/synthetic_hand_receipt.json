@@ -9,7 +9,11 @@
     49,
     65
    ],
-   "otsu_L": 41.13,
+   "feature": "L",
+   "features_tried": [
+    "L"
+   ],
+   "otsu_threshold": 41.13,
    "separability_eta": 0.982,
    "mask_area_fraction": 0.457,
    "border_touch": 0.0,
@@ -23,7 +27,11 @@
     49,
     69
    ],
-   "otsu_L": 41.13,
+   "feature": "L",
+   "features_tried": [
+    "L"
+   ],
+   "otsu_threshold": 41.13,
    "separability_eta": 0.982,
    "mask_area_fraction": 0.466,
    "border_touch": 0.0,

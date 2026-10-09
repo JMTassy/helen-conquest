@@ -143,28 +143,53 @@ AREA_RANGE = (0.15, 0.85)
 BORDER_MAX = 0.05
 
 
-def auto_mask(lab, boxes, polarity, diagnostics=None):
+FEATURES = ("L", "chroma", "L_minus_chroma")
+AUTO_ORDER = ("chroma", "L_minus_chroma", "L")
+
+
+def _feature(lab, name, polarity):
+    """Per-pixel score where the nail is the HIGH class. Chroma: nail near-neutral (polish or bare), skin saturated."""
+    L, C = lab[..., 0], np.hypot(lab[..., 1], lab[..., 2])
+    f = {"L": L, "chroma": -C, "L_minus_chroma": L - C}[name]
+    return f if (name == "chroma" or polarity == "lighter") else -f
+
+
+def _box_mask(f):
+    t = otsu(f.ravel())
+    part = fill_holes(largest_component(f > t))
+    eta, area, edge = separability(f, t), float(part.mean()), border_touch(part)
+    reasons = [r for r, bad in (("low separability", eta < ETA_MIN),
+                                ("area out of range", not AREA_RANGE[0] <= area <= AREA_RANGE[1]),
+                                ("mask reaches the box border", edge > BORDER_MAX)) if bad]
+    return part, {"otsu_threshold": round(float(t), 2), "separability_eta": round(eta, 3),
+                  "mask_area_fraction": round(area, 3), "border_touch": round(edge, 3),
+                  "inspect": bool(reasons), "reasons": reasons}
+
+
+def auto_mask(lab, boxes, polarity, diagnostics=None, feature="L"):
+    """feature: L (lightness), chroma, L_minus_chroma, or auto = per box, the first of AUTO_ORDER whose mask
+    raises no flag (else the least-flagged one). Flags are heuristics; mask.png at 100 % decides."""
     mask = np.zeros(lab.shape[:2], dtype=bool)
     H, W = mask.shape
+    names = AUTO_ORDER if feature == "auto" else (feature,)
     for box in boxes:
         x, y, w, h = (int(round(v)) for v in box)
         x, y = max(x, 0), max(y, 0)
         w, h = min(w, W - x), min(h, H - y)
         if w < 3 or h < 3:
             raise ValueError(f"nail box {box} is outside the image or too small")
-        L = lab[y:y + h, x:x + w, 0]
-        t = otsu(L.ravel())
-        sel = L > t if polarity == "lighter" else L < t
-        part = fill_holes(largest_component(sel))
+        sub = lab[y:y + h, x:x + w]
+        tried = []
+        for name in names:
+            part, diag = _box_mask(_feature(sub, name, polarity))
+            tried.append((len(diag["reasons"]), len(tried), name, part, diag))
+            if not diag["inspect"]:
+                break
+        _, _, name, part, diag = min(tried, key=lambda r: (r[0], r[1]))
         mask[y:y + h, x:x + w] |= part
         if diagnostics is not None:
-            eta, area, edge = separability(L, t), float(part.mean()), border_touch(part)
-            reasons = [r for r, bad in (("low separability", eta < ETA_MIN),
-                                        ("area out of range", not AREA_RANGE[0] <= area <= AREA_RANGE[1]),
-                                        ("mask reaches the box border", edge > BORDER_MAX)) if bad]
-            diagnostics.append({"box": [x, y, w, h], "otsu_L": round(float(t), 2), "separability_eta": round(eta, 3),
-                                "mask_area_fraction": round(area, 3), "border_touch": round(edge, 3),
-                                "inspect": bool(reasons), "reasons": reasons})
+            diagnostics.append({"box": [x, y, w, h], "feature": name,
+                                "features_tried": [r[2] for r in tried], **diag})
     return mask
 
 
@@ -263,6 +288,9 @@ def main(argv=None):
     g.add_argument("--mask", help="PNG mask, white = nail")
     ap.add_argument("--target", action="append", required=True, help='name=#RRGGBB (opaque shade, approximate unless sourced)')
     ap.add_argument("--nail", choices=["lighter", "darker"], default="lighter", help="nail vs skin inside each box")
+    ap.add_argument("--feature", choices=list(FEATURES) + ["auto"], default="L",
+                    help="what separates nail from skin in a box: L (lightness), chroma (nail near-neutral), "
+                         "L_minus_chroma, or auto (per box, first that raises no flag)")
     ap.add_argument("--out", default="m001a_out")
     ap.add_argument("--feather", type=int, default=1)
     ap.add_argument("--reference-mask", help="PNG mask traced by a person (white = nail), to measure the mask used")
@@ -276,12 +304,13 @@ def main(argv=None):
         mask = np.asarray(Image.open(args.mask).convert("L")) > 127
     else:
         diagnostics = []
-        mask = auto_mask(srgb_to_lab(src), json.loads(pathlib.Path(args.boxes).read_text()), args.nail, diagnostics)
+        mask = auto_mask(srgb_to_lab(src), json.loads(pathlib.Path(args.boxes).read_text()), args.nail, diagnostics,
+                         feature=args.feature)
     Image.fromarray((mask * 255).astype(np.uint8)).save(out / "mask.png")
     Image.fromarray(src).save(out / "00_original.png")
     report = {"source": src_path.name, "source_sha256": hashlib.sha256(src_path.read_bytes()).hexdigest()[:16],
               "size": [int(src.shape[1]), int(src.shape[0])], "method": "deterministic CIELAB recolour, no AI, no credits",
-              "mask_source": "painted" if args.mask else f"auto in boxes (nail {args.nail})",
+              "mask_source": "painted" if args.mask else f"auto in boxes (nail {args.nail}, feature {args.feature})",
               "limits": ["opaque shades only; translucent shades not simulated",
                          "target colours are parameters, not product references: product fidelity not evaluated",
                          "invariance holds for the PNG outputs; JPEG export changes every pixel slightly",

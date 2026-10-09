@@ -176,3 +176,37 @@ def test_cli_reference_mask_report(tmp_path):
     rep = rn.main([str(tmp_path / "f.png"), "--boxes", str(tmp_path / "b.json"), "--target", f"c={CORAL}",
                    "--reference-mask", str(tmp_path / "ref.png"), "--out", str(tmp_path / "o")])
     assert rep["mask_diagnostics"][0]["inspect"] and rep["mask_vs_reference"]["iou"] < 0.6
+
+
+def pearly_shaded_nail(seed=5):
+    """Near-neutral pearly nail lit on top and shaded below (its lower half as dark as the skin), on saturated skin:
+    lightness cuts the nail in half; chroma separates it whole (the calvi_04 case, synthetic)."""
+    rng = np.random.default_rng(seed)
+    h, w = 120, 160
+    yy, xx = np.mgrid[0:h, 0:w]
+    img = np.array([150, 95, 65], float)[None, None, :] + rng.normal(0, 3, (h, w, 1))
+    cx, cy, rx, ry = 80, 60, 18, 26
+    nail = ((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2 <= 1
+    g = 225 - (yy - (cy - ry)) / (2 * ry) * 135                   # 225 at the top of the nail, 90 at the bottom
+    img[nail] = np.stack([g + 6, g, g + 2], axis=-1)[nail]
+    box = [[cx - rx - 12, cy - ry - 10, 2 * rx + 25, 2 * ry + 21]]
+    return np.clip(np.round(img), 0, 255).astype(np.uint8), nail, box
+
+
+def test_auto_feature_keeps_a_shaded_pearly_nail_whole():
+    src, nail, box = pearly_shaded_nail()
+    lab = rn.srgb_to_lab(src)
+    by_l = rn.auto_mask(lab, box, "lighter", feature="L")
+    d = []
+    auto = rn.auto_mask(lab, box, "lighter", d, feature="auto")
+    assert rn.compare_masks(by_l, nail)["iou"] < 0.8              # lightness splits the nail by its own shading
+    assert d[0]["feature"] == "chroma" and not d[0]["inspect"]
+    assert rn.compare_masks(auto, nail)["iou"] > 0.9
+
+
+def test_auto_feature_still_works_on_the_plain_synthetic_hand():
+    src, truth, boxes = synthetic_hand()
+    d = []
+    mask = rn.auto_mask(rn.srgb_to_lab(src), boxes, "lighter", d, feature="auto")
+    assert all(not x["inspect"] for x in d), d
+    assert rn.compare_masks(mask, truth)["iou"] > 0.95
