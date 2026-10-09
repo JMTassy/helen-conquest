@@ -2,9 +2,11 @@
 
 NON_SOVEREIGN · authority=false · no AI · no spending. Built for HELEN mission M001 (Manucurist COLOR SHIFT); generic.
 
-> Three contact-sheet tools were written in parallel for M001 (this one, a ChatGPT zip, and `helen-os-JMTC/tools/contact_sheet.py`
-> on the operator's machine). For M001, use **one**: the operator chooses. This version includes the two fixes found by the
-> local one: colour-aware near-duplicates (shade variants are never merged) and denoised sharpness.
+> **Working version** for M001, consolidated from three parallel implementations; the ChatGPT zip stays a separate
+> prototype (reference only). Exact duplicates (file or decoded pixels) are excluded, keeping the annotated copy;
+> resemblances (luminance hash AND local colour) are only flagged. Sharpness is denoised and a noise estimate flags
+> images whose sharpness is unreliable. Blown highlights are penalised inside the nail box only.
+> The ranking is content-blind: it cannot see whether nails are visible at all. A person chooses.
 
 ```
 pip install pillow numpy          # ffmpeg/ffprobe optional (videos)
@@ -12,12 +14,13 @@ pip install pillow numpy          # ffmpeg/ffprobe optional (videos)
 # 1. Stills / rushes you downloaded (e.g. the 10 "Still 2025-05-17…" JPEGs, the 4 Calvi .mov)
 python contact_sheet.py ~/Downloads/calvi --out ~/HELEN_M001/contact_sheet --fps 1
 
-# 2. Optional, after marking the nail on each image: roi.json {"file.jpg": [x, y, w, h]}
-python contact_sheet.py ~/Downloads/calvi --roi roi.json --min-roi-short-side 400
+# 2. After marking the nail: metadata.json {"file.jpg": {"nail_roi": [x, y, w, h], "source": "..."}}
+python contact_sheet.py ~/Downloads/calvi --metadata metadata.json --require-nail --min-roi-short-side 400
 
 # 3. Public official product images (Shopify store), page claims kept apart from image facts
 python shop_images.py --store https://www.manucurist.com \
-  --match "active glow,coral reef,pistachio,chestnut" --out ~/HELEN_M001/public --download
+  --match "<shades named in the M001 sources>" --out ~/HELEN_M001/public --download
+# (e.g. the shades seen in the S3 Instagram captions; tie each one to an M001 source before using it)
 python contact_sheet.py ~/HELEN_M001/public/images --out ~/HELEN_M001/public/contact_sheet
 ```
 
