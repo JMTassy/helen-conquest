@@ -2,6 +2,10 @@
 
 NON_SOVEREIGN · authority=false · no AI · no spending. Built for HELEN mission M001 (Manucurist COLOR SHIFT); generic.
 
+> Three contact-sheet tools were written in parallel for M001 (this one, a ChatGPT zip, and `helen-os-JMTC/tools/contact_sheet.py`
+> on the operator's machine). For M001, use **one**: the operator chooses. This version includes the two fixes found by the
+> local one: colour-aware near-duplicates (shade variants are never merged) and denoised sharpness.
+
 ```
 pip install pillow numpy          # ffmpeg/ffprobe optional (videos)
 

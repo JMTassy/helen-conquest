@@ -51,9 +51,20 @@ def jpeg_quality(img):
     return best
 
 
+def denoise(gray):
+    """3x3 binomial blur: damps sensor grain and JPEG noise, which would otherwise inflate the Laplacian."""
+    if gray.shape[0] < 3 or gray.shape[1] < 3:
+        return gray
+    p = np.pad(gray, 1, mode="edge")
+    k = (1.0, 2.0, 1.0)
+    rows = sum(k[i] * p[i:i + gray.shape[0], :] for i in range(3)) / 4.0
+    return sum(k[j] * rows[:, j:j + gray.shape[1]] for j in range(3)) / 4.0
+
+
 def laplacian_var(gray):
     if gray.shape[0] < 3 or gray.shape[1] < 3:
         return 0.0
+    gray = denoise(gray)
     lap = (gray[:-2, 1:-1] + gray[2:, 1:-1] + gray[1:-1, :-2] + gray[1:-1, 2:] - 4 * gray[1:-1, 1:-1])
     return float(lap.var())
 
@@ -74,6 +85,19 @@ def sharpest_tile(gray, grid=8):
 def ahash(img, size=8):
     small = np.asarray(ImageOps.grayscale(img).resize((size, size), Image.Resampling.BILINEAR), dtype=np.float64)
     return int("".join("1" if v else "0" for v in (small > small.mean()).flatten()), 2)
+
+
+COLOUR_NEAR = 12  # max mean |RGB| difference of the worst 16x16 cell for a near-duplicate (0..255)
+
+
+def colour_grid(img, size=16):
+    return np.asarray(img.convert("RGB").resize((size, size), Image.Resampling.BOX), dtype=np.int16)
+
+
+def colour_distance(a, b):
+    """Worst-cell colour difference. aHash sees luminance only: the same nail framing in two shades
+    hashes alike, so a near-duplicate must also match in local colour (or shade variants get merged)."""
+    return float(np.abs(a - b).mean(axis=2).max())
 
 
 def hamming(a, b):
@@ -100,6 +124,7 @@ def measure(path, roi=None):
         info["roi_short_side_px"] = min(w, h)
         info["sharpness_roi"] = round(laplacian_var(gray[y:y + h, x:x + w]), 1)
     info["_ahash"] = ahash(rgb)
+    info["_colour"] = colour_grid(rgb)
     return info, rgb
 
 
@@ -174,7 +199,9 @@ def main(argv=None):
     for a in range(len(images)):
         for b in range(a + 1, len(images)):
             ia, ib = images[a][0], images[b][0]
-            if ia["sha256"] == ib["sha256"] or hamming(ia["_ahash"], ib["_ahash"]) <= 3:
+            exact = ia["sha256"] == ib["sha256"]
+            near = hamming(ia["_ahash"], ib["_ahash"]) <= 3 and colour_distance(ia["_colour"], ib["_colour"]) <= COLOUR_NEAR
+            if exact or near:
                 ia.setdefault("duplicates", []).append(ib["file"])
                 ib.setdefault("duplicates", []).append(ia["file"])
 

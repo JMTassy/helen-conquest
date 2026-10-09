@@ -74,3 +74,26 @@ def test_still_is_matched_to_its_source_video(tmp_path):
     assert r["videos"][0]["width"] == 1280 and r["videos"][0]["duration_s"] == 4.0
     nv = r["images"][0]["nearest_video_frame"]
     assert nv["frame"].startswith("clip_") and nv["ahash_distance"] <= 5
+
+
+def test_same_framing_different_shade_is_not_a_duplicate(tmp_path):
+    """M001 case: same nail framing, two polish shades. They must stay two images."""
+    d = tmp_path / "shades"
+    d.mkdir()
+    base = np.asarray(checker(1600, 1200)).copy()
+    red, green = base.copy(), base.copy()
+    # two shades with the same luminance (~101): a grey-level hash cannot tell them apart
+    red[400:800, 600:1000] = (200, 60, 60)
+    green[400:800, 600:1000] = (40, 140, 60)
+    Image.fromarray(red).save(d / "nail_red.jpg", quality=92)
+    Image.fromarray(green).save(d / "nail_green.jpg", quality=92)
+    r = cs.main([str(d), "--out", str(tmp_path / "o")])
+    assert all("duplicates" not in i for i in r["images"])
+    assert set(r["candidates"]) == {"nail_red.jpg", "nail_green.jpg"}
+
+
+def test_noise_does_not_win_sharpness():
+    rng = np.random.default_rng(0)
+    flat_noisy = 128 + rng.normal(0, 6, (400, 400))
+    edges = np.asarray(checker(400, 400, cell=40).convert("L"), dtype=np.float64)
+    assert cs.laplacian_var(edges) > cs.laplacian_var(flat_noisy)
