@@ -1,0 +1,482 @@
+{
+  "schema": "SCANNER_PILOT_CORPUS_MANIFEST_V0",
+  "status": "CANDIDATE — not frozen; the operator freezes by recording manifest_sha256 in the protocol",
+  "authority": false,
+  "sovereign": false,
+  "ledger_effect": "none",
+  "pinned_revision": "9c07f33c5b14813b29a53207e4f5757a2608907c",
+  "baseline_scanner_blob": "c68109f0dd71fc75b44b42b6ba1e03283ccaa423",
+  "eligibility_rules": [
+    "E1 docs/proposals/*.md tracked at revision",
+    "E2 exists on origin/main",
+    "E3 1500 <= bytes <= 40000",
+    "E4 exact-content dedup",
+    "E5 near-dup char-5-gram Jaccard >= 0.8"
+  ],
+  "grouping_rule": "first two underscore tokens of basename after stripping version/date suffixes",
+  "split_rule": "whole groups shuffled by seed; development filled to >= 25; rest holdout; no straddling",
+  "sampling": {
+    "seed_source": "9c07f33c5b14813b29a53207e4f5757a2608907c",
+    "seed": 8158772414391826527,
+    "method": "random.Random(seed).sample over sorted eligible paths",
+    "independent_of_scanner_predictions": true
+  },
+  "counts": {
+    "tracked": 72,
+    "eligible": 63,
+    "excluded": 9,
+    "selected": 40,
+    "development": 25,
+    "holdout": 15,
+    "groups": 37
+  },
+  "excluded": [
+    {
+      "path": "docs/proposals/AUTORESEARCH_OUTBOX_POLICY_AUDIT_2026_10_07.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/CODEX_EVALUATOR_SEAT_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/EGREGOR_DISAMBIGUATION_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/HARVEST_VIDEO_SHOTCRAFT_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/HELEN_JESTER_RIEMANN_FIXTURES_V1.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/HER_FABLE_VISION_SWARM_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/PREREG_G2_EMBEDDING_RUN_V0.md",
+      "reason": "E2 not on origin/main"
+    },
+    {
+      "path": "docs/proposals/STATE_WRITE_PATH_PERIMETER_V0.md",
+      "reason": "E2 not on origin/main"
+    }
+  ],
+  "documents": [
+    {
+      "path": "docs/proposals/AGENTIC_OS_RETRO_CONTROL_ROOM_V0_SPEC.md",
+      "source_group": "AGENTIC_OS",
+      "split": "development",
+      "blob": "f8c6153ae173d47dd0bc39ca190ea059dcecd10d",
+      "sha256_at_revision": "ccde9266020848a3fc7d44c85b1de4a7be593b1d43261734717af9d89881bba3",
+      "bytes": 8895,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/BOUNDED_RECEIPT_WULMATH_V0.md",
+      "source_group": "BOUNDED_RECEIPT",
+      "split": "development",
+      "blob": "900728dfaaf74e6a3abc05e87958c0b078468a8d",
+      "sha256_at_revision": "887fc44f7b66bc4265a35731fda27d44ec8f67c488ecfba02b6836707604a5cd",
+      "bytes": 3171,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/CONQUEST_WORLD_DIRECTION_V0.md",
+      "source_group": "CONQUEST_WORLD",
+      "split": "holdout",
+      "blob": "2489c67188dd99c5d8ebbf3af7388ac35a311a6f",
+      "sha256_at_revision": "18293787cc55c1db8d71dbf9c1dd0d69fbbcdb11418983c9fda89b4d513ec125",
+      "bytes": 4572,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/CONQUEST_WORLD_MODEL_RENDER_V1.md",
+      "source_group": "CONQUEST_WORLD",
+      "split": "holdout",
+      "blob": "393ef6a27d54fb691dedb4c7f7042d0f8fba1c05",
+      "sha256_at_revision": "808de0c1507edab4a1163e962bb77996f998d2b54b7e9d8f2c076e19bddb7851",
+      "bytes": 4045,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/CWL_EMOGLYPH_V0_2_1_SPEC.md",
+      "source_group": "CWL_EMOGLYPH",
+      "split": "holdout",
+      "blob": "d5b686c4c034efb3bbc8595af9b287765860513c",
+      "sha256_at_revision": "6300d4e65e01e06f596a939d58380db2b5bf3bb4059c331ec61ccf851b015a71",
+      "bytes": 13497,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/DAN_GOBLIN.md",
+      "source_group": "DAN_GOBLIN",
+      "split": "development",
+      "blob": "35761276d0b2c78f58ffd1621f074b9e4ee3911e",
+      "sha256_at_revision": "c7233412f640bbf0fe4e4ea16565df1d45809c4ecb3fc19fdf093b59b6a76594",
+      "bytes": 2645,
+      "covariate_packet_appearances": 3,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/EPISTEMIC_SYNTAX_V1.md",
+      "source_group": "EPISTEMIC_SYNTAX",
+      "split": "holdout",
+      "blob": "2ab5d0c934de8789ac71ea2fd86ed511202ae06e",
+      "sha256_at_revision": "313cbfa32706ca5a543b5b31f75db768d0c348c3932de7963e34c4a28fb540ba",
+      "bytes": 8561,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/GAS_V0.md",
+      "source_group": "GAS",
+      "split": "holdout",
+      "blob": "0311cdef3e4fb15dcf1ab9555a86b0f46d02cb7d",
+      "sha256_at_revision": "72d7ecfce1e5a51693e596de3660e52fdf2f88e3d4db2313dee6a7a3e14f31b9",
+      "bytes": 21605,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/GAS_V0_PROOFS.md",
+      "source_group": "GAS_V0",
+      "split": "holdout",
+      "blob": "1d9835b835494a38e1fa60883ccb4a0cea39f0cb",
+      "sha256_at_revision": "d7ecf86890dc684140a4f4dfa2a157052466f034e77b8724c2ece6ffa7b202e7",
+      "bytes": 13871,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/GOBLIN_5_EPOCH_AUTORESEARCH.md",
+      "source_group": "GOBLIN_5",
+      "split": "development",
+      "blob": "c48de2ed8f5a03dde12edb11ba4f726b6f3fc09d",
+      "sha256_at_revision": "1e26d4220658c3ca22c384a87cc3cf8044abdfa9a194cc5a8b0987d95ce0dd92",
+      "bytes": 7566,
+      "covariate_packet_appearances": 2,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/GOBLIN_JESTER_PROTOCOL_V1.md",
+      "source_group": "GOBLIN_JESTER",
+      "split": "holdout",
+      "blob": "b76347892d4bae153143a72632b42ac27e4d0485",
+      "sha256_at_revision": "85dc11a5486357c0ff67193032dfbb3ec5cd76e9264ec23a4214f6a33c6438f1",
+      "bytes": 4808,
+      "covariate_packet_appearances": 2,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_ANOMALY_GRAMMAR_V1.md",
+      "source_group": "HELEN_ANOMALY",
+      "split": "development",
+      "blob": "b49ac62ee65c9834f4961647ebbbc7df4737a2c3",
+      "sha256_at_revision": "56d1daf05a5a1644a2d32949b7f643bc93bc88e46a3ece2cd54c9a2fe2a64224",
+      "bytes": 4466,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_AUTORESEARCH_SAFE_ARCHITECTURE_V1.md",
+      "source_group": "HELEN_AUTORESEARCH",
+      "split": "development",
+      "blob": "3b26cdf8a95b6ebce5862fb6670af92e614508fa",
+      "sha256_at_revision": "ec219560b8206fd9ad34b6221258fe48d1ac9f27bc208c20dcce93de6501862a",
+      "bytes": 8433,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_CHROMATIC_WULMOJI_V1.md",
+      "source_group": "HELEN_CHROMATIC",
+      "split": "holdout",
+      "blob": "8b279f2d51d9e082cabfef1483c74986400c8d47",
+      "sha256_at_revision": "3de96655635b653d29ccb2ed808e681e65794e450ab72dd76fb8c46cb9b354b5",
+      "bytes": 6921,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_CLI_RECEIPT_NATIVE_SWARM_SUPERVISION_V0.md",
+      "source_group": "HELEN_CLI",
+      "split": "holdout",
+      "blob": "032ff11632f990f06f0ba813714b029a1335ca23",
+      "sha256_at_revision": "a937bc4b50214cca19bd52f2ada7a6360369f806532ada15670b96d832c73312",
+      "bytes": 7092,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_DAN_GOBLIN_RECALL_MODE_V0_1.md",
+      "source_group": "HELEN_DAN",
+      "split": "development",
+      "blob": "e057a409bc86cc9f3000758537076e2f62a11a59",
+      "sha256_at_revision": "f90361abb7d5ba4a409375443289c608ed6792c2a657f684b3ba1eb99ed8f63c",
+      "bytes": 9489,
+      "covariate_packet_appearances": 6,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_DIGITAL_METABOLISM_V0.md",
+      "source_group": "HELEN_DIGITAL",
+      "split": "development",
+      "blob": "61bd7e19ab0c815d1c349fcb9cad97141798ee47",
+      "sha256_at_revision": "fff47fff64ef587be534649247cf383e2a0fd43e36889abe2b2981e7b3b1b7df",
+      "bytes": 7115,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_DIRECTOR_FLEET_LOOP_V1.md",
+      "source_group": "HELEN_DIRECTOR",
+      "split": "development",
+      "blob": "5fb4b3f6a707f81ee36e1053e0d99a885452a6b4",
+      "sha256_at_revision": "f5dd86b8b9ba52fb5f1655674c75675565597f3b3da3b0d032548991b7b60c60",
+      "bytes": 5567,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_IDENTITY_GATE_V1.md",
+      "source_group": "HELEN_IDENTITY",
+      "split": "development",
+      "blob": "242934ee24848e76ffa8102bc13734ce37b5d71e",
+      "sha256_at_revision": "58a72e5b77a75d9bfadce175664d1196ae71acf3085edbdb328a46098ee10404",
+      "bytes": 10937,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_LANGUAGE_V1.md",
+      "source_group": "HELEN_LANGUAGE",
+      "split": "development",
+      "blob": "8dd0a08dd0aace04832b9c923b737708e34294ea",
+      "sha256_at_revision": "6a7aa3f521b7d051a5c791c0b7ff1d6888a3b64bc510f749506a900f196e4d4c",
+      "bytes": 13051,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_LANGUAGE_V1_BEGINNER.md",
+      "source_group": "HELEN_LANGUAGE",
+      "split": "development",
+      "blob": "ceb06d93e807a560fe52cc160e50eaec593a48c6",
+      "sha256_at_revision": "25bf11a4e932df79e5768c03a956f187b19623331f9f31824f11e4f91573208d",
+      "bytes": 3355,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_MEMBRANE_THEOREM_V0.md",
+      "source_group": "HELEN_MEMBRANE",
+      "split": "development",
+      "blob": "e73f1a885abed9df7875a58052365bea876c5dc4",
+      "sha256_at_revision": "e4d75d393a6187dd1258cbbb3f2708b7896ff1648ac2bbf2958d8643890964a5",
+      "bytes": 15021,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_NATIVE_LANGUAGE_V0.md",
+      "source_group": "HELEN_NATIVE",
+      "split": "holdout",
+      "blob": "dfc0c00a56ee3feb1f7fe99d3addd6037ae15c7e",
+      "sha256_at_revision": "0ebb58e9511faa2aee2c5c177804260ad94c936104f03d3555dc66342495056f",
+      "bytes": 5633,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_OBSTRUCTION_V0.md",
+      "source_group": "HELEN_OBSTRUCTION",
+      "split": "development",
+      "blob": "5ad32c90c462931103ad608b7650d0514df2eb60",
+      "sha256_at_revision": "53d729d8f350d8514848780a1c1f3f8424dfde4c506e2d3f71e3c8faf16593e4",
+      "bytes": 8795,
+      "covariate_packet_appearances": 2,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_OSAURUS_ADMISSION_SEAM_V0.md",
+      "source_group": "HELEN_OSAURUS",
+      "split": "development",
+      "blob": "d1628e0e4afbcd3e10480dc5831d26f26fbeed1e",
+      "sha256_at_revision": "544beb1377e0465276e0d80344e6feab02e6b73e97a05cd4585bab866b53692c",
+      "bytes": 7458,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_OS_V2_GRAMMAR_AMENDMENT_001.md",
+      "source_group": "HELEN_OS",
+      "split": "development",
+      "blob": "12d2d35621c8032167f381c253f64e57fbc43517",
+      "sha256_at_revision": "0c069a8bd5047ae30b1ec88d6b28e39ad90a6c1ad933de64a4823db44aac3977",
+      "bytes": 14643,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_SANDBOX_ADAPTER_RECEIPT_V0.md",
+      "source_group": "HELEN_SANDBOX",
+      "split": "holdout",
+      "blob": "c83690238dba114efc62cadcb1c13c3a43206256",
+      "sha256_at_revision": "d5bc81286f626a8d56d33002a89e99ab428dc1ff525a9b5db8c4ab7fb1b8fe27",
+      "bytes": 10049,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_SKILL_REGISTRY_V1.md",
+      "source_group": "HELEN_SKILL",
+      "split": "development",
+      "blob": "1669bf410b1a3abf9c18a549bf3a5c4eae933958",
+      "sha256_at_revision": "1ea563cb6b287b8695270a6750bf157ccb553d3da2c842870d41282359a5c65a",
+      "bytes": 4535,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_SOURCE_ATLAS_V1.md",
+      "source_group": "HELEN_SOURCE",
+      "split": "holdout",
+      "blob": "6c517f9c2391052daac08fc1ad2d8e158c93d502",
+      "sha256_at_revision": "655344b14a9c68eb59953b4ed078b731096ad9b1c05beedeb885403f916447a6",
+      "bytes": 8575,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/HELEN_WULMOJI_MATHS.md",
+      "source_group": "HELEN_WULMOJI",
+      "split": "development",
+      "blob": "a574a7eedf04c58ac15e41bcbb1dc14bf2e9b405",
+      "sha256_at_revision": "4627375605596e7bd72f58f84274e3a96c8653aef0f50a0637bab985197f2fa5",
+      "bytes": 4489,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/LATENT_WORLD_WITNESS_V1.md",
+      "source_group": "LATENT_WORLD",
+      "split": "development",
+      "blob": "832eb91849e1feb5012384bc4009e5554328af5b",
+      "sha256_at_revision": "9586274a7046ea935d06df2bb2ccd8ecde722b205e50608f4a028aeffd01569e",
+      "bytes": 31038,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/MEMBRANE_TRANSFORMATION_V0.md",
+      "source_group": "MEMBRANE_TRANSFORMATION",
+      "split": "holdout",
+      "blob": "05466f1175728472698fde062eed5d868f6923a8",
+      "sha256_at_revision": "1a103c22134c62daac7f9e2b2a5a99ee22f3d4049e762a1e7325899c805e5227",
+      "bytes": 5829,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/MRGTK_v0.md",
+      "source_group": "MRGTK",
+      "split": "development",
+      "blob": "63e0bca9ab0ca12700e531bd275abfefb2d8ce80",
+      "sha256_at_revision": "e345a5351b5c2ec61d3f4010cc1195cc89832b681a3efa302c7a4221aefcd91b",
+      "bytes": 15740,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/SAFE_NOETIC_METABOLISM_T9_V0.md",
+      "source_group": "SAFE_NOETIC",
+      "split": "development",
+      "blob": "b6d1bf10811e77b7fcfcc25befbc8d7d9c8f3178",
+      "sha256_at_revision": "5acfba3d8622aee0793af3bb9b4af6d042bb32b0504e2041a76ed01b2d9ab2e1",
+      "bytes": 15312,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/TEMPLE_MODE_EXPERIENCE_SCRIPT.md",
+      "source_group": "TEMPLE_MODE",
+      "split": "holdout",
+      "blob": "563e017e44523e1191a7a6eb49ef8f4af8c071a3",
+      "sha256_at_revision": "f7571ce7da380792fb252bca665bd8ec5af725a5677cc595e313263db4de7fb6",
+      "bytes": 13929,
+      "covariate_packet_appearances": 2,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/TRANSPORT_THEORY_V1_REGULARITY_HYPOTHESES.md",
+      "source_group": "TRANSPORT_THEORY",
+      "split": "development",
+      "blob": "af5f647b3797e3cbeba0e47b0d6475ac5f3f9463",
+      "sha256_at_revision": "1f125dec3066ad88a14c0816978564a24820272be8a37ef7da7d1d05e5423845",
+      "bytes": 7322,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/TRANSPORT_THEORY_VOLUME_I_STRUCTURE.md",
+      "source_group": "TRANSPORT_THEORY",
+      "split": "development",
+      "blob": "2272c6306d1437ba6ad816e51070fe105c107df1",
+      "sha256_at_revision": "9b5d402addb42dbd939056972971341a0ccb2b621cd12e6220252779e4686a50",
+      "bytes": 5893,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/TRUTH_PREDICTION_OBJECTIVE_V1.md",
+      "source_group": "TRUTH_PREDICTION",
+      "split": "holdout",
+      "blob": "55a95ff6f876ed1435f7e39150463cce69421d27",
+      "sha256_at_revision": "8d09e87e3afaadf65b5aaebde670cb8a59dba9fd652071801d0fc5e89f1243f8",
+      "bytes": 18625,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/VISIBLE_REASONING_SURFACE_V1.md",
+      "source_group": "VISIBLE_REASONING",
+      "split": "development",
+      "blob": "90eb269e4d0f3d5050ca5d55b2e998bf3a8b544a",
+      "sha256_at_revision": "03e6e2d531544169eabf97fbd91f0c758f4f48fe60f667fa4ea9065ab1bac06e",
+      "bytes": 9827,
+      "covariate_packet_appearances": 1,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    },
+    {
+      "path": "docs/proposals/VOLUME_II_CHAPTER_4_INFORMATION_GEOMETRY.md",
+      "source_group": "VOLUME_II",
+      "split": "development",
+      "blob": "84ed910663d59c2f93b23bd588c0ed39145ddcea",
+      "sha256_at_revision": "d2b26c79e4da47d4d75692c55196b02d47d39dcc75a2e61f072ac006811a4845",
+      "bytes": 5341,
+      "covariate_packet_appearances": 0,
+      "historical_scanned_bytes": "UNVERIFIED — packets carry no source digest"
+    }
+  ],
+  "not_bound_yet": [
+    "labels",
+    "annotators",
+    "scorer",
+    "thresholds",
+    "AMBIGUOUS rule",
+    "freeze digest in protocol"
+  ],
+  "manifest_sha256": "46111de2ae838750aa001672f02f8f4a30877ce7e5cb0d0934a22952d78bce73"
+}
