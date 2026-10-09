@@ -1,0 +1,65 @@
+# EGREGOR DAILY — copy to egregor.config.yaml (gitignored) and edit.
+# No paid API keys: local models through Ollama, Claude and Codex through your subscriptions
+# (their CLIs must be logged in on this machine: `claude` then /login, `codex login`).
+
+output_root: ~/HELEN_EGREGOR          # OUTSIDE the git tree: raw inputs include e-mails. Never commit it.
+max_input_chars: 6000                  # per raw input sent to GOBLIN
+
+inputs:
+  repo:
+    enabled: true
+    path: ~/Documents/GitHub/helen_os_v1   # your HELEN working tree (SOT)
+    since_hours: 24
+    fetch: false                          # true = `git fetch` first (needs network + credentials)
+  inbox:
+    enabled: true
+    path: ~/HELEN_EGREGOR/inbox           # drop .md .txt .json .pdf here; processed files move to inbox/done/<date>/
+  gmail:
+    enabled: true
+    label: egregor                        # the Gmail label you apply to e-mails for the egregor
+    since_hours: 24
+    max_threads: 5
+    lane: hal_collector                   # read through your Claude subscription's Gmail connector
+    # Tool names of the claude.ai Gmail connector inside Claude Code. Check with `claude mcp list` on first run.
+    allowed_tools: ["mcp__claude_ai_Gmail__search_threads", "mcp__claude_ai_Gmail__get_thread"]
+
+# Which lane plays which role. Blindness is enforced by this script, not by the lanes:
+# each lane only ever receives the previous stage's artifacts, stripped (SUPERTEAM_MVP_V0 blindness protocol).
+roles:
+  GOBLIN: goblin_local     # dreams on each raw input (raw text stays on this machine)
+  HER: her_local           # sees DreamSeeds only
+  HAL: hal_claude          # sees InsightCandidates only
+  MAYOR: mayor_codex       # sees ClaimCandidates only, without lineage; different vendor from HAL
+
+lanes:
+  goblin_local:
+    kind: ollama
+    model: qwen3.5:9b-ud-q4          # already in your MODEL_ROUTING_V1 stack; different family from HER on purpose
+    temperature: 1.0
+  her_local:
+    kind: ollama
+    model: gemma4:12b                # newer local model that fits 12 GB VRAM; check the exact tag: `ollama list`
+    temperature: 0.7
+  hal_claude:
+    kind: cli
+    cmd: ["claude", "-p", "--output-format", "json", "--max-turns", "1"]
+    output: claude_json              # stdin = prompt; no tools allowed
+  hal_collector:
+    kind: cli
+    cmd: ["claude", "-p", "--output-format", "json", "--max-turns", "8"]
+    output: claude_json
+  mayor_codex:
+    kind: cli
+    cmd: ["codex", "exec", "--skip-git-repo-check", "--sandbox", "read-only", "-"]
+    output: text
+
+ollama_url: http://localhost:11434
+timeout_seconds: 600
+
+cadence:                 # SUPERTEAM_MVP_V0 daily limits
+  inputs_per_run: 10
+  seeds_per_input: 2
+  seeds_per_run: 20
+  insights_max: 5
+  claims_max: 2
+  validation_per_run: 1
