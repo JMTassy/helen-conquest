@@ -12,7 +12,9 @@
    "otsu_L": 41.13,
    "separability_eta": 0.982,
    "mask_area_fraction": 0.457,
-   "inspect": false
+   "border_touch": 0.0,
+   "inspect": false,
+   "reasons": []
   },
   {
    "box": [
@@ -24,7 +26,9 @@
    "otsu_L": 41.13,
    "separability_eta": 0.982,
    "mask_area_fraction": 0.466,
-   "inspect": false
+   "border_touch": 0.0,
+   "inspect": false,
+   "reasons": []
   }
  ],
  "variants": {

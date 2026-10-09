@@ -128,9 +128,19 @@ def separability(values, t):
     return float(w0 * (1 - w0) * (lo.mean() - hi.mean()) ** 2 / v.var())
 
 
-# Heuristic thresholds for flagging a mask to inspect (not a refusal, not a validation).
+def border_touch(part):
+    """Fraction of the box border covered by the mask. The operator draws each box with skin all around the nail,
+    so a nail mask should not reach the border; a split by illumination (lit skin + nail) usually does."""
+    edge = np.concatenate([part[0], part[-1], part[1:-1, 0], part[1:-1, -1]])
+    return float(edge.mean())
+
+
+# Heuristic flags for a person to inspect mask.png. Not a refusal and NOT a validation: an unflagged mask can
+# still be wrong (a real bare-nail case passed with eta 0.611 and IoU 0.55 against a hand-traced mask).
+# Thresholds are uncalibrated; calibrate with --reference-mask on real cases.
 ETA_MIN = 0.6
 AREA_RANGE = (0.15, 0.85)
+BORDER_MAX = 0.05
 
 
 def auto_mask(lab, boxes, polarity, diagnostics=None):
@@ -148,16 +158,27 @@ def auto_mask(lab, boxes, polarity, diagnostics=None):
         part = fill_holes(largest_component(sel))
         mask[y:y + h, x:x + w] |= part
         if diagnostics is not None:
-            eta, area = separability(L, t), float(part.mean())
+            eta, area, edge = separability(L, t), float(part.mean()), border_touch(part)
+            reasons = [r for r, bad in (("low separability", eta < ETA_MIN),
+                                        ("area out of range", not AREA_RANGE[0] <= area <= AREA_RANGE[1]),
+                                        ("mask reaches the box border", edge > BORDER_MAX)) if bad]
             diagnostics.append({"box": [x, y, w, h], "otsu_L": round(float(t), 2), "separability_eta": round(eta, 3),
-                                "mask_area_fraction": round(area, 3),
-                                "inspect": bool(eta < ETA_MIN or not AREA_RANGE[0] <= area <= AREA_RANGE[1])})
+                                "mask_area_fraction": round(area, 3), "border_touch": round(edge, 3),
+                                "inspect": bool(reasons), "reasons": reasons})
     return mask
 
 
 def _dilate(mask):
     p = np.pad(mask, 1)
     return p[1:-1, 1:-1] | p[:-2, 1:-1] | p[2:, 1:-1] | p[1:-1, :-2] | p[1:-1, 2:]
+
+
+def compare_masks(mask, reference):
+    """Agreement with a reference mask (e.g. traced by hand): the calibration measure for the flags above."""
+    inter, union, ref = (mask & reference).sum(), (mask | reference).sum(), max(int(reference.sum()), 1)
+    return {"iou": round(float(inter / max(union, 1)), 3),
+            "overflow_px": int((mask & ~reference).sum()), "overflow_fraction_of_reference": round(float((mask & ~reference).sum() / ref), 3),
+            "missed_px": int((reference & ~mask).sum()), "missed_fraction_of_reference": round(float((reference & ~mask).sum() / ref), 3)}
 
 
 def feather(mask, radius=1):
@@ -244,6 +265,7 @@ def main(argv=None):
     ap.add_argument("--nail", choices=["lighter", "darker"], default="lighter", help="nail vs skin inside each box")
     ap.add_argument("--out", default="m001a_out")
     ap.add_argument("--feather", type=int, default=1)
+    ap.add_argument("--reference-mask", help="PNG mask traced by a person (white = nail), to measure the mask used")
     args = ap.parse_args(argv)
 
     src_path, out = pathlib.Path(args.image), pathlib.Path(args.out)
@@ -266,6 +288,8 @@ def main(argv=None):
                          "no number here validates the mask: a wrong mask still gives 0 changes outside it and a "
                          "small dE76; only mask.png at 100 % decides"],
               "mask_diagnostics": diagnostics, "variants": []}
+    if args.reference_mask:
+        report["mask_vs_reference"] = compare_masks(mask, np.asarray(Image.open(args.reference_mask).convert("L")) > 127)
     images, labels = [Image.fromarray(src)], ["original"]
     for i, t in enumerate(args.target, 1):
         name, hexv = t.split("=", 1)
@@ -283,8 +307,12 @@ def main(argv=None):
     (out / "report.json").write_text(json.dumps(report, indent=1))
     for d in diagnostics or []:
         if d["inspect"]:
-            print(f"INSPECT mask in box {d['box']}: separability {d['separability_eta']}, area {d['mask_area_fraction']} "
-                  f"(heuristic flags; try --nail darker or a painted --mask)")
+            print(f"INSPECT mask in box {d['box']}: {', '.join(d['reasons'])} "
+                  f"(heuristic; try a box with skin all around, --nail darker, or a painted --mask)")
+    if diagnostics is not None:
+        print("Not flagged does not mean correct: check mask.png at 100 %.")
+    if "mask_vs_reference" in report:
+        print(f"mask vs reference: {report['mask_vs_reference']}")
     for v in report["variants"]:
         ok = v["pixels_changed_outside_mask"] == 0
         print(f"{v['name']}: {v['pixels_changed']} px changed, outside mask {v['pixels_changed_outside_mask']} "

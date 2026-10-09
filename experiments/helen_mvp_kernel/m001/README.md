@@ -20,8 +20,15 @@ Read the result:
 - `mask.png` decides, checked by eye at 100 %. A wrong mask is the main failure mode, and **no number in the report
   validates the mask**: a mask that bleeds onto skin still gives 0 changes outside it and a small ΔE76. On a real
   still, an automatic mask on a bare nail was wrong and scored the *better* ΔE76.
-- `mask_diagnostics` (box mode): Otsu separability η and mask area per box; `inspect: true` when η < 0.6 or the area
-  is outside 15–85 % of the box (heuristic flags, printed as INSPECT). Then try `--nail darker` or paint a mask.
+- Draw each box with **skin all around the nail**. `mask_diagnostics` (box mode) flags a box for inspection when the
+  mask reaches the box border (`border_touch` > 5 %), when Otsu separability η < 0.6, or when the area is outside
+  15–85 % of the box; `reasons` says which. Then fix the box, try `--nail darker`, or paint a mask.
+  **Not flagged does not mean correct.** A real bare-nail case passed the first version of these flags (η 0.611,
+  IoU 0.55 against a hand-traced mask). Separability cannot see a split by illumination: on a side-lit synthetic
+  finger the wrong mask has η 0.73–0.83, while the border check flags all 14 swept cases and none of the good ones.
+  That is synthetic evidence; the thresholds are uncalibrated on real stills.
+- `--reference-mask ref.png` (traced by a person) adds `mask_vs_reference`: IoU, overflow onto skin, missed nail.
+  This is how to calibrate the flags on real cases. Keep client images and masks out of this public repository.
 - `pixels_changed_outside_mask` (outside the nail + 1 px feather ring) must be 0; ring changes are counted apart.
 - `mean_chroma_error_nail_body`: did the body reach the target a*, b*. `mean_dE76_to_target_nail_body`: mostly the
   kept shading, not a target-hit score. `texture_kept_corr_L_body`: texture on the body; the pooled
@@ -38,4 +45,4 @@ breaks bit-identity. Stills are approved by the operator before any animation; n
 
 Tests: `python -m pytest tests -q` (synthetic hand: mask IoU, invariance outside the mask, highlight kept,
 texture kept, CLI outputs, deterministic bytes, empty mask refused, body-only texture and chroma hit,
-bare nail close to skin flagged for inspection).
+bare nail close to skin flagged, side-lit failure flagged by the border check, reference comparison).

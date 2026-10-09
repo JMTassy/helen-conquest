@@ -133,3 +133,46 @@ def test_bare_nail_close_to_skin_is_flagged_for_inspection():
     flagged = []
     rn.auto_mask(lab(bare), boxes, "lighter", flagged)
     assert all(d["inspect"] for d in flagged), flagged
+
+
+def side_lit_bare_nail(grad=60, nail_delta=10, seed=3):
+    """Bare nail on a finger lit from one side: Otsu splits lit from shaded, not nail from skin."""
+    rng = np.random.default_rng(seed)
+    h, w = 120, 160
+    yy, xx = np.mgrid[0:h, 0:w]
+    img = np.array([150, 105, 85], float)[None, None, :] + ((xx - 40) / 80 * grad)[..., None] + rng.normal(0, 3, (h, w, 1))
+    cx, cy, rx, ry = 80, 60, 18, 26
+    nail = ((xx - cx) / rx) ** 2 + ((yy - cy) / ry) ** 2 <= 1
+    img[nail] += nail_delta + np.array([8, 0, 0])
+    box = [[cx - rx - 14, cy - ry - 10, 2 * rx + 29, 2 * ry + 21]]
+    return np.clip(np.round(img), 0, 255).astype(np.uint8), nail, box
+
+
+def test_side_lit_failure_passes_separability_but_reaches_the_border():
+    """The real failure mode: a well-separated but wrong split (lit skin + nail). Separability does not see it
+    (eta is high); the mask reaching the box border does. The reference comparison measures the damage."""
+    src, nail, box = side_lit_bare_nail()
+    d = []
+    mask = rn.auto_mask(rn.srgb_to_lab(src), box, "lighter", d)
+    assert d[0]["separability_eta"] > rn.ETA_MIN                 # separability alone would let it through
+    assert "mask reaches the box border" in d[0]["reasons"]
+    cmp = rn.compare_masks(mask, nail)
+    assert cmp["iou"] < 0.6 and cmp["overflow_fraction_of_reference"] > 0.5
+
+
+def test_good_mask_does_not_touch_the_border_and_matches_reference():
+    src, truth, boxes = synthetic_hand()
+    d = []
+    mask = rn.auto_mask(rn.srgb_to_lab(src), boxes, "lighter", d)
+    assert all(x["border_touch"] == 0 and not x["inspect"] for x in d), d
+    assert rn.compare_masks(mask, truth)["iou"] > 0.95
+
+
+def test_cli_reference_mask_report(tmp_path):
+    src, nail, box = side_lit_bare_nail()
+    Image.fromarray(src).save(tmp_path / "f.png")
+    Image.fromarray((nail * 255).astype(np.uint8)).save(tmp_path / "ref.png")
+    (tmp_path / "b.json").write_text(json.dumps(box))
+    rep = rn.main([str(tmp_path / "f.png"), "--boxes", str(tmp_path / "b.json"), "--target", f"c={CORAL}",
+                   "--reference-mask", str(tmp_path / "ref.png"), "--out", str(tmp_path / "o")])
+    assert rep["mask_diagnostics"][0]["inspect"] and rep["mask_vs_reference"]["iou"] < 0.6
