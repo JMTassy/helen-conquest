@@ -1,0 +1,176 @@
+{
+  "schema": "G2_PAIRS_BLIND_V0",
+  "authority": false,
+  "n_pairs": 24,
+  "pairs": [
+    {
+      "pair_index": 0,
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-contextrank-e54-e28-recency-live",
+      "a_text": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 — but the score formula at line 112 is 'score = (is_unresolved * 1000) + salience' and silently drops last_updated. Two threads with equal status and equal salience are ordered by Python dict insertion order, not recency. The docstring is the contract; the code breaks it.",
+      "b_text": "E54 confirms E28 live: _top_threads() silently drops last_updated at line 114. Two equal-salience/status threads produce insertion-order output, not recency order. Live: T_OLD (2026-01-01) ranks before T_NEW (2026-08-15) with identical salience=5 and status=unresolved. E28 3-line fix simulated: T_NEW first after fix (recency wins). Regression check: high-salience thread (salience=9, date=old) still beats low-salience (salience=3, date=new) — salience priority preserved. Edge case: missing last_updated defaults to '' (sorts before any ISO date) — safe, no crash. No existing test covers recency tiebreak in _top_threads. test_recency_tiebreak missing from test_init_determinism_against_chaos.py."
+    },
+    {
+      "pair_index": 1,
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-init-rank-d9c2",
+      "a_text": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 — but the score formula at line 112 is 'score = (is_unresolved * 1000) + salience' and silently drops last_updated. Two threads with equal status and equal salience are ordered by Python dict insertion order, not recency. The docstring is the contract; the code breaks it.",
+      "b_text": "init_helen_wedge.py:_top_threads() collects last_updated per thread (line 104) but the score formula (line 112) is (is_unresolved*1000)+salience only. Recency is a documented criterion (docstring line 92) but a dead letter. Observed: OLD_HIGH_SAL (2025-01-01) outranks NEW_HIGH_SAL (2026-07-16) at equal salience=9 because dict insertion order wins ties. Test test_high_impact_thread_ranked only asserts len(top_3)>0 — no rank assertion."
+    },
+    {
+      "pair_index": 2,
+      "a": "AR-context-rank-companion-drop-e14",
+      "b": "AR-context-rank-companion-fix-e15",
+      "a_text": "boot_loader.py loads 5 context fields (person_profile, last_session, epoch_state, companion_state, live_context). all 5 influence any_loaded (memory_source='storage' detection). but _check_memory_source() in init_airlock.py builds prior_context with only 4 keys — companion_state and live_context are silently dropped. consequence: if only companion_state_v1.json exists in storage, packet reports memory_source='storage' but prior_context contains only None values. misleading signal to downstream consumers. probe-confirmed.",
+      "b_text": "E14 data_loss confirmed on fresh checkout (2026-07-25). companion_state and live_context are loaded by boot_loader (any_loaded check) but silently dropped from prior_context dict in _check_memory_source(). Fix: two-line dict expansion. Probe-confirmed: fix simulation yields prior_context['companion_state'] == {'companion_id':'C1','mood':'curious'}. 20 existing tests unaffected (no companion_state/live_context coverage in test_init_airlock.py)."
+    },
+    {
+      "pair_index": 3,
+      "a": "AR-promptcomp-e36-admitted-lesson-dropped",
+      "b": "AR-promptcomp-e44-admitted-lesson-missing-append",
+      "a_text": "run_self_improve_loop appends rejection history to feedback_lines (lines 423, 426) but silently drops admission history. Line 418 computes lesson = 'Admitted skill X: description' but no feedback_lines.append follows. The next cycle's {feedback} slot carries zero signal about admitted skills' descriptions — only rejection reasons. Combined with E22/E23 (admitted_skills is ID-only, no description/gap), the LLM proposing cycle N+1 sees N rejected IDs in feedback and N admitted IDs in admitted_skills, but has no semantic description for any admitted skill from either source. One-line fix: add feedback_lines.append(lesson) after line 418.",
+      "b_text": "E36 found that admitted_skill lessons are not appended to feedback_lines. E44 live-confirms via direct read: self_improve_loop_v1.py:418 computes lesson = 'Admitted skill X: description' but no feedback_lines.append follows. All 5 failure paths (INFERENCE_FAILED:304, PARSE_FAILED:322, DUPLICATE:340, GATE_BLOCK:423, REDUCER_REJECT:426) append. ADMITTED does not. Result: next-cycle {feedback} slot carries zero admission signal. grep -c 'feedback_lines.append' self_improve_loop_v1.py = 5. No test covers this path (grep confirmed 0 tests import run_self_improve_loop or exercise feedback_lines in admitted branch)."
+    },
+    {
+      "pair_index": 4,
+      "a": "AR-promptcomp-fieldmismatch-e9",
+      "b": "AR-contextrank-e90-history-format-void",
+      "a_text": "E9 observation: memory.py NDJSON entries use actor+value schema; adapters.py context reader expects metadata.role+content. Field mismatch silently injects empty user messages — chat history is invisible to the LLM.",
+      "b_text": "E90: context_ranking — memory.get_history() returns unbounded NDJSON fact entries (schema: event_id/key/value/status/actor/timestamp). These are injected into LLM context via helen.py:53-57 concatenated with the system message. adapters.py:21-26 extracts h.get('metadata',{}).get('role') and h.get('content','') from each history item. Memory fact entries have neither 'metadata' nor 'content' keys, so ALL history items resolve to role='user', content='' — empty user messages. History occupies context slots but carries zero semantic content. Secondary: memory.py:75 uses datetime.utcnow() — mu_DETERMINISM violation per CLAUDE.md."
+    },
+    {
+      "pair_index": 5,
+      "a": "AR-summ-weights-e29-fallback-bias",
+      "b": "AR-summ-weights-e38-register-divergence",
+      "a_text": "ENGINE.py SOURCE_WEIGHT fallback is 1.0 — the maximum weight (equal to 'plugins'). Any unit with source_id='' (default), 'symbolic_sources', or any unregistered id silently scores at the top tier. symbolic_sources/ corpus has no registered source_id in sources.py. No tests cover this fallback path.",
+      "b_text": "register_source() in sources.py updates SOURCES dict but has no coupling to SOURCE_WEIGHT in engine.py. Any dynamically-registered corpus (e.g. symbolic_sources) immediately gets fallback weight=1.0 — silently outranking helen_os (0.9). Two registries diverge on every new source addition."
+    },
+    {
+      "pair_index": 6,
+      "a": "AR-sandbox-vgrammar-e31-live-shipped-collision",
+      "b": "AR-sandbox-vgrammar-e69-cockpit-live-grn-teal",
+      "a_text": "cockpit_v4.html renders 'shipped' (governance ADMITTED) and 'live' (process running) in identical green (#00ff88). CSS at L64 and L67 both use var(--grn). STATE_COLOR at L234: shipped:'#00ff88', live:'#00ff88'. Source Atlas Doctrine: one meaning per color; 'no decorative color substitution is allowed.' 🟢 = ADMITTED only. Liveness is an operational state, not a governance verdict — it maps to 🔵 OBSERVED in the SA palette. The node graph renders STARSHIP_V3 (shipped claim) and temple.html (live source) in the same color, silently collapsing governance and operational semantics.",
+      "b_text": "cockpit_v4.html assigns --grn:#00ff88 to both .si-state.shipped (L64) and .si-state.live (L67). JS color map (L234) confirms: shipped:'#00ff88' and live:'#00ff88' — identical hex. In the orbital visualization, claim nodes (type:'claim', state:'shipped', e.g. STARSHIP_V3 at L241) and source nodes (type:'source', state:'live', e.g. temple.html/focus.html at L247-248) both render green. SA one-meaning rule violation: --grn serves both COMPLETED_CLAIM (closest to SA-ADMITTED: governance object approved/shipped) and ACTIVE_SOURCE_FILE (closest to SA-OBSERVED: object is live/deployed/running). A viewer scanning the orbital cannot distinguish a shipped claim from a live source file by color alone. E63 established a precedent: in index.html, live-cluster/--green collision was resolved by introducing --teal:#2dd4bf for liveness, reserving --green for emotional-state-happy (and by implication SA-ADMITTED green). E69 applies the same principle to cockpit_v4.html: reassign .si-state.live from --grn to --teal, restoring one-meaning for --grn (shipped/ADMITTED) and creating a dedicated live/liveness token consistent with index.html E63 outcome."
+    },
+    {
+      "pair_index": 7,
+      "a": "AR-sandbox-vgrammar-e77-skill-active-pur-collapse",
+      "b": "AR-sandbox-vgrammar-e79-skill-active-pur-css-confirmed",
+      "a_text": "TYPE_COLOR.skill='#bb88ff'=--pur = .si-state.active=--pur: TYPE/STATE color collapse on sk1+sk2. Systemic: 7/14 nodes, 4 pairs collapse.",
+      "b_text": "TYPE.skill=--pur (#bb88ff) == CSS .si-state.active=var(--pur) at sk1. CSS layer collision confirmed (L71). 5/12 nodes collide in current state. Proposed: .si-state.active → #9966cc (dim-purple). Fix: 5→4 collisions."
+    },
+    {
+      "pair_index": 8,
+      "a": "AR-sandbox-vgrammar-e70-sbdot-liveness-teal",
+      "b": "AR-sandbox-vgrammar-e85-sbdot-wh-resolution",
+      "a_text": "cockpit_v4.html L38: .sb-dot{background:var(--grn);animation:blink 2s step-end infinite} — the always-blinking green heartbeat dot at L157 signals SYSTEM LIVENESS (cockpit is alive/connected), not governance admission. This is a SA one-meaning violation: --grn = SA-ADMITTED (governance object approved/shipped), but .sb-dot uses --grn for a temporal heartbeat pulse indicating the UI is running. Context: the dot appears adjacent to 'AUTH' label (L158) and 'authority: false' text (L216) — it has never reflected auth state; it blinks green unconditionally. E63 established --teal:#2dd4bf for liveness in index.html (live-cluster); E69 proposed --teal for .si-state.live in cockpit_v4.html. .sb-dot is a third instance of the same pattern: green blinking = liveness, not admission. Reassigning .sb-dot to --teal completes the liveness-token sweep for cockpit_v4.html. Secondary finding: .sb-v.ok{color:var(--grn)} (L35) is a dead CSS rule — no element in cockpit_v4.html receives class 'sb-v' and 'ok' simultaneously (search confirmed 0 hits in HTML).",
+      "b_text": "E85: sb-dot (L38) uses --grn for blinking liveness/heartbeat dot. E84 blocked on E69 --teal contingency (--teal not in :root). New path: --wh (rgba(255,255,255,.88), already at L21) resolves the contingency without requiring --teal admission. White pulse = system heartbeat signal. No governance color claim. Blink animation (opacity 1→.3) works correctly with rgba: full=rgba(255,255,255,.88), dim=~rgba(255,255,255,.26). E69 --teal contingency for sb-dot = RESOLVED via --wh (E69 may still be needed for .si-state.live L67, tracked separately)."
+    },
+    {
+      "pair_index": 9,
+      "a": "AR-sandbox-vgrammar-e33-gonogo-go-green-collision",
+      "b": "AR-sandbox-vgrammar-e62-station-verdict-blue",
+      "a_text": "The Go/No-Go panel (L1056-1064) is a pre-admission review gate — 'All stations must be GO before SHIP is authorized' (L1059). HER=GO (L1060, 'Proposal ready') and HAL=GO (L1061, 'Admissibility checked') represent station-level review clearances, not ledger admissions. Yet both render via .station-verdict.go{color:var(--green)} (L299), the same color SA doctrine reserves exclusively for governance-ADMITTED. LEDGER shows HOLD (receipt missing) and MAYOR is PENDING — the full system is not admitted — but individual GO stations appear in ADMITTED-level green. --amber (🟠 REVIEW) cannot substitute cleanly: L301 already assigns --amber to .station-verdict.pend (PENDING state), so both PENDING and GO-cleared would share the same color within the same panel. --blue (OBSERVED: #5b8af0) is unused in the gonogo panel and available. SA semantic fit: OBSERVED = 'seen and recorded' ≈ 'station has inspected and recorded its clearance' — closest available slot without introducing a new palette variable.",
+      "b_text": ".station-verdict.go (L299) assigns color:var(--green) to the 'GO' verdict label in the Go/No-Go pre-SHIP gate panel (#gonogo). The panel subtitle reads 'All stations must be GO before SHIP is authorized' — it is a pre-admission readiness check, not an admission event. In the demo state, HER=GO and HAL=GO while LEDGER=HOLD, MAYOR=PENDING, FLIGHT=NO_GO, and the COMMIT button is disabled. A station voting GO means 'this station has observed and cleared its pre-condition' — not 'the object is admitted.' Using --green (SA-ADMITTED) for a pre-admission clearance verdict violates the one-meaning-per-color rule. SA palette maps 🔵 observed to --blue (#5b8af0, defined at L32 with dim/bg variants). Reassigning station-verdict.go to --blue — 'the station has observed and cleared' — is semantically accurate and requires no new palette token."
+    },
+    {
+      "pair_index": 10,
+      "a": "AR-sandbox-vgrammar-e42-liveness-green-residual",
+      "b": "AR-sandbox-vgrammar-e43-focus-helen2027-presence-green",
+      "a_text": "Final sweep of the three unswept surfaces. dream_of_conquest.html: CLEAN — painterly parchment palette (rgba earth/cream tones, single #181210 ink), zero governance vocabulary, zero status color coding. goblin/gravure.html: CLEAN — monochrome gold (#c9a43a ×4), status rendered as text only (NO_CLAIM, PENDING_RECEIPT, authority=false at L9/L200/L242), no color-coded governance. focus.html: one finding — presence badge 'Online' in var(--ok):#16a34a (L41-42 CSS, L132 markup), the identical E31-class liveness-green that E40 logged in helen2027.html (L45-46, L224) and E41 already fixed in temple_akashic_v1. Both warm-light files define --helen:#0ea5e9 (sky blue) in their palettes — the natural light-theme OBSERVED slot, so liveness can move off green without introducing a new token. --ok remains defined and reserved for genuine ok/admitted states (currently unused elsewhere in both files). focus.html's other status colors are sound: .sr-n.wait → --warn, .sr-n.block → --blocked (L96-97), each single-meaning. AUDIT CLOSURE: with E42, all 11 apps/helen-surface files are swept — cockpit_v4 (E31), index (E32/E33), garden_conquest_avalon (f2a9), starship (E39), home_v1 + helen2027 (E40), temple + temple_akashic_v1 (E41), focus + dream_of_conquest + gravure (E42).",
+      "b_text": "Two surface files share an identical E31-class liveness-green collision that E40/E42 logged but did not fix. focus.html L41-42 and helen2027.html L45-46 both render the 'Online' presence badge (tb-badge.presence + presence-dot) using var(--ok):#16a34a — the governance ADMITTED color. The border-color rgba(22,163,74,.22) is the same hex at 22% alpha. In each file, --ok is used ONLY in these two presence badge rules (grep -c 'var(--ok)' = 2 per file, confirmed by live read). Both files already define --helen:#0ea5e9 (sky blue = governance OBSERVED slot) — the natural, palette-correct substitute for a liveness signal. After the tweak, --ok would have 0 callers in both files, eliminating the ADMITTED/liveness ambiguity entirely. This closes the one open finding from E42's audit-closure sweep."
+    },
+    {
+      "pair_index": 11,
+      "a": "AR-promptcomp-e3a1",
+      "b": "AR-f7ec3779a583",
+      "a_text": "Prior packet AR-f7ec3779a583 proposed tail=20 at helen.py:speak() only. New evidence: server.py:59 has identical gap — full NDJSON read, Python slice at return. Source fix (memory.py:116) remains unimplemented. Two unbounded call sites, one source fix.",
+      "b_text": "Unbounded history in helen.py:speak() — no tail limit before LLM call"
+    },
+    {
+      "pair_index": 12,
+      "a": "AR-ctxrank-e28-last-updated-dropped",
+      "b": "AR-contextrank-e50-propose-action-contradiction",
+      "a_text": "In _top_threads() (line 87-118), the ranking criterion 'recent activity' is declared in the docstring as criterion 3, and last_updated is read at line 104 — but the score formula at line 112 is 'score = (is_unresolved * 1000) + salience' and silently drops last_updated. Two threads with equal status and equal salience are ordered by Python dict insertion order, not recency. The docstring is the contract; the code breaks it.",
+      "b_text": "E28 found _top_threads() drops last_updated from its sort key (line 112, unfixed). E50 finds a second, distinct defect: _propose_action() (line 184-208) tension-first branch is salience-blind. When any unresolved tension exists, next_act returns 'Address tension: X' regardless of thread salience. _top_threads() independently surfaces the top-salience thread (e.g. T_HIGH salience=9). InitOutput therefore carries two fields pointing at different targets: top_3_threads[0]=T_HIGH but next_act='Address tension: TEN_LOW'. No cross-check is performed between the two functions. No test asserts cross-coherence between top_3_threads and next_act (grep confirmed 0 tests cover this path). Live probe: corpus with T_HIGH(salience=9) and TEN_LOW(weight=100, unrelated thread) yields top_3_threads=['T_HIGH'] and next_act='Address tension: TEN_LOW' — contradictory operator signals in one boot response."
+    },
+    {
+      "pair_index": 13,
+      "a": "AR-context-rank-companion-drop-e14",
+      "b": "AR-context-rank-risk-clear-e16",
+      "a_text": "boot_loader.py loads 5 context fields (person_profile, last_session, epoch_state, companion_state, live_context). all 5 influence any_loaded (memory_source='storage' detection). but _check_memory_source() in init_airlock.py builds prior_context with only 4 keys — companion_state and live_context are silently dropped. consequence: if only companion_state_v1.json exists in storage, packet reports memory_source='storage' but prior_context contains only None values. misleading signal to downstream consumers. probe-confirmed.",
+      "b_text": "E15 medium semantic risk flag cleared. E15 flagged: 'if any consumer explicitly asserts prior_context keys == 4, will break'. Full codebase grep for key-count assertions on prior_context returns 0 hits. Consumers access specific keys only (loaded_from, epoch_state[epoch_id]) — never asserting key-set equality or len(). 20/20 test_init_airlock tests green. E15 fix is structurally safe to apply."
+    },
+    {
+      "pair_index": 14,
+      "a": "AR-promptcomp-e22-admitted-skills-id-only",
+      "b": "AR-promptcomp-e23-bootstrap-description-gap",
+      "a_text": "In run_self_improve_loop() (line 281), admitted_skills is built as list(skill_library['active_skills'].keys()) — ID strings only. Line 284 passes this ID-only list into _SKILL_PROPOSAL_PROMPT. But _admit_skill_to_library() (lines 583-590) stores description, expected_effects, and capability_gap_addressed for every admitted skill. Those fields are available in skill_library at prompt-build time but are silently dropped. The LLM therefore cannot detect semantic duplicates: a new proposal 'inference_limiter_v1 — halt inference when token ceiling reached' passes the ID dedup check (line 331) and all scoring gates even if 'token_budget_manager_v1 — tracks token budget per inference call and halts when limit exceeded' is already admitted. Only the ID is checked; capability semantics are invisible to the model.",
+      "b_text": "E22 proposed changing admitted_skills at line 281 from ID-list to {sid: {description, gap}} dict. E22 fix not yet applied (line 281 still uses .keys()). Deeper issue: even if E22 is applied, BOOTSTRAP_SKILL_LIBRARY_STATE (lines 108-120) stores helen_autoresearch_v1 without 'description' or 'capability_gap_addressed' fields. The E22 dict comprehension (data.get('description', ''), data.get('capability_gap_addressed', 'UNKNOWN')) would produce {\"helen_autoresearch_v1\": {\"description\": \"\", \"gap\": \"UNKNOWN\"}} — semantically identical to an ID-only entry. Because bootstrap is always in cycle-0 context, the LLM can propose a semantic duplicate of the autoresearch capability in every cold-start run, passing all gate checks."
+    },
+    {
+      "pair_index": 15,
+      "a": "AR-f7ec3779a583",
+      "b": "AR-halctx-e30-6c84165362c2",
+      "a_text": "Unbounded history in helen.py:speak() — no tail limit before LLM call",
+      "b_text": "helen.py:63 calls hal.review(proposal, context) where context = [system_msg] + full_history (O(history) tokens). hal.review() passes context unchanged to adapter.generate() — the history is never inspected by HAL logic, only forwarded to the LLM. For a 20-turn session this adds ~1741 tokens to every HAL call (system+history) for zero benefit. Proposed fix: pass context=[] to hal.review() at both call sites (helen.py:63 and helen.py:170)."
+    },
+    {
+      "pair_index": 16,
+      "a": "AR-skillroute-e34-ok-quarantined-class",
+      "b": "AR-skillroute-e49-inference-rejected-missing",
+      "a_text": "E27 added 6 ERR_* codes to failure_to_class (skill_discovery_v1.py:162-174) but missed 'OK_QUARANTINED'. QUARANTINED ledger entries pass the detect_failure_clusters filter (only ADMITTED is skipped). When 2+ QUARANTINED outcomes cluster, analyze_capability_gap receives failure_type='OK_QUARANTINED', which is not in failure_to_class, and defaults to 'TRANSFORM'. Live probe confirms: analyze_capability_gap(FailureCluster(failure_type='OK_QUARANTINED'), state)['class'] == 'TRANSFORM'. Correct class is VALIDATE: quarantine is triggered by transfer_required=True with missing receipts — GATE_TRANSFER_REQUIRED per _blockers_from_reason (self_improve_loop_v1.py:636).",
+      "b_text": "E34 found OK_QUARANTINED missing from failure_to_class (skill_discovery_v1.py:162-174). E49 live-probe finds two additional pre-reducer outcome codes also missing: (1) INFERENCE_FAILED → TRANSFORM (wrong; OPTIMIZE is correct — inference failure is a model/infra issue, not schema transformation); (2) REJECTED (dedup path) → TRANSFORM (wrong; FILTER is correct — same category as ERR_DUPLICATE_DETECTION_FAILED). _make_failed_cycle() sets reason_code=outcome for all pre-reducer failures, so INFERENCE_FAILED and REJECTED become live cluster failure_types. OK_QUARANTINED remains unfixed (E34 HOLD_FOR_OPERATOR). 4 missing codes total; all default to TRANSFORM."
+    },
+    {
+      "pair_index": 17,
+      "a": "AR-skill-route-d1f7",
+      "b": "AR-skillroute-rule2b-dead-f3c7",
+      "a_text": "Dead comment: _compute_route() Rule 9 says 'or SKILL if multi-step intent' but no NLU detection exists. All USER_QUERY text routes to AGENT regardless of content. Explicit-field path (claim_extraction, audit_type) reaches SKILL; natural-language equivalent never does.",
+      "b_text": "Rule 2b (line 285-291) is unreachable. _classify_input() returns THINK_PREPARATION for any input with think=True (line 165), so input_type is never USER_QUERY when think=True — the Rule 2b conjunction can never be satisfied. Both Rule 2a and the dead Rule 2b route to RouteType.THINK, so there is no current functional regression, but the dead branch hides a design ambiguity: THINK_PREPARATION (explicit prep intent) and USER_QUERY+think=True (query that needs thinking) are collapsed to the same input type with no way to distinguish them at the routing layer."
+    },
+    {
+      "pair_index": 18,
+      "a": "AR-contextrank-e35-template-idempotent",
+      "b": "AR-initrank-e37-phantom-tweak-template",
+      "a_text": "context_ranking wins cold-start (19.2) on every clean run but its experiment template (two_stage_loop.py:97-102) is idempotent: it fires twice (2026-07-21, 2026-08-02) producing identical reports with no progress. Two specific gaps confirmed by live probe: (1) tweak target 'routed proposals in context_ranking output' — no context_ranking output module exists anywhere in the codebase (grep confirms 0 implementations); (2) metric 'count authority-shaped verbs' is an undefined category — authority_language_linter.py tracks hard_violations+soft_warnings, not 'authority-shaped verbs', so the baseline is unmeasurable as stated. The MAYBE_CANDIDATE prefix has no implementation anchor. Repeated identical reports = zero experiment velocity for the highest-scoring cold-start surface.",
+      "b_text": "two_stage_loop.py:92 experiment template for init_ranking_weights contains a phantom tweak: 'Increase weight of context_ranking by 0.05 in init_ranking_weights config.' There is no per-surface config — _DEFAULT_PARAMS is a flat (L,E,R,C,B) tuple. 'context_ranking weight in init_ranking_weights config' is not a real parameter path. Additionally, context_ranking already wins cold-start with 19.2 vs init's 18.0, so increasing context_ranking's weight would be a no-op on selection. The template was written when init_ranking_weights had E=8 (score=24.0) and was the cold-start winner; E11 lowered E to 6 deliberately (no cold-start self-selection rule) but the template was never updated. E25 flagged this as an 'E26 candidate'; it was not addressed. No test asserts the phantom string."
+    },
+    {
+      "pair_index": 19,
+      "a": "AR-initrank-e47-len-tiebreaker",
+      "b": "AR-initrank-e48-refs-tiebreaker",
+      "a_text": "E46 confirmed w_noise=1.0 as binary separator (score=0.9267, OrderScore=0.6333). E47 finds that adding w_len=0.1 (length penalty for longer summaries) lifts OrderScore from 0.6333 to 0.8000, raising overall score from 0.9267 to 0.9600. Mechanism: 6 of 20 cases have same-type ties (test_gap vs test_gap, both noise=0); w_len promotes the shorter/more-concise packet, matching operator goldset preference. Stable range: 0.05 <= w_len <= 0.27 (cliff at 0.28 where Top3Match drops to 0.45). Top3Match=1.0 and Stability=1.0 are preserved throughout the stable range.",
+      "b_text": "E47 (w_noise=1.0 + w_len=0.1) left 6/20 cases with incorrect ordering: eee30b (test_gap, refs=4, sev=2, len=224) ranked after 1f936 (test_gap, refs=2, sev=1, len=124) because the len penalty promotes the shorter packet. E48 finds that adding w_refs=0.028 resolves all 6 cases: refs(eee30)=4 > refs(1f936)=2 provides a 0.006 margin that reverses the 1f936-first ordering. Goldset preference eee30>1f936 is CONSISTENT across all 6 co-appearance cases (6:0). Score lifts from 0.9600 to 1.0000 (Top3Match=1.0, OrderScore=1.0, Stability=1.0). Safe window: w_refs in [0.026, 0.030]. CRITICAL: window width is only 0.004 (±0.002 to cliffs at 0.025 and 0.031). Attack surfaces: (1) margin 332>cecf=0.0085 is thin; (2) margin eee30>1f936=0.006 is thin; (3) any new rejected packet with refs>=5 could shift the cecf side of the cliff. CONDITIONAL KEEP — goldset expansion to 40+ cases required before operator admission."
+    },
+    {
+      "pair_index": 20,
+      "a": "AR-sandbox-vgrammar-e31-live-shipped-collision",
+      "b": "AR-sandbox-vgrammar-e39-shipped-chainok-collision",
+      "a_text": "cockpit_v4.html renders 'shipped' (governance ADMITTED) and 'live' (process running) in identical green (#00ff88). CSS at L64 and L67 both use var(--grn). STATE_COLOR at L234: shipped:'#00ff88', live:'#00ff88'. Source Atlas Doctrine: one meaning per color; 'no decorative color substitution is allowed.' 🟢 = ADMITTED only. Liveness is an operational state, not a governance verdict — it maps to 🔵 OBSERVED in the SA palette. The node graph renders STARSHIP_V3 (shipped claim) and temple.html (live source) in the same color, silently collapsing governance and operational semantics.",
+      "b_text": "starship.html ledger source panel (L557–L593) renders eight values in .lv.g (CSS L55: .lv.g{color:var(--g)}; L11: --g:#00ff41). Three are governance verdicts — status SHIPPED (L563, L570) and 'SHIP · 29/29 tests GREEN' (L584). Five are hash-chain integrity signals — 'chain OK · +1' on cum_hash rows (L565, L572, L579, L586, L593). Source Atlas Doctrine reserves green exclusively for governance-ADMITTED; chain validity is a structural/observational property (hash verified ≈ 🔵 OBSERVED / MONO receipt voice), not a verdict. The collision is highest-stakes on L579: a NO_SHIP entry (L578, .lv.r) still shows its cum_hash in ADMITTED-green, so a rejected entry carries green in the same row block. --c (#00e5ff, cyan) is already used in the panel for entry ids (.lv.c) as the structural/receipt voice and is the natural slot for chain-validity. File declares authority=false (L171: 'NO RECEIPT · authority=false · action required')."
+    },
+    {
+      "pair_index": 21,
+      "a": "AR-sandbox-vgrammar-e59-live-teal",
+      "b": "AR-sandbox-vgrammar-e43-focus-helen2027-presence-green",
+      "a_text": "L91/.live-pulse, L123/.mrow-dot.live, L133/.badge.live all use --green (#3dd68c) for runtime liveness (ACTIVE/ONLINE/LIVE). SA doctrine assigns --green exclusively to governance-ADMITTED. No admission receipt backs a running agent's liveness state. Three selectors create a semantic collision. If reassigned to --teal (new palette slot), --green is cleared for ADMITTED-only use and --blue remains available for E33's proposed GO fix — avoiding intra-viewport ambiguity when the gonogo modal is open (L289: background rgba(7,7,10,.88) — 88% opacity, main cockpit live-dots visible through backdrop-filter:blur(8px) behind the modal).",
+      "b_text": "Two surface files share an identical E31-class liveness-green collision that E40/E42 logged but did not fix. focus.html L41-42 and helen2027.html L45-46 both render the 'Online' presence badge (tb-badge.presence + presence-dot) using var(--ok):#16a34a — the governance ADMITTED color. The border-color rgba(22,163,74,.22) is the same hex at 22% alpha. In each file, --ok is used ONLY in these two presence badge rules (grep -c 'var(--ok)' = 2 per file, confirmed by live read). Both files already define --helen:#0ea5e9 (sky blue = governance OBSERVED slot) — the natural, palette-correct substitute for a liveness signal. After the tweak, --ok would have 0 callers in both files, eliminating the ADMITTED/liveness ambiguity entirely. This closes the one open finding from E42's audit-closure sweep."
+    },
+    {
+      "pair_index": 22,
+      "a": "AR-cecf4c5b553f",
+      "b": "AR-e8d1841c6d2f",
+      "a_text": "Three CI gates are red on main at HEAD dace8b02 (Kernel Guard: 3 stale CONSUMER_ALLOWLIST NDJSONWriter imports incl. kernel_daemon.py admission handlers; Oracle Town Verification; payload_meta), and pushes continue to land over the failures. Red-gate normalization erodes the certification layer: invariants may hold while their verification silently rots (Inv holds != Inv certified). Blocks GAS Prop 7.1(b).",
+      "b_text": "Oracle Town Verification CI is structurally unable to pass: VERIFY_ALL.sh steps 3-4 require oracle_town/runs/ (create_adversarial_runs.py + runA/B/C frozen artifacts) which was never committed to git (no history). Steps 1-2 pass (module self-tests + 23 integration tests green locally). The script ends with a hardcoded K0-K9 success banner printed unconditionally if reached - verification theater risk. Second of the three red gates on main explained."
+    },
+    {
+      "pair_index": 23,
+      "a": "AR-sandbox-vgrammar-e74-silive-grn-pur",
+      "b": "AR-sandbox-vgrammar-e81-source-live-compound-green",
+      "a_text": "E73 flagged .si-state.live (L67) → --grn for audit: is 'LIVE' an admission event or runtime observation? Audit confirms semantic collision. Two operational-state classes exist: (1) .si-state.live → --grn (L67), applied to source surfaces temple.html/focus.html (L247-248) meaning 'currently serving'; (2) .si-state.active → --pur (L71), applied to skills/memories meaning 'currently in use'. Both are runtime observations (not admission events), yet they use different colors. Per E73 boundary: --grn = admission event occurred (operator-authorized ledger write). Temple.html/focus.html being 'live' means they are currently running HTML surfaces — a runtime health signal, not a ledger write. No --teal variable exists in :root (E69 --teal proposal never admitted). Closest existing color for an operational/active state is --pur (already used by .si-state.active for the same semantic). Proposed tweak: .si-state.live → --pur, aligning with .si-state.active and vacating --grn for admission-only use. Contrast: .si-state.shipped → --grn remains correct (claim STARSHIP_V3 was admitted to ledger, per L241).",
+      "b_text": "Nodes s2 (temple.html, source/live) and s3 (focus.html, source/live) emit THREE independent --grn signals simultaneously: (1) orbital canvas dot via TYPE_COLOR.source='#00ff88' at L347, (2) stream sidebar si-dot via TYPE_COLOR.source at L459, (3) si-state.live text via .si-state.live{color:var(--grn)} at L67. Three green signals on non-admitted objects = strongest false-admission reading in the graph. E76 (TYPE_COLOR.source) and E74 (.si-state.live) each address one layer; only their joint application eliminates all three. Additional finding: E76's proposed rgba(255,255,255,.65) for TYPE_COLOR.source is partially risky at L387 (pull-ring transform: col.replace(')',',${alpha})') would produce invalid CSS 'rgba(255,255,255,.65,0.08)' for selected source nodes). Hex alternative '#aaaaaa' avoids this — no ')' in hex, transform no-ops safely, pull-rings render at full gray."
+    }
+  ],
+  "blind_pairs_sha256": "4126fcf6da580d9ea13d623654b4c1d27f098169fa8f60685ae2c50a15830419"
+}
