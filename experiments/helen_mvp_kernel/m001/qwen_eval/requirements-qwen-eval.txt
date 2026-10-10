@@ -8,3 +8,5 @@ accelerate==1.15.0
 huggingface_hub          # comes with diffusers; used for the download and the resolved revision
 pillow
 numpy
+# only for --quantize nf4 (GPUs under ~40 GB, or a RAM-limited WSL): official weights quantized at load
+bitsandbytes==0.50.2

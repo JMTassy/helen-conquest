@@ -18,6 +18,11 @@ The script refuses to run without `--accept-research-license`.
    ```
 2. Preflight, downloads nothing: `python qwen_turbo_eval.py --check --accept-research-license`.
    Report the JSON. Below ~40 GB of VRAM use `--offload model`. Keep 60 GB free for the weights cache.
+   **Smaller GPU or RAM-limited WSL:** add `--quantize nf4` to every command (check and run). It loads the
+   *official* weights in 4-bit at load time (transformer and Qwen3-VL text encoder) with the pinned
+   `bitsandbytes`; `report.json` labels the run `Turbo 4-bit`. Its numbers describe the 4-bit model, not the
+   published bf16 one. Do not use third-party GGUF conversions instead (e.g. Viggle builds): they are a
+   different, fine-tuned model whose card states it does not reproduce the upstream outputs.
 3. Synthetic first. From `..`, make the synthetic hand and its exact mask:
    ```bash
    python -c "import sys; sys.path[:0]=['tests','.']; from test_recolor_nails import synthetic_hand; \

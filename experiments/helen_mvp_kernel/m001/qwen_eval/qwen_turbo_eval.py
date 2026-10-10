@@ -47,6 +47,7 @@ import recolor_nails as rn  # noqa: E402
 
 MODEL_ID = "Qwen/Qwen-Image-2.1-Turbo"
 PINNED = {"diffusers": "0.41.0", "transformers": "5.19.0", "accelerate": "1.15.0"}
+BNB_PIN = "0.50.2"  # only for --quantize nf4
 LICENSE_NOTE = ("Qwen RESEARCH LICENSE AGREEMENT (2026-09-20): non-commercial research or evaluation only; "
                 "commercial use needs a separate licence from the licensor")
 # resolution presets from the model card (width, height)
@@ -145,9 +146,17 @@ def sha16(b):
 
 # ------------------------------------------------------------------ model side (GPU machine only)
 
-def preflight(out_dir=None):
+def preflight(quantize="none"):
     """Versions, GPU, disk. Imports torch/diffusers but downloads nothing."""
-    info = {"python": platform.python_version(), "pinned": PINNED, "problems": []}
+    info = {"python": platform.python_version(), "pinned": PINNED, "quantize": quantize, "problems": []}
+    if quantize == "nf4":
+        try:
+            import bitsandbytes
+            info["bitsandbytes"] = bitsandbytes.__version__
+            if bitsandbytes.__version__ != BNB_PIN:
+                info["problems"].append(f"bitsandbytes {bitsandbytes.__version__} installed, {BNB_PIN} pinned")
+        except ImportError:
+            info["problems"].append(f"--quantize nf4 needs bitsandbytes=={BNB_PIN} (see requirements)")
     try:
         import torch
         info["torch"] = torch.__version__
@@ -156,7 +165,7 @@ def preflight(out_dir=None):
             p = torch.cuda.get_device_properties(0)
             info["gpu"] = p.name
             info["vram_gb"] = round(p.total_memory / 2 ** 30, 1)
-            if info["vram_gb"] < 40:
+            if info["vram_gb"] < 40 and quantize == "none":
                 info["problems"].append(f"{info['vram_gb']} GB VRAM: run with --offload model (slower) "
                                         "or --offload sequential (slowest)")
         else:
@@ -186,10 +195,21 @@ def preflight(out_dir=None):
     return info
 
 
-def load_pipeline(revision, offload):
+QUANT_LABEL = {"none": "Turbo bf16 (official weights as published)",
+               "nf4": "Turbo 4-bit (official weights, NF4 at load: transformer + text encoder; not the published precision)"}
+
+
+def load_pipeline(revision, offload, quantize="none"):
     import torch
     from diffusers import QwenImage21Pipeline
-    pipe = QwenImage21Pipeline.from_pretrained(MODEL_ID, revision=revision, dtype=torch.bfloat16)
+    kw = {}
+    if quantize == "nf4":  # official checkpoint quantized in memory at load; no third-party converted weights
+        from diffusers.quantizers import PipelineQuantizationConfig
+        kw["quantization_config"] = PipelineQuantizationConfig(
+            quant_backend="bitsandbytes_4bit",
+            quant_kwargs={"load_in_4bit": True, "bnb_4bit_quant_type": "nf4", "bnb_4bit_compute_dtype": torch.bfloat16},
+            components_to_quantize=["transformer", "text_encoder"])
+    pipe = QwenImage21Pipeline.from_pretrained(MODEL_ID, revision=revision, dtype=torch.bfloat16, **kw)
     if offload == "model":
         pipe.enable_model_cpu_offload()
     elif offload == "sequential":
@@ -227,6 +247,8 @@ def main(argv=None, edit_fn=None):
     ap.add_argument("--seeds", type=int, nargs="+", default=[0, 1, 2])
     ap.add_argument("--revision", default=None, help="Hugging Face commit of the checkpoint; pin after the first run")
     ap.add_argument("--offload", choices=["none", "model", "sequential"], default="none")
+    ap.add_argument("--quantize", choices=["none", "nf4"], default="none",
+                    help="nf4: load the official weights in 4-bit (for ~12-24 GB GPUs); results are labelled Turbo 4-bit")
     ap.add_argument("--out", default="runs/qwen_eval")
     ap.add_argument("--check", action="store_true", help="preflight only; downloads nothing")
     args = ap.parse_args(argv)
@@ -234,7 +256,7 @@ def main(argv=None, edit_fn=None):
     if not args.accept_research_license:
         ap.error("--accept-research-license is required: " + LICENSE_NOTE)
     if args.check:
-        info = preflight()
+        info = preflight(args.quantize)
         print(json.dumps(info, indent=1))
         return info
     if not (args.image and args.mask and args.target and args.source_kind):
@@ -270,11 +292,12 @@ def main(argv=None, edit_fn=None):
 
     resolved = None
     if edit_fn is None:
-        report["environment"] = preflight()
-        pipe, resolved = load_pipeline(args.revision, args.offload)
+        report["environment"] = preflight(args.quantize)
+        pipe, resolved = load_pipeline(args.revision, args.offload, args.quantize)
         edit_fn = lambda rgb, s: qwen_edit(pipe, rgb, prompt, gen_size, s)  # noqa: E731
     report["model"] = {"id": MODEL_ID, "revision_requested": args.revision, "revision_resolved": resolved,
-                       "steps": "checkpoint's saved 8-step schedule", "use_kv_cache": True, "offload": args.offload}
+                       "steps": "checkpoint's saved 8-step schedule", "use_kv_cache": True, "offload": args.offload,
+                       "quantize": args.quantize, "label": QUANT_LABEL[args.quantize]}
 
     for s in args.seeds:
         t0 = time.time()
@@ -299,6 +322,7 @@ def main(argv=None, edit_fn=None):
         o = r["outside_mask_excluding_3px_band"]
         print(f"qwen seed {r['seed']}: outside mean dE {o['mean']}, p95 {o['p95']}, share > JND {o['share_above_jnd']}, "
               f"shift {r['global_shift_px']}, nail chroma error {r['nail_body']['mean_chroma_error_nail_body']}")
+    print(f"model: {report['model']['label']}")
     print("Research/evaluation only. A person reviews qwen_eval_sheet.png at 100 %. Keep outputs off the public repo.")
     return report
 

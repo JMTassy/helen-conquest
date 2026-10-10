@@ -84,3 +84,13 @@ def test_refusals_happen_before_any_model_code(tmp_path, extra):
         else:                                       # licence not acknowledged
             qe.main(base + ["--source-kind", "synthetic"], edit_fn=lambda rgb, s: rgb)
     assert not (tmp_path / "r" / "report.json").exists()
+
+
+def test_quantized_run_is_labelled_and_preflight_names_bitsandbytes(tmp_path):
+    src, truth = _write_case(tmp_path)
+    rep = qe.main([str(tmp_path / "hand.png"), "--mask", str(tmp_path / "mask.png"), "--target", f"c={CORAL}",
+                   "--source-kind", "synthetic", "--accept-research-license", "--seeds", "0", "--quantize", "nf4",
+                   "--out", str(tmp_path / "q")], edit_fn=lambda rgb, s: rgb)
+    assert rep["model"]["quantize"] == "nf4" and rep["model"]["label"].startswith("Turbo 4-bit")
+    info = qe.preflight("nf4")
+    assert info["quantize"] == "nf4" and ("bitsandbytes" in info or any("bitsandbytes" in p for p in info["problems"]))
