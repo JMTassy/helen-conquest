@@ -136,7 +136,9 @@ def label_lines(spec, src_sha, shade, crop, shape):
         ("Mesures", f"Pixels modifiés hors ongles et liseré : {m['pixels_changed_outside_mask']}. "
                     f"Liseré adouci de 1 px : {m['feather_ring_pixels_changed']} px. "
                     f"Texture conservée (corrélation de L) : {fr(m['texture_kept_corr_L_body'], 3)}. "
-                    f"Écart de teinte (chroma, corps de l'ongle) : {fr(m['mean_chroma_error_nail_body'])}."),
+                    f"Écart de teinte (chroma, corps de l'ongle) : {fr(m['mean_chroma_error_nail_body'])}. "
+                    f"Hors gamut sRGB, écrêtés : {m['gamut_clipped_px_body']} px du corps de l'ongle "
+                    f"({fr(100 * m['gamut_clipped_px_body'] / max(m['mask_pixels'], 1), 0)} %)."),
         ("Non revendiqué", f"Fidélité à la teinte du produit : non calibrée (cible approximative {shade['hex']}). "
                            "Le masque ne vaut que s'il a été vérifié à 100 %. Peau, décor et tout le reste de la photo : non modifiés."),
         ("Affichage", f"Recadrage carré {s} × {s} px agrandi pour l'écran ; les mesures portent sur les pixels d'origine."),
