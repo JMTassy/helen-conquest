@@ -112,3 +112,18 @@ def test_interrupted_run_keeps_the_seeds_it_finished(tmp_path):
                  "--out", str(tmp_path / "cut")], edit_fn=stops_on_seed_1)
     rep = json.loads((tmp_path / "cut" / "report.json").read_text())
     assert [r["seed"] for r in rep["runs"]] == [0] and rep["run_status"] == "in progress: 1 of 3 seeds done"
+
+
+def test_one_process_per_seed_keeps_every_seed(tmp_path):
+    """HAL-WITNESS ran seeds as separate processes after the OOM kill: a rerun must add, never overwrite."""
+    _write_case(tmp_path)
+    base = [str(tmp_path / "hand.png"), "--mask", str(tmp_path / "mask.png"), "--target", f"c={CORAL}",
+            "--source-kind", "synthetic", "--accept-research-license", "--out", str(tmp_path / "p")]
+    qe.main(base + ["--seeds", "0"], edit_fn=lambda rgb, s: rgb)
+    with pytest.raises(SystemExit):                                   # plain rerun would wipe seed 0: refused
+        qe.main(base + ["--seeds", "1"], edit_fn=lambda rgb, s: rgb)
+    rep = qe.main(base + ["--seeds", "1", "2", "--resume"], edit_fn=lambda rgb, s: rgb)
+    assert [r["seed"] for r in rep["runs"]] == [0, 1, 2] and rep["run_status"] == "complete: 3 of 3 seeds"
+    with pytest.raises(SystemExit):                                   # another target cannot join this report
+        qe.main([a if a != f"c={CORAL}" else "c=#00FF00" for a in base] + ["--seeds", "3", "--resume"],
+                edit_fn=lambda rgb, s: rgb)

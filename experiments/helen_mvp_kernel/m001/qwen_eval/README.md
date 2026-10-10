@@ -26,6 +26,9 @@ The script refuses to run without `--accept-research-license`.
    On a ~12 GB card, nf4 also needs `--offload model`; the script refuses nf4 without it below 16 GB. nf4 turns
    on VAE tiling (the 2K decode ran out of memory otherwise), recorded as `model.vae_tiling`. `report.json` is
    rewritten after every seed (`run_status`), so a run stopped half-way keeps the seeds it finished.
+   If RAM runs out (WSL capped at 15 GB killed a run at seed 1), run one seed per process into the same
+   `--out` with `--resume` (e.g. `--seeds 1 --resume`, then `--seeds 2 --resume`): seeds are added, never
+   overwritten; a plain rerun into a folder with finished seeds is refused.
 3. Synthetic first. From `..`, make the synthetic hand and its exact mask:
    ```bash
    python -c "import sys; sys.path[:0]=['tests','.']; from test_recolor_nails import synthetic_hand; \

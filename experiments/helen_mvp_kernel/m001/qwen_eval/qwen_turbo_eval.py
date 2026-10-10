@@ -226,6 +226,14 @@ def load_pipeline(revision, offload, quantize="none"):
     return pipe, resolved
 
 
+def free_memory():
+    import gc
+    gc.collect()
+    torch = sys.modules.get("torch")
+    if torch is not None and torch.cuda.is_available():
+        torch.cuda.empty_cache()
+
+
 def qwen_edit(pipe, rgb, prompt, size, seed):
     import torch
     out = pipe(prompt=prompt, image=Image.fromarray(rgb).convert("RGB"), width=size[0], height=size[1],
@@ -252,6 +260,8 @@ def main(argv=None, edit_fn=None):
     ap.add_argument("--quantize", choices=["none", "nf4"], default="none",
                     help="nf4: load the official weights in 4-bit (for ~12-24 GB GPUs); results are labelled Turbo 4-bit")
     ap.add_argument("--out", default="runs/qwen_eval")
+    ap.add_argument("--resume", action="store_true",
+                    help="add seeds to an existing report.json in --out (same image, mask, target, prompt, model settings)")
     ap.add_argument("--check", action="store_true", help="preflight only; downloads nothing")
     args = ap.parse_args(argv)
 
@@ -290,7 +300,24 @@ def main(argv=None, edit_fn=None):
               "resize_floor": evaluate(src, floor, mask, tl), "runs": []}
     Image.fromarray(src).save(out / "00_source.png")
     Image.fromarray(base).save(out / "01_baseline_deterministic.png")
-    cols = [(src, "source"), (base, "baseline (deterministic)")]
+    prior = out / "report.json"
+    same = ("source", "mask", "target", "prompt", "generation_size")
+    if prior.exists():
+        old = json.loads(prior.read_text())
+        if old.get("runs") and not args.resume:
+            ap.error(f"{prior} already holds {len(old['runs'])} finished seed(s): pass --resume to add seeds, "
+                     "or a new --out")
+        if args.resume:
+            om = old.get("model", {})
+            want = {"revision_requested": args.revision, "offload": args.offload, "quantize": args.quantize}
+            if any(old.get(k) != report[k] for k in same) or any(om.get(k) != v for k, v in want.items()):
+                ap.error(f"--resume refused: {prior} was made with another image, mask, target, prompt or model setting")
+            report["runs"] = old.get("runs", [])
+    done = {r["seed"] for r in report["runs"]}
+    todo = [s for s in args.seeds if s not in done]
+    total = len(done | set(args.seeds))
+    report["run_status"] = f"in progress: {len(done)} of {total} seeds done"
+    prior.write_text(json.dumps(report, indent=1))
 
     resolved = None
     if edit_fn is None:
@@ -300,14 +327,13 @@ def main(argv=None, edit_fn=None):
                      "(without it the run failed with a CUDA error on a 12 GB card)")
         pipe, resolved = load_pipeline(args.revision, args.offload, args.quantize)
         edit_fn = lambda rgb, s: qwen_edit(pipe, rgb, prompt, gen_size, s)  # noqa: E731
-    report["model"] = {"id": MODEL_ID, "revision_requested": args.revision, "revision_resolved": resolved,
+    model = {"id": MODEL_ID, "revision_requested": args.revision, "revision_resolved": resolved,
                        "steps": "checkpoint's saved 8-step schedule", "use_kv_cache": True, "offload": args.offload,
                        "quantize": args.quantize, "label": QUANT_LABEL[args.quantize],
                        "vae_tiling": args.quantize == "nf4"}
+    report["model"] = model
 
-    report["run_status"] = f"in progress: 0 of {len(args.seeds)} seeds done"
-    (out / "report.json").write_text(json.dumps(report, indent=1))
-    for s in args.seeds:
+    for s in todo:
         t0 = time.time()
         raw = edit_fn(src, s)
         at_src = raw if raw.shape == src.shape else to_size(raw, (src.shape[1], src.shape[0]))
@@ -317,18 +343,25 @@ def main(argv=None, edit_fn=None):
         Image.fromarray(heat).save(out / f"qwen_seed{s}_dE_map.png")
         report["runs"].append({"seed": s, "seconds": round(time.time() - t0, 1), "raw_size": [int(raw.shape[1]), int(raw.shape[0])],
                                "output_sha256": sha16(at_src.tobytes()), **evaluate(src, at_src, mask, tl)})
-        cols += [(at_src, f"qwen seed {s}"), (heat, f"dE map seed {s} (0-10)")]
-        report["run_status"] = f"in progress: {len(report['runs'])} of {len(args.seeds)} seeds done"
-        (out / "report.json").write_text(json.dumps(report, indent=1))
-    report["run_status"] = f"complete: {len(report['runs'])} of {len(args.seeds)} seeds"
+        report["run_status"] = f"in progress: {len(report['runs'])} of {total} seeds done"
+        prior.write_text(json.dumps(report, indent=1))
+        del raw, at_src, heat
+        free_memory()  # the 12 GB / 15 GB-WSL run was OOM-killed at seed 1 when memory was not released
+    report["run_status"] = f"complete: {len(report['runs'])} of {total} seeds"
+    cols = [(src, "source"), (base, "baseline (deterministic)")]
+    for r in sorted(report["runs"], key=lambda r: r["seed"]):
+        k = r["seed"]
+        cols += [(np.asarray(Image.open(out / f"qwen_seed{k}_at_source.png").convert("RGB")), f"qwen seed {k}"),
+                 (np.asarray(Image.open(out / f"qwen_seed{k}_dE_map.png").convert("RGB")), f"dE map seed {k} (0-10)")]
     sheet(cols, out / "qwen_eval_sheet.png")
     (out / "report.json").write_text(json.dumps(report, indent=1))
 
-    b = report["baseline_deterministic"]["outside_mask_strict"]
+    b = report["baseline_deterministic"]["outside_mask_excluding_3px_band"]
     f = report["resize_floor"]["outside_mask_excluding_3px_band"]
-    print(f"baseline: outside-mask mean dE {b['mean']} (identical outside: "
+    print("all figures below: outside the nail, excluding a 3 px band around it (dE76)")
+    print(f"baseline: mean dE {b['mean']}, share > JND {b['share_above_jnd']} (identical outside the mask, strict: "
           f"{report['baseline_deterministic']['pixels_identical_outside_mask']})")
-    print(f"resize floor: outside mean dE {f['mean']}, share > JND {f['share_above_jnd']}")
+    print(f"resize floor: mean dE {f['mean']}, share > JND {f['share_above_jnd']}")
     for r in report["runs"]:
         o = r["outside_mask_excluding_3px_band"]
         print(f"qwen seed {r['seed']}: outside mean dE {o['mean']}, p95 {o['p95']}, share > JND {o['share_above_jnd']}, "
