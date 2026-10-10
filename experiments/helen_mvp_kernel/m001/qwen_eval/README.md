@@ -13,7 +13,7 @@ The script refuses to run without `--accept-research-license`.
 1. Separate venv, pinned packages (nothing else changes on the machine):
    ```bash
    python -m venv .venv-qwen && source .venv-qwen/bin/activate
-   pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu128   # match nvidia-smi
+   pip install torch==2.14.1 torchvision==0.29.1 --index-url https://download.pytorch.org/whl/cu130   # match nvidia-smi
    pip install -r requirements-qwen-eval.txt
    ```
 2. Preflight, downloads nothing: `python qwen_turbo_eval.py --check --accept-research-license`.
@@ -23,6 +23,9 @@ The script refuses to run without `--accept-research-license`.
    `bitsandbytes`; `report.json` labels the run `Turbo 4-bit`. Its numbers describe the 4-bit model, not the
    published bf16 one. Do not use third-party GGUF conversions instead (e.g. Viggle builds): they are a
    different, fine-tuned model whose card states it does not reproduce the upstream outputs.
+   On a ~12 GB card, nf4 also needs `--offload model`; the script refuses nf4 without it below 16 GB. nf4 turns
+   on VAE tiling (the 2K decode ran out of memory otherwise), recorded as `model.vae_tiling`. `report.json` is
+   rewritten after every seed (`run_status`), so a run stopped half-way keeps the seeds it finished.
 3. Synthetic first. From `..`, make the synthetic hand and its exact mask:
    ```bash
    python -c "import sys; sys.path[:0]=['tests','.']; from test_recolor_nails import synthetic_hand; \

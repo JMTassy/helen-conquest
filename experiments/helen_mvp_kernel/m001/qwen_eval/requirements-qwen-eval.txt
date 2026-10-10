@@ -1,7 +1,8 @@
 # Qwen-Image-2.1-Turbo research evaluation (M001). Pinned; install in a separate venv on the GPU machine.
 # torch: install the CUDA build matching the machine FIRST, e.g. for CUDA 12.x drivers:
-#   pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cu128
+#   pip install torch==2.14.1 torchvision==0.29.1 --index-url https://download.pytorch.org/whl/cu130
 # (pick the cuXXX index that matches `nvidia-smi`; CPU-only torch cannot run this model)
+torchvision==0.29.1      # the Qwen3-VL processor imports it; must match torch 2.14.x (install with torch, above)
 diffusers==0.41.0        # released 2026-10-06; contains QwenImage21Pipeline, pipeline-configured sample_sigmas, use_kv_cache (checked in the wheel)
 transformers==5.19.0     # model card asks >=5.17.0
 accelerate==1.15.0

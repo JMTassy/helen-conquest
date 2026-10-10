@@ -210,6 +210,8 @@ def load_pipeline(revision, offload, quantize="none"):
             quant_kwargs={"load_in_4bit": True, "bnb_4bit_quant_type": "nf4", "bnb_4bit_compute_dtype": torch.bfloat16},
             components_to_quantize=["transformer", "text_encoder"])
     pipe = QwenImage21Pipeline.from_pretrained(MODEL_ID, revision=revision, dtype=torch.bfloat16, **kw)
+    if quantize == "nf4":  # decoding the 2K frame in one piece runs out of memory on ~12 GB cards
+        pipe.vae.enable_tiling()  # tile seams, if any, show up in the outside-mask measures: recorded in report
     if offload == "model":
         pipe.enable_model_cpu_offload()
     elif offload == "sequential":
@@ -292,13 +294,19 @@ def main(argv=None, edit_fn=None):
 
     resolved = None
     if edit_fn is None:
-        report["environment"] = preflight(args.quantize)
+        report["environment"] = env = preflight(args.quantize)
+        if args.quantize == "nf4" and args.offload == "none" and (env.get("vram_gb") or 99) < 16:
+            ap.error(f"{env.get('vram_gb')} GB VRAM: --quantize nf4 needs --offload model below 16 GB "
+                     "(without it the run failed with a CUDA error on a 12 GB card)")
         pipe, resolved = load_pipeline(args.revision, args.offload, args.quantize)
         edit_fn = lambda rgb, s: qwen_edit(pipe, rgb, prompt, gen_size, s)  # noqa: E731
     report["model"] = {"id": MODEL_ID, "revision_requested": args.revision, "revision_resolved": resolved,
                        "steps": "checkpoint's saved 8-step schedule", "use_kv_cache": True, "offload": args.offload,
-                       "quantize": args.quantize, "label": QUANT_LABEL[args.quantize]}
+                       "quantize": args.quantize, "label": QUANT_LABEL[args.quantize],
+                       "vae_tiling": args.quantize == "nf4"}
 
+    report["run_status"] = f"in progress: 0 of {len(args.seeds)} seeds done"
+    (out / "report.json").write_text(json.dumps(report, indent=1))
     for s in args.seeds:
         t0 = time.time()
         raw = edit_fn(src, s)
@@ -310,6 +318,9 @@ def main(argv=None, edit_fn=None):
         report["runs"].append({"seed": s, "seconds": round(time.time() - t0, 1), "raw_size": [int(raw.shape[1]), int(raw.shape[0])],
                                "output_sha256": sha16(at_src.tobytes()), **evaluate(src, at_src, mask, tl)})
         cols += [(at_src, f"qwen seed {s}"), (heat, f"dE map seed {s} (0-10)")]
+        report["run_status"] = f"in progress: {len(report['runs'])} of {len(args.seeds)} seeds done"
+        (out / "report.json").write_text(json.dumps(report, indent=1))
+    report["run_status"] = f"complete: {len(report['runs'])} of {len(args.seeds)} seeds"
     sheet(cols, out / "qwen_eval_sheet.png")
     (out / "report.json").write_text(json.dumps(report, indent=1))
 

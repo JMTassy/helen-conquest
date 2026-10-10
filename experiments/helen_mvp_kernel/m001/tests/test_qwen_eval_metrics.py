@@ -94,3 +94,21 @@ def test_quantized_run_is_labelled_and_preflight_names_bitsandbytes(tmp_path):
     assert rep["model"]["quantize"] == "nf4" and rep["model"]["label"].startswith("Turbo 4-bit")
     info = qe.preflight("nf4")
     assert info["quantize"] == "nf4" and ("bitsandbytes" in info or any("bitsandbytes" in p for p in info["problems"]))
+    assert rep["model"]["vae_tiling"] is True and rep["run_status"] == "complete: 1 of 1 seeds"
+
+
+def test_interrupted_run_keeps_the_seeds_it_finished(tmp_path):
+    """HAL-WITNESS run 1 was stopped during seed 1 and left no report: the report now follows every seed."""
+    _write_case(tmp_path)
+
+    def stops_on_seed_1(rgb, s):
+        if s == 1:
+            raise KeyboardInterrupt  # stands in for the external SIGTERM
+        return rgb
+
+    with pytest.raises(KeyboardInterrupt):
+        qe.main([str(tmp_path / "hand.png"), "--mask", str(tmp_path / "mask.png"), "--target", f"c={CORAL}",
+                 "--source-kind", "synthetic", "--accept-research-license", "--seeds", "0", "1", "2",
+                 "--out", str(tmp_path / "cut")], edit_fn=stops_on_seed_1)
+    rep = json.loads((tmp_path / "cut" / "report.json").read_text())
+    assert [r["seed"] for r in rep["runs"]] == [0] and rep["run_status"] == "in progress: 1 of 3 seeds done"
